@@ -38,6 +38,11 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>com.yimayhd.user</groupId>
+				<artifactId>user-client</artifactId>
+				<version>${user.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>com.yimayhd.membercenter</groupId>
 				<artifactId>membercenter-biz</artifactId>
 				<version>${project.version}</version>

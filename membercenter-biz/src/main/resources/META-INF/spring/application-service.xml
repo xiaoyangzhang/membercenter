@@ -6,5 +6,6 @@
            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd"
 	default-lazy-init="true">
 	<context:annotation-config />
-	
+
+	<bean id="merchantServiceImpl" class="com.yimayhd.membercenter.service.merchant.impl.MerchantServiceImpl"></bean>
 </beans>

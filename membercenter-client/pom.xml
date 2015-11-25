@@ -24,6 +24,11 @@
 			<groupId>com.yimayhd.api</groupId>
 			<artifactId>api-util</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>com.yimayhd.user</groupId>
+			<artifactId>user-client</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>membercenter-client</finalName>

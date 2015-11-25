@@ -9,7 +9,8 @@ import net.pocrd.entity.ApiReturnCode;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.Resource;
 
 /**
  * Created by root on 15-11-25.
@@ -18,7 +19,7 @@ public class MerchantServiceImpl implements MerchantService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MerchantServiceImpl.class);
 
-    @Autowired
+    @Resource
     private UserService userService;
 
     @Override
@@ -40,7 +41,7 @@ public class MerchantServiceImpl implements MerchantService {
         UserDO createUserDO = result.getValue();
         LOGGER.info("createUserDO.getId={}", createUserDO.getId());
 
-        
+
 
         return null;
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yimayhd.membercenter.client.mapper.WxUserMerchantRelationMapper">
+<mapper namespace="com.yimayhd.membercenter.mapper.WxUserMerchantRelationMapper">
     <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO">
 
         <id column="id" property="id" jdbcType="BIGINT"/>
@@ -18,7 +18,7 @@
     </sql>
 
     <!--insert的时候要去掉ID，创建时间，更新时间和状态-->
-    <insert id="add" parameterType="com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO"  useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO"  useGeneratedKeys="true" keyProperty="id">
         insert into wx_user_merchant_relation  (id,open_id,merchant_id,user_id)
         values (
         
@@ -45,7 +45,7 @@
         <include refid="search_clause"/>
     </select>
 
-    <update id="modify" parameterType="com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO">
         update wx_user_merchant_relation t
         <set>
         

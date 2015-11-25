@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yimayhd.membercenter.mapper.MemberDurationDOMapper">
+    <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.MemberDurationDO">
+
+        <id column="id" property="id" jdbcType="BIGINT"/>
+    
+        <result column="begin_time" property="beginTime" jdbcType="BIGINT"/>
+
+        <result column="end_time" property="endTime" jdbcType="BIGINT"/>
+
+        <result column="is_del" property="isDel" jdbcType="VARCHAR"/>
+
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+
+        <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
+
+        <result column="version" property="version" jdbcType="VARCHAR"/>
+
+</resultMap>
+
+    <sql id="Base_Column_List">
+        id,begin_time,end_time,is_del,user_id,gmt_modified,gmt_created,version
+    </sql>
+
+    <!--insert的时候要去掉ID，创建时间，更新时间和状态-->
+    <insert id="add" parameterType="com.yimayhd.membercenter.client.domain.MemberDurationDO"  useGeneratedKeys="true" keyProperty="id">
+        insert into member_duration  (id,begin_time,end_time,is_del,user_id,gmt_modified,gmt_created,version)
+        values (
+        
+          #{id,jdbcType=BIGINT},
+        
+          #{beginTime,jdbcType=BIGINT},
+        
+          #{endTime,jdbcType=BIGINT},
+        
+          #{isDel,jdbcType=VARCHAR},
+        
+          #{userId,jdbcType=BIGINT},
+        
+          #{gmtModified,jdbcType=TIMESTAMP},
+        
+          #{gmtCreated,jdbcType=TIMESTAMP},
+        
+          #{version,jdbcType=VARCHAR}
+        
+        )
+    </insert>
+
+    <select id="getById" resultMap="BaseResultMap" parameterType="long">
+        select <include refid="Base_Column_List"/>
+        from member_duration t
+        where
+        t.id = #{id}
+    </select>
+
+    <select id="getCount" resultType="long" parameterType="com.yimayhd.membercenter.client.domain.MemberDurationDO">
+        select count(1) from member_duration t
+
+    </select>
+
+    <update id="modify" parameterType="com.yimayhd.membercenter.client.domain.MemberDurationDO">
+        update member_duration t
+        <set>
+        
+            <if test="beginTime != null">
+                t.begin_time = #{beginTime,jdbcType=BIGINT},
+            </if>
+        
+            <if test="endTime != null">
+                t.end_time = #{endTime,jdbcType=BIGINT},
+            </if>
+        
+            <if test="isDel != null">
+                t.is_del = #{isDel,jdbcType=VARCHAR},
+            </if>
+        
+            <if test="userId != null">
+                t.user_id = #{userId,jdbcType=BIGINT},
+            </if>
+        
+            <if test="gmtModified != null">
+                t.gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+        
+            <if test="gmtCreated != null">
+                t.gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+            </if>
+        
+            <if test="version != null">
+                t.version = #{version,jdbcType=VARCHAR}
+            </if>
+        
+        </set>
+        where
+        t.id = #{id}
+    </update>
+
+    <update id="delete" parameterType="long">
+      update member_duration t set t.status = 0 where t.id = #{value}
+    </update>
+
+
+
+
+    <sql id="querySqlString">
+        <where>
+            community_id = #{communityId}
+            <if test="ids != null">
+                and id in
+                <foreach item="item" index="index" collection="ids" open="("
+                         separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="userId != null">
+                and
+                user_id = #{userId}
+            </if>
+            <if test="objId != null">
+                and
+                obj_id = #{objId}
+            </if>
+            <if test="status != null">
+                AND
+                status = #{status}
+            </if>
+            <if test="hotStartDate != null">
+                AND
+                score_date <![CDATA[>]]>
+                #{hotStartDate}
+            </if>
+            <if test="lastGmtCreated != null">
+                AND
+                gmt_created <![CDATA[<]]>
+                #{lastGmtCreated}
+            </if>
+            <if test="gmtCreateStart != null">
+                AND
+                gmt_created <![CDATA[>]]>
+                #{gmtCreateStart}
+            </if>
+            <if test="gmtCreateEnd != null">
+                AND
+                gmt_created <![CDATA[<]]>
+                #{gmtCreateEnd}
+            </if>
+            <if test="textContent != null">
+                AND
+                text_content like CONCAT('%', #{textContent}, '%')
+            </if>
+            <if test="hasTextContent == true">
+                and
+                text_content is not null
+            </if>
+        </where>
+    </sql>
+</mapper>

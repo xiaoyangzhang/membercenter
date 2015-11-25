@@ -6,15 +6,15 @@
 	default-lazy-init="true">
 	
 	<!-- ===========================  user =============================== -->
-	<!-- <bean id="userServiceRef" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+	<bean id="userServiceRef" class="com.alibaba.dubbo.config.spring.ReferenceBean">
         <property name="interface" value="com.yimayhd.user.api.UserService"/>
         <property name="application" ref="dubboApplicationConfig"/>
         <property name="registry" ref="dubboRegistryConfig"/>
         <property name="timeout" value="${consumer.dubbo.timeout}"/>
         <property name="check" value="${consumer.dubbo.check}"/>
-        <property name="version" value="${consumer.user.dubbo.version}"/>
+        <property name="version" value="${consume.user.dubbo.version}"/>
         <property name="retries" value="${dubbo.retries}"/>
-    </bean> -->
+    </bean>
     
 
 

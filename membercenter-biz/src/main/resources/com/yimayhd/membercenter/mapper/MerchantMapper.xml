@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yimayhd.membercenter.client.mapper.MerchantMapper">
+    <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.MerchantDO">
+
+        <id column="id" property="id" jdbcType="BIGINT"/>
+    
+        <result column="seller_id" property="sellerId" jdbcType="BIGINT"/>
+
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+
+        <result column="partner_id" property="partnerId" jdbcType="VARCHAR"/>
+
+        <result column="seller_private_key" property="sellerPrivateKey" jdbcType="VARCHAR"/>
+
+        <result column="alipay_public_key" property="alipayPublicKey" jdbcType="VARCHAR"/>
+
+        <result column="seller_alipay_id" property="sellerAlipayId" jdbcType="VARCHAR"/>
+
+        <result column="seller_app_id" property="sellerAppId" jdbcType="VARCHAR"/>
+
+        <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
+
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+
+</resultMap>
+
+    <sql id="Base_Column_List">
+        id,seller_id,name,partner_id,seller_private_key,alipay_public_key,seller_alipay_id,seller_app_id,gmt_created,gmt_modified
+    </sql>
+
+    <!--insert的时候要去掉ID，创建时间，更新时间和状态-->
+    <insert id="add" parameterType="com.yimayhd.membercenter.client.domain.MerchantDO"  useGeneratedKeys="true" keyProperty="id">
+        insert into merchant  (id,seller_id,name,partner_id,seller_private_key,alipay_public_key,seller_alipay_id,seller_app_id,gmt_created,gmt_modified)
+        values (
+        
+          #{id,jdbcType=BIGINT},
+        
+          #{sellerId,jdbcType=BIGINT},
+        
+          #{name,jdbcType=VARCHAR},
+        
+          #{partnerId,jdbcType=VARCHAR},
+        
+          #{sellerPrivateKey,jdbcType=VARCHAR},
+        
+          #{alipayPublicKey,jdbcType=VARCHAR},
+        
+          #{sellerAlipayId,jdbcType=VARCHAR},
+        
+          #{sellerAppId,jdbcType=VARCHAR},
+        
+          #{gmtCreated,jdbcType=TIMESTAMP},
+        
+          #{gmtModified,jdbcType=TIMESTAMP}
+        
+        )
+    </insert>
+
+    <select id="getById" resultMap="BaseResultMap" parameterType="long">
+        select <include refid="Base_Column_List"/>
+        from merchant t
+        where
+        t.id = #{id}
+    </select>
+
+    <select id="getCount" resultType="long" parameterType="com.yimayhd.membercenter.client.domain.MerchantDO">
+        select count(1) from merchant t
+        <include refid="search_clause"/>
+    </select>
+
+    <update id="modify" parameterType="com.yimayhd.membercenter.client.domain.MerchantDO">
+        update merchant t
+        <set>
+        
+            <if test="sellerId != null">
+                t.seller_id = #{sellerId,jdbcType=BIGINT},
+            </if>
+        
+            <if test="name != null">
+                t.name = #{name,jdbcType=VARCHAR},
+            </if>
+        
+            <if test="partnerId != null">
+                t.partner_id = #{partnerId,jdbcType=VARCHAR},
+            </if>
+        
+            <if test="sellerPrivateKey != null">
+                t.seller_private_key = #{sellerPrivateKey,jdbcType=VARCHAR},
+            </if>
+        
+            <if test="alipayPublicKey != null">
+                t.alipay_public_key = #{alipayPublicKey,jdbcType=VARCHAR},
+            </if>
+        
+            <if test="sellerAlipayId != null">
+                t.seller_alipay_id = #{sellerAlipayId,jdbcType=VARCHAR},
+            </if>
+        
+            <if test="sellerAppId != null">
+                t.seller_app_id = #{sellerAppId,jdbcType=VARCHAR},
+            </if>
+        
+            <if test="gmtCreated != null">
+                t.gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+            </if>
+        
+            <if test="gmtModified != null">
+                t.gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+            </if>
+        
+        </set>
+        where
+        t.id = #{id}
+    </update>
+</mapper>

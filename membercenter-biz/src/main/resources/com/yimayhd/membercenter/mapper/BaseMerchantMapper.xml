@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yimayhd.membercenter.mapper.BaseMerchantMapper">
+    <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.BaseMerchantDO">
+
+        <id column="id" property="id" jdbcType="BIGINT"/>
+    
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+
+        <result column="contracter" property="contracter" jdbcType="VARCHAR"/>
+
+        <result column="contracter_phone" property="contracterPhone" jdbcType="VARCHAR"/>
+
+        <result column="handle_name" property="handleName" jdbcType="VARCHAR"/>
+
+        <result column="handle_gmt_create" property="handleGmtCreate" jdbcType="TIMESTAMP"/>
+
+        <result column="status" property="status" jdbcType="TINYINT"/>
+
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+
+        <result column="gmt_update" property="gmtUpdate" jdbcType="TIMESTAMP"/>
+
+</resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,name,address,contracter,contracter_phone,handle_name,handle_gmt_create,status,remark,gmt_create,gmt_update
+    </sql>
+
+    <!--insert的时候要去掉ID，创建时间，更新时间和状态-->
+    <insert id="add" parameterType="com.yimayhd.membercenter.client.domain.BaseMerchantDO"  useGeneratedKeys="true" keyProperty="id">
+        insert into base_merchant  (id,user_id,name,address,contracter,contracter_phone,handle_name,handle_gmt_create,status,remark,gmt_create,gmt_update)
+        values (
+        
+          #{id,jdbcType=BIGINT},
+        
+          #{userId,jdbcType=BIGINT},
+        
+          #{name,jdbcType=VARCHAR},
+        
+          #{address,jdbcType=VARCHAR},
+        
+          #{contracter,jdbcType=VARCHAR},
+        
+          #{contracterPhone,jdbcType=VARCHAR},
+        
+          #{handleName,jdbcType=VARCHAR},
+        
+          #{handleGmtCreate,jdbcType=TIMESTAMP},
+        
+          #{status,jdbcType=TINYINT},
+        
+          #{remark,jdbcType=VARCHAR},
+        
+          #{gmtCreate,jdbcType=TIMESTAMP},
+        
+          #{gmtUpdate,jdbcType=TIMESTAMP}
+        
+        )
+    </insert>
+
+    <select id="getById" resultMap="BaseResultMap" parameterType="long">
+        select <include refid="Base_Column_List"/>
+        from base_merchant t
+        where
+        t.id = #{id}
+    </select>
+
+    <select id="getCount" resultType="long" parameterType="com.yimayhd.membercenter.client.domain.BaseMerchantDO">
+        select count(1) from base_merchant t
+        <include refid="search_clause"/>
+    </select>
+
+    <update id="modify" parameterType="com.yimayhd.membercenter.client.domain.BaseMerchantDO">
+        update base_merchant t
+        <set>
+        
+            <if test="userId != null">
+                t.user_id = #{userId,jdbcType=BIGINT},
+            </if>
+        
+            <if test="name != null">
+                t.name = #{name,jdbcType=VARCHAR},
+            </if>
+        
+            <if test="address != null">
+                t.address = #{address,jdbcType=VARCHAR},
+            </if>
+        
+            <if test="contracter != null">
+                t.contracter = #{contracter,jdbcType=VARCHAR},
+            </if>
+        
+            <if test="contracterPhone != null">
+                t.contracter_phone = #{contracterPhone,jdbcType=VARCHAR},
+            </if>
+        
+            <if test="handleName != null">
+                t.handle_name = #{handleName,jdbcType=VARCHAR},
+            </if>
+        
+            <if test="handleGmtCreate != null">
+                t.handle_gmt_create = #{handleGmtCreate,jdbcType=TIMESTAMP},
+            </if>
+        
+            <if test="status != null">
+                t.status = #{status,jdbcType=VARCHAR},
+            </if>
+        
+            <if test="remark != null">
+                t.remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        
+            <if test="gmtCreate != null">
+                t.gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+        
+            <if test="gmtUpdate != null">
+                t.gmt_update = #{gmtUpdate,jdbcType=TIMESTAMP}
+            </if>
+        
+        </set>
+        where
+        t.id = #{id}
+    </update>
+</mapper>

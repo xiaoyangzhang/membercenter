@@ -10,7 +10,7 @@
        " default-lazy-init="true" >
  
   	<!-- 加载配置属性文件 -->
-	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/cacheConf.properties" />
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/*.properties" />
     <!-- 提供方应用信息，用于计算依赖关系 -->
 	<dubbo:application name="${server.name}" />
  

@@ -8,3 +8,6 @@
 /membercenter-client/.classpath
 /membercenter-client/.project
 /membercenter-client/.settings
+*.iml
+.idea
+/.idea

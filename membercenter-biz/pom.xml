@@ -118,6 +118,10 @@
 			<groupId>com.taobao.tair</groupId>
 			<artifactId>tair-client</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.yimayhd.tradecenter</groupId>
+			<artifactId>tradecenter-client</artifactId>
+		</dependency>
 	</dependencies>
 
 

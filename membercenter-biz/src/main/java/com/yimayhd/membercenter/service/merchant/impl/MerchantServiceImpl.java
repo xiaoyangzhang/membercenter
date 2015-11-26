@@ -8,7 +8,6 @@ import com.yimayhd.membercenter.client.service.merchant.MerchantService;
 import com.yimayhd.membercenter.client.vo.MerchantVO;
 import com.yimayhd.membercenter.manager.service.MerchantServiceManager;
 import com.yimayhd.user.client.domain.UserDO;
-import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
 import net.pocrd.entity.ApiReturnCode;
 import org.apache.commons.lang.StringUtils;

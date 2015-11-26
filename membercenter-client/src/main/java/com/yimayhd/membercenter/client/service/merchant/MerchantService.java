@@ -2,8 +2,11 @@ package com.yimayhd.membercenter.client.service.merchant;
 
 
 import com.yimayhd.membercenter.client.result.MemResult;
+import com.yimayhd.membercenter.client.vo.MerchantPageQueryVO;
 import com.yimayhd.membercenter.client.vo.MerchantVO;
 import com.yimayhd.user.client.domain.UserDO;
+
+import java.util.List;
 
 /**
  * Created by root on 15-11-25.
@@ -37,4 +40,11 @@ public interface MerchantService {
      * @return  BaseResult<UserDO>
      */
     MemResult<UserDO> findUserByTwoDimensionCode(String twoDimensionCode);
+
+    /**
+     * 根据MerchantId及相关条件查询分页的该商家的客户
+     * @param merchantPageQueryVO   MerchantPageQueryVO
+     * @return  MemResult<List<UserDO>>
+     */
+    MemResult<List<UserDO>> findPageUsersByMerchant(MerchantPageQueryVO merchantPageQueryVO);
 }

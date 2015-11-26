@@ -1,6 +1,6 @@
 package com.yimayhd.membercenter.client.service.merchant;
 
-import com.yimayhd.membercenter.client.result.BaseResult;
+import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.vo.MerchantVO;
 import com.yimayhd.user.client.domain.UserDO;
 
@@ -14,5 +14,5 @@ public interface MerchantService {
      * @param merchantVO    MerchantVO
      * @return  BaseResult<UserDO>
      */
-    BaseResult<UserDO> rigisterUser(MerchantVO merchantVO);
+    MemResult<UserDO> rigisterUser(MerchantVO merchantVO);
 }

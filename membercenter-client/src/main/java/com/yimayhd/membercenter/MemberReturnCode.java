@@ -45,4 +45,13 @@ public class MemberReturnCode  extends AbstractReturnCode {
 	public static final MemberReturnCode PARAMTER_ERROR = new MemberReturnCode(PARAMTER_ERROR_C, "参数 错误") ;
 	
 	
+	
+	
+	/**************************************ORDER********************************************/
+	public static final int BIZ_ORDER_NOT_FOUND_C = 16001000;
+	public static final MemberReturnCode BIZ_ORDER_NOT_FOUND = new MemberReturnCode(BIZ_ORDER_NOT_FOUND_C, "订单未找到") ;
+	
+	
+	
+	
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yimayhd.membercenter.mapper.MemberDOMapper" >
+  <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.MemberDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="BIGINT" />
+    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, type, status, start_time, end_time, version, gmt_created, gmt_modified
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="long" >
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where id = #{id}
+  </select>
+  <delete id="deleteById" parameterType="long" >
+    delete from member
+    where id = #{id}
+  </delete>
+  <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.MemberDO" useGeneratedKeys="true" keyProperty="id" >
+    insert into member (user_id, type, status, 
+      start_time, end_time, version, 
+      gmt_created, gmt_modified)
+    values (#{userId}, #{type}, #{status}, 
+      #{startTime}, #{endTime}, 1, 
+      #{gmtCreated}, #{gmtModified})
+  </insert>
+  <update id="update" parameterType="com.yimayhd.membercenter.client.domain.MemberDO" >
+    update member
+    set user_id = #{userId},
+      type = #{type},
+      status = #{status},
+      start_time = #{startTime},
+      end_time = #{endTime},
+      version = version + 1,
+      gmt_created = #{gmtCreated},
+      gmt_modified = #{gmtModified}
+    where id = #{id} and  version = #{version}
+  </update>
+</mapper>

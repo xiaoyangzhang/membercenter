@@ -28,8 +28,7 @@
     </group>
     
     <script>
-        <generate template="cacheConf.properties.vm" destfile="cacheConf.properties" charset="UTF-8"/>
-        <generate template="config.properties.vm" destfile="config.properties" charset="UTF-8"/>
+        <generate template="config.properties" destfile="config.properties" charset="UTF-8"/>
         <generate template="logback.xml" destfile="WEB-INF/logback.xml" charset="UTF-8"/>
     </script>
 </config>

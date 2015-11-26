@@ -1,5 +1,6 @@
 package com.yimayhd.membercenter.client.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Date;
  * @table member_firehose
  * @author houdh
  **/
-public class MemberFirehoseDO{
+public class MemberFirehoseDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

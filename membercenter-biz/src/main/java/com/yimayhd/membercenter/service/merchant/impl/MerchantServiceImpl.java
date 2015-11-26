@@ -5,6 +5,7 @@ import com.yimayhd.membercenter.client.domain.BaseMerchantDO;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.merchant.MerchantService;
+import com.yimayhd.membercenter.client.vo.MerchantPageQueryVO;
 import com.yimayhd.membercenter.client.vo.MerchantVO;
 import com.yimayhd.membercenter.manager.service.MerchantServiceManager;
 import com.yimayhd.user.client.domain.UserDO;
@@ -15,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by root on 15-11-25.
@@ -70,6 +72,11 @@ public class MerchantServiceImpl implements MerchantService {
 
     @Override
     public MemResult<UserDO> findUserByTwoDimensionCode(String twoDimensionCode) {
+        return null;
+    }
+
+    @Override
+    public MemResult<List<UserDO>> findPageUsersByMerchant(MerchantPageQueryVO merchantPageQueryVO) {
         return null;
     }
 

@@ -16,8 +16,4 @@
         <property name="retries" value="${dubbo.retries}"/>
     </bean>
     
-
-
-	
-	
 </beans>

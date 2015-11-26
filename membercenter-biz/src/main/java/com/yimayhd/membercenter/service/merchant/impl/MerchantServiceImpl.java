@@ -1,9 +1,11 @@
 package com.yimayhd.membercenter.service.merchant.impl;
 
-import com.yimayhd.membercenter.client.result.BaseResult;
+import com.yimayhd.membercenter.client.domain.BaseMerchantDO;
 import com.yimayhd.membercenter.client.service.merchant.MerchantService;
 import com.yimayhd.membercenter.client.vo.MerchantVO;
+import com.yimayhd.membercenter.manager.service.MerchantServiceManager;
 import com.yimayhd.user.client.domain.UserDO;
+import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
 import net.pocrd.entity.ApiReturnCode;
 import org.apache.commons.lang.StringUtils;
@@ -21,6 +23,9 @@ public class MerchantServiceImpl implements MerchantService {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private MerchantServiceManager merchantServiceManager;
 
     @Override
     public BaseResult<UserDO> rigisterUser(MerchantVO merchantVO) {
@@ -41,8 +46,24 @@ public class MerchantServiceImpl implements MerchantService {
         UserDO createUserDO = result.getValue();
         LOGGER.info("createUserDO.getId={}", createUserDO.getId());
 
+        BaseMerchantDO baseMerchantDO = merchantServiceManager.findBaseMerchantDOById(merchantVO.getMerchantId());
 
+        
+        return null;
+    }
 
+    @Override
+    public BaseResult<String> getTwoDimensionCode(MerchantVO merchantVO) {
+        return null;
+    }
+
+    @Override
+    public BaseResult<UserDO> findUserByOpenIdAndMerchant(MerchantVO merchantVO) {
+        return null;
+    }
+
+    @Override
+    public BaseResult<UserDO> findUserByTwoDimensionCode(String twoDimensionCode) {
         return null;
     }
 

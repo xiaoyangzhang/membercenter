@@ -73,6 +73,9 @@ public class MerchantServiceImpl implements MerchantService {
 
     @Override
     public MemResult<String> getTwoDimensionCode(MerchantVO merchantVO) {
+        LOGGER.info("getTwoDimensionCode for merchantVO={}", merchantVO);
+
+
         return null;
     }
 

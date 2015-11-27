@@ -52,6 +52,13 @@
 				<artifactId>membercenter-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
+			<dependency>
+				<groupId>com.yimayhd.membercenter</groupId>
+				<artifactId>membercenter-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>com.yimayhd.api</groupId>
 				<artifactId>api-util</artifactId>

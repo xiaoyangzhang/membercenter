@@ -50,6 +50,14 @@ public class MemberReturnCode  extends AbstractReturnCode {
 	/**************************************ORDER********************************************/
 	public static final int BIZ_ORDER_NOT_FOUND_C = 16001000;
 	public static final MemberReturnCode BIZ_ORDER_NOT_FOUND = new MemberReturnCode(BIZ_ORDER_NOT_FOUND_C, "订单未找到") ;
+
+
+	public static final int USER_ERROR_C = 16000100;
+	public static final MemberReturnCode USER_ERROR = new MemberReturnCode(USER_ERROR_C, "用户错误") ;
+
+
+	public static final int MERCHANT_NOT_FOUND_ERROR_C = 16010000;
+	public static final MemberReturnCode MERCHANT_NOT_FOUND_ERROR = new MemberReturnCode(MERCHANT_NOT_FOUND_ERROR_C, "商家不存在") ;
 	
 	
 	

@@ -66,7 +66,7 @@
 
     <select id="getCount" resultType="long" parameterType="com.yimayhd.membercenter.client.domain.MerchantDO">
         select count(1) from merchant t
-        <include refid="search_clause"/>
+
     </select>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.yimayhd.membercenter.client.domain.MerchantDO">

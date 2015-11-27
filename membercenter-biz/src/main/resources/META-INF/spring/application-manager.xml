@@ -7,4 +7,6 @@
 	<context:annotation-config />
 
 	<bean class="com.yimayhd.membercenter.manager.MerchantServiceManager"></bean>
+
+	<bean id="memberProfileManager" class="com.yimayhd.membercenter.manager.MemberProfileManager"/>
 </beans>

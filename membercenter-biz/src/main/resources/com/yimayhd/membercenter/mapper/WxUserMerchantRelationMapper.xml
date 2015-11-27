@@ -42,7 +42,7 @@
 
     <select id="getCount" resultType="long" parameterType="com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO">
         select count(1) from wx_user_merchant_relation t
-        <include refid="search_clause"/>
+
     </select>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO">

@@ -9,7 +9,7 @@ import com.yimayhd.membercenter.entity.*;
 import com.yimayhd.user.client.domain.UserDO;
 
 import com.yimayhd.user.client.enums.AbilityEnum;
-import com.yimayhd.user.entity.UserInfo;
+
 import org.springframework.util.CollectionUtils;
 
 

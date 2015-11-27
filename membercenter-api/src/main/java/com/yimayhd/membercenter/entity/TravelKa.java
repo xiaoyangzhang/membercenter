@@ -2,7 +2,7 @@ package com.yimayhd.membercenter.entity;
 
 
 
-import com.yimayhd.user.entity.UserInfo;
+
 import net.pocrd.annotation.Description;
 
 import java.io.Serializable;

@@ -1,10 +1,6 @@
 import com.yimayhd.membercenter.api.TravelKaApi;
-import com.yimayhd.membercenter.entity.Ability;
-import com.yimayhd.membercenter.entity.PageInfo;
-import com.yimayhd.membercenter.entity.TravelKa;
+import com.yimayhd.membercenter.entity.*;
 
-import com.yimayhd.membercenter.entity.TravelKaPageInfoList;
-import com.yimayhd.user.entity.UserInfo;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;

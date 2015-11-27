@@ -16,7 +16,7 @@ public class TravelKaApiCode extends AbstractReturnCode {
     }
 
     public final static int C_INTERNAL_SERVER_ERROR = 16001000;
-    public final static AbstractReturnCode INTERNAL_SERVER_ERROR   = new TravelKaApiCode( "服务器内部错误", C_INTERNAL_SERVER_ERROR);
+    public final static TravelKaApiCode INTERNAL_SERVER_ERROR   = new TravelKaApiCode( "服务器内部错误", C_INTERNAL_SERVER_ERROR);
 
 
 

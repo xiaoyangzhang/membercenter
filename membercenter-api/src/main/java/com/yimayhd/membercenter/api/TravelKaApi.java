@@ -36,7 +36,8 @@ public interface TravelKaApi {
             @ApiAutowired(CommonParameter.deviceId) long deviceId,
             @ApiAutowired(CommonParameter.userId) long userId,
             @ApiAutowired(CommonParameter.versionCode) int versionCode,
-            @ApiParameter(required = true, name = "pageInfo", desc = "分页信息") PageInfo pageInfo
+            @ApiParameter(required = true, name = "pageInfo", desc = "分页信息") PageInfo pageInfo,
+            @ApiParameter(required = true, name = "type", desc = "列表分类，人气：POPULARITY，新晋：NEWJOIN") String type
     );
 
 }

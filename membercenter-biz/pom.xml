@@ -39,6 +39,10 @@
 			<artifactId>membercenter-client</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.yimayhd.membercenter</groupId>
+			<artifactId>membercenter-api</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 		</dependency>

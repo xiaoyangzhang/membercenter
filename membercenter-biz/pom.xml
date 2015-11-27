@@ -137,6 +137,11 @@
 			<artifactId>membercenter-api</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.alibaba.toolkit.common.lang</groupId>
+			<artifactId>lang</artifactId>
+		</dependency>
+
 	</dependencies>
 
 

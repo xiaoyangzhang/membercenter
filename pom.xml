@@ -111,6 +111,12 @@
 			</dependency>
 
 			<dependency>
+				<groupId>com.alibaba.toolkit.common.lang</groupId>
+				<artifactId>lang</artifactId>
+				<version>1.0</version>
+			</dependency>
+
+			<dependency>
 				<groupId>com.yimayhd.idgen</groupId>
 				<artifactId>idgen-client</artifactId>
 				<version>${idgen_client_version}</version>

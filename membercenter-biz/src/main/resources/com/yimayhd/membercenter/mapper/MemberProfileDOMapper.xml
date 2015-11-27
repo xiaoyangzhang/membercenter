@@ -128,9 +128,11 @@
         SELECT
         <include refid="Base_Column_List" />
         FROM member_profile ORDER BY #{orderbyCol} DESC
-        <include refid="querySqlString"/>
+
         limit #{startRow},#{pageSize}
     </select>
+
+
     <select id="queryCount" resultType="int" parameterType="com.yimayhd.membercenter.client.query.TravelkaPageQuery">
         SELECT
         COUNT(*)

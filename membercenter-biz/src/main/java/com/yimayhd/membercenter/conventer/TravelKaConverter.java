@@ -143,6 +143,8 @@ public class TravelKaConverter {
             t.provinceCode = userDO.getProvinceCode();
             t.cityCode = userDO.getCityCode();
             t.age = getAge(userDO.getBirthday());
+            t.province = userDO.getProvince();
+            t.city = userDO.getCity();
             travelKaItems.add(t);
         }
         infoList.travelKaItemPageInfoList = travelKaItems;

@@ -3,6 +3,7 @@ package com.yimayhd.membercenter.manager;
 import com.yimayhd.membercenter.client.domain.MemberProfileDO;
 import com.yimayhd.membercenter.client.domain.UserAbilityRelationDO;
 import com.yimayhd.membercenter.client.query.TravelkaPageQuery;
+import com.yimayhd.membercenter.client.result.BasePageResult;
 import com.yimayhd.membercenter.mapper.MemberProfileDOMapper;
 
 import com.yimayhd.membercenter.mapper.UserAbilityRelationMapper;
@@ -11,7 +12,7 @@ import com.yimayhd.membercenter.repo.UserRepo;
 
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.enums.ErrorCode;
-import com.yimayhd.user.client.result.BasePageResult;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

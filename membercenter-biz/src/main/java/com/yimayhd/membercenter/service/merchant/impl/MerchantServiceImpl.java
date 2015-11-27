@@ -1,9 +1,13 @@
 package com.yimayhd.membercenter.service.merchant.impl;
 
+
+import com.yimayhd.membercenter.client.domain.BaseMerchantDO;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.merchant.MerchantService;
+import com.yimayhd.membercenter.client.vo.MerchantPageQueryVO;
 import com.yimayhd.membercenter.client.vo.MerchantVO;
+import com.yimayhd.membercenter.manager.service.MerchantServiceManager;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.service.UserService;
 import net.pocrd.entity.ApiReturnCode;
@@ -12,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by root on 15-11-25.
@@ -23,14 +28,17 @@ public class MerchantServiceImpl implements MerchantService {
     @Resource
     private UserService userService;
 
+    @Resource
+    private MerchantServiceManager merchantServiceManager;
+
     @Override
-    public MemResult<UserDO> rigisterUser(MerchantVO merchantVO) {
+    public MemResult<UserDO> registerUser(MerchantVO merchantVO) {
     	MemResult<UserDO> result = new MemResult<UserDO>() ;
         LOGGER.info("rigisterUser merchantVO= {}", merchantVO);
 
         if (checkParam(merchantVO)) {
             result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
-            return result ;
+            return MemResult.buildFailResult(MemberReturnCode.PARAMTER_ERROR.getCode(), MemberReturnCode.PARAMTER_ERROR.getDesc(), null) ;
         }
 
         UserDO userDO = new UserDO();
@@ -46,8 +54,29 @@ public class MerchantServiceImpl implements MerchantService {
         UserDO createUserDO = createUserResult.getValue();
         LOGGER.info("createUserDO.getId={}", createUserDO.getId());
 
+        BaseMerchantDO baseMerchantDO = merchantServiceManager.findBaseMerchantDOById(merchantVO.getMerchantId());
 
+        
+        return null;
+    }
 
+    @Override
+    public MemResult<String> getTwoDimensionCode(MerchantVO merchantVO) {
+        return null;
+    }
+
+    @Override
+    public MemResult<UserDO> findUserByOpenIdAndMerchant(MerchantVO merchantVO) {
+        return null;
+    }
+
+    @Override
+    public MemResult<UserDO> findUserByTwoDimensionCode(String twoDimensionCode) {
+        return null;
+    }
+
+    @Override
+    public MemResult<List<UserDO>> findPageUsersByMerchant(MerchantPageQueryVO merchantPageQueryVO) {
         return null;
     }
 

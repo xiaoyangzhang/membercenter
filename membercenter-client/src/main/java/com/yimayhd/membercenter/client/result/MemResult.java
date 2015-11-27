@@ -24,30 +24,21 @@ public class MemResult<T> extends MemResultSupport {
 
     }
 
-//    public static <U> MemResult<U> buildFailResult(AbstractReturnCode apiReturnCode, U value) {
-//        MemResult<U> baseResult = new MemResult<U>();
-//        baseResult.setSuccess(false);
-//        baseResult.setErrorCode(String.valueOf(apiReturnCode.getCode()));
-//        baseResult.setValue(value);
-//        baseResult.setResultMsg(apiReturnCode.getDesc());
-//
-//        return baseResult;
-//    }
-//
-//    public static <U> MemResult<U> buildFailResult(String errorCode ,String errorMsg, U value) {
-//        MemResult<U> baseResult = new MemResult<U>();
-//        baseResult.setSuccess(false);
-//        baseResult.setErrorCode(errorCode);
-//        baseResult.setValue(value);
-//        baseResult.setResultMsg(errorMsg);
-//
-//        return baseResult;
-//    }
-//
-//    public static <U> MemResult<U> buildSuccessResult(U value) {
-//        MemResult<U> baseResult = new MemResult<U>();
-//        baseResult.setSuccess(true);
-//        baseResult.setValue(value);
-//        return baseResult;
-//    }
+
+    public static <U> MemResult<U> buildFailResult(int errorCode ,String errorMsg, U value) {
+        MemResult<U> baseResult = new MemResult<U>();
+        baseResult.setSuccess(false);
+        baseResult.setErrorCode(errorCode);
+        baseResult.setValue(value);
+        baseResult.setErrorMsg(errorMsg);
+
+        return baseResult;
+    }
+
+    public static <U> MemResult<U> buildSuccessResult(U value) {
+        MemResult<U> baseResult = new MemResult<U>();
+        baseResult.setSuccess(true);
+        baseResult.setValue(value);
+        return baseResult;
+    }
 }

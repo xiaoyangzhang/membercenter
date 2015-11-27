@@ -1,5 +1,6 @@
 package com.yimayhd.membercenter.manager.service.impl;
 
+import com.yimayhd.membercenter.client.domain.BaseMerchantDO;
 import com.yimayhd.membercenter.manager.service.MerchantServiceManager;
 import com.yimayhd.membercenter.mapper.BaseMerchantMapper;
 import com.yimayhd.membercenter.mapper.MerchantMapper;
@@ -21,5 +22,8 @@ public class MerchantServiceManagerImpl implements MerchantServiceManager {
     private WxUserMerchantRelationMapper wxUserMerchantRelationMapper;
 
 
-
+    @Override
+    public BaseMerchantDO findBaseMerchantDOById(Long id) {
+        return baseMerchantMapper.getById(id);
+    }
 }

@@ -140,7 +140,7 @@
 
 
     <build>
-        <finalName>membercenter-service</finalName>
+        <finalName>membercenter-api</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

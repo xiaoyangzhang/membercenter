@@ -47,10 +47,10 @@ public class MemResultSupport implements Serializable {
 		return returnCode;
 	}
 
-	public void setReturnCode(MemberReturnCode returnCode) {
-		this.returnCode = returnCode;
+	public void setReturnCode(MemberReturnCode memberReturnCode) {
+		this.returnCode = memberReturnCode;
 		this.success = false;
-		this.errorCode = returnCode.getCode();
-		this.errorMsg = returnCode.getDesc();
+		this.errorCode = memberReturnCode.getCode();
+		this.errorMsg = memberReturnCode.getDesc();
 	}
 }

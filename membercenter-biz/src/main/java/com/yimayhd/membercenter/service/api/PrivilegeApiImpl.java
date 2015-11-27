@@ -1,4 +1,4 @@
-package com.yimayhd.membercenter.manager.service.api;
+package com.yimayhd.membercenter.service.api;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -6,7 +6,6 @@
            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	<context:annotation-config />
 
-
 	<!-- ==================   tair start    ==================== -->
 	<bean id="persistenceDefaultTairManager" class="com.taobao.tair.impl.DefaultTairManager" init-method="init"
           >
@@ -21,4 +20,7 @@
     </bean>
     
 
+	<bean class="com.yimayhd.membercenter.manager.MerchantServiceManager"></bean>
+
+	<bean id="memberProfileManager" class="com.yimayhd.membercenter.manager.MemberProfileManager"/>
 </beans>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yimayhd.membercenter.mapper.MemberProfileDOMapper">
+    <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.MemberProfileDO">
+
+        <id column="id" property="id" jdbcType="BIGINT"/>
+    
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+
+        <result column="service_content" property="serviceContent" jdbcType="VARCHAR"/>
+
+        <result column="identity_no" property="identityNo" jdbcType="VARCHAR"/>
+
+        <result column="occupation_id" property="occupationId" jdbcType="BIGINT"/>
+
+        <result column="background_img" property="backgroundImg" jdbcType="VARCHAR"/>
+
+        <result column="certificates_img" property="certificatesImg" jdbcType="VARCHAR"/>
+
+        <result column="is_del" property="isDel" jdbcType="VARCHAR"/>
+
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+
+        <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
+
+        <result column="identity_validated" property="identityValidated" jdbcType="VARCHAR"/>
+
+        <result column="mobile_validated" property="mobileValidated" jdbcType="VARCHAR"/>
+
+        <result column="occupation_validated" property="occupationValidated" jdbcType="VARCHAR"/>
+
+        <result column="sort_column1" property="sortColumn1" jdbcType="INTEGER"/>
+
+        <result column="sort_column2" property="sortColumn2" jdbcType="INTEGER"/>
+
+</resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,service_content,identity_no,occupation_id,background_img,certificates_img,is_del,gmt_modified,gmt_created,identity_validated,mobile_validated,occupation_validated,sort_column1,sort_column2
+    </sql>
+
+
+
+    <select id="getById" resultMap="BaseResultMap" parameterType="long">
+        select <include refid="Base_Column_List"/>
+        from member_profile t
+        where
+        t.id = #{id}
+    </select>
+
+    <select id="getCount" resultType="long" parameterType="com.yimayhd.membercenter.client.domain.MemberProfileDO">
+        select count(1) from member_profile t
+    </select>
+
+
+
+    <update id="delete" parameterType="long">
+      update member_profile t set t.status = 0 where t.id = #{value}
+    </update>
+
+
+
+
+    <sql id="querySqlString">
+        <where>
+            community_id = #{communityId}
+            <if test="ids != null">
+                and id in
+                <foreach item="item" index="index" collection="ids" open="("
+                         separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="userId != null">
+                and
+                user_id = #{userId}
+            </if>
+            <if test="objId != null">
+                and
+                obj_id = #{objId}
+            </if>
+            <if test="status != null">
+                AND
+                status = #{status}
+            </if>
+            <if test="hotStartDate != null">
+                AND
+                score_date <![CDATA[>]]>
+                #{hotStartDate}
+            </if>
+            <if test="lastGmtCreated != null">
+                AND
+                gmt_created <![CDATA[<]]>
+                #{lastGmtCreated}
+            </if>
+            <if test="gmtCreateStart != null">
+                AND
+                gmt_created <![CDATA[>]]>
+                #{gmtCreateStart}
+            </if>
+            <if test="gmtCreateEnd != null">
+                AND
+                gmt_created <![CDATA[<]]>
+                #{gmtCreateEnd}
+            </if>
+            <if test="textContent != null">
+                AND
+                text_content like CONCAT('%', #{textContent}, '%')
+            </if>
+            <if test="hasTextContent == true">
+                and
+                text_content is not null
+            </if>
+        </where>
+    </sql>
+
+    <select id="getByUserId" resultMap="BaseResultMap" parameterType="long">
+        select <include refid="Base_Column_List"/>
+        from member_profile t
+        where
+        t.user_id = #{userId}
+    </select>
+
+
+
+
+    <select id="pageQuery" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.client.query.TravelkaPageQuery">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM member_profile ORDER BY #{orderbyCol} DESC
+
+        limit #{startRow},#{pageSize}
+    </select>
+
+
+    <select id="queryCount" resultType="int" parameterType="com.yimayhd.membercenter.client.query.TravelkaPageQuery">
+        SELECT
+        COUNT(*)
+        FROM member_profile
+        <include refid="querySqlString"/>
+    </select>
+
+
+
+</mapper>

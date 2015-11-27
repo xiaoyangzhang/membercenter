@@ -34,10 +34,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.yimayhd.membercenter</groupId>
-			<artifactId>membercenter-client</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>com.yimayhd.membercenter</groupId>
 			<artifactId>membercenter-api</artifactId>
@@ -122,10 +119,24 @@
 			<groupId>com.taobao.tair</groupId>
 			<artifactId>tair-client</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>com.yimayhd.tradecenter</groupId>
 			<artifactId>tradecenter-client</artifactId>
 		</dependency>
+
+
+
+		<dependency>
+			<groupId>com.yimayhd.membercenter</groupId>
+			<artifactId>membercenter-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yimayhd.membercenter</groupId>
+			<artifactId>membercenter-api</artifactId>
+		</dependency>
+
 	</dependencies>
 
 

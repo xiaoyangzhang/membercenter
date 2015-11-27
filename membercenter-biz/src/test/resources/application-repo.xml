@@ -4,81 +4,8 @@
 	xsi:schemaLocation="
            http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
-	
-	<bean id="userServiceRef" class="com.alibaba.dubbo.config.spring.ReferenceBean">
-        <property name="interface" value="com.yimayhd.user.api.UserService"/>
-        <property name="application" ref="dubboApplicationConfig"/>
-        <property name="registry" ref="dubboRegistryConfig"/>
-        <property name="timeout" value="5000"/>
-        <property name="check" value="false"/>
-        <property name="version" value="LATEST"/>
-        <property name="retries" value="0"/>
-    </bean>
-	
-	<bean id="dubboApplicationConfig" class="com.alibaba.dubbo.config.ApplicationConfig">
-        <property name="name" value="sns"/>
-    </bean>
+	<context:annotation-config />
 
-    <bean id="dubboRegistryConfig" class="com.alibaba.dubbo.config.RegistryConfig">
-        <property name="address" value="192.168.1.202:2181"/>
-        <property name="protocol" value="zookeeper"/>
-    </bean>
-	
-	<bean id="globalIdGenerator" class="com.alibaba.dubbo.config.spring.ReferenceBean">
-		<property name="interface" value="com.yimayhd.idgen.IDGenService"/>
-		<property name="application" ref="dubboApplicationConfig"/>
-		<property name="registry" ref="dubboRegistryConfig"/>
-		<property name="timeout" value="5000"/>
-		<property name="check" value="false"/>
-        <property name="version" value="LATEST"/>
-        <property name="retries" value="0"/>
-	</bean>
+	<bean id="userRepo" class="com.yimayhd.membercenter.repo.UserRepo"/>
 
-   
-	<!-- 配置线程池 -->
-	<bean id="threadPoolTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-		<!-- 线程池维护线程的最少数量 -->
-		<property name="corePoolSize" value="5" />
-		<!-- 线程池维护线程所允许的空闲时间 10分钟-->
-		<property name="keepAliveSeconds" value="600" />
-		<!-- 线程池维护线程的最大数量 -->
-		<property name="maxPoolSize" value="60" />
-		<!-- 线程池所使用的缓冲队列 -->
-		<property name="queueCapacity" value="20" />
-	</bean>
-    
-    <!-- Redis start -->
-    <!-- POOL配置 -->
-    <!--<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
-        <property name="maxTotal" value="200"/>
-        <property name="maxIdle" value="100"/>
-        <property name="maxWaitMillis" value="2000"/>
-        <property name="testOnBorrow" value="false"/>
-        <property name="testWhileIdle" value="false"/>
-    </bean>
- -->
- <!--  
-    <bean id="indexShardedJedisPool"
-          class="com.yimayhd.snscenter.redis.SequenceShardedJedisPool" destroy-method="destroy">
-        <constructor-arg index="0" ref="jedisPoolConfig"/>
-        <constructor-arg index="1">
-            <bean class="com.yimayhd.snscenter.redis.SequenceJedisShardInfoList">
-                <constructor-arg index="0">
-                    <list>
-                        <bean class="com.yimayhd.snscenter.redis.SequenceJedisShardInfo">
-                            <constructor-arg index="0" value="10.0.131.84"/>
-                            <constructor-arg index="1" value="6379-6379"/>
-                        </bean>
-                         <bean class="com.pajk.snscenter.redis.SequenceJedisShardInfo">
-                            <constructor-arg index="0" value="10.0.75.183"/>
-                            <constructor-arg index="1" value="6379-6379"/>
-                        </bean> 
-                    </list>
-                  
-                </constructor-arg>
-            </bean>
-           
-        </constructor-arg>
-    </bean>
-       -->
 </beans>

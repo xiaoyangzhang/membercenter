@@ -16,8 +16,8 @@ public class TravelKaItem implements Serializable {
     @Description("userId")
     public long userId;
 
-    @Description("旅游咖能力")
-    public int gender; // 性别  1-男 2-女
+    @Description("性别")
+    public int gender; // 性别 1-未确认  2-男  3-女
 
     @Description("用户头像")
     public String avatar; // 用户头像
@@ -30,6 +30,12 @@ public class TravelKaItem implements Serializable {
 
     @Description("市code")
     public int cityCode; //
+
+    @Description("省名称")
+    public String province;
+
+    @Description("市名称")
+    public String city;
 
     @Description("年龄")
     public int age;

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yimayhd.membercenter.mapper.MemberRecordDOMapper" >
+  <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.MemberRecordDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="period" property="period" jdbcType="INTEGER" />
+    <result column="outer_id" property="outerId" jdbcType="VARCHAR" />
+    <result column="outer_type" property="outerType" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="BIGINT" />
+    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, buyer_id, seller_id, period, outer_id, outer_type, version, gmt_created, gmt_modified
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="long" >
+    select 
+    <include refid="Base_Column_List" />
+    from member_record
+    where id = #{id}
+  </select>
+  <delete id="deleteById" parameterType="long" >
+    delete from member_record
+    where id = #{id}
+  </delete>
+  <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.MemberRecordDO" useGeneratedKeys="true" keyProperty="id" >
+    insert into member_record (buyer_id, seller_id, period, 
+      outer_id, outer_type, version, 
+      gmt_created, gmt_modified)
+    values (#{buyerId}, #{sellerId}, #{period}, 
+      #{outerId}, #{outerType}, 1, 
+      #{gmtCreated}, #{gmtModified})
+  </insert>
+  <update id="update" parameterType="com.yimayhd.membercenter.client.domain.MemberRecordDO" >
+    update member_record
+    set buyer_id = #{buyerId},
+      seller_id = #{sellerId},
+      period = #{period},
+      outer_id = #{outerId},
+      outer_type = #{outerType},
+      version = version + 1,
+      gmt_created = #{gmtCreated},
+      gmt_modified = #{gmtModified}
+    where id = #{id} and version = #{version}
+  </update>
+</mapper>

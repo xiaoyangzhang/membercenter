@@ -7,9 +7,8 @@
 	<context:annotation-config />
 
 	<bean class="com.yimayhd.membercenter.manager.MerchantServiceManager"></bean>
-	
-		<bean id="memberProfileManager" class="com.yimayhd.membercenter.manager.MemberProfileManager"/>
-	
+
+	<bean id="memberProfileManager" class="com.yimayhd.membercenter.manager.MemberProfileManager"/>
 	
 	<bean class="com.yimayhd.membercenter.manager.MemberPrivilegeManager"></bean>
 	<bean class="com.yimayhd.membercenter.dao.MemberPrivilegeDao"></bean>

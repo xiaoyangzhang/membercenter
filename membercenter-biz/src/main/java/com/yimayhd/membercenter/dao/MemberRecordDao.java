@@ -2,6 +2,7 @@ package com.yimayhd.membercenter.dao;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.client.domain.MemberRecordDO;
@@ -40,4 +41,18 @@ public class MemberRecordDao {
 		}
 		return null ;
 	}
+	
+	public MemberRecordDO getMemberRecordByOutInfo(String outerId, int outerType){
+		if( StringUtils.isBlank(outerId) || outerType <= 0 ){
+			return null;
+		}
+		return memberRecordDOMapper.getMemberRecordByOutInfo(outerId, outerType);
+	}
+	
+//	public MemberRecordDO queryMemberRecords(MemberRecordQuery memberRecordQuery){
+//		if( memberRecordQuery == null || StringUtils.isBlank(memberRecordQuery.getOuterId()) || memberRecordQuery.getOuterType() <= 0 ){
+//			return null;
+//		}
+//		return memberRecordDOMapper.getMemberRecordByOutInfo(outerId, outerType);
+//	}
 }

@@ -3,7 +3,8 @@ package com.yimayhd.membercenter.client.enums.topic;
 import com.yimayhd.membercenter.client.constant.MemberConstant;
 
 public enum MemberTopic {
-	MEMBER_TAKE_EFFECT(MemberConstant.TOPIC_MEMBER, "MEMBER_TAKE_EFFECT", "会员生效")
+	MEMBER_TAKE_EFFECT(MemberConstant.TOPIC_MEMBER, "MEMBER_TAKE_EFFECT", "会员生效"),
+	MEMBER_OVERDUE(MemberConstant.TOPIC_MEMBER, "MEMBER_OVERDUE", "会员过期")
 	
 	;
 

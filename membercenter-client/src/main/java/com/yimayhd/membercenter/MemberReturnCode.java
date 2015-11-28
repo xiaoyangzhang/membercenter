@@ -53,5 +53,12 @@ public class MemberReturnCode  extends AbstractReturnCode {
 	
 	
 	
+	/**************************************user********************************************/
+	public static final int USER_NOT_FOUND_C = 16002001;
+	public static final MemberReturnCode USER_NOT_FOUND = new MemberReturnCode(USER_NOT_FOUND_C, "用户未找到") ;
+	
+	
+	
+	
 	
 }

@@ -17,7 +17,9 @@ import com.alibaba.rocketmq.common.message.Message;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.MemberDO;
 import com.yimayhd.membercenter.client.domain.MemberRecordDO;
+import com.yimayhd.membercenter.client.enums.MemberStatus;
 import com.yimayhd.membercenter.client.enums.topic.MemberTopic;
+import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.result.MemResultSupport;
 import com.yimayhd.membercenter.idgen.IDPool;
 import com.yimayhd.membercenter.mapper.MemberDOMapper;
@@ -119,6 +121,51 @@ public class MemberDao {
 		return result ;
 	}
 	
+	
+	public MemResult<Boolean> overdueMember(final MemberDO memberDO) {
+		MemResult<Boolean> result = new MemResult<Boolean>();
+		if( memberDO == null ){
+			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return result ;
+		}
+		memberDO.setStatus(MemberStatus.EXPIRED.getStatus());
+		MemberTopic topic = MemberTopic.MEMBER_OVERDUE ;
+		TransactionSendResult sendResult = msgSender.sendMessage(memberDO, topic.getTopic(), topic.getTags(), new LocalTransactionExecuter() {
+			@Override
+			public LocalTransactionState executeLocalTransactionBranch(Message msg, Object arg) {
+				Boolean dbResult = transactionTemplate.execute(new TransactionCallback<Boolean>() {
+					@Override
+					public Boolean doInTransaction(TransactionStatus status) {
+						try {
+							int count = memberDOMapper.update(memberDO);
+							if( count != 1){
+								status.setRollbackOnly(); 
+								return false;
+							}
+							return true;
+						} catch (Exception e) {
+							logger.error("db error!  memberDO={}", JSON.toJSONString(memberDO), e);
+							return false;
+						}
+						
+					}
+					
+				});
+				if( dbResult != null && dbResult ){
+					return LocalTransactionState.COMMIT_MESSAGE ;
+				}else{
+					return LocalTransactionState.ROLLBACK_MESSAGE ;
+				}
+			}
+		} );
+		if( sendResult == null || sendResult.getLocalTransactionState() != LocalTransactionState.COMMIT_MESSAGE ){
+			logger.error("send msg failed! topic={}, msg={},  result={}", topic, JSON.toJSONString(memberDO), JSON.toJSONString(sendResult));
+			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+		}else{
+			result.setValue(true);
+		}
+		return result ;
+	}
 	
 
 	public MemberDO update(MemberDO record){

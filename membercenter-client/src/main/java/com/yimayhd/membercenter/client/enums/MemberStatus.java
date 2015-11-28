@@ -2,7 +2,7 @@ package com.yimayhd.membercenter.client.enums;
 
 public enum MemberStatus {
 	ACTIVE(10, "可用的"),
-	Expired(20, "已过期")
+	EXPIRED(20, "已过期")
 	;
 	
 	private int status ;

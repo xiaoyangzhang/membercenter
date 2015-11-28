@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
+import com.mysql.fabric.xmlrpc.base.Member;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.MemberDO;
 import com.yimayhd.membercenter.client.domain.MemberDurationDO;
@@ -31,8 +32,8 @@ import com.yimayhd.membercenter.mapper.MemberFirehoseDOMapper;
 /**
  * Created by Administrator on 2015/11/21.
  */
-public class MemberManager {
 
+public class MemberManager {
     private final static Logger log = LoggerFactory.getLogger(MemberManager.class);
     @Autowired
     private MemberDao memberDao;
@@ -44,6 +45,14 @@ public class MemberManager {
 
     @Autowired
     private MemberFirehoseDOMapper memberFirehoseDOMapper;
+    
+    public MemResult<MemberDO> getMemberById(long id) {
+    	MemberDO memberDO = memberDao.selectById(id);
+    	MemResult<MemberDO> result = new MemResult<MemberDO>();
+    	result.setValue(memberDO);
+		return result;
+	}
+    
 
     /**
      * 完成会员购买,在数据库中创建或者更新会员记录
@@ -93,6 +102,13 @@ public class MemberManager {
 		}
 		return result;
 	}
+	
+	public MemResult<Boolean> overdueMember(long id) {
+		MemberDO memberDO = memberDao.selectById(id);
+		MemResult<Boolean> result = memberDao.overdueMember(memberDO);
+		return result ;
+	}
+	
 	
 
     public MemberDurationDO AddMemberDuration(MemberDurationDO memberDurationDO){

@@ -111,6 +111,7 @@ public class MemberManager {
 	
 	
 
+	@Deprecated
     public MemberDurationDO AddMemberDuration(MemberDurationDO memberDurationDO){
         if(memberDurationDO == null){
             return null;
@@ -122,7 +123,8 @@ public class MemberManager {
         }
         return memberDurationDO;
     }
-
+	
+	@Deprecated
     public MemberFirehoseDO AddMemberFirehose(MemberFirehoseDO memberFirehoseDO){
     	
         if(memberFirehoseDO == null){

@@ -4,95 +4,105 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class MemberDO implements Serializable {
-    private long id;
+	private long id;
 
-    private long userId;
+	private long userId;
 
-    private int type;
+	private int type;
 
-    private int status;
+	private String code;
 
-    private Date startTime;
+	private int status;
 
-    private Date endTime;
+	private Date startTime;
 
-    private long version;
+	private Date endTime;
 
-    private Date gmtCreated;
+	private long version;
 
-    private Date gmtModified;
+	private Date gmtCreated;
 
-    private static final long serialVersionUID = 1L;
+	private Date gmtModified;
 
-    public long getId() {
-        return id;
-    }
+	private static final long serialVersionUID = 1L;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public long getUserId() {
-        return userId;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
+	public long getUserId() {
+		return userId;
+	}
 
-    public int getType() {
-        return type;
-    }
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
 
-    public void setType(int type) {
-        this.type = type;
-    }
+	public int getType() {
+		return type;
+	}
 
-    public int getStatus() {
-        return status;
-    }
+	public void setType(int type) {
+		this.type = type;
+	}
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+	public int getStatus() {
+		return status;
+	}
 
-    public Date getStartTime() {
-        return startTime;
-    }
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
+	public Date getStartTime() {
+		return startTime;
+	}
 
-    public Date getEndTime() {
-        return endTime;
-    }
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
+	public Date getEndTime() {
+		return endTime;
+	}
 
-    public long getVersion() {
-        return version;
-    }
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
 
-    public void setVersion(long version) {
-        this.version = version;
-    }
+	public long getVersion() {
+		return version;
+	}
 
-    public Date getGmtCreated() {
-        return gmtCreated;
-    }
+	public void setVersion(long version) {
+		this.version = version;
+	}
 
-    public void setGmtCreated(Date gmtCreated) {
-        this.gmtCreated = gmtCreated;
-    }
+	public Date getGmtCreated() {
+		return gmtCreated;
+	}
 
-    public Date getGmtModified() {
-        return gmtModified;
-    }
+	public void setGmtCreated(Date gmtCreated) {
+		this.gmtCreated = gmtCreated;
+	}
 
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
-    }
+	public Date getGmtModified() {
+		return gmtModified;
+	}
+
+	public void setGmtModified(Date gmtModified) {
+		this.gmtModified = gmtModified;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 }

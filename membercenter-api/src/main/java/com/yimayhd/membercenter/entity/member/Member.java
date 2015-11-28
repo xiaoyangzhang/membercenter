@@ -1,7 +1,6 @@
 package com.yimayhd.membercenter.entity.member;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import net.pocrd.annotation.Description;
 
@@ -20,6 +19,9 @@ public class Member implements Serializable {
 
 	@Description("类型")
 	public String type;
+	
+	@Description("会员号")
+	public String code;
 
 	@Description("状态")
 	public String status;

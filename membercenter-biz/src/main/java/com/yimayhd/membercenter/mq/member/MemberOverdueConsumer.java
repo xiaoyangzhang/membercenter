@@ -15,9 +15,9 @@ import com.yimayhd.membercenter.client.result.MemResultSupport;
 import com.yimayhd.membercenter.mq.BaseConsumer;
 import com.yimayhd.membercenter.repo.UserMemberRepo;
 
-public class MemberTakeEffectConsumer extends BaseConsumer {
-	private static final Logger logger = LoggerFactory.getLogger("MemberTakeEffectConsumer") ;
-	private static final MemberTopic topic = MemberTopic.MEMBER_TAKE_EFFECT ;
+public class MemberOverdueConsumer extends BaseConsumer {
+	private static final Logger logger = LoggerFactory.getLogger("MemberOverdueConsumer") ;
+	private static final MemberTopic topic = MemberTopic.MEMBER_OVERDUE ;
 	@Autowired
 	private UserMemberRepo userMemberRepo ;
 	
@@ -40,10 +40,11 @@ public class MemberTakeEffectConsumer extends BaseConsumer {
 			return true;
 		}
 		MemberDO memberDO = (MemberDO) message ;
+
 		long userId = memberDO.getUserId() ;
-		MemResultSupport result = userMemberRepo.addVipflag(userId);
+		MemResultSupport result = userMemberRepo.removeVipFlag(userId);
 		if( result == null || !result.isSuccess() ){
-			logger.error(log+" flagVip4User failed!  userId={}, result={}", userId, JSON.toJSONString(result));
+			logger.error(log+" removeVipFlag failed!  userId={}, result={}", userId, JSON.toJSONString(result));
 			int code = result.getErrorCode() ;
 			if( MemberReturnCode.USER_NOT_FOUND.getCode() == code ){
 				return true;

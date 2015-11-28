@@ -45,7 +45,7 @@ public class MerchantServiceImpl implements MerchantService {
         userDO.setMobile(merchantVO.getMobile());
         com.yimayhd.user.client.result.BaseResult<UserDO> createUserResult = userService.createUserAndPutCache(userDO);
 
-        if (ApiReturnCode._C_SUCCESS != Integer.valueOf(createUserResult.getErrorCode())) {
+        if (ApiReturnCode._C_SUCCESS != createUserResult.getErrorCode() ) {
             LOGGER.info("invoke userService.createUserAndPutCache not success, merchantVO={}", merchantVO);
             return MemResult.buildFailResult(MemberReturnCode.USER_ERROR.getCode(), createUserResult.getResultMsg(), null);
         }

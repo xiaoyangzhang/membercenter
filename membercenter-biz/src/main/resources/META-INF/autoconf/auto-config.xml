@@ -11,20 +11,21 @@
     </group>
     <group name="activity">
     	<property name="app.name" defaultValue="activity" description="应用名称"/>
-        <property name="act.log.home" defaultValue="/home/admin/logs/activity" description="activity日志输出目录"/>
-        <property name="act.db.url"
+        <property name="log.home" defaultValue="/home/admin/logs/activity" description="activity日志输出目录"/>
+        <property name="db.url"
                   defaultValue="jdbc:mysql://192.168.1.91:3306/activity?useUnicode=true&amp;amp;characterset=utf-8"
                   description="activity数据库链接url"/>
-        <property name="act.db.username" defaultValue="root" description="数据库用户名"/>
-        <property name="act.db.password" defaultValue="test" description="数据库密码"/>
-        <property name="act.db.pool.minIdle" defaultValue="5" description="db最小空闲连接数"/>
-        <property name="act.db.pool.maxIdle" defaultValue="30" description="db最大空闲连接数"/>
-        <property name="act.db.pool.maxActive" defaultValue="100" description="db最大活跃连接数"/>
+        <property name="db.username" defaultValue="root" description="数据库用户名"/>
+        <property name="db.password" defaultValue="test" description="数据库密码"/>
+        <property name="db.pool.minIdle" defaultValue="5" description="db最小空闲连接数"/>
+        <property name="db.pool.maxIdle" defaultValue="30" description="db最大空闲连接数"/>
+        <property name="db.pool.maxActive" defaultValue="100" description="db最大活跃连接数"/>
         
         <property name="redis.pool" defaultValue="rd01.mythicflora.com" description="redis配置"/>
     </group>
     <group name="mq">
         <property name="rocketmq.server.name" defaultValue="192.168.1.206:9876" description="rocketmq的注册中心地址"/>
+        <property name="member.consume.member.group" value="member_consumer_member_group"></property>
     </group>
     
     <script>

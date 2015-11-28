@@ -1,14 +1,12 @@
 package com.yimayhd.membercenter.client.result;
 
-import com.yimayhd.user.client.result.ResultSupport;
-
 import java.util.List;
 
 /**
  * Created by 海浩 on 2015/3/29.
  *
  */
-public class BasePageResult<T> extends ResultSupport {
+public class BasePageResult<T> extends MemResultSupport {
     private static final long serialVersionUID = 7378807577314788084L;
     protected int pageNo = 1;
     protected int pageSize;

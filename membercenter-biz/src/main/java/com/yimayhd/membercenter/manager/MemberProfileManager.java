@@ -1,6 +1,7 @@
 package com.yimayhd.membercenter.manager;
 
 import com.alibaba.common.lang.StringUtil;
+import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.MemberProfileDO;
 import com.yimayhd.membercenter.client.domain.TerminalDeviceDO;
 import com.yimayhd.membercenter.client.domain.UserAbilityRelationDO;
@@ -15,6 +16,7 @@ import com.yimayhd.membercenter.repo.UserRepo;
 
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.enums.ErrorCode;
+import com.yimayhd.user.errorcode.UserServiceHttpCode;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,7 +88,7 @@ public class MemberProfileManager {
             }
         } catch (Exception e) {
             LOGGER.error("userPageQuery " + userPageQuery.toString(), e);
-            basePageResult.setErrorCode(ErrorCode.READ_DB_ERROR);
+            basePageResult.setReturnCode(MemberReturnCode.DB_READ_FAILED);
         }
 
         return basePageResult;

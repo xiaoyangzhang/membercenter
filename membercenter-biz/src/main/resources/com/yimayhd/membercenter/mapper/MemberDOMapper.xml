@@ -9,11 +9,12 @@
     <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
     <result column="version" property="version" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, user_id, type, status, start_time, end_time, version, gmt_created, gmt_modified
+    id, user_id, type, status, code, start_time, end_time, version, gmt_created, gmt_modified
   </sql>
   <select id="selectById" resultMap="BaseResultMap" parameterType="long" >
     select 

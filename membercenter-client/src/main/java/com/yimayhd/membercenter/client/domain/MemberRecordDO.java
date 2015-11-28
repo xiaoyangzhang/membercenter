@@ -16,7 +16,7 @@ public class MemberRecordDO implements Serializable {
 
     private int outerType;
 
-    private Long version;
+    private long version;
 
     private Date gmtCreated;
 
@@ -72,11 +72,11 @@ public class MemberRecordDO implements Serializable {
         this.outerType = outerType;
     }
 
-    public Long getVersion() {
+    public long getVersion() {
         return version;
     }
 
-    public void setVersion(Long version) {
+    public void setVersion(long version) {
         this.version = version;
     }
 

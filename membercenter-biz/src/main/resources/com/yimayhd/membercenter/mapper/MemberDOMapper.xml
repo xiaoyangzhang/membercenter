@@ -21,6 +21,12 @@
     from member
     where id = #{id}
   </select>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="long" >
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where user_id = #{userId}
+  </select>
   <delete id="deleteById" parameterType="long" >
     delete from member
     where id = #{id}

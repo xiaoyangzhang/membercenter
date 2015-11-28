@@ -9,7 +9,7 @@ import com.yimayhd.membercenter.entity.*;
 import com.yimayhd.user.client.domain.UserDO;
 
 import com.yimayhd.user.client.enums.AbilityEnum;
-import com.yimayhd.user.entity.UserInfo;
+
 import org.springframework.util.CollectionUtils;
 
 
@@ -143,6 +143,8 @@ public class TravelKaConverter {
             t.provinceCode = userDO.getProvinceCode();
             t.cityCode = userDO.getCityCode();
             t.age = getAge(userDO.getBirthday());
+            t.province = userDO.getProvince();
+            t.city = userDO.getCity();
             travelKaItems.add(t);
         }
         infoList.travelKaItemPageInfoList = travelKaItems;

@@ -50,16 +50,28 @@ public class MemberReturnCode  extends AbstractReturnCode {
 	/**************************************ORDER********************************************/
 	public static final int BIZ_ORDER_NOT_FOUND_C = 16001000;
 	public static final MemberReturnCode BIZ_ORDER_NOT_FOUND = new MemberReturnCode(BIZ_ORDER_NOT_FOUND_C, "订单未找到") ;
-
-
-	public static final int USER_ERROR_C = 16000100;
+	
+	
+	
+	/**************************************user********************************************/
+	public static final int USER_NOT_FOUND_C = 16002001;
+	public static final MemberReturnCode USER_NOT_FOUND = new MemberReturnCode(USER_NOT_FOUND_C, "用户未找到") ;
+	
+	public static final int USER_ERROR_C = 16002002;
 	public static final MemberReturnCode USER_ERROR = new MemberReturnCode(USER_ERROR_C, "用户错误") ;
+	
+
+	
+	/**************************************特权********************************************/
+	public static final int UPTATE_PRIVILEGE_STATUS_ERROR_C = 16003004;
+	public static final MemberReturnCode UPTATE_PRIVILEGE_STATUS_ERROR = new MemberReturnCode(UPTATE_PRIVILEGE_STATUS_ERROR_C,"更新特权状态失败");
+	
 
 
-	public static final int MERCHANT_NOT_FOUND_ERROR_C = 16010000;
+
+	/**************************************merchant********************************************/
+	public static final int MERCHANT_NOT_FOUND_ERROR_C = 160004000;
 	public static final MemberReturnCode MERCHANT_NOT_FOUND_ERROR = new MemberReturnCode(MERCHANT_NOT_FOUND_ERROR_C, "商家不存在") ;
-	
-	
 	
 	
 }

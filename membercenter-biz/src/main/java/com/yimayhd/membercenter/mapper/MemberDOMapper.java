@@ -10,4 +10,6 @@ public interface MemberDOMapper {
 	MemberDO selectById(long id);
 
 	int update(MemberDO record);
+	
+	public MemberDO selectByUserId(long userId);
 }

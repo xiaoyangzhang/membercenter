@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yimayhd.membercenter.mapper.TerminalDeviceDOMapper" >
+  <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.TerminalDeviceDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="device_code" property="deviceCode" jdbcType="VARCHAR" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, device_code, seller_id, gmt_created, gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="long" >
+    select 
+    <include refid="Base_Column_List" />
+    from terminal_device
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getByDeviceCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from terminal_device
+    where device_code = #{device_code,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="long" >
+    delete from terminal_device
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.TerminalDeviceDO" useGeneratedKeys="true" keyProperty="id" >
+    insert into terminal_device (device_code, seller_id, gmt_created, 
+      gmt_modified)
+    values (#{deviceCode,jdbcType=VARCHAR}, #{sellerId,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.yimayhd.user.client.domain.TerminalDeviceDO" >
+    update terminal_device
+    set device_code = #{deviceCode,jdbcType=VARCHAR},
+      seller_id = #{sellerId,jdbcType=BIGINT},
+      gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

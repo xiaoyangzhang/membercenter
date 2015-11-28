@@ -1,17 +1,21 @@
 package com.yimayhd.membercenter.manager;
 
+import com.alibaba.common.lang.StringUtil;
 import com.yimayhd.membercenter.client.domain.MemberProfileDO;
+import com.yimayhd.membercenter.client.domain.TerminalDeviceDO;
 import com.yimayhd.membercenter.client.domain.UserAbilityRelationDO;
 import com.yimayhd.membercenter.client.query.TravelkaPageQuery;
+import com.yimayhd.membercenter.client.result.BasePageResult;
 import com.yimayhd.membercenter.mapper.MemberProfileDOMapper;
 
+import com.yimayhd.membercenter.mapper.TerminalDeviceDOMapper;
 import com.yimayhd.membercenter.mapper.UserAbilityRelationMapper;
 
 import com.yimayhd.membercenter.repo.UserRepo;
 
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.enums.ErrorCode;
-import com.yimayhd.user.client.result.BasePageResult;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +30,16 @@ public class MemberProfileManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MemberProfileManager.class);
 
-//    @Autowired
-//    private TravelKaDOMapper travelKaDOMapper;
+
 
     @Autowired
     private MemberProfileDOMapper memberProfileDOMapper;
 
     @Autowired
     private UserAbilityRelationMapper userAbilityRelationMapper;
+
+    @Autowired
+    private TerminalDeviceDOMapper terminalDeviceDOMapper;
 
     @Autowired
     private UserRepo userRepo;   // 用户相关接口
@@ -86,15 +92,20 @@ public class MemberProfileManager {
         return basePageResult;
     }
 
+    public TerminalDeviceDO getDeviceByCode(String deviceCode) {
+        if (StringUtil.isBlank(deviceCode)) {
+            return null;
+        }
+        TerminalDeviceDO terminalDeviceDO = null;
+        try {
+            terminalDeviceDO = terminalDeviceDOMapper.getByDeviceCode(deviceCode);
+        } catch (Exception e) {
+            LOGGER.error("terminalDeviceDOMapper.getByDeviceCode(deviceCode); exception ,",e);
+        }
+        return terminalDeviceDO;
+    }
 
 
-//    public TravelKaDO getTravelKaDetail(long id) {
-//        return travelKaDOMapper.getById(id);
-//    }
-
-//    public TravelKaDO getTravelKaDetailByUserId(long userId){
-//        return travelKaDOMapper.getByUserId(userId);
-//    }
 
 
 }

@@ -4,6 +4,7 @@ import com.yimayhd.membercenter.api.TravelKaApi;
 import com.yimayhd.membercenter.client.domain.MemberProfileDO;
 import com.yimayhd.membercenter.client.domain.UserAbilityRelationDO;
 import com.yimayhd.membercenter.client.query.TravelkaPageQuery;
+import com.yimayhd.membercenter.client.result.BasePageResult;
 import com.yimayhd.membercenter.conventer.TravelKaConverter;
 import com.yimayhd.membercenter.entity.PageInfo;
 import com.yimayhd.membercenter.entity.TravelKa;
@@ -13,7 +14,8 @@ import com.yimayhd.membercenter.manager.MemberProfileManager;
 
 
 import com.yimayhd.user.client.domain.UserDO;
-import com.yimayhd.user.client.result.BasePageResult;
+import com.yimayhd.user.client.enums.BaseStatus;
+
 import net.pocrd.annotation.ApiAutowired;
 import net.pocrd.annotation.ApiParameter;
 import net.pocrd.annotation.HttpApi;
@@ -59,9 +61,11 @@ public class TravelKaApiImpl implements TravelKaApi {
                 List<UserAbilityRelationDO> userAbilityRelationDOs =  memberProfileManager.getUserAbilityRelationByUserId(theUserId);
                 //4. 组装数据
                 travelKa = TravelKaConverter.converntTravelKaDetail(userAbilityRelationDOs, memberProfileDO, userDO);
+                travelKa.isTravelKa = String.valueOf(BaseStatus.YES.getType());
             } else {
                 // 只返回用户信息即可
                 TravelKaConverter.converntTravelKaDetail4UserInfo(userDO);
+                travelKa.isTravelKa = String.valueOf(BaseStatus.NO.getType());
             }
         }catch (Exception e){
             DubboExtProperty.setErrorCode(TravelKaApiCode.INTERNAL_SERVER_ERROR);

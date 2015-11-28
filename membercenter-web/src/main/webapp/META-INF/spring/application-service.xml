@@ -9,9 +9,11 @@
 
 	<!-- ==========================  api  ========================== -->
 	<bean id="travelKaApi" class="com.yimayhd.membercenter.service.merchant.impl.service.api.travelka.TravelKaApiImpl"/>
+	<bean id="privilegeApi" class="com.yimayhd.membercenter.service.api.PrivilegeApiImpl"/>
 
 	<!--  ==========================  dubbo  ==========================  -->
 	<bean id="merchantServiceImpl" class="com.yimayhd.membercenter.service.merchant.impl.MerchantServiceImpl"></bean>
 
 
+	<bean id="memberPrivilegeServiceImpl" class="com.yimayhd.membercenter.service.impl.MemberPrivilegeServiceImpl"></bean>
 </beans>

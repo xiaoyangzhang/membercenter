@@ -11,3 +11,7 @@
 *.iml
 .idea
 /.idea
+/membercenter-api/.settings
+/membercenter-api/*.classpath
+/membercenter-api/*.project
+/membercenter-web/target

@@ -45,4 +45,11 @@
       gmt_modified = #{gmtModified}
     where id = #{id} and version = #{version}
   </update>
+  
+  <select id="getMemberRecordByOutInfo" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from member_record
+    where  outer_id = #{outerId} and  outer_type = #{outerType}
+  </select>
 </mapper>

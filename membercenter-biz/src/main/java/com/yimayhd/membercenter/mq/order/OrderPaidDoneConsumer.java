@@ -8,19 +8,26 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
+import com.yimayhd.membercenter.client.dto.MemberBuyDTO;
+import com.yimayhd.membercenter.client.enums.MemberRecordOutType;
 import com.yimayhd.membercenter.client.result.MemResult;
+import com.yimayhd.membercenter.manager.MemberManager;
 import com.yimayhd.membercenter.mq.BaseConsumer;
 import com.yimayhd.membercenter.repo.TcOrderRepo;
 import com.yimayhd.tradecenter.client.model.domain.order.BizOrderDO;
 import com.yimayhd.tradecenter.client.model.enums.PayStatus;
 import com.yimayhd.tradecenter.client.model.result.order.metaq.OrderInfoTO;
 import com.yimayhd.tradecenter.client.model.topic.OrderTopic;
+import com.yimayhd.tradecenter.util.BizOrderUtil;
 
 public class OrderPaidDoneConsumer extends BaseConsumer {
 	private static final Logger logger = LoggerFactory.getLogger("OrderPaidDoneConsumer") ;
 	private static final OrderTopic topic = OrderTopic.ORDER_PAID_DONE ;
+	
 	@Autowired
 	private TcOrderRepo orderRepo ;
+	@Autowired
+	private MemberManager memberManager;
 	
 	@Override
 	public String getTopic() {
@@ -57,10 +64,23 @@ public class OrderPaidDoneConsumer extends BaseConsumer {
 			return false;
 		}
 		
+		//FIMXE
+		int period = 365 ;
+//		BizOrderUtil.getMemberRechargeDa
 		
+		MemberBuyDTO memberBuyDTO = new MemberBuyDTO();
+		memberBuyDTO.setBuyerId(orderDO.getBuyerId());
+		memberBuyDTO.setOuterId(String.valueOf(orderDO.getBizOrderId()));
+		memberBuyDTO.setOuterType(MemberRecordOutType.BUY.getType());
+		memberBuyDTO.setPeriod(period);
+		memberBuyDTO.setSellerId(orderDO.getSellerId());
 		
-		
-		return false;
+		MemResult<Boolean> result = memberManager.finishMemberPay(memberBuyDTO);
+		if( result == null || !result.isSuccess() || result.getValue() == null || !result.getValue() ){
+			logger.error(log+"  finishMemberPay failed!  MemberBuyDTO={}, Result={}", JSON.toJSONString(memberBuyDTO), JSON.toJSONString(result));
+			return false;
+		}
+		return true ;
 	}
 
 }

@@ -121,8 +121,6 @@
 			<artifactId>tradecenter-client</artifactId>
 		</dependency>
 
-
-
 		<dependency>
 			<groupId>com.yimayhd.membercenter</groupId>
 			<artifactId>membercenter-client</artifactId>

@@ -72,20 +72,8 @@ public class MerchantServiceImpl implements MerchantService {
     }
 
     @Override
-    public MemResult<String> getTwoDimensionCode(MerchantVO merchantVO) {
-        LOGGER.info("getTwoDimensionCode for merchantVO={}", merchantVO);
-
-
-        return null;
-    }
-
-    @Override
     public MemResult<UserDO> findUserByOpenIdAndMerchant(MerchantVO merchantVO) {
-        return null;
-    }
-
-    @Override
-    public MemResult<UserDO> findUserByTwoDimensionCode(String twoDimensionCode) {
+        LOGGER.info("findUserByOpenIdAndMerchant merchantVO = {}", merchantVO);
         return null;
     }
 

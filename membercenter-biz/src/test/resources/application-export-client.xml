@@ -6,7 +6,7 @@
        default-lazy-init="true">
 
        <bean id="merchantServiceExport" class="com.alibaba.dubbo.config.spring.ServiceBean">
-              <property name="interface" value="com.yimayhd.membercenter.client.service.merchant.MerchantService"/>
+              <property name="interface" value="com.yimayhd.membercenter.client.service.MerchantService"/>
               <property name="ref" ref="merchantService"/>
               <property name="application" ref="dubboApplicationConfig"/>
               <property name="registry" ref="dubboRegistryConfig"/>
@@ -16,7 +16,7 @@
               <property name="retries" value="${dubbo.retries}"/>
        </bean>
        <bean id="memberServiceExport" class="com.alibaba.dubbo.config.spring.ServiceBean">
-              <property name="interface" value="com.yimayhd.membercenter.client.service.member.MemberService"/>
+              <property name="interface" value="com.yimayhd.membercenter.client.service.MemberService"/>
               <property name="ref" ref="memberService"/>
               <property name="application" ref="dubboApplicationConfig"/>
               <property name="registry" ref="dubboRegistryConfig"/>

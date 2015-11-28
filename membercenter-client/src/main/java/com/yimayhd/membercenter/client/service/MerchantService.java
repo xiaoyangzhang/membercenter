@@ -1,4 +1,4 @@
-package com.yimayhd.membercenter.client.service.merchant;
+package com.yimayhd.membercenter.client.service;
 
 
 import com.yimayhd.membercenter.client.result.MemResult;

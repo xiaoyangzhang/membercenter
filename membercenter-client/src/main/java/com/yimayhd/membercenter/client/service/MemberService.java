@@ -1,4 +1,4 @@
-package com.yimayhd.membercenter.client.service.member;
+package com.yimayhd.membercenter.client.service;
 
 import com.yimayhd.membercenter.client.domain.MemberDO;
 import com.yimayhd.membercenter.client.result.MemResult;

@@ -1,4 +1,4 @@
-package com.yimayhd.membercenter.client.service.privilege;
+package com.yimayhd.membercenter.client.service;
 
 import java.util.List;
 

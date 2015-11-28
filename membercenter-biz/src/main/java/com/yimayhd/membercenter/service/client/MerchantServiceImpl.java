@@ -1,11 +1,11 @@
-package com.yimayhd.membercenter.service.merchant;
+package com.yimayhd.membercenter.service.client;
 
 
 import com.yimayhd.membercenter.client.domain.BaseMerchantDO;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO;
 import com.yimayhd.membercenter.client.result.MemResult;
-import com.yimayhd.membercenter.client.service.merchant.MerchantService;
+import com.yimayhd.membercenter.client.service.MerchantService;
 import com.yimayhd.membercenter.client.vo.MerchantPageQueryVO;
 import com.yimayhd.membercenter.client.vo.MerchantVO;
 import com.yimayhd.membercenter.manager.MerchantServiceManager;

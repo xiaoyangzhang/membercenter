@@ -1,4 +1,4 @@
-package com.yimayhd.membercenter.service.impl;
+package com.yimayhd.membercenter.service.client;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.MemberPrivilegeDO;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
-import com.yimayhd.membercenter.client.service.privilege.MemberPrivilegeService;
+import com.yimayhd.membercenter.client.service.MemberPrivilegeService;
 import com.yimayhd.membercenter.dto.PrivilegeBatchUpdateDTO;
 import com.yimayhd.membercenter.manager.MemberPrivilegeManager;
 import com.yimayhd.membercenter.query.MemPrivilegePageQuery;

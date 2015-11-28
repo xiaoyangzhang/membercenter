@@ -12,9 +12,10 @@
 	<bean id="privilegeApi" class="com.yimayhd.membercenter.service.api.PrivilegeApiImpl"/>
 
 	<!--  ==========================  dubbo  ==========================  -->
-	<bean id="merchantService" class="com.yimayhd.membercenter.service.merchant.MerchantServiceImpl"></bean>
+	<bean id="merchantService" class="com.yimayhd.membercenter.service.client.MerchantServiceImpl"></bean>
+	<bean id="memberService" class="com.yimayhd.membercenter.service.client.MemberServiceImpl"></bean>
 
 
-	<bean id="memberPrivilegeService" class="com.yimayhd.membercenter.service.impl.MemberPrivilegeServiceImpl"></bean>
+	<bean id="memberPrivilegeService" class="com.yimayhd.membercenter.service.client.MemberPrivilegeServiceImpl"></bean>
 	
 </beans>

@@ -8,10 +8,11 @@
 	<context:annotation-config />
 
 	<!-- ==========================  api  ========================== -->
-	<bean id="travelKaApi" class="com.yimayhd.membercenter.service.merchant.impl.service.api.travelka.TravelKaApiImpl"/>
+	<bean id="travelKaApi" class="com.yimayhd.membercenter.service.api.TravelKaApiImpl"/>
 
 	<!--  ==========================  dubbo  ==========================  -->
-	<bean id="merchantServiceImpl" class="com.yimayhd.membercenter.service.merchant.impl.MerchantServiceImpl"></bean>
+	<bean id="merchantService" class="com.yimayhd.membercenter.service.merchant.MerchantServiceImpl"></bean>
+	<bean id="memberService" class="com.yimayhd.membercenter.service.member.MemberServiceImpl"></bean>
 
 
 </beans>

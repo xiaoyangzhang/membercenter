@@ -36,10 +36,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.yimayhd.membercenter</groupId>
-			<artifactId>membercenter-api</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 		</dependency>
@@ -125,8 +121,6 @@
 			<artifactId>tradecenter-client</artifactId>
 		</dependency>
 
-
-
 		<dependency>
 			<groupId>com.yimayhd.membercenter</groupId>
 			<artifactId>membercenter-client</artifactId>
@@ -135,11 +129,6 @@
 		<dependency>
 			<groupId>com.yimayhd.membercenter</groupId>
 			<artifactId>membercenter-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.alibaba.toolkit.common.lang</groupId>
-			<artifactId>lang</artifactId>
 		</dependency>
 
 	</dependencies>

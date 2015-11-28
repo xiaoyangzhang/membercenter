@@ -3,11 +3,12 @@ package com.yimayhd.membercenter.service.merchant.impl;
 
 import com.yimayhd.membercenter.client.domain.BaseMerchantDO;
 import com.yimayhd.membercenter.MemberReturnCode;
+import com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.merchant.MerchantService;
 import com.yimayhd.membercenter.client.vo.MerchantPageQueryVO;
 import com.yimayhd.membercenter.client.vo.MerchantVO;
-import com.yimayhd.membercenter.manager.service.MerchantServiceManager;
+import com.yimayhd.membercenter.manager.MerchantServiceManager;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.service.UserService;
 import net.pocrd.entity.ApiReturnCode;
@@ -33,11 +34,10 @@ public class MerchantServiceImpl implements MerchantService {
 
     @Override
     public MemResult<UserDO> registerUser(MerchantVO merchantVO) {
-    	MemResult<UserDO> result = new MemResult<UserDO>() ;
         LOGGER.info("rigisterUser merchantVO= {}", merchantVO);
 
         if (checkParam(merchantVO)) {
-            result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+            LOGGER.error("parameter is not valid ,parameter={}", merchantVO);
             return MemResult.buildFailResult(MemberReturnCode.PARAMTER_ERROR.getCode(), MemberReturnCode.PARAMTER_ERROR.getDesc(), null) ;
         }
 
@@ -46,22 +46,36 @@ public class MerchantServiceImpl implements MerchantService {
         com.yimayhd.user.client.result.BaseResult<UserDO> createUserResult = userService.createUserAndPutCache(userDO);
 
         if (ApiReturnCode._C_SUCCESS != Integer.valueOf(createUserResult.getErrorCode())) {
-//            return MemResult.buildFailResult(createUserResult.getErrorCode(), createUserResult.getResultMsg(), null);
-        	//FIXME 侯冬辉 不要 返回其他系统的errorcode和errorMsg，每个系统应该只返回自己的error信息，
-            return result ;
+            LOGGER.info("invoke userService.createUserAndPutCache not success, merchantVO={}", merchantVO);
+            return MemResult.buildFailResult(MemberReturnCode.USER_ERROR.getCode(), createUserResult.getResultMsg(), null);
         }
 
         UserDO createUserDO = createUserResult.getValue();
         LOGGER.info("createUserDO.getId={}", createUserDO.getId());
 
         BaseMerchantDO baseMerchantDO = merchantServiceManager.findBaseMerchantDOById(merchantVO.getMerchantId());
+        if (null == baseMerchantDO) {
+            LOGGER.info("merchant not found by merchantVO={}", merchantVO);
+            return MemResult.buildFailResult(MemberReturnCode.MERCHANT_NOT_FOUND_ERROR.getCode(),
+                    MemberReturnCode.MERCHANT_NOT_FOUND_ERROR.getDesc(), null);
+        }
 
-        
-        return null;
+        WxUserMerchantRelationDO wxUserMerchantRelationDO = new WxUserMerchantRelationDO();
+        wxUserMerchantRelationDO.setOpenId(merchantVO.getOpenId());
+        wxUserMerchantRelationDO.setMerchantId(merchantVO.getMerchantId());
+        wxUserMerchantRelationDO.setUserId(createUserDO.getId());
+
+        Long id = merchantServiceManager.saveUserMerchantRelation(wxUserMerchantRelationDO);
+        LOGGER.info("saved wxUserMerchantRelationDO={} id = {}", wxUserMerchantRelationDO, id);
+
+        return MemResult.buildSuccessResult(createUserDO);
     }
 
     @Override
     public MemResult<String> getTwoDimensionCode(MerchantVO merchantVO) {
+        LOGGER.info("getTwoDimensionCode for merchantVO={}", merchantVO);
+
+
         return null;
     }
 

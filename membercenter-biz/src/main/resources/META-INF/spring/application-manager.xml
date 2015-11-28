@@ -6,5 +6,10 @@
            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	<context:annotation-config />
 
-	<bean class="com.yimayhd.membercenter.manager.service.impl.MerchantServiceManagerImpl"></bean>
+	<bean class="com.yimayhd.membercenter.manager.MerchantServiceManager"></bean>
+
+	<bean id="memberProfileManager" class="com.yimayhd.membercenter.manager.MemberProfileManager"/>
+	
+	<bean class="com.yimayhd.membercenter.manager.MemberPrivilegeManager"></bean>
+	<bean class="com.yimayhd.membercenter.dao.MemberPrivilegeDao"></bean>
 </beans>

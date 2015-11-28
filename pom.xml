@@ -52,6 +52,13 @@
 				<artifactId>membercenter-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
+			<dependency>
+				<groupId>com.yimayhd.membercenter</groupId>
+				<artifactId>membercenter-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>com.yimayhd.api</groupId>
 				<artifactId>api-util</artifactId>
@@ -101,6 +108,12 @@
 				<groupId>com.yimayhd.idgen</groupId>
 				<artifactId>idgen-api</artifactId>
 				<version>${idgenapi_version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.alibaba.toolkit.common.lang</groupId>
+				<artifactId>lang</artifactId>
+				<version>1.0</version>
 			</dependency>
 
 			<dependency>

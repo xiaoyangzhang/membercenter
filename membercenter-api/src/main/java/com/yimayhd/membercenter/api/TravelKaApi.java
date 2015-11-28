@@ -14,7 +14,7 @@ import net.pocrd.define.SecurityType;
 /**
  * Created by Administrator on 2015/11/14.
  */
-@ApiGroup(name = "membercenter", minCode = 16000000, maxCode = 17000000, codeDefine = com.yimayhd.membercenter.api.TravelKaApi.class, owner = "侯冬辉")
+@ApiGroup(name = "membercenter", minCode = 16000000, maxCode = 17000000, codeDefine = TravelKaApi.class, owner = "侯冬辉")
 public interface TravelKaApi {
 
     @HttpApi(name = "membercenter.getTravelKaDetail", desc = "查询旅游咖信息", security = SecurityType.None, owner = "侯冬辉")
@@ -36,7 +36,8 @@ public interface TravelKaApi {
             @ApiAutowired(CommonParameter.deviceId) long deviceId,
             @ApiAutowired(CommonParameter.userId) long userId,
             @ApiAutowired(CommonParameter.versionCode) int versionCode,
-            @ApiParameter(required = true, name = "pageInfo", desc = "分页信息") PageInfo pageInfo
+            @ApiParameter(required = true, name = "pageInfo", desc = "分页信息") PageInfo pageInfo,
+            @ApiParameter(required = true, name = "type", desc = "列表分类，人气：POPULARITY，新晋：NEWJOIN") String type
     );
 
 }

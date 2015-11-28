@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+       default-lazy-init="true">
+    <!-- 方式一 -->
+   <!--  <dubbo:application name="tradecenter"/>
+    <dubbo:reference id="mallAddressService" interface="com.pajk.tradecenter.client.service.personalcenter.MallAddressService" url="dubbo://127.0.0.1:20880" version="1.0.0.daily"/> -->
+    
+    <!-- 方式二 -->
+    <bean id="dubboApplicationConfig" class="com.alibaba.dubbo.config.ApplicationConfig">
+        <property name="name" value="test-client"/>
+    </bean>
+    <bean id="dubboRegistryConfig" class="com.alibaba.dubbo.config.RegistryConfig">
+        <!--<property name="address" value="10.0.128.129:2181"/> -->
+        <property name="address" value="192.168.1.202:2181"/>
+        <property name="protocol" value="zookeeper" />
+    </bean>
+    <bean id="dubboProtocolConfig" class="com.alibaba.dubbo.config.ProtocolConfig">
+        <property name="port" value="-1"/>
+    </bean>
+    <!--<bean id="silverService" class="com.alibaba.dubbo.config.spring.ReferenceBean">-->
+        <!--<property name="interface" value="com.smart.silver.service.SilverService"/>-->
+        <!--<property name="application" ref="dubboApplicationConfig"/>-->
+        <!--<property name="registry" ref="dubboRegistryConfig"/>-->
+        <!--<property name="version" value="LATEST"/>-->
+    <!--</bean>-->
+    <dubbo:reference
+            id="snsApi"
+            interface="com.yimayhd.snscenter.api.SnsApi"
+            url="dubbo://127.0.0.1:20880"
+            version="1.0.0.test" />
+    <!-- 
+    <bean id="userService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+        <property name="interface" value="com.pajk.user.api.UserService"/>
+        <property name="application" ref="dubboApplicationConfig"/>
+        <property name="registry" ref="dubboRegistryConfig"/>
+        <property name="version" value="LATEST"/>
+    </bean>
+
+    <bean id="creditTradeService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+        <property name="interface" value="CreditTradeService"/>
+        <property name="application" ref="dubboApplicationConfig"/>
+        <property name="registry" ref="dubboRegistryConfig"/>
+        <property name="version" value="LATEST"/>
+    </bean>
+
+    <bean id="creditRuleService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+        <property name="interface" value="CreditRuleService"/>
+        <property name="application" ref="dubboApplicationConfig"/>
+        <property name="registry" ref="dubboRegistryConfig"/>
+        <property name="version" value="LATEST"/>
+    </bean>
+    <bean id="creditUserImportService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+        <property name="interface" value="CreditUserImportService"/>
+        <property name="application" ref="dubboApplicationConfig"/>
+        <property name="registry" ref="dubboRegistryConfig"/>
+        <property name="version" value="DEVELOP"/>
+    </bean>
+    
+    
+    <bean id="mqMsgIdPool" class="IdPoolImpl">
+        <constructor-arg name="configDomain" value="tc_biz_order"/>
+        <constructor-arg name="configKey" value="tc_mq_msg"/>
+        <constructor-arg name="allocCount" value="20"/>
+        <constructor-arg name="generator" ref="globalIdGenerator"/>
+    </bean>
+     -->
+   <!-- <bean id="tcServeExecuteService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+        <property name="interface" value="com.smart.tradecenter.client.service.serve.TcServeExecuteService"/>
+        <property name="application" ref="dubboApplicationConfig"/>
+        <property name="registry" ref="dubboRegistryConfig"/>
+        <property name="retries" value="0"/>
+        <property name="version" value="MEM-TEST"/>
+    </bean>
+    <bean id="tcServiceOrderService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+        <property name="interface" value="com.smart.tradecenter.client.service.trade.TcServiceOrderService"/>
+        <property name="application" ref="dubboApplicationConfig"/>
+        <property name="registry" ref="dubboRegistryConfig"/>
+        <property name="retries" value="0"/>
+        <property name="version" value="MEM-TEST"/>
+    </bean>
+    <bean id="tcTradeService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+        <property name="interface" value="com.smart.tradecenter.client.service.trade.TcTradeService"/>
+        <property name="application" ref="dubboApplicationConfig"/>
+        <property name="registry" ref="dubboRegistryConfig"/>
+        <property name="version" value="MEM-TEST"/>
+    </bean> -->
+    <!--
+    <bean id="itemQueryService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+        <property name="interface" value="com.pajk.ic.api.service.item.ItemQueryService"/>
+        <property name="application" ref="dubboApplicationConfig"/>
+        <property name="registry" ref="dubboRegistryConfig"/>
+        <property name="version" value="INTEGRATION"/>
+    </bean>
+    <bean id="tcQueryService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+        <property name="interface" value="TcQueryService"/>
+        <property name="application" ref="dubboApplicationConfig"/>
+        <property name="registry" ref="dubboRegistryConfig"/>
+        <property name="version" value="INTEGRATION"/>
+    </bean>
+    <bean id="tcTradeService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+        <property name="interface" value="TcTradeService"/>
+        <property name="application" ref="dubboApplicationConfig"/>
+        <property name="registry" ref="dubboRegistryConfig"/>
+        <property name="version" value="INTEGRATION"/>
+    </bean>
+    <bean id="cardSecretQueryService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+        <property name="interface" value="com.pajk.ic.api.service.item.cards.CardSecretQueryService"/>
+        <property name="application" ref="dubboApplicationConfig"/>
+        <property name="registry" ref="dubboRegistryConfig"/>
+        <property name="version" value="INTEGRATION"/>
+    </bean>
+     -->
+</beans>

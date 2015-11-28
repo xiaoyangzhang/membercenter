@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yimayhd.membercenter.mapper.MemberPrivilegeDOMapper" >
+  <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.MemberPrivilegeDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="image_show_url" property="imageShowUrl" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="domain_id" property="domainId" jdbcType="BIGINT" />
+    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, image_url, image_show_url, description, status, domain_id, gmt_created, gmt_modified
+  </sql>
+  
+  <sql id="querySqlString" >
+    <where>
+      <if test="title != null">
+        title LIKE CONCAT(CONCAT('%', #{title}), '%')
+      </if>
+      <if test="status != 0">
+        and status = #{status}
+      </if>
+    </where>
+  </sql>
+  
+  
+   <select id="pageQuery" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.query.MemPrivilegePageQuery" >
+    select 
+    <include refid="Base_Column_List" />
+    from member_privilege
+    <include refid="querySqlString" />
+    
+    order by gmt_created desc
+    limit #{startRow},#{pageSize}
+  </select>
+   <select id="queryCount" resultType="java.lang.Integer" parameterType="com.yimayhd.membercenter.query.MemPrivilegePageQuery" >
+    select 
+   	count(1)
+    from member_privilege
+    <include refid="querySqlString" />
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from member_privilege
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from member_privilege
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.MemberPrivilegeDO" >
+    insert into member_privilege (id, title, image_url, 
+      image_show_url, description, status, domain_id,
+      gmt_created, gmt_modified)
+    values (
+    #{id,jdbcType=BIGINT}, 
+    #{title,jdbcType=VARCHAR}, 
+    #{imageUrl,jdbcType=VARCHAR}, 
+    #{imageShowUrl,jdbcType=VARCHAR}, 
+    #{description,jdbcType=VARCHAR}, 
+    #{status,jdbcType=INTEGER}, 
+    #{domainId,jdbcType=BIGINT},
+    #{gmtCreated,jdbcType=TIMESTAMP}, 
+    #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.yimayhd.membercenter.client.domain.MemberPrivilegeDO" >
+    update member_privilege
+    set title = #{title,jdbcType=VARCHAR},
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      image_show_url = #{imageShowUrl,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      domain_id = #{domainId,jdbcType=INTEGER},
+      gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+   <update id="updateStatus" parameterType="com.yimayhd.membercenter.client.domain.MemberPrivilegeDO" >
+    update member_privilege
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -2,7 +2,7 @@ package com.yimayhd.membercenter.entity;
 
 
 
-import com.yimayhd.user.entity.UserInfo;
+
 import net.pocrd.annotation.Description;
 
 import java.io.Serializable;
@@ -41,6 +41,9 @@ public class TravelKa implements Serializable {
 
     @Description("是否删除 0否 1是")
     public String isDel; // 是否删除 0否 1是
+
+    @Description("是否是大咖 0否 1是")
+    public String isTravelKa; //是否是大咖 0否 1是
 
     @Description("改修时间")
     public long gmtModified; // 改修时间

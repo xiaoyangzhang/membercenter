@@ -124,6 +124,7 @@ public class MemberManager {
     }
 
     public MemberFirehoseDO AddMemberFirehose(MemberFirehoseDO memberFirehoseDO){
+    	
         if(memberFirehoseDO == null){
             return null;
         }
@@ -132,6 +133,7 @@ public class MemberManager {
         } catch (Exception e) {
             log.error(" MemberManager method AddMemberFirehose error ",e);
         }
+        
         return memberFirehoseDO;
     }
 

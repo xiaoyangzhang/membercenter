@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+           http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	<context:annotation-config />
+
+	<!-- ==================   tair start    ==================== -->
+	<bean id="persistenceDefaultTairManager" class="com.taobao.tair.impl.DefaultTairManager" init-method="init"
+          >
+       <property name="configServerList">
+            <list>
+                <value>192.168.1.209:5198</value>
+                <value>192.168.1.209:5198</value>
+            </list>
+        </property>
+        <property name="groupName" value="p_group1" />
+        <property name="timeout" value="5000" />
+    </bean>
+    
+
+	<bean class="com.yimayhd.membercenter.manager.MerchantServiceManager"></bean>
+
+	<bean id="memberProfileManager" class="com.yimayhd.membercenter.manager.MemberProfileManager"/>
+</beans>

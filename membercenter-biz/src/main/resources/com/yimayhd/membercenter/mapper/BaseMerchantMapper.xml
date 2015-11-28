@@ -74,7 +74,7 @@
 
     <select id="getCount" resultType="long" parameterType="com.yimayhd.membercenter.client.domain.BaseMerchantDO">
         select count(1) from base_merchant t
-        <include refid="search_clause"/>
+
     </select>
 
     <update id="modify" parameterType="com.yimayhd.membercenter.client.domain.BaseMerchantDO">

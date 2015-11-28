@@ -2,10 +2,8 @@ package com.yimayhd.membercenter.repo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.client.result.MemResultSupport;
-import com.yimayhd.user.client.service.member.UserMemberService;
 
 public class UserMemberRepo {
 	private static final Logger logger = LoggerFactory.getLogger("UserMemberRepo");

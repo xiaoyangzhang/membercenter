@@ -1,6 +1,5 @@
 package com.yimayhd.membercenter.manager;
 
-import com.alibaba.common.lang.StringUtil;
 import com.yimayhd.membercenter.client.domain.MemberProfileDO;
 import com.yimayhd.membercenter.client.domain.TerminalDeviceDO;
 import com.yimayhd.membercenter.client.domain.UserAbilityRelationDO;
@@ -16,6 +15,7 @@ import com.yimayhd.membercenter.repo.UserRepo;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.enums.ErrorCode;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,6 @@ public class MemberProfileManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(MemberProfileManager.class);
 
 
-
     @Autowired
     private MemberProfileDOMapper memberProfileDOMapper;
 
@@ -44,24 +43,24 @@ public class MemberProfileManager {
     @Autowired
     private UserRepo userRepo;   // 用户相关接口
 
-    public List<UserAbilityRelationDO> getUserAbilityRelationByUserId(long userId){
+    public List<UserAbilityRelationDO> getUserAbilityRelationByUserId(long userId) {
         return userAbilityRelationMapper.getByUserId(userId);
     }
 
-    public MemberProfileDO getMemberProfileDetail(long id){
+    public MemberProfileDO getMemberProfileDetail(long id) {
         return memberProfileDOMapper.getById(id);
     }
 
-    public MemberProfileDO getMemberProfileByUserId(long userId){
+    public MemberProfileDO getMemberProfileByUserId(long userId) {
         return memberProfileDOMapper.getByUserId(userId);
     }
 
 
-    public UserDO getUserDOById(long userId){
-        return  userRepo.getUserDOById(userId);
+    public UserDO getUserDOById(long userId) {
+        return userRepo.getUserDOById(userId);
     }
 
-    public List<UserDO> getUserList(List<Long> userIds){
+    public List<UserDO> getUserList(List<Long> userIds) {
         return userRepo.getUserList(userIds);
     }
 
@@ -93,19 +92,17 @@ public class MemberProfileManager {
     }
 
     public TerminalDeviceDO getDeviceByCode(String deviceCode) {
-        if (StringUtil.isBlank(deviceCode)) {
+        if (StringUtils.isBlank(deviceCode)) {
             return null;
         }
         TerminalDeviceDO terminalDeviceDO = null;
         try {
             terminalDeviceDO = terminalDeviceDOMapper.getByDeviceCode(deviceCode);
         } catch (Exception e) {
-            LOGGER.error("terminalDeviceDOMapper.getByDeviceCode(deviceCode); exception ,",e);
+            LOGGER.error("terminalDeviceDOMapper.getByDeviceCode(deviceCode); exception ,", e);
         }
         return terminalDeviceDO;
     }
-
-
 
 
 }

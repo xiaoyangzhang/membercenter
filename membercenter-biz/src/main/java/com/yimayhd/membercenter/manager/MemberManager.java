@@ -117,6 +117,7 @@ public class MemberManager {
 			result.setReturnCode(MemberReturnCode.MEMBER_NOT_FOUND);
 			return result ;
 		}
+		
 		return result ;
 	}
 	

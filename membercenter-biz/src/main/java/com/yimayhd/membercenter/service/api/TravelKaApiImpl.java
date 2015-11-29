@@ -1,5 +1,15 @@
 package com.yimayhd.membercenter.service.api;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.api.TravelKaApi;
 import com.yimayhd.membercenter.client.domain.MemberProfileDO;
 import com.yimayhd.membercenter.client.domain.UserAbilityRelationDO;
@@ -9,10 +19,7 @@ import com.yimayhd.membercenter.conventer.TravelKaConverter;
 import com.yimayhd.membercenter.entity.PageInfo;
 import com.yimayhd.membercenter.entity.TravelKa;
 import com.yimayhd.membercenter.entity.TravelKaPageInfoList;
-import com.yimayhd.membercenter.errorcode.TravelKaApiCode;
 import com.yimayhd.membercenter.manager.MemberProfileManager;
-
-
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.enums.BaseStatus;
 
@@ -22,14 +29,6 @@ import net.pocrd.annotation.HttpApi;
 import net.pocrd.define.CommonParameter;
 import net.pocrd.define.SecurityType;
 import net.pocrd.dubboext.DubboExtProperty;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2015/11/14.
@@ -68,7 +67,7 @@ public class TravelKaApiImpl implements TravelKaApi {
                 travelKa.isTravelKa = String.valueOf(BaseStatus.NO.getType());
             }
         }catch (Exception e){
-            DubboExtProperty.setErrorCode(TravelKaApiCode.INTERNAL_SERVER_ERROR);
+            DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
             logger.error("TravelKaApiImpl method getTravelKaDetail error",e);
         }
         return travelKa;
@@ -103,7 +102,7 @@ public class TravelKaApiImpl implements TravelKaApi {
             Map<Long,UserDO> userDOMap = praseUserData(userList);
             travelKaPageInfoList = TravelKaConverter.travelKaPageInfoList(memberProfileDOs,userDOMap,basePageResult.getPageNo(), basePageResult.isHasNext());
         }catch (Exception e){
-            DubboExtProperty.setErrorCode(TravelKaApiCode.INTERNAL_SERVER_ERROR);
+            DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
             logger.error("TravelKaApiImpl method getTravelKaListPage error",e);
         }
 

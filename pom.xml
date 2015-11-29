@@ -19,6 +19,7 @@
 		<module>membercenter-client</module>
 		<module>membercenter-biz</module>
 		<module>membercenter-api</module>
+		<module>membercenter-web</module>
 	</modules>
 
 	<properties>

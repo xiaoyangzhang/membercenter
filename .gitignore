@@ -16,3 +16,4 @@
 /membercenter-api/*.project
 /membercenter-web/target
 /membercenter-web/target/*
+/target

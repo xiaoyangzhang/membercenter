@@ -2,12 +2,12 @@ package com.yimayhd.membercenter.api;
 
 import com.yimayhd.membercenter.entity.PageInfo;
 import com.yimayhd.membercenter.entity.TravelKa;
-
-
 import com.yimayhd.membercenter.entity.TravelKaPageInfoList;
-import com.yimayhd.membercenter.errorcode.TravelKaApiCode;
 
-import net.pocrd.annotation.*;
+import net.pocrd.annotation.ApiAutowired;
+import net.pocrd.annotation.ApiGroup;
+import net.pocrd.annotation.ApiParameter;
+import net.pocrd.annotation.HttpApi;
 import net.pocrd.define.CommonParameter;
 import net.pocrd.define.SecurityType;
 
@@ -18,7 +18,6 @@ import net.pocrd.define.SecurityType;
 public interface TravelKaApi {
 
     @HttpApi(name = "membercenter.getTravelKaDetail", desc = "查询旅游咖信息", security = SecurityType.None, owner = "侯冬辉")
-    @DesignedErrorCode({TravelKaApiCode.C_INTERNAL_SERVER_ERROR})
     public TravelKa getTravelKaDetail(
             @ApiAutowired(CommonParameter.applicationId) int appId,
             @ApiAutowired(CommonParameter.domainId) int domainId,
@@ -29,7 +28,6 @@ public interface TravelKaApi {
     );
 
     @HttpApi(name = "membercenter.getTravelKaListPage", desc = "返回旅游咖列表", security = SecurityType.None, owner = "侯冬辉")
-    @DesignedErrorCode({TravelKaApiCode.C_INTERNAL_SERVER_ERROR})
     public TravelKaPageInfoList getTravelKaListPage(
             @ApiAutowired(CommonParameter.applicationId) int appId,
             @ApiAutowired(CommonParameter.domainId) int domainId,

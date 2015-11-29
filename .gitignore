@@ -16,3 +16,7 @@
 /membercenter-api/*.project
 /membercenter-web/target
 /membercenter-web/target/*
+/target
+/membercenter-web/.classpath
+/membercenter-web/.project
+/membercenter-web/.settings

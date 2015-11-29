@@ -14,7 +14,7 @@ import net.pocrd.define.SecurityType;
  */
 
 @ApiGroup(name = "membercenter", minCode = 16000000, maxCode = 17000000, codeDefine = com.yimayhd.membercenter.api.PrivilegeApi.class, owner = "徐胜强")
-public interface MemberApiService {
+public interface MemberApi {
 
 	@HttpApi(name = "membercenter.getMemberDetail", desc = "获取会员详情", security = SecurityType.None, owner = "徐胜强")
 	public MemberDetail getMemberDetail(

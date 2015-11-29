@@ -26,7 +26,7 @@
     select 
     <include refid="Base_Column_List" />
     from member
-    where user_id = #{userId}
+    where user_id = #{userId} limit 0, 1
   </select>
   <delete id="deleteById" parameterType="long" >
     delete from member

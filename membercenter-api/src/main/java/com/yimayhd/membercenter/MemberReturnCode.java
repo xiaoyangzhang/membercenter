@@ -74,4 +74,10 @@ public class MemberReturnCode  extends AbstractReturnCode {
 	public static final MemberReturnCode MERCHANT_NOT_FOUND_ERROR = new MemberReturnCode(MERCHANT_NOT_FOUND_ERROR_C, "商家不存在") ;
 	
 	
+	
+	/**************************************member********************************************/
+	public static final int MEMBER_NOT_FOUND_C = 160005000;
+	public static final MemberReturnCode MEMBER_NOT_FOUND = new MemberReturnCode(MEMBER_NOT_FOUND_C, "会员信息未找到") ;
+	
+	
 }

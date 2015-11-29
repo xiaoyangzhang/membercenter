@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
-import com.mysql.fabric.xmlrpc.base.Member;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.MemberDO;
 import com.yimayhd.membercenter.client.domain.MemberDurationDO;
@@ -19,11 +18,11 @@ import com.yimayhd.membercenter.client.domain.MemberRecordDO;
 import com.yimayhd.membercenter.client.dto.MemberBuyDTO;
 import com.yimayhd.membercenter.client.enums.MemberRecordOutType;
 import com.yimayhd.membercenter.client.enums.MemberStatus;
-import com.yimayhd.membercenter.client.enums.MemberType;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.result.MemResultSupport;
 import com.yimayhd.membercenter.dao.MemberDao;
 import com.yimayhd.membercenter.dao.MemberRecordDao;
+import com.yimayhd.membercenter.entity.member.MemberDetail;
 import com.yimayhd.membercenter.manager.helper.MemberHelper;
 import com.yimayhd.membercenter.manager.helper.MemberRecordHelper;
 import com.yimayhd.membercenter.mapper.MemberDurationDOMapper;
@@ -108,6 +107,19 @@ public class MemberManager {
 		MemResult<Boolean> result = memberDao.overdueMember(memberDO);
 		return result ;
 	}
+	
+	
+	public MemResult<MemberDetail> getMemberDetail(long userId){
+		MemResult<MemberDetail> result = new MemResult<MemberDetail>();
+		MemberDO memberDO = memberDao.selectByUserId(userId);
+		
+		if( memberDO == null ){
+			result.setReturnCode(MemberReturnCode.MEMBER_NOT_FOUND);
+			return result ;
+		}
+		return result ;
+	}
+	
 	
 	
 

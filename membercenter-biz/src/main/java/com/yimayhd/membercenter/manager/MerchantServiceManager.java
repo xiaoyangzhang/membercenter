@@ -1,17 +1,20 @@
 package com.yimayhd.membercenter.manager;
 
+
 import com.alibaba.dubbo.common.utils.CollectionUtils;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+
 import com.yimayhd.membercenter.client.domain.BaseMerchantDO;
 import com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO;
 import com.yimayhd.membercenter.mapper.BaseMerchantMapper;
-import com.yimayhd.membercenter.mapper.MerchantMapper;
 import com.yimayhd.membercenter.mapper.WxUserMerchantRelationMapper;
 import com.yimayhd.membercenter.repo.UserRepo;
 import com.yimayhd.membercenter.service.BussinessException;
 import com.yimayhd.user.client.domain.UserDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -24,9 +27,6 @@ public class MerchantServiceManager {
 
     @Autowired
     private BaseMerchantMapper baseMerchantMapper;
-
-    @Autowired
-    private MerchantMapper merchantMapper;
 
     @Autowired
     private WxUserMerchantRelationMapper wxUserMerchantRelationMapper;
@@ -56,7 +56,7 @@ public class MerchantServiceManager {
         }
 
         WxUserMerchantRelationDO wxUserMerchantRelationResult = queryResultList.get(0);
-        Long userId = wxUserMerchantRelationDO.getUserId();
+        Long userId = wxUserMerchantRelationResult.getUserId();
         return userRepo.getUserDOById(userId);
     }
 

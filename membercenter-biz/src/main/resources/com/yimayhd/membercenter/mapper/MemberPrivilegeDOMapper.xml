@@ -21,14 +21,17 @@
       <if test="title != null">
         title LIKE CONCAT(CONCAT('%', #{title}), '%')
       </if>
-      <if test="status != 0">
-        and status = #{status}
+      <if test="statuses != null and statuses.length >0 ">
+        and status in 
+        	<foreach collection="statuses" item="item" open="(" close=")" separator=",">
+        		#{item}
+        	</foreach>
       </if>
     </where>
   </sql>
   
   
-   <select id="pageQuery" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.query.MemPrivilegePageQuery" >
+   <select id="pageQuery" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.client.query.MemPrivilegePageQuery" >
     select 
     <include refid="Base_Column_List" />
     from member_privilege
@@ -37,7 +40,7 @@
     order by gmt_created desc
     limit #{startRow},#{pageSize}
   </select>
-   <select id="queryCount" resultType="java.lang.Integer" parameterType="com.yimayhd.membercenter.query.MemPrivilegePageQuery" >
+   <select id="queryCount" resultType="java.lang.Integer" parameterType="com.yimayhd.membercenter.client.query.MemPrivilegePageQuery" >
     select 
    	count(1)
     from member_privilege

@@ -13,9 +13,9 @@ import java.util.List;
  */
 @Description("旅游咖信息")
 public class TravelKa implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-
-    @Description("id")
+	@Description("id")
     public long id; //
 
     @Description("userId")

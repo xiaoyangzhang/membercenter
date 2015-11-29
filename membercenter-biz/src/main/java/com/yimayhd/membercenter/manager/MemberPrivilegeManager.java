@@ -10,11 +10,11 @@ import org.springframework.util.CollectionUtils;
 
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.MemberPrivilegeDO;
+import com.yimayhd.membercenter.client.query.MemPrivilegePageQuery;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.dao.MemberPrivilegeDao;
 import com.yimayhd.membercenter.dto.PrivilegeBatchUpdateDTO;
-import com.yimayhd.membercenter.query.MemPrivilegePageQuery;
 
 public class MemberPrivilegeManager {
 	
@@ -95,8 +95,7 @@ public class MemberPrivilegeManager {
 			pageResult.setPageNo(memPrilvilegePageQuery.getPageNo());
 			pageResult.setPageSize(memPrilvilegePageQuery.getPageSize());
 			
-			List<MemberPrivilegeDO> pageQueryList = memberPrivilegeDao
-					.pageQuery(memPrilvilegePageQuery);
+			List<MemberPrivilegeDO> pageQueryList = memberPrivilegeDao.pageQuery(memPrilvilegePageQuery);
 			pageResult.setList(pageQueryList);
 			
 			 if (memPrilvilegePageQuery.isNeedCount()) {

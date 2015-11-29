@@ -17,3 +17,9 @@
 /membercenter-web/target
 /membercenter-web/target/*
 /target
+<<<<<<< HEAD
+/membercenter-web/.classpath
+/membercenter-web/.project
+/membercenter-web/.settings
+=======
+>>>>>>> afc4847b1f36022bb089bb5050d85f4ef7c0309b

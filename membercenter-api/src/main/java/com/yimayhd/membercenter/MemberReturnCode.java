@@ -51,6 +51,9 @@ public class MemberReturnCode  extends AbstractReturnCode {
 	public static final int BIZ_ORDER_NOT_FOUND_C = 16001000;
 	public static final MemberReturnCode BIZ_ORDER_NOT_FOUND = new MemberReturnCode(BIZ_ORDER_NOT_FOUND_C, "订单未找到") ;
 	
+	public static final int PAGE_QUERY_ORDER_FAILED_C = 16001001;
+	public static final MemberReturnCode PAGE_QUERY_ORDER_FAILED = new MemberReturnCode(PAGE_QUERY_ORDER_FAILED_C, "分页查询订单失败") ;
+	
 	
 	
 	/**************************************user********************************************/
@@ -78,6 +81,12 @@ public class MemberReturnCode  extends AbstractReturnCode {
 	/**************************************member********************************************/
 	public static final int MEMBER_NOT_FOUND_C = 160005000;
 	public static final MemberReturnCode MEMBER_NOT_FOUND = new MemberReturnCode(MEMBER_NOT_FOUND_C, "会员信息未找到") ;
+	
+	
+	
+	/**************************************item********************************************/
+	public static final int PAGE_QUERY_ITEM_FAILED_C = 160006000;
+	public static final MemberReturnCode PAGE_QUERY_ITEM_FAILED = new MemberReturnCode(PAGE_QUERY_ITEM_FAILED_C, "分页查询商品信息失败") ;
 	
 	
 }

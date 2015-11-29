@@ -1,6 +1,5 @@
 package com.yimayhd.membercenter.mapper;
 
-import com.yimayhd.membercenter.client.domain.MerchantDO;
 import com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO;
 
 import java.util.List;

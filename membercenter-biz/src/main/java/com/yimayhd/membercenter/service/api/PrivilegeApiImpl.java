@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.api.PrivilegeApi;
 import com.yimayhd.membercenter.client.domain.MemberPrivilegeDO;
+import com.yimayhd.membercenter.client.query.MemPrivilegePageQuery;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.converter.PrivilegeConverter;
 import com.yimayhd.membercenter.entity.PageInfo;
 import com.yimayhd.membercenter.entity.PrivilegeInfoPageList;
 import com.yimayhd.membercenter.enums.MemPrivilegeStatus;
 import com.yimayhd.membercenter.manager.MemberPrivilegeManager;
-import com.yimayhd.membercenter.query.MemPrivilegePageQuery;
 
 public class PrivilegeApiImpl implements PrivilegeApi {
 	

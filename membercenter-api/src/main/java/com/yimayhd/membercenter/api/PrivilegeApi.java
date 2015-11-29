@@ -1,5 +1,6 @@
 package com.yimayhd.membercenter.api;
 
+import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.entity.PageInfo;
 import com.yimayhd.membercenter.entity.PrivilegeInfoPageList;
 
@@ -10,7 +11,7 @@ import net.pocrd.annotation.HttpApi;
 import net.pocrd.define.CommonParameter;
 import net.pocrd.define.SecurityType;
 
-@ApiGroup(name = "membercenter", minCode = 16000000, maxCode = 17000000, codeDefine = com.yimayhd.membercenter.api.PrivilegeApi.class, owner = "徐胜强")
+@ApiGroup(name = "membercenter", minCode = 16000000, maxCode = 17000000, codeDefine = MemberReturnCode.class, owner = "徐胜强")
 public interface PrivilegeApi {
 
 	@HttpApi(name = "membercenter.getPrivilegeInfoPageList", desc = "返回会员特权列表", security = SecurityType.None, owner = "徐胜强")

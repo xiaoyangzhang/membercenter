@@ -10,16 +10,22 @@
             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
        default-lazy-init="false" default-autowire="byName">
 
-    <!-- <bean id="msgSender" class="com.yimayhd.snscenter.mq.MsgSenderService"
+    <bean id="msgSender" class="com.yimayhd.membercenter.mq.MsgSenderService"
           init-method="init" destroy-method="destroy">
         <property name="nameServer" value="${rocketmq.server.name}"/>
     </bean>
 
-    <bean id="shippedDoneConsumer" class="com.yimayhd.snscenter.mq.consumer.CommentCreateConsumer"
+    <bean id="memberTakeEffectConsumer" class="com.yimayhd.membercenter.mq.member.MemberTakeEffectConsumer"
           init-method="init" destroy-method="destroy">
         <property name="nameServer" value="${rocketmq.server.name}"/>
-        <property name="group" value="${rocketmq.consumer.sns.group}"/>
-    </bean> -->
+        <property name="group" value="${member.consume.member.group}"/>
+    </bean>
+
+    <bean id="memberOverdueConsumer" class="com.yimayhd.membercenter.mq.member.MemberOverdueConsumer"
+          init-method="init" destroy-method="destroy">
+        <property name="nameServer" value="${rocketmq.server.name}"/>
+        <property name="group" value="${member.consume.member.group}"/>
+    </bean>
 
 
 

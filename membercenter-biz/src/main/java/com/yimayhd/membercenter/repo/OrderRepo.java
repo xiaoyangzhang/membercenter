@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
 import com.yimayhd.membercenter.MemberReturnCode;
-import com.yimayhd.membercenter.client.domain.MemberDO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.dto.MemberDiscountQueryDTO;
 import com.yimayhd.membercenter.entity.member.MemeberDiscount;

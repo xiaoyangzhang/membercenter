@@ -197,7 +197,7 @@ public class MemberManager {
 			detail.memeberItems = itemResult.getValue();
 		}
 		result.setValue(detail);
-		return null;
+		return result;
 	}
 	
 	

@@ -21,7 +21,7 @@
       <if test="title != null">
         title LIKE CONCAT(CONCAT('%', #{title}), '%')
       </if>
-      <if test="statuses != null and statues.length >0 ">
+      <if test="statuses != null and statuses.length >0 ">
         and status in 
         	<foreach collection="statuses" item="item" open="(" close=")" separator=",">
         		#{item}

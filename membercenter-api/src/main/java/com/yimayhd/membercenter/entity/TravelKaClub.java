@@ -11,9 +11,9 @@ import java.util.List;
  */
 @Description("大咖俱乐部信息")
 public class TravelKaClub implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-
-    @Description("是否是部长 0-否 1-是")
+	@Description("是否是部长 0-否 1-是")
     public int isMinister; // 是否是 部长 0-否 1-是
 
     @Description("直播数")

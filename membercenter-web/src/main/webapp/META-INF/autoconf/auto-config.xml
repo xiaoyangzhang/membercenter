@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <group name="dubbo">
-        <property name="zk.address" defaultValue=192.168.1.202:2181 description="dubbo注册的zookeeper地址"/>
+        <property name="zk.address" defaultValue="192.168.1.202:2181" description="dubbo注册的zookeeper地址"/>
         <property name="zk.port" defaultValue="-1" description="dubbo服务使用的端口号"/>
         <property name="export.dubbo.timeout" defaultValue="5000" description="activity提供dubbo服务的默认超时时间"/>
         <property name="export.dubbo.version" defaultValue="1.0.0.test" description="activity暴露dubbo的版本号"/>
@@ -9,12 +9,15 @@
     	<property name="consumer.dubbo.timeout" defaultValue="5000" description="activity使用其他dubbo服务的超市时间"/>
         <property name="consumer.dubbo.check" defaultValue="false" description="activity启东时是否强依赖其他服务，如果true那么依赖的服务必须先启动；如果false,其他服务可以不存在，但是调用的时候，如果服务依然不存在，则报错"/>
         <property name="consumer.idgen.dubbo.version" defaultValue="1.0.0.test" description="版本号"/>
+        <property name="consumer.user.dubbo.version" defaultValue="1.0.0.test" description="版本号"/>
+        <property name="consumer.order.dubbo.version" defaultValue="1.0.0.test" description="版本号"/>
+        <property name="consumer.item.dubbo.version" defaultValue="1.0.0.test" description="版本号"/>
     </group>
     <group name="">
-    	<property name="app.name" defaultValue="" description="应用名称"/>
-        <property name="log.home" defaultValue="/home/admin/logs/activity" description="activity日志输出目录"/>
+    	<property name="app.name" defaultValue="membercenter" description="应用名称"/>
+        <property name="log.home" defaultValue="/home/admin/logs/membercenter" description="activity日志输出目录"/>
         <property name="db.url"
-                  defaultValue="jdbc:mysql://192.168.1.202:3306/activity?useUnicode=true&amp;amp;characterset=utf-8"
+                  defaultValue="jdbc:mysql://192.168.1.202:3306/membercenter?useUnicode=true&amp;amp;characterset=utf-8"
                   description="activity数据库链接url"/>
         <property name="db.username" defaultValue="root" description="数据库用户名"/>
         <property name="db.password" defaultValue="123456" description="数据库密码"/>
@@ -25,7 +28,7 @@
     </group>
     <group name="mq">
         <property name="rocketmq.server.name" defaultValue="192.168.1.206:9876" description="rocketmq的注册中心地址"/>
-        <property name="member.consume.member.group" value="member_consumer_member_group"></property>
+        <property name="member.consume.member.group" defaultValue="member_consumer_member_group" description="member center消费member消息的group名称"></property>
     </group>
     <group name="idgen">
     	<property name="memcenter.meber.idgen.key" defaultValue="member" description="member表使用idgen的key"></property>

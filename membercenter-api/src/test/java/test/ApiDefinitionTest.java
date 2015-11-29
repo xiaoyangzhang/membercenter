@@ -1,16 +1,19 @@
 package test;
 
 
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import com.yimayhd.membercenter.api.MemberApi;
+import com.yimayhd.membercenter.api.PrivilegeApi;
 import com.yimayhd.membercenter.api.TravelKaApi;
 
 import net.pocrd.core.ApiDocumentationHelper;
 import net.pocrd.core.ApiManager;
 import net.pocrd.define.ApiOpenState;
 import net.pocrd.entity.ApiMethodInfo;
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.util.List;
 
 public class ApiDefinitionTest {
 
@@ -20,6 +23,16 @@ public class ApiDefinitionTest {
             ApiManager manager = new ApiManager();
             ApiDocumentationHelper apiDoc = new ApiDocumentationHelper();
             List<ApiMethodInfo> apis = ApiManager.parseApi(TravelKaApi.class, new Object());
+            apiDoc.getDocument(apis.toArray(new ApiMethodInfo[apis.size()]));
+            manager.register(apis, ApiOpenState.OPEN_TO_CLIENT);
+            System.out.println(apis.size());
+            
+            apis = ApiManager.parseApi(MemberApi.class, new Object());
+            apiDoc.getDocument(apis.toArray(new ApiMethodInfo[apis.size()]));
+            manager.register(apis, ApiOpenState.OPEN_TO_CLIENT);
+            System.out.println(apis.size());
+            
+            apis = ApiManager.parseApi(PrivilegeApi.class, new Object());
             apiDoc.getDocument(apis.toArray(new ApiMethodInfo[apis.size()]));
             manager.register(apis, ApiOpenState.OPEN_TO_CLIENT);
             System.out.println(apis.size());

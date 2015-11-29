@@ -8,4 +8,8 @@
 
 	<bean id="userRepo" class="com.yimayhd.membercenter.repo.UserRepo"/>
 
+	
+	<bean id="userMemberRepo" class="com.yimayhd.membercenter.repo.UserMemberRepo"/>
+	<bean id="orderRepo" class="com.yimayhd.membercenter.repo.OrderRepo"/>
+	<bean id="itemRepo" class="com.yimayhd.membercenter.repo.ItemRepo"/>
 </beans>

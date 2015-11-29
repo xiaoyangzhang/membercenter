@@ -8,28 +8,11 @@ import net.pocrd.entity.AbstractReturnCode;
  *
  */
 public class MemberReturnCode  extends AbstractReturnCode {
-	private int code;
-	private String desc ;
 
 	
 	public MemberReturnCode(int code, String desc) {
 		super(desc, code);
 	}
-	
-	public int getCode() {
-		return code;
-	}
-	public void setCode(int code) {
-		this.code = code;
-	}
-	public String getDesc() {
-		return desc;
-	}
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-	
-	
 	
 
 	public static final int SYSTEM_ERROR_C = 16000000;
@@ -73,19 +56,19 @@ public class MemberReturnCode  extends AbstractReturnCode {
 
 
 	/**************************************merchant********************************************/
-	public static final int MERCHANT_NOT_FOUND_ERROR_C = 160004000;
+	public static final int MERCHANT_NOT_FOUND_ERROR_C = 16004000;
 	public static final MemberReturnCode MERCHANT_NOT_FOUND_ERROR = new MemberReturnCode(MERCHANT_NOT_FOUND_ERROR_C, "商家不存在") ;
 	
 	
 	
 	/**************************************member********************************************/
-	public static final int MEMBER_NOT_FOUND_C = 160005000;
+	public static final int MEMBER_NOT_FOUND_C = 16005000;
 	public static final MemberReturnCode MEMBER_NOT_FOUND = new MemberReturnCode(MEMBER_NOT_FOUND_C, "会员信息未找到") ;
 	
 	
 	
 	/**************************************item********************************************/
-	public static final int PAGE_QUERY_ITEM_FAILED_C = 160006000;
+	public static final int PAGE_QUERY_ITEM_FAILED_C = 16006000;
 	public static final MemberReturnCode PAGE_QUERY_ITEM_FAILED = new MemberReturnCode(PAGE_QUERY_ITEM_FAILED_C, "分页查询商品信息失败") ;
 	
 	

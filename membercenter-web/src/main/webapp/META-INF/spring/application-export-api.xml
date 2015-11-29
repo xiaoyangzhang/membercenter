@@ -25,7 +25,7 @@
               <property name="retries" value="${dubbo.retries}"/>
        </bean>
        <bean id="privilegeApiExport" class="com.alibaba.dubbo.config.spring.ServiceBean">
-              <property name="interface" value="com.yimayhd.membercenter.api.PrivilegeApiImpl"/>
+              <property name="interface" value="com.yimayhd.membercenter.api.PrivilegeApi"/>
               <property name="ref" ref="privilegeApi"/>
               <property name="application" ref="dubboApplicationConfig"/>
               <property name="registry" ref="dubboRegistryConfig"/>

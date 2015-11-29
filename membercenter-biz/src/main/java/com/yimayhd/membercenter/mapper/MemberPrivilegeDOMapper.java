@@ -3,7 +3,7 @@ package com.yimayhd.membercenter.mapper;
 import java.util.List;
 
 import com.yimayhd.membercenter.client.domain.MemberPrivilegeDO;
-import com.yimayhd.membercenter.query.MemPrivilegePageQuery;
+import com.yimayhd.membercenter.client.query.MemPrivilegePageQuery;
 
 public interface MemberPrivilegeDOMapper {
     int deleteByPrimaryKey(long id);

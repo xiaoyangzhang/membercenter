@@ -26,7 +26,7 @@ public class DateUtil {
      * @param date
      * @return 返回long类型日期
      */
-    public static Long dateToLong(Date date) {
+    public static long dateToLong(Date date) {
         return date == null ? 0 : date.getTime();
     }
 

@@ -3,6 +3,8 @@
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
         <dependent-module archiveName="membercenter-biz-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/membercenter-biz/membercenter-biz">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -12,7 +14,13 @@
         <dependent-module archiveName="membercenter-client-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/membercenter-client/membercenter-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="context-root" value="membercenter-web"/>
+        <dependent-module archiveName="user-client-1.5.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/user-client/user-client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="user-api-1.5.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/user-api/user-api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/membercenter-web/target/classes"/>
+        <property name="context-root" value="membercenter"/>
     </wb-module>
 </project-modules>

@@ -13,7 +13,7 @@ import com.yimayhd.membercenter.client.enums.MemberRecordOutType;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.manager.MemberManager;
 import com.yimayhd.membercenter.mq.BaseConsumer;
-import com.yimayhd.membercenter.repo.TcOrderRepo;
+import com.yimayhd.membercenter.repo.OrderRepo;
 import com.yimayhd.tradecenter.client.model.domain.order.BizOrderDO;
 import com.yimayhd.tradecenter.client.model.enums.PayStatus;
 import com.yimayhd.tradecenter.client.model.result.order.metaq.OrderInfoTO;
@@ -25,7 +25,7 @@ public class OrderPaidDoneConsumer extends BaseConsumer {
 	private static final OrderTopic topic = OrderTopic.ORDER_PAID_DONE ;
 	
 	@Autowired
-	private TcOrderRepo orderRepo ;
+	private OrderRepo orderRepo ;
 	@Autowired
 	private MemberManager memberManager;
 	

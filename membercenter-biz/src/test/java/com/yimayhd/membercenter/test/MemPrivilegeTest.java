@@ -13,8 +13,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.yimayhd.membercenter.client.domain.MemberPrivilegeDO;
+import com.yimayhd.membercenter.client.query.MemPrivilegePageQuery;
 import com.yimayhd.membercenter.mapper.MemberPrivilegeDOMapper;
-import com.yimayhd.membercenter.query.MemPrivilegePageQuery;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {

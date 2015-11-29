@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.client.domain.MemberPrivilegeDO;
+import com.yimayhd.membercenter.client.query.MemPrivilegePageQuery;
 import com.yimayhd.membercenter.mapper.MemberPrivilegeDOMapper;
-import com.yimayhd.membercenter.query.MemPrivilegePageQuery;
 
 public class MemberPrivilegeDao {
 	

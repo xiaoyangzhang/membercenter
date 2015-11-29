@@ -5,10 +5,10 @@ import java.util.List;
 
 import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.yimayhd.membercenter.client.domain.MemberPrivilegeDO;
+import com.yimayhd.membercenter.client.query.MemPrivilegePageQuery;
 import com.yimayhd.membercenter.entity.PageInfo;
 import com.yimayhd.membercenter.entity.PrivilegeInfo;
 import com.yimayhd.membercenter.entity.PrivilegeInfoPageList;
-import com.yimayhd.membercenter.query.MemPrivilegePageQuery;
 
 public class PrivilegeConverter {
 
@@ -25,6 +25,21 @@ public class PrivilegeConverter {
 		pageInfoList.pageNo = pageNo;
 		pageInfoList.hasNext = hasNext;
 		
+		List<PrivilegeInfo> privilegeInfoList = dos2PrivilegeInfos(privilegeDOs);
+		pageInfoList.privilegeInfoPageList = privilegeInfoList ;
+		
+		
+		return  pageInfoList;
+	}
+	
+	
+	
+
+	public static List<PrivilegeInfo> dos2PrivilegeInfos(List<MemberPrivilegeDO> privilegeDOs) {
+		
+		if( CollectionUtils.isEmpty(privilegeDOs) ) {
+			return null;
+		}
 		List<PrivilegeInfo> privilegeInfoList = new ArrayList<PrivilegeInfo>();
 		
 		for (MemberPrivilegeDO privilegeDO : privilegeDOs) {
@@ -32,11 +47,9 @@ public class PrivilegeConverter {
 			privilegeInfoList.add(privilegeInfo(privilegeDO));
 		}
 		
-		
-		
-		return  pageInfoList;
+		return privilegeInfoList;
 	}
-
+	
 	private static PrivilegeInfo privilegeInfo(MemberPrivilegeDO privilegeDO) {
 		
 		if(null == privilegeDO){

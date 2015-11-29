@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.MemberPrivilegeDO;
+import com.yimayhd.membercenter.client.query.MemPrivilegePageQuery;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.MemberPrivilegeService;
 import com.yimayhd.membercenter.dto.PrivilegeBatchUpdateDTO;
 import com.yimayhd.membercenter.manager.MemberPrivilegeManager;
-import com.yimayhd.membercenter.query.MemPrivilegePageQuery;
 
 public class MemberPrivilegeServiceImpl implements MemberPrivilegeService {
 	

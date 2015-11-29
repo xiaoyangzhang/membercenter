@@ -38,7 +38,7 @@ public class MemberDao {
 	@Autowired
 	private TransactionTemplate transactionTemplate ;
 	@Autowired
-	private IDPool idPool ;
+	private IDPool memberIdpool ;
 
 	public MemberDO insert(MemberDO record){
 		if( record == null ){
@@ -69,7 +69,7 @@ public class MemberDao {
 		}
 		boolean isNewMember = false ;
 		if( memberDO.getId() <= 0 ){
-			long id = idPool.getNewId();
+			long id = memberIdpool.getNewId();
 			memberDO.setId(id);
 			isNewMember = true;
 		}

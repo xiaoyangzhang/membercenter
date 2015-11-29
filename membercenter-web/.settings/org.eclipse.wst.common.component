@@ -12,6 +12,12 @@
         <dependent-module archiveName="membercenter-client-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/membercenter-client/membercenter-client">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="user-client-1.5.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/user-client/user-client">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="user-api-1.5.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/user-api/user-api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="membercenter-web"/>
         <property name="java-output-path" value="/membercenter-web/target/classes"/>
     </wb-module>

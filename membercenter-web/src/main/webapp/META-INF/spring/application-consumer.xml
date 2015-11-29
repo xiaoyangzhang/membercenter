@@ -5,6 +5,17 @@
        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
 	default-lazy-init="true">
 	
+	<!-- ===========================  idgen =============================== -->
+	    <bean id="globalIdGenerator" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+		<property name="interface" value="com.yimayhd.idgen.IDGenService"/>
+		<property name="application" ref="dubboApplicationConfig"/>
+		<property name="registry" ref="dubboRegistryConfig"/>
+		<property name="timeout" value="${consumer.dubbo.timeout}"/>
+		<property name="check" value="${consumer.dubbo.check}"/>
+        <property name="version" value="${consumer.idgen.dubbo.version}"/>
+        <property name="retries" value="${dubbo.retries}"/>
+	</bean>
+	
 	<!-- ===========================  user =============================== -->
 	<bean id="userService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
         <property name="interface" value="com.yimayhd.user.client.service.UserService"/>

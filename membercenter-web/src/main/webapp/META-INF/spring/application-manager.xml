@@ -10,6 +10,17 @@
 
 	<bean id="memberProfileManager" class="com.yimayhd.membercenter.manager.MemberProfileManager"/>
 	
-	<bean class="com.yimayhd.membercenter.manager.MemberPrivilegeManager"></bean>
-	<bean class="com.yimayhd.membercenter.dao.MemberPrivilegeDao"></bean>
+	<bean id="memberPrivilegeManager" class="com.yimayhd.membercenter.manager.MemberPrivilegeManager"></bean>
+	<bean id="memberManager" class="com.yimayhd.membercenter.manager.MemberManager"></bean>
+	
+	
+	
+	
+    <bean id="memberIdpool" class="com.yimayhd.membercenter.idgen.IdPoolImpl">
+        <constructor-arg name="generator" ref="globalIdGenerator"/>
+        <constructor-arg name="configDomain" value="${app.name}"/>
+        <constructor-arg name="configKey" value="${memcenter.meber.idgen.key}"/>
+        <constructor-arg name="allocCount" value="20"/>
+    </bean>
+	
 </beans>

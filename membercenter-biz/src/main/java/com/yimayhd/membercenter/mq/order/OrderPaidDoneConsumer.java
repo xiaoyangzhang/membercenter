@@ -18,7 +18,7 @@ import com.yimayhd.tradecenter.client.model.domain.order.BizOrderDO;
 import com.yimayhd.tradecenter.client.model.enums.PayStatus;
 import com.yimayhd.tradecenter.client.model.result.order.metaq.OrderInfoTO;
 import com.yimayhd.tradecenter.client.model.topic.OrderTopic;
-import com.yimayhd.tradecenter.util.BizOrderUtil;
+
 
 public class OrderPaidDoneConsumer extends BaseConsumer {
 	private static final Logger logger = LoggerFactory.getLogger("OrderPaidDoneConsumer") ;

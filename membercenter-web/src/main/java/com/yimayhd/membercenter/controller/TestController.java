@@ -1,14 +1,15 @@
+
 package com.yimayhd.membercenter.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by root on 15-11-30.
@@ -28,3 +29,4 @@ public class TestController {
         return map;
     }
 }
+

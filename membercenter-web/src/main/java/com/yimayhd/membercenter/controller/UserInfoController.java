@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
 import com.yimay.integral.client.service.PointService;
 import com.yimayhd.membercenter.Constants;
 import com.yimayhd.membercenter.Converter;
@@ -19,7 +20,6 @@ import com.yimayhd.membercenter.client.service.MerchantService;
 import com.yimayhd.membercenter.client.vo.MerchantVO;
 import com.yimayhd.membercenter.exception.InValidParamException;
 import com.yimayhd.membercenter.utils.Asserts;
-import com.yimayhd.membercenter.utils.CommonUtil;
 import com.yimayhd.membercenter.utils.TimeElapseCaculate;
 import com.yimayhd.membercenter.vo.MemeberBasicInfoVO;
 import com.yimayhd.membercenter.vo.UserVO;
@@ -58,8 +58,8 @@ public class UserInfoController {
 	 */
 	@RequestMapping(value = "/fulfillUserInfo")
 	public ModelAndView fulfillUserInfoView(UserVO userVO,MemeberBasicInfoVO memeberInfo) {
-		LOGGER.debug("user:" + CommonUtil.toJson(userVO));
-		LOGGER.debug("memeberInfo:" + CommonUtil.toJson(memeberInfo));
+		LOGGER.debug("user:{}",JSON.toJSONString(userVO));
+		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		
 		boolean succeeded = true;
 		String message = "";
@@ -71,7 +71,7 @@ public class UserInfoController {
 			succeeded = false;
 			message = e.getMessage();
 
-			LOGGER.error(e.getMessage());
+			LOGGER.error("invalid parameter:{}",e.getMessage());
 		} finally {
 
 		}
@@ -90,9 +90,11 @@ public class UserInfoController {
 		// 更新用户信息
 		UserDO userDO = Converter.contertToUserDO(userVO);
 		BaseResult<Boolean> result = userService.updateUserDO(userDO);
-					
+		
+		LOGGER.debug("result:{}" ,JSON.toJSONString(result));
+		
 		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug(TIME_ELAPSE_HEAD + " during getUserDOByMobile and createUser:[" + TimeElapseCaculate.endSnapshort() + "ms]");
+			LOGGER.debug(TIME_ELAPSE_HEAD + " during getUserDOByMobile and createUser:{}ms",TimeElapseCaculate.endSnapshort());
 		}
 
 		if(!result.isSuccess()){
@@ -105,12 +107,21 @@ public class UserInfoController {
 		//处理成功之后跳转到二维码页面
 		mv.addObject("memeberInfo",memeberInfo);
 		mv.addObject("isFilledUserInfo",true);
-		//此处获取二维码串
-		//userService.getTwoDimensionCode(userId,merchanId);
+
+		// 此处获取二维码串
+		BaseResult<String> dimensionResult = userService.getTwoDimensionCode(memeberInfo.getUserId(),memeberInfo.getMerchantId());
+		LOGGER.debug("dimensionResult:{}" ,JSON.toJSONString(dimensionResult));
 		
-		String codeInfo = "18611865094";
+		if (!dimensionResult.isSuccess()) {
+			mv.addObject("message", dimensionResult.getErrorMsg());
+			mv.addObject("errorCode", dimensionResult.getErrorCode());
+			mv.setViewName("error");
+			return mv;
+		}
 		
-		LOGGER.debug("codeInfo:" + codeInfo);
+		String codeInfo = dimensionResult.getValue();
+		
+		LOGGER.debug("codeInfo:{}",codeInfo);
 		
 		mv.addObject("codeInfo",codeInfo);
 		mv.setViewName("user/showTwoDimensionCode");
@@ -127,7 +138,7 @@ public class UserInfoController {
 	 */
 	@RequestMapping(value = "/toDimensionCode")
 	public ModelAndView toDimensionCodeView(MemeberBasicInfoVO memeberInfo) {
-		LOGGER.debug("MemeberBasicInfoVO:" + CommonUtil.toJson(memeberInfo));
+		LOGGER.debug("MemeberBasicInfoVO:{}",JSON.toJSONString(memeberInfo));
 		
 		boolean succeeded = true;
 		String message = "";
@@ -163,6 +174,8 @@ public class UserInfoController {
 		merchantVO.setOpenId(memeberInfo.getOpenId());
 		
 		MemResult<UserDO> memResult = merchantService.registerUser(merchantVO);
+		LOGGER.debug("memResult:{}" ,JSON.toJSONString(memResult));
+		
 		if(!memResult.isSuccess()){
 			mv.addObject("message", memResult.getErrorMsg());
 			mv.addObject("errorCode", memResult.getErrorCode());
@@ -174,6 +187,8 @@ public class UserInfoController {
 		
 		// 此处获取二维码串
 		BaseResult<String> dimensionResult = userService.getTwoDimensionCode(memResult.getValue().getId(),memeberInfo.getMerchantId());
+		LOGGER.debug("dimensionResult:{}",JSON.toJSONString(dimensionResult));
+		
 		if(!dimensionResult.isSuccess()){
 			mv.addObject("message", dimensionResult.getErrorMsg());
 			mv.addObject("errorCode", dimensionResult.getErrorCode());
@@ -182,17 +197,18 @@ public class UserInfoController {
 		}
 		
 		String codeInfo = dimensionResult.getValue();
-		LOGGER.debug("codeInfo:" + codeInfo);
+		LOGGER.debug("codeInfo:{}" ,codeInfo);
 		
 		//查询用户信息，设置是否需要补全用户资料
 		UserDO userDO = userService.getUserDOById(memeberInfo.getUserId());
+		LOGGER.debug("userDO:{}" ,JSON.toJSONString(userDO));
 		
 		if(userDO != null && !StringUtils.isEmpty(userDO.getName())){
 			mv.addObject("isFilledUserInfo",true);
 		}
 				
 		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug(TIME_ELAPSE_HEAD + " during getTwoDimensionCode:[" + TimeElapseCaculate.endSnapshort() + "ms]");
+			LOGGER.debug(TIME_ELAPSE_HEAD + " during getTwoDimensionCode:{}ms" ,TimeElapseCaculate.endSnapshort());
 		}
 		
 		mv.addObject("codeInfo", codeInfo);
@@ -213,7 +229,7 @@ public class UserInfoController {
 	 */
 	@RequestMapping(value = "/sendMsgCode")
 	public Response sendMsgCode(MemeberBasicInfoVO memeberInfo) {
-		LOGGER.debug("memeberInfo:" + CommonUtil.toJson(memeberInfo));
+		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		
 		boolean succeeded = true;
 		String message = "";
@@ -222,7 +238,7 @@ public class UserInfoController {
 			Asserts.AssertNotNull(memeberInfo, "memeberInfo");
 			Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
 		} catch (InValidParamException e) {
-			LOGGER.error("memeberInfo" + CommonUtil.toJson(memeberInfo));
+			LOGGER.error("invalid parameter:{}" ,e.getMessage());
 			return new Response().failure(e.getMessage());
 		}
 		
@@ -236,14 +252,15 @@ public class UserInfoController {
 		
 		// 发送短信
 		BaseResult<Boolean> result = userService.sendPhoneVerifyCode(memeberInfo.getPhone());
+		LOGGER.debug("result:{}",JSON.toJSONString(result));
 		if(!result.isSuccess()){
-			LOGGER.error("发送短信失败:[errorCode:"  + result.getErrorCode() + ",message:" + result.getResultMsg() + "]");
+			LOGGER.error("发送短信失败:[errorCode:{},,message:{}]" ,result.getErrorCode() ,result.getResultMsg() );
 			return new Response().failure(result.getErrorMsg(), result.getErrorCode());
 		}
 		
 		//userService.sendPhoneVerifyCode(phone);
 		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug(TIME_ELAPSE_HEAD + " sendPhoneVerifyCode:[" + TimeElapseCaculate.endSnapshort() + "ms]");
+			LOGGER.debug(TIME_ELAPSE_HEAD + " sendPhoneVerifyCode:{}ms",TimeElapseCaculate.endSnapshort() );
 		}
 
 		return new Response().success();
@@ -259,7 +276,8 @@ public class UserInfoController {
 	 */
 	@RequestMapping(value = "/checkMsgCode")
 	public Response checkMsgCode(MemeberBasicInfoVO memeberInfo,String authCode) {
-		LOGGER.debug("memeberInfo" + CommonUtil.toJson(memeberInfo));
+		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
+		LOGGER.debug("authCode:{}",authCode);
 		
 		boolean succeeded = true;
 		String message = "";
@@ -269,7 +287,7 @@ public class UserInfoController {
 			Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
 			Asserts.AssertStringNotEmpty(authCode, "authCode");
 		} catch (InValidParamException e) {
-			LOGGER.error("memeberInfo=" + CommonUtil.toJson(memeberInfo) + ",authCode=" + authCode);
+			LOGGER.error("invalid parameter:{}",e.getMessage());
 			return new Response().failure(e.getMessage());
 
 		}
@@ -281,18 +299,21 @@ public class UserInfoController {
 		if(LOGGER.isDebugEnabled()){
 			TimeElapseCaculate.startSnapshort();
 		}
+		
+		
 		// 校验短信验证码
 		BaseResult<Boolean> result = userService.validatePhoneVerifyCode(memeberInfo.getPhone(), authCode);
-		LOGGER.debug("result:" + CommonUtil.toJson(result));
+		LOGGER.debug("result:{}",JSON.toJSONString(result));
 		
 		if(!result.isSuccess() || result.getValue().booleanValue() == false){
-			LOGGER.error("短信验证失败:[errorCode:"  + result.getErrorCode() + ",message:" + result.getResultMsg() + "]");
+			LOGGER.error("短信验证失败:[errorCode:{},message:{}]",result.getErrorCode(),result.getResultMsg());
 			return new Response().failure(result.getErrorMsg(), result.getErrorCode());
 		}
 		
 		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug(TIME_ELAPSE_HEAD + " validatePhoneVerifyCode:[" + TimeElapseCaculate.endSnapshort() + "ms]");
+			LOGGER.debug(TIME_ELAPSE_HEAD + " validatePhoneVerifyCode:{}ms" + TimeElapseCaculate.endSnapshort());
 		}
+		
 
 		return new Response().success();
 	}
@@ -307,7 +328,7 @@ public class UserInfoController {
 	 */
 	@RequestMapping(value = "/main")
 	public ModelAndView registerMain(MemeberBasicInfoVO memeberInfo) {
-		LOGGER.debug("memeberInfo:" + CommonUtil.toJson(memeberInfo));
+		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		
 		boolean succeeded = true;
 		String message = "";
@@ -318,8 +339,7 @@ public class UserInfoController {
 		} catch (InValidParamException e) {
 			succeeded = false;
 			message = e.getMessage();
-
-			LOGGER.error("memeberInfo:" + CommonUtil.toJson(memeberInfo));
+			LOGGER.error("invalid parameter:{}",e);
 		}
 		
 		ModelAndView mv = new ModelAndView();
@@ -341,21 +361,27 @@ public class UserInfoController {
 		merchantVO.setOpenId(memeberInfo.getOpenId());
 		merchantVO.setMerchantId( memeberInfo.getMerchantId());
 		
-		MemResult<UserDO> userDO = merchantService.findUserByOpenIdAndMerchant(merchantVO);
-		LOGGER.debug("userDO:" + CommonUtil.toJson(userDO));
+		MemResult<UserDO> memResult = merchantService.findUserByOpenIdAndMerchant(merchantVO);
+		LOGGER.debug("userDO:{}",JSON.toJSONString(memResult));
 		
-		if(userDO != null){
-			mv.addObject("userId",userDO.getValue().getId());
+		if(memResult.getValue() != null){
+			memeberInfo.setUserId(memResult.getValue().getId());
+			memeberInfo.setPhone(memResult.getValue().getMobile());
+			mv.addObject("memeberInfo",memeberInfo);
+			mv.addObject("userId",memResult.getValue().getId());
+			mv.addObject("isFilledUserInfo",true);
 			mv.setViewName("/user/showTwoDimensionCode");
 			
 			//获取二维码信息
-			BaseResult<String> codeInfo =  userService.getTwoDimensionCode(userDO.getValue().getId(),memeberInfo.getMerchantId());
+			BaseResult<String> codeInfo =  userService.getTwoDimensionCode(memResult.getValue().getId(),memeberInfo.getMerchantId());
+			LOGGER.debug("codeInfo:{}" ,JSON.toJSONString(codeInfo));
+			
 			mv.addObject("codeInfo",codeInfo);
 			
 			return mv;
 		}
 		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug(TIME_ELAPSE_HEAD + " findUserDOByOpenIdAndMerchantId and getTwoDimensionCode:[" + TimeElapseCaculate.endSnapshort() + "ms]");
+			LOGGER.debug(TIME_ELAPSE_HEAD + " findUserDOByOpenIdAndMerchantId and getTwoDimensionCode:{}ms",TimeElapseCaculate.endSnapshort());
 		}
 		
 		mv.setViewName("user/registerMain");
@@ -365,7 +391,7 @@ public class UserInfoController {
 
 	@RequestMapping(value = "/toAuthCodeView")
 	public ModelAndView toAuthCodeView(MemeberBasicInfoVO memeberInfo) {
-		LOGGER.debug("memeberInfo:" + CommonUtil.toJson(memeberInfo));
+		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		
 		boolean succeeded = true;
 		String message = "";
@@ -379,7 +405,7 @@ public class UserInfoController {
 			succeeded = false;
 			message = e.getMessage();
 			
-			LOGGER.error("memeberInfo:" + CommonUtil.toJson(memeberInfo));
+			LOGGER.error("invalid parameter:{}",e.getMessage());
 		}
 
 		ModelAndView mv = new ModelAndView();
@@ -397,7 +423,6 @@ public class UserInfoController {
 		}
 		
 		// 发送验证码
-		// 发送短信
 		BaseResult<Boolean> result = userService.sendPhoneVerifyCode(memeberInfo.getPhone());
 		if (!result.isSuccess()) {
 			mv.addObject("message", result.getErrorMsg());
@@ -405,10 +430,12 @@ public class UserInfoController {
 			mv.setViewName("error");
 			return mv;
 		}
-		System.out.println("发送验证码成功");
-
+		
+		LOGGER.debug("result:{}",JSON.toJSONString(result));
+		
+		
 		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug(TIME_ELAPSE_HEAD + " sendPhoneVerifyCode:[" + TimeElapseCaculate.endSnapshort() + "ms]");
+			LOGGER.debug(TIME_ELAPSE_HEAD + " sendPhoneVerifyCode:{}ms" + TimeElapseCaculate.endSnapshort());
 		}
 		
 		mv.setViewName("user/checkAuthCode");
@@ -418,7 +445,7 @@ public class UserInfoController {
 	
 	@RequestMapping(value = "/toFullfillUserInfo")
 	public ModelAndView toFullfillUserInfoView(MemeberBasicInfoVO memeberInfo) {
-		LOGGER.debug("memeberInfo:" + CommonUtil.toJson(memeberInfo));
+		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		
 		boolean succeeded = true;
 		String message = "";
@@ -432,7 +459,7 @@ public class UserInfoController {
 			succeeded = false;
 			message = e.getMessage();
 			
-			LOGGER.error("memeberInfo:" + CommonUtil.toJson(memeberInfo));
+			LOGGER.error("invalid parameter:{}",e.getMessage());
 		}
 		
 		ModelAndView mv = new ModelAndView();

@@ -1,6 +1,14 @@
 package com.yimayhd.membercenter.vo;
 
-public class PointDetailVO {
+import java.io.Serializable;
+
+public class PointDetailVO implements Serializable{
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7639397071418766212L;
 	// 积分来源
 	private String source;
 	// 积分生成日期

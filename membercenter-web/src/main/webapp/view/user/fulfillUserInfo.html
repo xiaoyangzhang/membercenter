@@ -6,7 +6,9 @@
 
 <form name="fulfillUserInfoForm" action="fulfillUserInfo" method="post">
 	<div class="ipt-input">
-		<label><em>手机号:</em><span>$memeberInfo.phone</span></label>
+		<label><em>手机号:</em><span>
+		$stringTool.hideStr($memeberInfo.phone,3,7)
+		</span></label>
 		<label><em>名字:</em><input type="text" value="" id="name" name="name" required="required"/> </label>
 			
 			<label><em>性别:</em>
@@ -45,8 +47,7 @@
 	<input type="hidden" name="openId" value="$memeberInfo.openId" /> <input
 		type="hidden" name="merchantId" value="$memeberInfo.merchantId" /> <input
 		type="hidden" name="userId" value="$memeberInfo.userId" /> <input
-		type="hidden" name="id" value="$memeberInfo.userId" /> <input
-		type="hidden" name="phone" value="$memeberInfo.phone" />
+		type="hidden" name="id" value="$memeberInfo.userId" />
 </form>
 
 <script src="$resourceContextTool.getResourcePath()/js/user/user.js"></script>

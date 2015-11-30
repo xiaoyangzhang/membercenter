@@ -1,6 +1,14 @@
 package com.yimayhd.membercenter.vo;
 
-public class UserVO {
+import java.io.Serializable;
+
+public class UserVO implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1782483298710673233L;
+	
 	// 用户Id
 	private Long userId;
 	// 性别 1:男,2:女

@@ -18,7 +18,6 @@ import com.yimayhd.tradecenter.client.model.domain.order.BizOrderDO;
 import com.yimayhd.tradecenter.client.model.enums.PayStatus;
 import com.yimayhd.tradecenter.client.model.result.order.metaq.OrderInfoTO;
 import com.yimayhd.tradecenter.client.model.topic.OrderTopic;
-import com.yimayhd.tradecenter.util.BizOrderUtil;
 
 public class OrderPaidDoneConsumer extends BaseConsumer {
 	private static final Logger logger = LoggerFactory.getLogger("OrderPaidDoneConsumer") ;
@@ -63,6 +62,8 @@ public class OrderPaidDoneConsumer extends BaseConsumer {
 			logger.error(log+"  BizOrderDO status Error!  status={}", orderDO.getPayStatus() );
 			return false;
 		}
+		
+		//FIXME 不是所有订单都要创建会员信息的，check哪些订单是会员订单，
 		
 		//FIMXE
 		int period = 365 ;

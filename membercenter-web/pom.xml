@@ -15,6 +15,7 @@
             <groupId>com.yimayhd.membercenter</groupId>
             <artifactId>membercenter-biz</artifactId>
         </dependency>
+        
         <dependency>
             <groupId>com.yimayhd.membercenter</groupId>
             <artifactId>membercenter-api</artifactId>
@@ -23,6 +24,10 @@
             <groupId>com.yimayhd.membercenter</groupId>
             <artifactId>membercenter-client</artifactId>
         </dependency>
+        <dependency>
+			<groupId>com.yimayhd</groupId>
+			<artifactId>point-client</artifactId>
+		</dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -106,6 +111,31 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
+        
+        <dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-tools</artifactId>
+		</dependency>
 
     </dependencies>
     <build>

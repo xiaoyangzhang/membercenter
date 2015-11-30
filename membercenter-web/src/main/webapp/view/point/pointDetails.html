@@ -1,0 +1,53 @@
+<!--
+<h1 class="page-title">
+	<a href="" class="return-btn" onclick='history.go(-1)'>返回</a>
+</h1>
+ -->
+<body id="bg-fff">
+<ul class="point-tab clearfix">
+	<li class="on">总积分</li>
+</ul>
+
+<script src="$resourceContextTool.getResourcePath()/js/point/point.js"></script>
+<script src="$resourceContextTool.getResourcePath()/js/common/iscroll.js"></script>
+
+
+<div class="point-box">
+	<ul>
+		<li>
+			<span class="left"> 
+				<strong >当前总积分</strong>	<br /> <br/>
+			</span> 
+			<span class="right"> 
+		   		<strong id="currentPoint"></strong><br /><br />
+			</span>
+		</li> 
+		
+	<input type="hidden" id="currentPage" value="1" />
+	<div id="wrapper">
+		<div id="scroller">
+			<div id="showPointDetailsDiv"> </div>
+		</div>	
+		<input type="hidden" name="pageNumber" id="pageNumber" value="1"/>	
+		<input type="hidden" name="totalPage" id="totalPage" value="$totalPage"/>	
+		<input type="hidden" name="pageSize" id="pageSize" value="10"/>	
+		
+	</div>
+	<div id="pullUp">
+		<span class="pullUpIcon"></span><span class="pullUpLabel">下拉刷新</span>
+	</div>	
+		
+	</ul>
+</div>
+
+
+
+<script type="text/javascript">
+
+var myScroll,pullUpEl, pullUpOffset,generatedCount = 0;
+
+initPointDetails();
+
+</script>
+
+</body>

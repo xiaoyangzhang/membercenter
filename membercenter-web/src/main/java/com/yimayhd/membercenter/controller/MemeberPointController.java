@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
 import com.yimay.integral.client.enums.PointType;
 import com.yimay.integral.client.model.medi.PointDetailDTO;
 import com.yimay.integral.client.model.param.point.CountReqDTO;
@@ -25,7 +26,6 @@ import com.yimayhd.membercenter.Converter;
 import com.yimayhd.membercenter.Response;
 import com.yimayhd.membercenter.exception.InValidParamException;
 import com.yimayhd.membercenter.utils.Asserts;
-import com.yimayhd.membercenter.utils.CommonUtil;
 import com.yimayhd.membercenter.utils.TimeElapseCaculate;
 import com.yimayhd.membercenter.vo.MemeberBasicInfoVO;
 import com.yimayhd.membercenter.vo.PointDetailVO;
@@ -50,7 +50,7 @@ public class MemeberPointController {
 	 */
 	@RequestMapping(value = "/memeberTotalPoint")
 	public Response getMemeberTotalPoint(MemeberBasicInfoVO memeberInfo) {
-		LOGGER.debug("memeberInfo:" + CommonUtil.toJson(memeberInfo));
+		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		
 		boolean succeeded = true;
 		String message = "";
@@ -62,8 +62,7 @@ public class MemeberPointController {
 		} catch (InValidParamException e) {
 			succeeded = false;
 			message = e.getMessage();
-
-			LOGGER.error("memeberInfo:" + CommonUtil.toJson(memeberInfo));
+			LOGGER.error("invalid parameters:{}",message);
 		}
 
 		if (!succeeded) {
@@ -85,10 +84,10 @@ public class MemeberPointController {
 		BaseResult<CountResultDTO> result = pointService.queryMemberPoint(pointQueryRequestDTO);
 		
 		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug(TIME_ELAPSE_HEAD + " sendPhoneVerifyCode:[" + TimeElapseCaculate.endSnapshort() + "ms]");
+			LOGGER.debug(TIME_ELAPSE_HEAD + " sendPhoneVerifyCode:{}ms" ,TimeElapseCaculate.endSnapshort());
 		}
 		
-		LOGGER.debug("countResultDTO:" + CommonUtil.toJson(result));
+		LOGGER.debug("countResultDTO:{}",JSON.toJSONString(result));
 		
 		// 查询出用户总积分
 		if(!result.isSuccess()){
@@ -111,9 +110,9 @@ public class MemeberPointController {
 	 */
 	@RequestMapping(value="/memberPointDetails")
 	public Response getMemberPointDetailsByPage(MemeberBasicInfoVO memeberInfo, int pageNumber,int pageSize) {
-		LOGGER.debug("memeberInfo:" + CommonUtil.toJson(memeberInfo));
-		LOGGER.debug("pageNumber:" + pageNumber);
-		LOGGER.debug("pageSize:" + pageSize);
+		LOGGER.debug("memeberInfo:{}" ,JSON.toJSONString(memeberInfo));
+		LOGGER.debug("pageNumber:{}", pageNumber);
+		LOGGER.debug("pageSize:{}", pageSize);
 		
 		boolean succeeded = true;
 		String message = "";
@@ -125,7 +124,7 @@ public class MemeberPointController {
 			succeeded = false;
 			message = e.getMessage();
 
-			LOGGER.error("memeberInfo:" + CommonUtil.toJson(memeberInfo));
+			LOGGER.error("invalid parameter:{}" ,e.getMessage());
 		}
 
 		if (!succeeded) {
@@ -151,10 +150,10 @@ public class MemeberPointController {
 		BaseResult<DetailResultDTO<PointDetailDTO>>  detailResult = pointService.queryPointDetails(detailReqDTO);
 		
 		if(LOGGER.isDebugEnabled()){
-			LOGGER.debug(TIME_ELAPSE_HEAD + " queryPointChangeDetails:[" + TimeElapseCaculate.endSnapshort() + "ms]");
+			LOGGER.debug(TIME_ELAPSE_HEAD + " queryPointChangeDetails:{}ms",TimeElapseCaculate.endSnapshort());
 		}
 		
-		LOGGER.debug("detailResult:" + detailResult);
+		LOGGER.debug("detailResult:{}",detailResult);
 		
 		if(!detailResult.isSuccess()){
 			message = "错误编码:" + detailResult.getErrorCode();

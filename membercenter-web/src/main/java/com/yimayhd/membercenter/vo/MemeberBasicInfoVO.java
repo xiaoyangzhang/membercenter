@@ -1,6 +1,12 @@
 package com.yimayhd.membercenter.vo;
 
-public class MemeberBasicInfoVO {
+import java.io.Serializable;
+
+public class MemeberBasicInfoVO implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6400387427455175346L;
 	//用户Id
 	private Long userId;
 	//商户Id

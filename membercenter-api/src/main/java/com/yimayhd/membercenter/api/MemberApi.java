@@ -20,7 +20,7 @@ import net.pocrd.define.SecurityType;
 public interface MemberApi {
 
 	@HttpApi(name = "membercenter.getMemberDetail", desc = "获取会员详情", security = SecurityType.None, owner = "wuzf@yimayholiday.com")
-//	@DesignedErrorCode({MemberReturnCode.MEMBER_NOT_FOUND_C})
+	@DesignedErrorCode({MemberReturnCode.MEMBER_NOT_FOUND_C})
 	public MemberDetail getMemberDetail(
 			@ApiAutowired(CommonParameter.applicationId) int appId,
 			@ApiAutowired(CommonParameter.domainId) int domainId, 

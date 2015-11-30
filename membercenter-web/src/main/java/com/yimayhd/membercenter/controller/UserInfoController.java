@@ -369,6 +369,7 @@ public class UserInfoController {
 			memeberInfo.setPhone(memResult.getValue().getMobile());
 			mv.addObject("memeberInfo",memeberInfo);
 			mv.addObject("userId",memResult.getValue().getId());
+			mv.addObject("isFilledUserInfo",true);
 			mv.setViewName("/user/showTwoDimensionCode");
 			
 			//获取二维码信息

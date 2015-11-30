@@ -16,11 +16,11 @@ import net.pocrd.define.SecurityType;
  * @date 2015年11月28日 下午5:24:11
  */
 
-@ApiGroup(name = "membercenter", minCode = 16000000, maxCode = 17000000, codeDefine = com.yimayhd.membercenter.api.PrivilegeApi.class, owner = "wuzf@yimayholiday.com")
+@ApiGroup(name = "membercenter", minCode = 16000000, maxCode = 17000000, codeDefine = MemberReturnCode.class, owner = "wuzf@yimayholiday.com")
 public interface MemberApi {
 
 	@HttpApi(name = "membercenter.getMemberDetail", desc = "获取会员详情", security = SecurityType.None, owner = "wuzf@yimayholiday.com")
-	@DesignedErrorCode({MemberReturnCode.MEMBER_NOT_FOUND_C})
+//	@DesignedErrorCode({MemberReturnCode.MEMBER_NOT_FOUND_C})
 	public MemberDetail getMemberDetail(
 			@ApiAutowired(CommonParameter.applicationId) int appId,
 			@ApiAutowired(CommonParameter.domainId) int domainId, 

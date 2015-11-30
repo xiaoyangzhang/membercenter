@@ -8,28 +8,11 @@ import net.pocrd.entity.AbstractReturnCode;
  *
  */
 public class MemberReturnCode  extends AbstractReturnCode {
-	private int code;
-	private String desc ;
 
 	
 	public MemberReturnCode(int code, String desc) {
 		super(desc, code);
 	}
-	
-	public int getCode() {
-		return code;
-	}
-	public void setCode(int code) {
-		this.code = code;
-	}
-	public String getDesc() {
-		return desc;
-	}
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
-	
-	
 	
 
 	public static final int SYSTEM_ERROR_C = 16000000;

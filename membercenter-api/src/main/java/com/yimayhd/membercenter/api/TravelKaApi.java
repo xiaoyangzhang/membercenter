@@ -1,5 +1,6 @@
 package com.yimayhd.membercenter.api;
 
+import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.entity.PageInfo;
 import com.yimayhd.membercenter.entity.TravelKa;
 import com.yimayhd.membercenter.entity.TravelKaPageInfoList;
@@ -14,7 +15,7 @@ import net.pocrd.define.SecurityType;
 /**
  * Created by Administrator on 2015/11/14.
  */
-@ApiGroup(name = "membercenter", minCode = 16000000, maxCode = 17000000, codeDefine = TravelKaApi.class, owner = "侯冬辉")
+@ApiGroup(name = "membercenter", minCode = 16000000, maxCode = 17000000, codeDefine = MemberReturnCode.class, owner = "侯冬辉")
 public interface TravelKaApi {
 
     @HttpApi(name = "membercenter.getTravelKaDetail", desc = "查询旅游咖信息", security = SecurityType.None, owner = "侯冬辉")

@@ -13,7 +13,7 @@ public class MemResultSupport implements Serializable {
 	private boolean success = true;
 	private String errorMsg;
 	private int errorCode;
-	private MemberReturnCode returnCode;
+	private transient MemberReturnCode returnCode;
 
 	public MemResultSupport() {
 

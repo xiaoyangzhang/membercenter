@@ -12,7 +12,9 @@ import com.yimayhd.membercenter.client.vo.MerchantVO;
 import com.yimayhd.membercenter.manager.MerchantServiceManager;
 import com.yimayhd.membercenter.service.BussinessException;
 import com.yimayhd.user.client.domain.UserDO;
+import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
+import com.yimayhd.user.errorcode.UserServiceHttpCode;
 import net.pocrd.entity.ApiReturnCode;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -46,19 +48,29 @@ public class MerchantServiceImpl implements MerchantService {
             return MemResult.buildFailResult(MemberReturnCode.PARAMTER_ERROR.getCode(), MemberReturnCode.PARAMTER_ERROR.getDesc(), null);
         }
 
-        UserDO userDO = new UserDO();
-        userDO.setMobile(merchantVO.getMobile());
-        com.yimayhd.user.client.result.BaseResult<UserDO> createUserResult = userService.createUserAndPutCache(userDO);
-
-        //FIXME user不能返回api的错误code，应该自己定义
-        if (ApiReturnCode._C_SUCCESS != Integer.valueOf(createUserResult.getErrorCode())) {
-            LOGGER.info("invoke userService.createUserAndPutCache not success, merchantVO={}", merchantVO);
-            return MemResult.buildFailResult(MemberReturnCode.USER_ERROR.getCode(), createUserResult.getResultMsg(), null);
+        WxUserMerchantRelationDO wxQueryCondition = new WxUserMerchantRelationDO();
+        wxQueryCondition.setOpenId(merchantVO.getOpenId());
+        wxQueryCondition.setMerchantId(merchantVO.getMerchantId());
+        List<WxUserMerchantRelationDO> wxUserMerchantRelationDOList = merchantServiceManager.findByCondition(wxQueryCondition);
+        if (CollectionUtils.isNotEmpty(wxUserMerchantRelationDOList)) {
+            LOGGER.info("wxUserMerchantRelationDOList is not empty and size = {}, merchantVO={}", wxUserMerchantRelationDOList.size(), merchantVO);
+            return MemResult.buildFailResult(MemberReturnCode.USER_ERROR.getCode(), MemberReturnCode.USER_ERROR.getDesc(), null);
         }
 
-        UserDO createUserDO = createUserResult.getValue();
-        LOGGER.info("createUserDO.getId={}", createUserDO.getId());
+        BaseResult<UserDO> userResult = userService.getUserDOByMobile(merchantVO.getMobile());
+        if (null == userResult.getValue() && UserServiceHttpCode.USER_NOT_FOUND.getCode() != userResult.getErrorCode()) {
+            LOGGER.error("registerUser userService.getUserDOByMobile occur error by mobile = {}", merchantVO.getMobile());
+            return MemResult.buildFailResult(MemberReturnCode.USER_ERROR.getCode(), userResult.getErrorMsg(), null);
+        }
 
+
+        UserDO createUserDO = parseUserDO(userResult, merchantVO);
+        if (null == createUserDO) {
+            LOGGER.info("parseUserDO return null");
+            return MemResult.buildFailResult(MemberReturnCode.USER_ERROR.getCode(), MemberReturnCode.USER_ERROR.getDesc(), null);
+        }
+
+        LOGGER.info("createUserDO.getId={}", createUserDO.getId());
         BaseMerchantDO baseMerchantDO = merchantServiceManager.findBaseMerchantDOById(merchantVO.getMerchantId());
         if (null == baseMerchantDO) {
             LOGGER.info("merchant not found by merchantVO={}", merchantVO);
@@ -131,8 +143,23 @@ public class MerchantServiceImpl implements MerchantService {
         }
 
 
-
         return null;
+    }
+
+    private UserDO parseUserDO(BaseResult<UserDO> userDOBaseResult, MerchantVO merchantVO) {
+        if (null != userDOBaseResult.getValue()) {
+            return userDOBaseResult.getValue();
+        }
+
+        UserDO userDO = new UserDO();
+        userDO.setMobile(merchantVO.getMobile());
+        com.yimayhd.user.client.result.BaseResult<UserDO> createUserResult = userService.createUserAndPutCache(userDO);
+        if (ApiReturnCode._C_SUCCESS != Integer.valueOf(createUserResult.getErrorCode())) {
+            LOGGER.info("invoke userService.createUserAndPutCache not success, merchantVO={}", merchantVO);
+            return null;
+        }
+
+        return createUserResult.getValue();
     }
 
     private boolean checkParam(MerchantVO merchantVO) {

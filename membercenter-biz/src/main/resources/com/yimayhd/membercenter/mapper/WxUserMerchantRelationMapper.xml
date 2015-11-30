@@ -41,7 +41,7 @@
             parameterType="com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO">
         select
         <include refid="Base_Column_List" />
-        from wx_user_merchant_relationjav
+        from wx_user_merchant_relation
         <include refid="Search_Limit" />
     </select>
 

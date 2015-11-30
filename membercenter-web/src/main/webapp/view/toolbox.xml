@@ -5,6 +5,7 @@
         <tool key="utilNum" class="com.yimayhd.membercenter.utils.NumUtil"/>
         <tool key="nullTool" class="com.yimayhd.membercenter.utils.NullTool"/>
         <tool key="resourceContextTool" class="com.yimayhd.membercenter.utils.ResourceContextTool"/>
+        <tool key="stringTool" class="com.yimayhd.membercenter.utils.StringTool"/>
     </toolbox>
 
 </tools>

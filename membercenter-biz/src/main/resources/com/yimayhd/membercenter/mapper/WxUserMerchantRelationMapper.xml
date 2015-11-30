@@ -11,13 +11,13 @@
 
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
 
-        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
 
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,open_id,merchant_id,user_id, gmt_create, gmt_modified
+        id,open_id,merchant_id,user_id, gmt_created, gmt_modified
     </sql>
 
     <sql id="Search_Limit">

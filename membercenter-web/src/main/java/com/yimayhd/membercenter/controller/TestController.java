@@ -1,16 +1,22 @@
+
 package com.yimayhd.membercenter.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import java.util.HashMap;
+import java.util.Map;
 
-@Controller
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * Created by root on 15-11-30.
+ */
+@RestController
 public class TestController {
-	@RequestMapping(value="/testView")
-	public ModelAndView forward(){
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("test/scrollrefresh");
-		
-		return mv;
-	}
+
+    @RequestMapping("/test/send")
+    public Map<String, Object> test() {
+        Map<String, Object> map = new HashMap<>();
+        return map;
+    }
 }
+

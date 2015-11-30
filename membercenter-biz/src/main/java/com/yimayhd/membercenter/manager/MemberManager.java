@@ -44,6 +44,7 @@ import com.yimayhd.membercenter.mapper.MemberDurationDOMapper;
 import com.yimayhd.membercenter.mapper.MemberFirehoseDOMapper;
 import com.yimayhd.membercenter.repo.ItemRepo;
 import com.yimayhd.membercenter.repo.OrderRepo;
+import com.yimayhd.membercenter.util.DateUtil;
 
 /**
  * Created by Administrator on 2015/11/21.
@@ -107,8 +108,10 @@ public class MemberManager {
 			int period = memberBuyDTO.getPeriod();
 			Calendar calendar = Calendar.getInstance() ;
 			calendar.add(Calendar.DATE, period);
-			memberDO.setStartTime(new Date());
-			memberDO.setEndTime(calendar.getTime());
+			Date start = DateUtil.getDateStart(new Date()) ;
+			Date end = DateUtil.getDateEnd(calendar.getTime()) ;
+			memberDO.setStartTime(start);
+			memberDO.setEndTime(end);
 		}
 		memberDO.setStatus(MemberStatus.ACTIVE.getStatus());
 		

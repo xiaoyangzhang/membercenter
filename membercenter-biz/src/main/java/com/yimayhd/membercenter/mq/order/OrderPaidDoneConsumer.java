@@ -63,6 +63,8 @@ public class OrderPaidDoneConsumer extends BaseConsumer {
 			return false;
 		}
 		
+		//FIXME 不是所有订单都要创建会员信息的，check哪些订单是会员订单，
+		
 		//FIMXE
 		int period = 365 ;
 //		BizOrderUtil.getMemberRechargeDa

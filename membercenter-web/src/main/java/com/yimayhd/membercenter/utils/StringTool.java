@@ -13,7 +13,7 @@ public class StringTool {
 	 */
 	public static String hideStr(String target,int start,int end){
 		StringBuilder sb = new StringBuilder(target);
-		sb
+		//sb
 		
 		return "";
 	}

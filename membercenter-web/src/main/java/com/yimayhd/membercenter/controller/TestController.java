@@ -4,6 +4,7 @@ package com.yimayhd.membercenter.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,19 @@ public class TestController {
     public Map<String, Object> validate(@RequestParam String mobile, @RequestParam String code) {
         Map<String, Object> map = new HashMap<>();
         BaseResult<Boolean> baseResult = userService.validatePhoneVerifyCode(mobile, code);
+
+        map.put("result", baseResult.getValue());
+        return map;
+    }
+
+
+    @RequestMapping("/test/dimen")
+    public Map<String, Object> dimen() {
+        Map<String, Object> map = new HashMap<>();
+        BaseResult<String> dimenResult = userService.getTwoDimensionCode(3500L, 1L);
+        System.out.println(dimenResult.getValue());
+
+        BaseResult<UserDO> baseResult = userService.getUserDOByTwoDimensionCode(dimenResult.getValue());
 
         map.put("result", baseResult.getValue());
         return map;

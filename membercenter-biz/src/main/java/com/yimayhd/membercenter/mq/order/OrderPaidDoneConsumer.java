@@ -18,6 +18,7 @@ import com.yimayhd.tradecenter.client.model.domain.order.BizOrderDO;
 import com.yimayhd.tradecenter.client.model.enums.PayStatus;
 import com.yimayhd.tradecenter.client.model.result.order.metaq.OrderInfoTO;
 import com.yimayhd.tradecenter.client.model.topic.OrderTopic;
+import com.yimayhd.tradecenter.client.util.BizOrderUtil;
 
 public class OrderPaidDoneConsumer extends BaseConsumer {
 	private static final Logger logger = LoggerFactory.getLogger("OrderPaidDoneConsumer") ;
@@ -52,6 +53,12 @@ public class OrderPaidDoneConsumer extends BaseConsumer {
 			logger.error(log+"  message error! BizOrderDO is empty!");
 			return true;
 		}
+		boolean isRecharge = BizOrderUtil.isMemberRecharge(bizOrderDO);
+		if( !isRecharge ){
+			//仅处理会员充值订单，其他的订单此处不处理
+			return true;
+		}
+		
 		MemResult<BizOrderDO> orderResult = orderRepo.getBizOrderById(bizOrderDO.getBizOrderId());
 		if( orderResult == null || !orderResult.isSuccess() || orderResult.getValue() == null ){
 			logger.error(log+"  get BizOrderDO failed!  result={}", JSON.toJSONString(orderResult));
@@ -67,7 +74,6 @@ public class OrderPaidDoneConsumer extends BaseConsumer {
 		
 		//FIMXE
 		int period = 365 ;
-//		BizOrderUtil.getMemberRechargeDa
 		
 		MemberBuyDTO memberBuyDTO = new MemberBuyDTO();
 		memberBuyDTO.setBuyerId(orderDO.getBuyerId());

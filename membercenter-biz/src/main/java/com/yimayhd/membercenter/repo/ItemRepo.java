@@ -6,11 +6,11 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.yimayhd.ic.client.model.domain.item.ItemDO;
-import com.yimayhd.ic.client.model.param.item.ItemQryDTO;
-import com.yimayhd.ic.client.model.result.item.ItemPageResult;
+import com.yimayhd.ic.client.model.result.ICResult;
 import com.yimayhd.ic.client.service.item.ItemQueryService;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.result.MemResult;
@@ -24,25 +24,19 @@ public class ItemRepo {
 	
 	public MemResult<List<MemeberItem>> queryMemberItems(MemberItemQueryDTO memberItemQueryDTO){
 		MemResult<List<MemeberItem>> result = new MemResult<List<MemeberItem>>();
-		if( memberItemQueryDTO == null ){
+		if( memberItemQueryDTO == null || CollectionUtils.isEmpty( memberItemQueryDTO.getItemIds() )){
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 			return result ;
 		}
-		ItemQryDTO itemQryDTO = new ItemQryDTO() ;
-		itemQryDTO.setPageNo(memberItemQueryDTO.getPageNo());
-		itemQryDTO.setPageSize(memberItemQueryDTO.getPageSize());
-		//FIXME 缺少通过会员信息
-		ItemPageResult itemPageResult = itemQueryService.getItem(itemQryDTO);
+		List<Long> itemIds = memberItemQueryDTO.getItemIds();
+		ICResult<List<ItemDO>> itemResult = itemQueryService.getItemByIds(itemIds);
 		
-		if( itemPageResult == null || !itemPageResult.isSuccess() ){
-			logger.error("getItem  ItemQryDTO={},  Result={}", JSON.toJSONString(itemQryDTO), JSON.toJSONString(itemPageResult) );
+		if( itemResult == null || !itemResult.isSuccess() || CollectionUtils.isEmpty(itemResult.getModule())){
+			logger.error("getItemByIds  itemIds={},  Result={}", JSON.toJSONString(itemIds), JSON.toJSONString(itemResult) );
 			result.setReturnCode(MemberReturnCode.PAGE_QUERY_ITEM_FAILED);
 			return result ;
 		}
-		List<ItemDO> itemDOs = itemPageResult.getItemDOList();
-		if( itemDOs == null ){
-			return result;
-		}
+		List<ItemDO> itemDOs = itemResult.getModule();
 		List<MemeberItem> items = new ArrayList<MemeberItem>() ;
 		for(ItemDO itemDO : itemDOs ){
 			MemeberItem item = new MemeberItem() ;

@@ -1,7 +1,7 @@
 <body id="bg-fff">
-<script src="$resourceContextTool.getResourcePath()/js/user/user.js"></script>
-<script src="$resourceContextTool.getResourcePath()/js/point/point.js"></script>
-<script src="$resourceContextTool.getResourcePath()/js/common/jquery.qrcode.min.js"></script>
+<script src="$resourceContextTool.getStaticResourcePath()/js/user/user.js"></script>
+<script src="$resourceContextTool.getStaticResourcePath()/js/point/point.js"></script>
+<script src="$resourceContextTool.getStaticResourcePath()/js/common/jquery.qrcode.min.js"></script>
 
 <h1 class="page-title">
 	<a href="#" class="return-btn" onclick='history.go(-1)'>返回</a>我的二维码
@@ -13,12 +13,13 @@
 		<span class="t-left">
 			
 		#if($nullTool.isNotNull($memeberInfo.name))
-		<img src="$resourceContextTool.getResourcePath()/img/userLogo.jpg" alt=""/>$memeberInfo.name
+
+		<img src="$resourceContextTool.getStaticResourcePath()/img/userLogo.png" alt=""/>$memeberInfo.name
 		
 		#end
 		</span> 
 		<span class="t-right"><a href="#" class="link-btn" id="currentPoint" onclick='toPointDetailForm.submit()'>前期积分:--</a></span>
-		<form name="toPointDetailForm" method="post" action="toPointDetails">
+		<form name="toPointDetailForm" method="post" action="$resourceContextTool.getContextPath()/point/toPointDetails">
 			<input type="hidden" name="merchantId" id="merchantId" value="$memeberInfo.merchantId" />
 			<input type="hidden" name="userId" id="userId" value="$memeberInfo.userId" />
 		</form>
@@ -30,10 +31,12 @@
 		#end
 	</p>
 	<div>
-		<form name="toFulfillUserForm" action="toFullfillUserInfo" method="post">
+		<form name="toFulfillUserForm" action="$resourceContextTool.getContextPath()/user/toFullfillUserInfo" method="post">
 			<input type="hidden" name="phone" id="phone" value="$memeberInfo.phone" />
 			<input type="hidden" name="openId" id="openId" value="$memeberInfo.openId" />		
 			<input type="hidden" name="mobileNo" id="mobileNo" value="$memeberInfo.phone" />
+			<input type="hidden" name="merchantId" id="merchantId" value="$memeberInfo.merchantId" />
+			<input type="hidden" name="userId" id="userId" value="$memeberInfo.userId" />
 		</form>
 	</div>
 </div>
@@ -42,9 +45,8 @@
 <script type="text/javascript">
 	$("#code").qrcode({
 		render : "table", //table方式
-		width : 250, //宽度
-		height : 250, //高度
-		color : "red",
+		width : 200, //宽度
+		height : 200, //高度
 		text : $("#codeInfo").val()
 	//任意内容
 	});

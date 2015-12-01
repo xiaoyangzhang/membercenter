@@ -4,7 +4,7 @@
 	<a href="" class="return-btn" onclick='history.go(-1)'>返回</a>完善资料
 </h1>
 
-<form name="fulfillUserInfoForm" action="fulfillUserInfo" method="post">
+<form name="fulfillUserInfoForm" action="$resourceContextTool.getContextPath()/user/fulfillUserInfo" method="post">
 	<div class="ipt-input">
 		<label><em>手机号:</em><span>
 		$stringTool.hideStr($memeberInfo.phone,3,7)
@@ -50,7 +50,7 @@
 		type="hidden" name="id" value="$memeberInfo.userId" />
 </form>
 
-<script src="$resourceContextTool.getResourcePath()/js/user/user.js"></script>
+<script src="$resourceContextTool.getStaticResourcePath()/js/user/user.js"></script>
 
 <script>
 initFulfillUserInfo();

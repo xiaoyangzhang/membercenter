@@ -56,7 +56,7 @@ public class UserInfoController {
 	 * @param memeberInfo
 	 * @return
 	 */
-	@RequestMapping(value = "/fulfillUserInfo")
+	@RequestMapping(value = "/user/fulfillUserInfo")
 	public ModelAndView fulfillUserInfoView(UserVO userVO,MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("user:{}",JSON.toJSONString(userVO));
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
@@ -117,7 +117,7 @@ public class UserInfoController {
 	 * @param memeberInfo
 	 * @return
 	 */
-	@RequestMapping(value = "/toDimensionCode")
+	@RequestMapping(value = "/user/toDimensionCode")
 	public ModelAndView toDimensionCodeView(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("MemeberBasicInfoVO:{}",JSON.toJSONString(memeberInfo));
 		
@@ -208,7 +208,7 @@ public class UserInfoController {
 	 * @param memeberInfo
 	 * @return
 	 */
-	@RequestMapping(value = "/sendMsgCode")
+	@RequestMapping(value = "/user/sendMsgCode")
 	public Response sendMsgCode(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		
@@ -255,7 +255,7 @@ public class UserInfoController {
 	 * @param authCode
 	 * @return
 	 */
-	@RequestMapping(value = "/checkMsgCode")
+	@RequestMapping(value = "/user/checkMsgCode")
 	public Response checkMsgCode(MemeberBasicInfoVO memeberInfo,String authCode) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		LOGGER.debug("authCode:{}",authCode);
@@ -338,7 +338,6 @@ public class UserInfoController {
 			memeberInfo.setName(memResult.getValue().getName());
 			mv.addObject("memeberInfo",memeberInfo);
 			mv.addObject("userId",memResult.getValue().getId());
-			mv.addObject("isFilledUserInfo",true);
 			mv.setViewName("/user/showTwoDimensionCode");
 			
 			//获取二维码信息
@@ -346,6 +345,10 @@ public class UserInfoController {
 			LOGGER.debug("codeInfo:{}" ,JSON.toJSONString(codeInfo));
 			
 			mv.addObject("codeInfo",codeInfo.getValue());
+			
+			if(!StringUtils.isEmpty(memResult.getValue().getName())){
+				mv.addObject("isFilledUserInfo",true);
+			}
 			
 			return mv;
 		}
@@ -358,7 +361,7 @@ public class UserInfoController {
 		return mv;
 	}
 
-	@RequestMapping(value = "/toAuthCodeView")
+	@RequestMapping(value = "/user/toAuthCodeView")
 	public ModelAndView toAuthCodeView(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 
@@ -397,7 +400,7 @@ public class UserInfoController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/toFullfillUserInfo")
+	@RequestMapping(value = "/user/toFullfillUserInfo")
 	public ModelAndView toFullfillUserInfoView(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		

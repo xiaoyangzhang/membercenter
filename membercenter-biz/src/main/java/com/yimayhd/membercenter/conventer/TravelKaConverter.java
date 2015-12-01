@@ -165,6 +165,7 @@ public class TravelKaConverter {
             }
             t.province = userDO.getProvince()==null ? null : userDO.getProvince();
             t.city = userDO.getCity() == null ? null : userDO.getCity();
+            t.signature = userDO.getSignature() == null ? null : userDO.getSignature();
             travelKaItems.add(t);
         }
         infoList.travelKaItemPageInfoList = travelKaItems;

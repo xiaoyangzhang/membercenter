@@ -4,6 +4,7 @@ package com.yimayhd.membercenter.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,8 +39,22 @@ public class TestController {
         map.put("result", baseResult.getValue());
         return map;
     }
+
+
+
+    @RequestMapping("/test/dimen")
+    public Map<String, Object> dimen() {
+        Map<String, Object> map = new HashMap<>();
+        BaseResult<String> dimenResult = userService.getTwoDimensionCode(3500L, 1L);
+        System.out.println(dimenResult.getValue());
+
+        BaseResult<UserDO> baseResult = userService.getUserDOByTwoDimensionCode(dimenResult.getValue());
+
+        map.put("result", baseResult.getValue());
+        return map;
+    }
     
-    @RequestMapping("/exception")
+    @RequestMapping("/test/exception")
     public Map<String,String> testException(){
     	Map<String,String> map = new HashMap<String,String>();
     	map.put("message","error happen");
@@ -47,6 +62,7 @@ public class TestController {
     	throw new RuntimeException("测试异常");
     	
     	//return map;
+
     }
 }
 

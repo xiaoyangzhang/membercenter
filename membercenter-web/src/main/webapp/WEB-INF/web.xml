@@ -33,7 +33,9 @@
 		<servlet-name>default</servlet-name>
 		<url-pattern>/static/*</url-pattern>
 	</servlet-mapping>
-
+	  
+	  
+	  
     <listener>
         <listener-class>com.yimayhd.membercenter.listener.Log4jConfigListener</listener-class>
     </listener>

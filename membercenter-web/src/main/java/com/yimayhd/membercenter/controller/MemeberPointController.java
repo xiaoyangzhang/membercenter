@@ -47,7 +47,7 @@ public class MemeberPointController {
 	 * @param memeberInfo
 	 * @return
 	 */
-	@RequestMapping(value = "/memeberTotalPoint")
+	@RequestMapping(value = "/point/memeberTotalPoint")
 	public Response getMemeberTotalPoint(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 
@@ -93,7 +93,7 @@ public class MemeberPointController {
 	 * @param pageSize
 	 * @return
 	 */
-	@RequestMapping(value="/memberPointDetails")
+	@RequestMapping(value="/point/memberPointDetails")
 	public Response getMemberPointDetailsByPage(MemeberBasicInfoVO memeberInfo, int pageNumber,int pageSize) {
 		LOGGER.debug("memeberInfo:{}" ,JSON.toJSONString(memeberInfo));
 		LOGGER.debug("pageNumber:{}", pageNumber);
@@ -161,7 +161,7 @@ public class MemeberPointController {
 	 * @param memeberInfo
 	 * @return
 	 */
-	@RequestMapping(value = "/toPointDetails")
+	@RequestMapping(value = "/point/toPointDetails")
 	public ModelAndView toPointDetailsView(MemeberBasicInfoVO memeberInfo) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("point/pointDetails");

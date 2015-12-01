@@ -129,4 +129,13 @@
         where
         t.id = #{id}
     </update>
+
+    <select id="getByUserId" resultMap="BaseResultMap" parameterType="long">
+        select <include refid="Base_Column_List"/>
+        from base_merchant t
+        where
+        t.user_id = #{userId}
+    </select>
+
+
 </mapper>

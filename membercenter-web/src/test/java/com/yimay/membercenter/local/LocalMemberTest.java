@@ -34,7 +34,7 @@ public class LocalMemberTest extends LocalBaseTest{
 	private void process(){
 		try{
 			
-			getMemberDetail();
+//			getMemberDetail();
 			
 			getMemberPurchuseDetail();
 		}catch(Exception e){
@@ -57,7 +57,7 @@ public class LocalMemberTest extends LocalBaseTest{
 	}
 	private void getMemberPurchuseDetail(){
 //		System.err.println();
-		long userId = 401 ;
+		long userId = 123456 ;
 		int appId =1 ;
 		int domainId = 1 ;
 		int versionCode = 10 ;

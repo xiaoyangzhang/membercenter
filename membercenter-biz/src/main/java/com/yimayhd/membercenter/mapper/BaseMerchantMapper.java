@@ -14,4 +14,6 @@ public interface BaseMerchantMapper {
     Long getCount(BaseMerchantDO baseMerchantDO);
 
     int updateByPrimaryKeySelective(BaseMerchantDO baseMerchantDO);
+
+    BaseMerchantDO getByUserId(long userId);
 }

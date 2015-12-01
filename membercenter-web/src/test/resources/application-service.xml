@@ -18,5 +18,6 @@
 	<bean id="merchantService" class="com.yimayhd.membercenter.service.client.MerchantServiceImpl"></bean>
 	<bean id="memberService" class="com.yimayhd.membercenter.service.client.MemberServiceImpl"></bean>
 	<bean id="memberPrivilegeService" class="com.yimayhd.membercenter.service.client.MemberPrivilegeServiceImpl"></bean>
+	<bean id="baseMerchantService" class="com.yimayhd.membercenter.service.client.BaseMerchantServiceImpl"></bean>
 	
 </beans>

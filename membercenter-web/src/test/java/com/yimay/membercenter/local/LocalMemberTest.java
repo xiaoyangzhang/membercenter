@@ -1,5 +1,13 @@
 package com.yimay.membercenter.local;
 
+
+import com.yimayhd.membercenter.api.TravelKaApi;
+import com.yimayhd.membercenter.client.domain.BaseMerchantDO;
+import com.yimayhd.membercenter.client.result.MemResult;
+import com.yimayhd.membercenter.client.service.BaseMerchantService;
+import com.yimayhd.membercenter.entity.PageInfo;
+import com.yimayhd.membercenter.entity.TravelKa;
+import com.yimayhd.membercenter.entity.TravelKaPageInfoList;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,6 +19,12 @@ import com.yimayhd.membercenter.entity.member.MemberPurchauseDetail;
 public class LocalMemberTest extends LocalBaseTest{
 	@Autowired
 	private MemberApi memberApi ;
+
+	@Autowired
+	private TravelKaApi travelKaApi;
+
+	@Autowired
+	private BaseMerchantService baseMerchantService;
 
 	@Test
 	public void test(){
@@ -52,5 +66,27 @@ public class LocalMemberTest extends LocalBaseTest{
 		
 		printResult(memberPurchauseDetail, "getMemberPurchuseDetail");
 		System.err.println();
+	}
+
+	@Test
+	public void getTravelKaDetailTest(){
+		TravelKa travelKa = travelKaApi.getTravelKaDetail(1, 2, 3, 4, 5, 10);
+		System.out.println("aaaaaaaaaaaaaaaaa");
+	}
+
+	@Test
+	public void getTravelKaListPageTest() {
+		PageInfo pageInfo = new PageInfo();
+		pageInfo.pageSize = 10;
+		pageInfo.pageNo = 1;
+		TravelKaPageInfoList  travelKaPageInfoList = travelKaApi.getTravelKaListPage(1, 2, 3, 4, 5, pageInfo, "NEWJOIN");
+		System.out.println("bbbbbb");
+	}
+
+	@Test
+	public void getMerchantByUserIdTest() {
+		long userId = 1L;
+		MemResult<BaseMerchantDO> memResult = baseMerchantService.getMerchantByUserId(userId);
+		System.out.println("abc");
 	}
 }

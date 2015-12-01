@@ -44,7 +44,7 @@ public class MerchantServiceManager {
     }
 
     public UserDO findMerchantUserDO(WxUserMerchantRelationDO wxUserMerchantRelationDO) {
-        List<WxUserMerchantRelationDO> queryResultList = wxUserMerchantRelationMapper.findByCondition(wxUserMerchantRelationDO);
+        List<WxUserMerchantRelationDO> queryResultList = this.findByCondition(wxUserMerchantRelationDO);
 
         if (CollectionUtils.isEmpty(queryResultList)) {
             return null;

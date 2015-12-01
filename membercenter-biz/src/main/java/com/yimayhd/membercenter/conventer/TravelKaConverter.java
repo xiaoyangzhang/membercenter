@@ -26,9 +26,9 @@ public class TravelKaConverter {
         travelKa.id = travelKaDO.getId();
         travelKa.userId = userDO.getId();
         travelKa.userInfo = convertUserDO2UserInfo(userDO);
-        travelKa.serviceContent = travelKaDO.getServiceContent();
-        travelKa.backgroundImg = travelKaDO.getBackgroundImg();
-        travelKa.isDel = travelKaDO.getIsDel();
+        travelKa.serviceContent = travelKaDO.getServiceContent() == null ? null : travelKaDO.getServiceContent();
+        travelKa.backgroundImg = travelKaDO.getBackgroundImg() == null ? null : travelKaDO.getBackgroundImg();
+        travelKa.isDel = travelKaDO.getIsDel() == null ? null : travelKaDO.getIsDel();
         travelKa.gmtCreated = travelKaDO.getGmtCreated().getTime();
         travelKa.gmtModified = travelKaDO.getGmtModified().getTime();
         travelKa.identityValidated = travelKaDO.getIdentityValidated();
@@ -63,14 +63,25 @@ public class TravelKaConverter {
         }
         UserInfo userInfo = new UserInfo();
         userInfo.id = userDO.getId();
-        userInfo.avatar = userDO.getAvatar();
-        userInfo.nickname = userDO.getNickname();
-        userInfo.name = userDO.getName();
-        userInfo.gender = String.valueOf(userDO.getGender());
-        userInfo.age = getAge(userDO.getBirthday());
-        userInfo.provinceCode = userDO.getProvinceCode();
-        userInfo.cityCode = userDO.getCityCode();
-        userInfo.signature = userDO.getSignature();
+        userInfo.avatar = userDO.getAvatar() == null ? null : userDO.getAvatar();
+        userInfo.nickname = userDO.getNickname() == null ? null : userDO.getNickname();
+        userInfo.name = userDO.getName() == null ? null : userDO.getName();
+        if(userDO.getGender() != 0){
+            userInfo.gender = String.valueOf(userDO.getGender());
+        }
+        if(userDO.getBirthday() != null){
+            userInfo.age = getAge(userDO.getBirthday());
+        }
+
+        if(userDO.getProvinceCode() != 0){
+            userInfo.provinceCode = userDO.getProvinceCode();
+        }
+
+        if(userDO.getCityCode() != 0){
+            userInfo.cityCode = userDO.getCityCode();
+        }
+
+        userInfo.signature = userDO.getSignature() == null ? null : userDO.getSignature();
         return userInfo;
     }
 
@@ -137,14 +148,23 @@ public class TravelKaConverter {
             TravelKaItem t = new TravelKaItem();
             t.userId = memberProfileDO.getUserId();
             UserDO userDO = userDOMap.get(t.userId);
-            t.gender = userDO.getGender();
-            t.avatar = userDO.getAvatar()==null?"":userDO.getAvatar();
-            t.nickname = userDO.getNickname();
-            t.provinceCode = userDO.getProvinceCode();
-            t.cityCode = userDO.getCityCode();
-            t.age = getAge(userDO.getBirthday());
-            t.province = userDO.getProvince();
-            t.city = userDO.getCity();
+            if(userDO.getGender() != 0){
+                t.gender = userDO.getGender();
+            }
+
+            t.avatar = userDO.getAvatar()==null ? null : userDO.getAvatar();
+            t.nickname = userDO.getNickname() == null ? null : userDO.getNickname();
+            if(userDO.getProvinceCode() != 0){
+                t.provinceCode = userDO.getProvinceCode();
+            }
+            if( userDO.getCityCode() != 0){
+                t.cityCode = userDO.getCityCode();
+            }
+            if(userDO.getBirthday() != null){
+                t.age = getAge(userDO.getBirthday());
+            }
+            t.province = userDO.getProvince()==null ? null : userDO.getProvince();
+            t.city = userDO.getCity() == null ? null : userDO.getCity();
             travelKaItems.add(t);
         }
         infoList.travelKaItemPageInfoList = travelKaItems;

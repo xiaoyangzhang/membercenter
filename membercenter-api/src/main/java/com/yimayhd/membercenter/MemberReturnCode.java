@@ -45,6 +45,9 @@ public class MemberReturnCode  extends AbstractReturnCode {
 	
 	public static final int USER_ERROR_C = 16002002;
 	public static final MemberReturnCode USER_ERROR = new MemberReturnCode(USER_ERROR_C, "用户错误") ;
+
+	public static final int USER_REGISTERED_C = 16002002;
+	public static final MemberReturnCode USER_REGISTERED = new MemberReturnCode(USER_REGISTERED_C, "用户已注册") ;
 	
 
 	

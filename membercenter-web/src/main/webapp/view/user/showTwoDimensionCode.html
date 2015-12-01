@@ -1,0 +1,70 @@
+<body id="bg-fff">
+<script src="$resourceContextTool.getResourcePath()/js/user/user.js"></script>
+<script src="$resourceContextTool.getResourcePath()/js/point/point.js"></script>
+<script src="$resourceContextTool.getResourcePath()/js/common/jquery.qrcode.min.js"></script>
+
+<h1 class="page-title">
+	<a href="#" class="return-btn" onclick='history.go(-1)'>返回</a>我的二维码
+</h1>
+
+<div class="code-box">
+	<input type="hidden" id="codeInfo" value="$codeInfo" />
+	<div class="header">
+		
+		<span class="t-left">
+		#if($nullTool.isNotNull($userName))
+		$userName
+		#end
+		</span> 
+		<span class="t-right"><a href="#" class="link-btn" id="currentPoint" onclick='toPointDetailForm.submit()'>前期积分:--</a></span>
+		<form name="toPointDetailForm" method="post" action="toPointDetails">
+		</form>
+		
+	</div>
+	<center>
+		<div class="er-img" id="code"></div>
+	</center>
+	<p class="clearfix">
+		#if ($nullTool.isNull($isFilledUserInfo) || $isFilledUserInfo == false) 
+		<a href="#" class="link-btn" id="fullfilUserInfo" onclick='toFulfillUserForm.submit()'>这里有大把积分</a>
+		#end
+
+	</p>
+
+	<div>
+		<form name="toFulfillUserForm" action="toFullfillUserInfo" method="post">
+
+			<input type="hidden" name="phone" value="$memeberInfo.phone" /> <input
+				type="hidden" name="openId" value="$memeberInfo.openId" /> <input
+				type="hidden" name="merchantId" value="$memeberInfo.merchantId" /> <input
+				type="hidden" name="userId" value="$memeberInfo.userId" />
+				<input type="hidden" name="mobileNo" value="$memeberInfo.phone" />
+		</form>
+	</div>
+
+</div>
+
+
+<script type="text/javascript">
+	$("#code").qrcode({
+		render : "table", //table方式
+		width : 200, //宽度
+		height : 200, //高度
+		text : $("#codeInfo").val()
+	//任意内容
+	});
+	
+	var userId = '344243443';
+	var merchantId = '12334';
+	//获取当前积分
+	getCurrentPoint(userId,merchantId,function(data){
+		var isSuccessful = data.meta.success;
+		if (isSuccessful == true) {
+			$("#currentPoint").text("前期积分:" + data.data.totalPoint);
+		}
+	});
+	
+	
+</script>
+
+</body>

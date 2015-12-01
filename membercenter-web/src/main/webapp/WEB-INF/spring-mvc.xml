@@ -37,5 +37,8 @@
 
 
 	</bean>
+	
+	<bean id="memberExceptionHandler" class="com.yimayhd.membercenter.exception.MemberExceptionHandler">
+	</bean>
 
 </beans>

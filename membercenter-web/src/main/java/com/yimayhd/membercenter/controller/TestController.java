@@ -35,9 +35,19 @@ public class TestController {
     public Map<String, Object> validate(@RequestParam String mobile, @RequestParam String code) {
         Map<String, Object> map = new HashMap<>();
         BaseResult<Boolean> baseResult = userService.validatePhoneVerifyCode(mobile, code);
-
+        
         map.put("result", baseResult.getValue());
         return map;
+    }
+    
+    @RequestMapping("/exception")
+    public Map<String,String> testException(){
+    	Map<String,String> map = new HashMap<String,String>();
+    	map.put("message","error happen");
+    	
+    	throw new RuntimeException("测试异常");
+    	
+    	//return map;
     }
 }
 

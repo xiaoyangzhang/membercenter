@@ -146,7 +146,7 @@ public class MerchantServiceImpl implements MerchantService {
         UserDOPageQuery userDOPageQuery = new UserDOPageQuery();
         userDOPageQuery.setUserIdList(new ArrayList<Long>(userIdSet));
         try{
-            BasePageResult<UserDO> basePageResult = userService.findPageResultByCondition(userDOPageQuery);
+                BasePageResult<UserDO> basePageResult = userService.findPageResultByCondition(userDOPageQuery);
             return MemResult.buildSuccessResult(basePageResult.getList());
         }catch (Exception e){
             return MemResult.buildSuccessResult(userDOList);

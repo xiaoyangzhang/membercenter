@@ -11,13 +11,17 @@
 	<input type="hidden" id="codeInfo" value="$codeInfo" />
 	<div class="header">
 		<span class="t-left">
-			<img src="$resourceContextTool.getResourcePath()/img/userLogo.jpg" alt=""/>杨某某
-		#if($nullTool.isNotNull($userName))
-		$userName
+			
+		#if($nullTool.isNotNull($memeberInfo.name))
+		<img src="$resourceContextTool.getResourcePath()/img/userLogo.jpg" alt=""/>$memeberInfo.name
+		
 		#end
 		</span> 
 		<span class="t-right"><a href="#" class="link-btn" id="currentPoint" onclick='toPointDetailForm.submit()'>前期积分:--</a></span>
-		<form name="toPointDetailForm" method="post" action="toPointDetails"></form>
+		<form name="toPointDetailForm" method="post" action="toPointDetails">
+			<input type="hidden" name="merchantId" id="merchantId" value="$memeberInfo.merchantId" />
+			<input type="hidden" name="userId" id="userId" value="$memeberInfo.userId" />
+		</form>
 	</div>
 	<div class="er-img" id="code"></div>
 	<p class="clearfix">
@@ -27,11 +31,9 @@
 	</p>
 	<div>
 		<form name="toFulfillUserForm" action="toFullfillUserInfo" method="post">
-			<input type="hidden" name="phone" value="$memeberInfo.phone" />
-			<input type="hidden" name="openId" value="$memeberInfo.openId" />
-			<input type="hidden" name="merchantId" value="$memeberInfo.merchantId" />
-			<input type="hidden" name="userId" value="$memeberInfo.userId" />
-			<input type="hidden" name="mobileNo" value="$memeberInfo.phone" />
+			<input type="hidden" name="phone" id="phone" value="$memeberInfo.phone" />
+			<input type="hidden" name="openId" id="openId" value="$memeberInfo.openId" />		
+			<input type="hidden" name="mobileNo" id="mobileNo" value="$memeberInfo.phone" />
 		</form>
 	</div>
 </div>
@@ -40,15 +42,15 @@
 <script type="text/javascript">
 	$("#code").qrcode({
 		render : "table", //table方式
-		width : 150, //宽度
-		height : 150, //高度
+		width : 250, //宽度
+		height : 250, //高度
 		color : "red",
 		text : $("#codeInfo").val()
 	//任意内容
 	});
 	
-	var userId = '344243443';
-	var merchantId = '12334';
+	var userId = $("#userId").val();
+	var merchantId = $("#merchantId").val();
 	//获取当前积分
 	getCurrentPoint(userId,merchantId,function(data){
 		var isSuccessful = data.meta.success;

@@ -20,7 +20,7 @@ public class Asserts {
 	 */
 	public static <T>  void AssertNotNull(T target,String paramName){
 		if(target == null){
-			throw new InValidParamException("parameter " + paramName + " should not be null!");
+			throw new InValidParamException(paramName + " should not be null!");
 		}
 	}
 	
@@ -34,7 +34,7 @@ public class Asserts {
 	public static void AssertStringNotEmpty(String target,String paramName){
 		AssertNotNull(target,paramName);
 		if("".equals(target)){
-			throw new InValidParamException("parameter " + paramName + " should not be empty!");
+			throw new InValidParamException(paramName + " should not be empty!");
 		}
 	}
 }

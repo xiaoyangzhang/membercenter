@@ -24,7 +24,6 @@ import com.yimay.integral.client.service.PointService;
 import com.yimayhd.membercenter.Constants;
 import com.yimayhd.membercenter.Converter;
 import com.yimayhd.membercenter.Response;
-import com.yimayhd.membercenter.exception.InValidParamException;
 import com.yimayhd.membercenter.utils.Asserts;
 import com.yimayhd.membercenter.utils.TimeElapseCaculate;
 import com.yimayhd.membercenter.vo.MemeberBasicInfoVO;
@@ -51,23 +50,10 @@ public class MemeberPointController {
 	@RequestMapping(value = "/memeberTotalPoint")
 	public Response getMemeberTotalPoint(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
-		
-		boolean succeeded = true;
-		String message = "";
 
-		try {
-			Asserts.AssertNotNull(memeberInfo,"memeberInfo");
-			Asserts.AssertNotNull(memeberInfo.getUserId(), "userId");
-			Asserts.AssertNotNull(memeberInfo.getMerchantId(), "merchantId");
-		} catch (InValidParamException e) {
-			succeeded = false;
-			message = e.getMessage();
-			LOGGER.error("invalid parameters:{}",message);
-		}
-
-		if (!succeeded) {
-			new Response().failure(message);
-		}
+		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
+		Asserts.AssertNotNull(memeberInfo.getUserId(), "userId");
+		Asserts.AssertNotNull(memeberInfo.getMerchantId(), "merchantId");
 		
 		if(LOGGER.isDebugEnabled()){
 			TimeElapseCaculate.startSnapshort();
@@ -75,10 +61,10 @@ public class MemeberPointController {
 		
 		// 获取可用总积分
 		CountReqDTO pointQueryRequestDTO = new CountReqDTO();
-		pointQueryRequestDTO.setMemberId(11L);
-		pointQueryRequestDTO.setVendorId(1L);
-//		pointQueryRequestDTO.setMemberId(memeberInfo.getUserId());
-//		pointQueryRequestDTO.setVendorId(memeberInfo.getMerchantId());
+//		pointQueryRequestDTO.setMemberId(11L);
+//		pointQueryRequestDTO.setVendorId(1L);
+		pointQueryRequestDTO.setMemberId(memeberInfo.getUserId());
+		pointQueryRequestDTO.setVendorId(memeberInfo.getMerchantId());
 		pointQueryRequestDTO.setIntegralType(PointType.POINT.getType());
 		
 		BaseResult<CountResultDTO> result = pointService.queryMemberPoint(pointQueryRequestDTO);
@@ -91,8 +77,7 @@ public class MemeberPointController {
 		
 		// 查询出用户总积分
 		if(!result.isSuccess()){
-			message = "错误编码:" + result.getErrorCode();
-			return new Response().failure(message);
+			return new Response().failure("错误编码:" + result.getErrorCode());
 		}
 		
 		Map<String,Object> viewMap = new HashMap<String,Object>();
@@ -117,16 +102,9 @@ public class MemeberPointController {
 		boolean succeeded = true;
 		String message = "";
 
-		try {
-			Asserts.AssertNotNull(memeberInfo, "memeberInfo");
-			Asserts.AssertNotNull(memeberInfo.getUserId(), "userId");
-		} catch (InValidParamException e) {
-			succeeded = false;
-			message = e.getMessage();
-
-			LOGGER.error("invalid parameter:{}" ,e.getMessage());
-		}
-
+		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
+		Asserts.AssertNotNull(memeberInfo.getUserId(), "userId");
+		
 		if (!succeeded) {
 			return new Response().failure(message);
 		}
@@ -136,16 +114,16 @@ public class MemeberPointController {
 		}
 		// 获取可用总积分
 		DetailReqDTO detailReqDTO = new DetailReqDTO();
-		detailReqDTO.setMemberId(11L);
-		detailReqDTO.setVendorId(1L);
-		detailReqDTO.setPageNo(1);
-		detailReqDTO.setPageSize(10);
+//		detailReqDTO.setMemberId(11L);
+//		detailReqDTO.setVendorId(1L);
+//		detailReqDTO.setPageNo(1);
+//		detailReqDTO.setPageSize(10);
 		
-//		detailReqDTO.setMemberId(memeberInfo.getUserId());
-//		detailReqDTO.setVendorId(memeberInfo.getMerchantId());
+		detailReqDTO.setMemberId(memeberInfo.getUserId());
+		detailReqDTO.setVendorId(memeberInfo.getMerchantId());
 		detailReqDTO.setIntegralType(PointType.POINT.getType());
-//		detailReqDTO.setPageNo(pageNumber);
-//		detailReqDTO.setPageSize(pageSize);
+		detailReqDTO.setPageNo(pageNumber);
+		detailReqDTO.setPageSize(pageSize);
 		
 		BaseResult<DetailResultDTO<PointDetailDTO>>  detailResult = pointService.queryPointDetails(detailReqDTO);
 		

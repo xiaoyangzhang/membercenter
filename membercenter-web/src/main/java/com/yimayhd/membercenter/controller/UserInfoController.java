@@ -61,29 +61,10 @@ public class UserInfoController {
 		LOGGER.debug("user:{}",JSON.toJSONString(userVO));
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		
-		boolean succeeded = true;
-		String message = "";
+		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
+		Asserts.AssertNotNull(userVO, "userVO");
 
-		try {
-			Asserts.AssertNotNull(memeberInfo, "memeberInfo");
-			Asserts.AssertNotNull(userVO, "userVO");
-		} catch (InValidParamException e) {
-			succeeded = false;
-			message = e.getMessage();
-
-			LOGGER.error("invalid parameter:{}",e.getMessage());
-		} finally {
-
-		}
-		
 		ModelAndView mv = new ModelAndView();
-		if (!succeeded) {
-			mv.addObject("message",message);
-			mv.setViewName("error");
-			return mv;
-		}
-		
-
 		if(LOGGER.isDebugEnabled()){
 			TimeElapseCaculate.startSnapshort();
 		}
@@ -330,25 +311,12 @@ public class UserInfoController {
 	public ModelAndView registerMain(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		
-		boolean succeeded = true;
-		String message = "";
-		try {
-			Asserts.AssertNotNull(memeberInfo, "memeberInfo");
-			Asserts.AssertStringNotEmpty(memeberInfo.getOpenId(), "openId");
-			Asserts.AssertNotNull(memeberInfo.getMerchantId(), "merchantId");
-		} catch (InValidParamException e) {
-			succeeded = false;
-			message = e.getMessage();
-			LOGGER.error("invalid parameter:{}",e);
-		}
+		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
+		Asserts.AssertStringNotEmpty(memeberInfo.getOpenId(), "openId");
+		Asserts.AssertNotNull(memeberInfo.getMerchantId(), "merchantId");
+		
 		
 		ModelAndView mv = new ModelAndView();
-
-		if (!succeeded) {
-			mv.addObject("message", message);
-			mv.setViewName("error");
-			return mv;
-		}
 
 		mv.addObject("memeberInfo", memeberInfo);
 		
@@ -367,6 +335,7 @@ public class UserInfoController {
 		if(memResult.getValue() != null){
 			memeberInfo.setUserId(memResult.getValue().getId());
 			memeberInfo.setPhone(memResult.getValue().getMobile());
+			memeberInfo.setName(memResult.getValue().getName());
 			mv.addObject("memeberInfo",memeberInfo);
 			mv.addObject("userId",memResult.getValue().getId());
 			mv.addObject("isFilledUserInfo",true);
@@ -376,7 +345,7 @@ public class UserInfoController {
 			BaseResult<String> codeInfo =  userService.getTwoDimensionCode(memResult.getValue().getId(),memeberInfo.getMerchantId());
 			LOGGER.debug("codeInfo:{}" ,JSON.toJSONString(codeInfo));
 			
-			mv.addObject("codeInfo",codeInfo);
+			mv.addObject("codeInfo",codeInfo.getValue());
 			
 			return mv;
 		}
@@ -392,28 +361,13 @@ public class UserInfoController {
 	@RequestMapping(value = "/toAuthCodeView")
 	public ModelAndView toAuthCodeView(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
-		
-		boolean succeeded = true;
-		String message = "";
-		
-		try {
-			Asserts.AssertNotNull(memeberInfo, "memeberInfo");
-			Asserts.AssertStringNotEmpty(memeberInfo.getOpenId(), "openId");
-			Asserts.AssertNotNull(memeberInfo.getMerchantId(), "merchantId");
-			Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
-		} catch (InValidParamException e) {
-			succeeded = false;
-			message = e.getMessage();
-			
-			LOGGER.error("invalid parameter:{}",e.getMessage());
-		}
 
+		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
+		Asserts.AssertStringNotEmpty(memeberInfo.getOpenId(), "openId");
+		Asserts.AssertNotNull(memeberInfo.getMerchantId(), "merchantId");
+		Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
+		
 		ModelAndView mv = new ModelAndView();
-		if (!succeeded) {
-			mv.addObject("message", message);
-			mv.setViewName("error");
-			return mv;
-		}
 		
 		// 添加模型数据 可以是任意的POJO对象
 		mv.addObject("memeberInfo", memeberInfo);
@@ -447,28 +401,13 @@ public class UserInfoController {
 	public ModelAndView toFullfillUserInfoView(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		
-		boolean succeeded = true;
-		String message = "";
-		
-		try {
-			Asserts.AssertNotNull(memeberInfo,"memeberInfo");
-			Asserts.AssertStringNotEmpty(memeberInfo.getOpenId(), "openId");
-			Asserts.AssertNotNull(memeberInfo.getMerchantId(), "merchantId");
-			Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
-		} catch (InValidParamException e) {
-			succeeded = false;
-			message = e.getMessage();
-			
-			LOGGER.error("invalid parameter:{}",e.getMessage());
-		}
-		
+		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
+		Asserts.AssertStringNotEmpty(memeberInfo.getOpenId(), "openId");
+		Asserts.AssertNotNull(memeberInfo.getMerchantId(), "merchantId");
+		Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
+
 		ModelAndView mv = new ModelAndView();
-		if (!succeeded) {
-			mv.addObject("message", message);
-			mv.setViewName("error");
-			return mv;
-		}
-		
+
 		mv.addObject("memeberInfo", memeberInfo);
 		mv.setViewName("user/fulfillUserInfo");
 		

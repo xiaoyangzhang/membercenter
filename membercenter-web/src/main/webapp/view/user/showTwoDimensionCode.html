@@ -10,46 +10,39 @@
 <div class="code-box">
 	<input type="hidden" id="codeInfo" value="$codeInfo" />
 	<div class="header">
-		
 		<span class="t-left">
+			<img src="$resourceContextTool.getResourcePath()/img/userLogo.jpg" alt=""/>杨某某
 		#if($nullTool.isNotNull($userName))
 		$userName
 		#end
 		</span> 
 		<span class="t-right"><a href="#" class="link-btn" id="currentPoint" onclick='toPointDetailForm.submit()'>前期积分:--</a></span>
-		<form name="toPointDetailForm" method="post" action="toPointDetails">
-		</form>
-		
+		<form name="toPointDetailForm" method="post" action="toPointDetails"></form>
 	</div>
-	<center>
-		<div class="er-img" id="code"></div>
-	</center>
+	<div class="er-img" id="code"></div>
 	<p class="clearfix">
 		#if ($nullTool.isNull($isFilledUserInfo) || $isFilledUserInfo == false) 
 		<a href="#" class="link-btn" id="fullfilUserInfo" onclick='toFulfillUserForm.submit()'>这里有大把积分</a>
 		#end
-
 	</p>
-
 	<div>
 		<form name="toFulfillUserForm" action="toFullfillUserInfo" method="post">
-
-			<input type="hidden" name="phone" value="$memeberInfo.phone" /> <input
-				type="hidden" name="openId" value="$memeberInfo.openId" /> <input
-				type="hidden" name="merchantId" value="$memeberInfo.merchantId" /> <input
-				type="hidden" name="userId" value="$memeberInfo.userId" />
-				<input type="hidden" name="mobileNo" value="$memeberInfo.phone" />
+			<input type="hidden" name="phone" value="$memeberInfo.phone" />
+			<input type="hidden" name="openId" value="$memeberInfo.openId" />
+			<input type="hidden" name="merchantId" value="$memeberInfo.merchantId" />
+			<input type="hidden" name="userId" value="$memeberInfo.userId" />
+			<input type="hidden" name="mobileNo" value="$memeberInfo.phone" />
 		</form>
 	</div>
-
 </div>
 
 
 <script type="text/javascript">
 	$("#code").qrcode({
 		render : "table", //table方式
-		width : 200, //宽度
-		height : 200, //高度
+		width : 150, //宽度
+		height : 150, //高度
+		color : "red",
 		text : $("#codeInfo").val()
 	//任意内容
 	});

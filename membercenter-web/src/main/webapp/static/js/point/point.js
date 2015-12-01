@@ -64,8 +64,8 @@ function pointDetailPullUpAction () {
 	
 	//每页显示多少条
 	var pageSize = $("#pageSize").val();
-	var userId = '11223333';
-	var merchantId = '3444444';
+	var userId = $("#userId").val();
+	var merchantId = $("#merchantId").val();
 	
 	//获取积分明细
 	getPointDetailsByPage(currentPage, pageSize, userId, merchantId, function(
@@ -92,11 +92,11 @@ function pointDetailPullUpAction () {
 
 function initPointDetails(){
 	//页号
-	var pageNumber = 2;
+	var pageNumber = $("#pageNumber").val();
 	//每页显示多少条
-	var pageSize = 10;
-	var userId = '11223333';
-	var merchantId = '3444444';
+	var pageSize = $("#pageSize").val();
+	var userId = $("#userId").val();
+	var merchantId = $("#merchantId").val();
 	
 	//获取当前积分
 	getCurrentPoint(userId,merchantId,function(data){

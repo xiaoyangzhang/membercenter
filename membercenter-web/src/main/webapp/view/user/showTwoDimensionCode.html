@@ -10,38 +10,32 @@
 <div class="code-box">
 	<input type="hidden" id="codeInfo" value="$codeInfo" />
 	<div class="header">
-		
 		<span class="t-left">
-		#if($nullTool.isNotNull($userName))
-		$userName
+			
+		#if($nullTool.isNotNull($memeberInfo.name))
+		<img src="$resourceContextTool.getResourcePath()/img/userLogo.jpg" alt=""/>$memeberInfo.name
+		
 		#end
 		</span> 
 		<span class="t-right"><a href="#" class="link-btn" id="currentPoint" onclick='toPointDetailForm.submit()'>前期积分:--</a></span>
 		<form name="toPointDetailForm" method="post" action="toPointDetails">
+			<input type="hidden" name="merchantId" id="merchantId" value="$memeberInfo.merchantId" />
+			<input type="hidden" name="userId" id="userId" value="$memeberInfo.userId" />
 		</form>
-		
 	</div>
-	<center>
-		<div class="er-img" id="code"></div>
-	</center>
+	<div class="er-img" id="code"></div>
 	<p class="clearfix">
 		#if ($nullTool.isNull($isFilledUserInfo) || $isFilledUserInfo == false) 
 		<a href="#" class="link-btn" id="fullfilUserInfo" onclick='toFulfillUserForm.submit()'>这里有大把积分</a>
 		#end
-
 	</p>
-
 	<div>
 		<form name="toFulfillUserForm" action="toFullfillUserInfo" method="post">
-
-			<input type="hidden" name="phone" value="$memeberInfo.phone" /> <input
-				type="hidden" name="openId" value="$memeberInfo.openId" /> <input
-				type="hidden" name="merchantId" value="$memeberInfo.merchantId" /> <input
-				type="hidden" name="userId" value="$memeberInfo.userId" />
-				<input type="hidden" name="mobileNo" value="$memeberInfo.phone" />
+			<input type="hidden" name="phone" id="phone" value="$memeberInfo.phone" />
+			<input type="hidden" name="openId" id="openId" value="$memeberInfo.openId" />		
+			<input type="hidden" name="mobileNo" id="mobileNo" value="$memeberInfo.phone" />
 		</form>
 	</div>
-
 </div>
 
 
@@ -54,8 +48,8 @@
 	//任意内容
 	});
 	
-	var userId = '344243443';
-	var merchantId = '12334';
+	var userId = $("#userId").val();
+	var merchantId = $("#merchantId").val();
 	//获取当前积分
 	getCurrentPoint(userId,merchantId,function(data){
 		var isSuccessful = data.meta.success;

@@ -12,6 +12,8 @@ import com.yimayhd.membercenter.client.vo.MerchantVO;
 import com.yimayhd.membercenter.manager.MerchantServiceManager;
 import com.yimayhd.membercenter.service.BussinessException;
 import com.yimayhd.user.client.domain.UserDO;
+import com.yimayhd.user.client.domain.UserDOPageQuery;
+import com.yimayhd.user.client.result.BasePageResult;
 import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
 import com.yimayhd.user.errorcode.UserServiceHttpCode;
@@ -141,9 +143,14 @@ public class MerchantServiceImpl implements MerchantService {
         for (WxUserMerchantRelationDO relationDO : wxUserMerchantRelationDOList) {
             userIdSet.add(relationDO.getUserId());
         }
-
-
-        return null;
+        UserDOPageQuery userDOPageQuery = new UserDOPageQuery();
+        userDOPageQuery.setUserIdList(new ArrayList<Long>(userIdSet));
+        try{
+            BasePageResult<UserDO> basePageResult = userService.findPageResultByCondition(userDOPageQuery);
+            return MemResult.buildSuccessResult(basePageResult.getList());
+        }catch (Exception e){
+            return MemResult.buildSuccessResult(userDOList);
+        }
     }
 
     private UserDO parseUserDO(BaseResult<UserDO> userDOBaseResult, MerchantVO merchantVO) {

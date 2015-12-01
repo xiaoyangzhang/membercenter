@@ -9,7 +9,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
 
+import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.alibaba.fastjson.JSON;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.MemberDO;
@@ -44,6 +47,7 @@ import com.yimayhd.membercenter.mapper.MemberDurationDOMapper;
 import com.yimayhd.membercenter.mapper.MemberFirehoseDOMapper;
 import com.yimayhd.membercenter.repo.ItemRepo;
 import com.yimayhd.membercenter.repo.OrderRepo;
+import com.yimayhd.membercenter.repo.ResourceRepo;
 import com.yimayhd.membercenter.util.DateUtil;
 
 /**
@@ -51,23 +55,19 @@ import com.yimayhd.membercenter.util.DateUtil;
  */
 
 public class MemberManager {
-    private final static Logger log = LoggerFactory.getLogger(MemberManager.class);
+    private final static Logger logger = LoggerFactory.getLogger(MemberManager.class);
     @Autowired
     private MemberDao memberDao;
     @Autowired
     private MemberRecordDao memberRecordDao ;
-    
-    @Autowired
-    private MemberDurationDOMapper memberDurationDOMapper;
-
-    @Autowired
-    private MemberFirehoseDOMapper memberFirehoseDOMapper;
     @Autowired
     private MemberPrivilegeDao memberPrivilegeDao;
     @Autowired
     private OrderRepo orderRepo ;
     @Autowired
     private ItemRepo itemRepo ;
+    @Autowired
+    private ResourceRepo resourceRepo ;
     
     
     public MemResult<MemberDO> getMemberById(long id) {
@@ -117,7 +117,7 @@ public class MemberManager {
 		
 		MemResultSupport createOrUpdateResult = memberDao.createOrUpdateMember(memberDO, memberRecordDO);
 		if( createOrUpdateResult == null ||  !createOrUpdateResult.isSuccess() ){
-			log.error("createOrUpdateMember failed!  member={}, memberRecord={}, result={}", JSON.toJSONString(memberDO), JSON.toJSONString(memberRecordDO), JSON.toJSONString(createOrUpdateResult));
+			logger.error("createOrUpdateMember failed!  member={}, memberRecord={}, result={}", JSON.toJSONString(memberDO), JSON.toJSONString(memberRecordDO), JSON.toJSONString(createOrUpdateResult));
 			if( createOrUpdateResult == null ){
 				result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
 			}else{
@@ -126,6 +126,7 @@ public class MemberManager {
 		}else{
 			result.setValue(true);
 		}
+		
 		return result;
 	}
 	
@@ -172,14 +173,19 @@ public class MemberManager {
 	
 	public MemResult<MemberPurchauseDetail> getMemberPurchuseDetail(long userId){
 		MemResult<MemberPurchauseDetail> result = new MemResult<MemberPurchauseDetail>();
-		MemberDO memberDO = memberDao.selectByUserId(userId);
-		if( memberDO == null ){
-			result.setReturnCode(MemberReturnCode.MEMBER_NOT_FOUND);
-			return result ;
-		}
-		
 		MemberPurchauseDetail detail = new MemberPurchauseDetail() ;
 		
+		List<Long> itemIds = resourceRepo.getMemberItemIds();
+		if( CollectionUtils.isEmpty(itemIds) ){
+			logger.error("getMemberItemIds no itemId return!");
+		}else{
+			MemberItemQueryDTO memberItemQueryDTO = new MemberItemQueryDTO() ;
+			memberItemQueryDTO.setItemIds(itemIds);
+			MemResult<List<MemeberItem>> itemResult = itemRepo.queryMemberItems(memberItemQueryDTO);
+			if( itemResult != null && itemResult.isSuccess() ){
+				detail.memeberItems = itemResult.getValue();
+			}
+		}
 		//FIXME 目前不支持分页，后期完善
 		int pageNo = 1 ;
 		int pageSize =20 ;
@@ -192,46 +198,8 @@ public class MemberManager {
 		detail.privilegeInfos = privilegeInfos  ;
 		
 		
-		MemberItemQueryDTO memberItemQueryDTO = new MemberItemQueryDTO() ;
-		memberItemQueryDTO.setPageNo(pageNo);
-		memberItemQueryDTO.setPageSize(pageSize);
-		MemResult<List<MemeberItem>> itemResult = itemRepo.queryMemberItems(memberItemQueryDTO);
-		if( itemResult != null && itemResult.isSuccess() ){
-			detail.memeberItems = itemResult.getValue();
-		}
 		result.setValue(detail);
 		return result;
 	}
-	
-	
-
-	@Deprecated
-    public MemberDurationDO AddMemberDuration(MemberDurationDO memberDurationDO){
-        if(memberDurationDO == null){
-            return null;
-        }
-        try {
-            memberDurationDO = memberDurationDOMapper.insert(memberDurationDO);
-        } catch (Exception e) {
-            log.error(" MemberManager method AddMemberDuration error ",e);
-        }
-        return memberDurationDO;
-    }
-	
-	@Deprecated
-    public MemberFirehoseDO AddMemberFirehose(MemberFirehoseDO memberFirehoseDO){
-    	
-        if(memberFirehoseDO == null){
-            return null;
-        }
-        try {
-            memberFirehoseDO = memberFirehoseDOMapper.insert(memberFirehoseDO);
-        } catch (Exception e) {
-            log.error(" MemberManager method AddMemberFirehose error ",e);
-        }
-        
-        return memberFirehoseDO;
-    }
-
 
 }

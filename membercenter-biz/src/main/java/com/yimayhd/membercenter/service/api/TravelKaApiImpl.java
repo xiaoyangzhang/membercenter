@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.yimayhd.membercenter.entity.TravelKaClub;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,10 @@ public class TravelKaApiImpl implements TravelKaApi {
                 //4. 组装数据
                 travelKa = TravelKaConverter.converntTravelKaDetail(userAbilityRelationDOs, memberProfileDO, userDO);
                 travelKa.isTravelKa = String.valueOf(BaseStatus.YES.getType());
+                TravelKaClub travelKaClub = new TravelKaClub();
+                travelKaClub.liveCount = 77;
+                travelKaClub.informationsCount = 567;
+                travelKa.travelKaClub = travelKaClub;
             } else {
                 // 只返回用户信息即可
                 TravelKaConverter.converntTravelKaDetail4UserInfo(userDO);

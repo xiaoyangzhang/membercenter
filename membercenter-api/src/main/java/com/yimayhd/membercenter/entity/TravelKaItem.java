@@ -40,5 +40,8 @@ public class TravelKaItem implements Serializable {
     @Description("年龄")
     public int age;
 
+    @Description("签名")
+    public String signature;
+
 
 }

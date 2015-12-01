@@ -5,7 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.yimayhd.membercenter.entity.*;
+import com.yimayhd.membercenter.entity.KaClub;
+import com.yimayhd.membercenter.entity.PageInfo;
+import com.yimayhd.membercenter.entity.TravelKa;
 import com.yimayhd.membercenter.entity.TravelKaClub;
+import com.yimayhd.membercenter.entity.TravelKaPageInfoList;
+import com.yimayhd.user.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +23,6 @@ import com.yimayhd.membercenter.client.domain.UserAbilityRelationDO;
 import com.yimayhd.membercenter.client.query.TravelkaPageQuery;
 import com.yimayhd.membercenter.client.result.BasePageResult;
 import com.yimayhd.membercenter.conventer.TravelKaConverter;
-import com.yimayhd.membercenter.entity.PageInfo;
-import com.yimayhd.membercenter.entity.TravelKa;
-import com.yimayhd.membercenter.entity.TravelKaPageInfoList;
 import com.yimayhd.membercenter.manager.MemberProfileManager;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.enums.BaseStatus;
@@ -62,10 +65,27 @@ public class TravelKaApiImpl implements TravelKaApi {
                 //4. 组装数据
                 travelKa = TravelKaConverter.converntTravelKaDetail(userAbilityRelationDOs, memberProfileDO, userDO);
                 travelKa.isTravelKa = String.valueOf(BaseStatus.YES.getType());
+
                 TravelKaClub travelKaClub = new TravelKaClub();
                 travelKaClub.liveCount = 77;
                 travelKaClub.informationsCount = 567;
                 travelKa.travelKaClub = travelKaClub;
+
+                KaClub kaClub1 = new KaClub();
+                kaClub1.clubName = "城市生活";
+                kaClub1.clubId = 1;
+                kaClub1.clubImg = "xx/xx/xx.jpg";
+
+                KaClub kaClub2 = new KaClub();
+                kaClub2.clubName = "农庄生活";
+                kaClub2.clubId = 2;
+                kaClub2.clubImg = "yy/yy/yyy.jpg";
+                List<KaClub> kaClubs = new ArrayList<KaClub>();
+                kaClubs.add(kaClub1);
+                kaClubs.add(kaClub2);
+                travelKaClub.kaClubs = kaClubs;
+
+
             } else {
                 // 只返回用户信息即可
                 TravelKaConverter.converntTravelKaDetail4UserInfo(userDO);

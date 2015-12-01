@@ -34,7 +34,7 @@ function initCheckAuthCode(){
 		$('.sendcode-btn').countdown({autoTime:60});
 	 });
 	 
-	 $(".sendcode-btn").attr("href",contextPath + "user/sendMsgCode?phone=" + $("#phone").val());
+	 $(".sendcode-btn").attr("href",contextPath + "/user/sendMsgCode?phone=" + $("#phone").val());
 }
 
 /**

@@ -9,6 +9,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
 
 import com.alibaba.fastjson.JSON;
 import com.yimayhd.membercenter.MemberReturnCode;
@@ -126,6 +128,7 @@ public class MemberManager {
 		}else{
 			result.setValue(true);
 		}
+		
 		return result;
 	}
 	
@@ -172,12 +175,6 @@ public class MemberManager {
 	
 	public MemResult<MemberPurchauseDetail> getMemberPurchuseDetail(long userId){
 		MemResult<MemberPurchauseDetail> result = new MemResult<MemberPurchauseDetail>();
-		MemberDO memberDO = memberDao.selectByUserId(userId);
-		if( memberDO == null ){
-			result.setReturnCode(MemberReturnCode.MEMBER_NOT_FOUND);
-			return result ;
-		}
-		
 		MemberPurchauseDetail detail = new MemberPurchauseDetail() ;
 		
 		//FIXME 目前不支持分页，后期完善

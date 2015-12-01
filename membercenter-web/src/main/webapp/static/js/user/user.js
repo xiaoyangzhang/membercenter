@@ -1,9 +1,11 @@
+var contextPath=$("#contextPath").val();
+
 /*###########################ajax后台交互:start##################################################*/
 function sendAuthCode(phone,callback) {
 	var phone = $("#phone").val();
 	//alert(phone);
 	
-	$.post("sendMsgCode", {
+	$.post(contextPath + "/user/sendMsgCode", {
 		phone : phone
 	}, function(data, status) {
 		alert("验证发送成功!");
@@ -12,7 +14,7 @@ function sendAuthCode(phone,callback) {
 
 function checkAuthCode(phone,authCode,callback){
 	// 校验短信验证码
-	$.post("checkMsgCode", {
+	$.post(contextPath + "/user/checkMsgCode", {
 		phone : phone,
 		authCode : authCode
 	}, function(data, status) {
@@ -32,7 +34,7 @@ function initCheckAuthCode(){
 		$('.sendcode-btn').countdown({autoTime:60});
 	 });
 	 
-	 $(".sendcode-btn").attr("href","sendMsgCode?phone=" + $("#phone").val());
+	 $(".sendcode-btn").attr("href",contextPath + "user/sendMsgCode?phone=" + $("#phone").val());
 }
 
 /**

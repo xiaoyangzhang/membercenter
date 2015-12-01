@@ -39,7 +39,7 @@ public class TestController {
         return map;
     }
     
-    @RequestMapping("/exception")
+    @RequestMapping("/test/exception")
     public Map<String,String> testException(){
     	Map<String,String> map = new HashMap<String,String>();
     	map.put("message","error happen");

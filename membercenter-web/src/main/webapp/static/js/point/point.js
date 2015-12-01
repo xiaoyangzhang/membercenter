@@ -1,8 +1,10 @@
 
+var contextPath=$("#contextPath").val();
+
 /*#####################################ajax 后台交互:start##########################################*/
 
 function getCurrentPoint(userId, merchantId, callback) {
-	$.post("memeberTotalPoint", {
+	$.post(contextPath + "/point/memeberTotalPoint", {
 		userId : userId,
 		merchantId : merchantId
 	}, function(data, status) {
@@ -13,7 +15,7 @@ function getCurrentPoint(userId, merchantId, callback) {
 function getPointDetailsByPage(pageNumber, pageSize, userId, merchantId,
 		callback) {
 	// 分页获取积分明细
-	$.post("memberPointDetails", {
+	$.post(contextPath + "/point/memberPointDetails", {
 		userId : userId,
 		merchantId : merchantId,
 		pageNumber : pageNumber,

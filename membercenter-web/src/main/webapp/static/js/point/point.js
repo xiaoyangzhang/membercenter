@@ -30,82 +30,20 @@ function getPointDetailsByPage(pageNumber, pageSize, userId, merchantId,
 
 /*############################积分明细页面:start##############################################*/
 function pointDetailLoaded() {
-	
-	generatedCount = 0;
 	pullUpEl = document.getElementById('pullUp');	
 	pullUpOffset = pullUpEl.offsetHeight;
 	
 	myScroll = new iScroll('wrapper', {
 		useTransition: true,
-		topOffset: 51,
-		onRefresh: function () {
-			if (pullUpEl.className.match('loading')) {
-				pullUpEl.className = '';
-				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
-			}
-		},
-		onScrollMove: function () {
-			if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
-				pullUpEl.className = 'flip';
-				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Release to refresh...';
-				this.maxScrollY += 20;
-			} else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
-				pullUpEl.className = '';
-				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
-				this.maxScrollY = pullUpOffset;
-			}
-		},
-		
 		onScrollEnd: function () {
-			if (pullUpEl.className.match('flip')){
-				pullUpEl.className = 'loading';
-				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Loading...';				
-				pointDetailPullUpAction();	
-			}
-
+			pointDetailPullUpAction();	
 		}
 	});
 	
 } 
 
 function pointDetailPullUpAction () {
-	//页号
-	var currentPage = parseInt($("#pageNumber").val()) + 1;
 	
-	var totalPage = $("#totalPage").val();
-	if(currentPage >  parseInt(totalPage)){
-		return ;
-	}
-	
-	$("#pageNumber").val(currentPage);
-	
-	//每页显示多少条
-	var pageSize = $("#pageSize").val();
-	var userId = $("#userId").val();
-	var merchantId = $("#merchantId").val();
-	
-	//获取积分明细
-	getPointDetailsByPage(currentPage, pageSize, userId, merchantId, function(
-			data) {
-		var isSuccessful = data.meta.success;
-		if (isSuccessful == true) {
-			var pointDetails = data.data.pointDetails;
-			for (i in pointDetails) {
-				var detailStr = " <li> <span class='left'>"
-						+ pointDetails[i].source + "&nbsp; <br/><em>"
-						+ pointDetails[i].createDate
-						+ "</em></span><span class='right'> "
-						+ pointDetails[i].type + pointDetails[i].point
-						+ "<br/> <em>有效期至" + pointDetails[i].endDate
-						+ "</em></span></li> ";
-				$("#pointDetails").append(detailStr);
-			}
-		}else{
-			alert("获取积分明细错误:" + data.meta.message);
-		}
-
-	});	
-	myScroll.refresh();	
 }
 
 
@@ -144,7 +82,7 @@ function initPointDetails(){
 						+ pointDetails[i].type + pointDetails[i].point
 						+ "<br/> <em>有效期至" + pointDetails[i].endDate
 						+ "</em></span></li> ";
-				$("#pointDetails").append(detailStr);
+				$("#showPointDetailsDiv").append(detailStr);
 			}
 		}else{
 			alert("获取积分明细错误:" + data.meta.message);

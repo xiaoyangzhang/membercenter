@@ -30,32 +30,39 @@ function getPointDetailsByPage(pageNumber, pageSize, userId, merchantId,
 
 /*############################积分明细页面:start##############################################*/
 function pointDetailLoaded() {
+	
+	generatedCount = 0;
 	pullUpEl = document.getElementById('pullUp');	
 	pullUpOffset = pullUpEl.offsetHeight;
 	
 	myScroll = new iScroll('wrapper', {
 		useTransition: true,
+		topOffset: 51,
+		onRefresh: function () {
+			if (pullUpEl.className.match('loading')) {
+				pullUpEl.className = '';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
+			}
+		},
 		onScrollMove: function () {
-			if (this.y > 5 && !pullDownEl.className.match('flip')) {
-				pullDownEl.className = 'flip';
-				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Release to refresh...';
-				this.minScrollY = 0;
-			} else if (this.y < 5 && pullDownEl.className.match('flip')) {
-				pullDownEl.className = '';
-				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
-				this.minScrollY = -pullDownOffset;
-			} else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
+			if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
 				pullUpEl.className = 'flip';
 				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Release to refresh...';
-				this.maxScrollY = this.maxScrollY;
+				this.maxScrollY += 20;
 			} else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
 				pullUpEl.className = '';
 				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
 				this.maxScrollY = pullUpOffset;
 			}
 		},
+		
 		onScrollEnd: function () {
-			pointDetailPullUpAction();	
+			if (pullUpEl.className.match('flip')){
+				pullUpEl.className = 'loading';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Loading...';				
+				pointDetailPullUpAction();	
+			}
+
 		}
 	});
 	
@@ -91,7 +98,7 @@ function pointDetailPullUpAction () {
 						+ pointDetails[i].type + pointDetails[i].point
 						+ "<br/> <em>有效期至" + pointDetails[i].endDate
 						+ "</em></span></li> ";
-				$("#showPointDetailsDiv").append(detailStr);
+				$("#pointDetails").append(detailStr);
 			}
 		}else{
 			alert("获取积分明细错误:" + data.meta.message);
@@ -137,7 +144,7 @@ function initPointDetails(){
 						+ pointDetails[i].type + pointDetails[i].point
 						+ "<br/> <em>有效期至" + pointDetails[i].endDate
 						+ "</em></span></li> ";
-				$("#showPointDetailsDiv").append(detailStr);
+				$("#pointDetails").append(detailStr);
 			}
 		}else{
 			alert("获取积分明细错误:" + data.meta.message);

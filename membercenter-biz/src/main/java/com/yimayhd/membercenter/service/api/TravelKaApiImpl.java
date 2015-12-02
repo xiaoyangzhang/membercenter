@@ -54,6 +54,10 @@ public class TravelKaApiImpl implements TravelKaApi {
     ){
         TravelKa travelKa = null;
         try{
+            if(theUserId <=0){
+                DubboExtProperty.setErrorCode(MemberReturnCode.PARAMTER_ERROR);
+                return null;
+            }
             logger.info("TravelKaApiImpl method getTravelKaDetail userId:"+ theUserId);
             //1 . 根据用户id 查询 大咖详情
             MemberProfileDO memberProfileDO = memberProfileManager.getMemberProfileByUserId(theUserId);

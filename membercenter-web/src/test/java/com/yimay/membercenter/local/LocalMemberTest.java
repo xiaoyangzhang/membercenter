@@ -5,9 +5,12 @@ import com.yimayhd.membercenter.api.TravelKaApi;
 import com.yimayhd.membercenter.client.domain.BaseMerchantDO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.BaseMerchantService;
+import com.yimayhd.membercenter.client.service.MerchantService;
+import com.yimayhd.membercenter.client.vo.MerchantPageQueryVO;
 import com.yimayhd.membercenter.entity.PageInfo;
 import com.yimayhd.membercenter.entity.TravelKa;
 import com.yimayhd.membercenter.entity.TravelKaPageInfoList;
+import com.yimayhd.user.client.domain.UserDO;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,6 +18,8 @@ import com.yimay.membercenter.LocalBaseTest;
 import com.yimayhd.membercenter.api.MemberApi;
 import com.yimayhd.membercenter.entity.member.MemberDetail;
 import com.yimayhd.membercenter.entity.member.MemberPurchauseDetail;
+
+import java.util.List;
 
 public class LocalMemberTest extends LocalBaseTest{
 	@Autowired
@@ -25,6 +30,9 @@ public class LocalMemberTest extends LocalBaseTest{
 
 	@Autowired
 	private BaseMerchantService baseMerchantService;
+
+	@Autowired
+	private MerchantService merchantService;
 
 	@Test
 	public void test(){
@@ -88,5 +96,21 @@ public class LocalMemberTest extends LocalBaseTest{
 		long userId = 1L;
 		MemResult<BaseMerchantDO> memResult = baseMerchantService.getMerchantByUserId(userId);
 		System.out.println("abc");
+	}
+
+
+
+	@Test
+	public void testFindPageUsersByMerchant(){
+		MerchantPageQueryVO merchantPageQueryVO = new MerchantPageQueryVO();
+		merchantPageQueryVO.setPageSize(10);
+		merchantPageQueryVO.setPageNo(1);
+//		merchantPageQueryVO.setCity();
+//		merchantPageQueryVO.setNickName();
+//		merchantPageQueryVO.setMerchantId();
+		merchantPageQueryVO.setMerchantUserId(1L);
+//		merchantPageQueryVO.setMobile();
+		MemResult<List<UserDO>> memResult = merchantService.findPageUsersByMerchant(merchantPageQueryVO);
+		printResult(memResult,"MemResult");
 	}
 }

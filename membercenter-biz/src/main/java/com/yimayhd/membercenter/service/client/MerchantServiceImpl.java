@@ -9,6 +9,7 @@ import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.MerchantService;
 import com.yimayhd.membercenter.client.vo.MerchantPageQueryVO;
 import com.yimayhd.membercenter.client.vo.MerchantVO;
+import com.yimayhd.membercenter.converter.MemberConverter;
 import com.yimayhd.membercenter.manager.MerchantServiceManager;
 import com.yimayhd.membercenter.service.BussinessException;
 import com.yimayhd.user.client.domain.UserDO;
@@ -130,26 +131,29 @@ public class MerchantServiceImpl implements MerchantService {
             return MemResult.buildFailResult(MemberReturnCode.PARAMTER_ERROR_C,
                     MemberReturnCode.PARAMTER_ERROR.getDesc(), null);
         }
+        BaseMerchantDO baseMerchantDO = merchantServiceManager.getBaseMerchantByMerchantUserId(merchantUserId);
+        if (null == baseMerchantDO) {
+            LOGGER.error("baseMerchantDO is null");
+            return MemResult.buildFailResult(MemberReturnCode.MERCHANT_NOT_FOUND_ERROR_C,
+                    MemberReturnCode.MERCHANT_NOT_FOUND_ERROR.getDesc(), null);
+        }
 
         List<UserDO> userDOList = new ArrayList<UserDO>();
         WxUserMerchantRelationDO wxUserMerchantRelationDO = new WxUserMerchantRelationDO();
-        wxUserMerchantRelationDO.setMerchantId(merchantPageQueryVO.getMerchantId());
+        wxUserMerchantRelationDO.setMerchantId(baseMerchantDO.getId());
         List<WxUserMerchantRelationDO> wxUserMerchantRelationDOList = merchantServiceManager.findByCondition(wxUserMerchantRelationDO);
         if (CollectionUtils.isEmpty(wxUserMerchantRelationDOList)) {
             return MemResult.buildSuccessResult(userDOList);
         }
 
-        Set<Long> userIdSet = new HashSet<Long>();
-        for (WxUserMerchantRelationDO relationDO : wxUserMerchantRelationDOList) {
-            userIdSet.add(relationDO.getUserId());
-        }
-        UserDOPageQuery userDOPageQuery = new UserDOPageQuery();
-        userDOPageQuery.setUserIdList(new ArrayList<Long>(userIdSet));
         try{
-                BasePageResult<UserDO> basePageResult = userService.findPageResultByCondition(userDOPageQuery);
+            UserDOPageQuery userDOPageQuery = MemberConverter.do2UserDOPageQuery(merchantPageQueryVO,wxUserMerchantRelationDOList);
+            BasePageResult<UserDO> basePageResult = userService.findPageResultByCondition(userDOPageQuery);
             return MemResult.buildSuccessResult(basePageResult.getList());
         }catch (Exception e){
-            return MemResult.buildSuccessResult(userDOList);
+            LOGGER.error("userService.findPageResultByCondition(userDOPageQuery) Exception" + e);
+            return MemResult.buildFailResult(MemberReturnCode.SYSTEM_ERROR_C,
+                    MemberReturnCode.SYSTEM_ERROR.getDesc(), null);
         }
     }
 

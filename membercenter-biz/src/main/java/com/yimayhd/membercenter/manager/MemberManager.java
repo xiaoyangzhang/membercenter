@@ -9,15 +9,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallback;
 
 import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.alibaba.fastjson.JSON;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.MemberDO;
-import com.yimayhd.membercenter.client.domain.MemberDurationDO;
-import com.yimayhd.membercenter.client.domain.MemberFirehoseDO;
 import com.yimayhd.membercenter.client.domain.MemberPrivilegeDO;
 import com.yimayhd.membercenter.client.domain.MemberRecordDO;
 import com.yimayhd.membercenter.client.dto.MemberBuyDTO;
@@ -35,7 +31,6 @@ import com.yimayhd.membercenter.dao.MemberRecordDao;
 import com.yimayhd.membercenter.dto.MemberDiscountQueryDTO;
 import com.yimayhd.membercenter.dto.MemberItemQueryDTO;
 import com.yimayhd.membercenter.entity.PrivilegeInfo;
-import com.yimayhd.membercenter.entity.PrivilegeInfoPageList;
 import com.yimayhd.membercenter.entity.member.Member;
 import com.yimayhd.membercenter.entity.member.MemberDetail;
 import com.yimayhd.membercenter.entity.member.MemberPurchauseDetail;
@@ -43,8 +38,6 @@ import com.yimayhd.membercenter.entity.member.MemeberDiscount;
 import com.yimayhd.membercenter.entity.member.MemeberItem;
 import com.yimayhd.membercenter.manager.helper.MemberHelper;
 import com.yimayhd.membercenter.manager.helper.MemberRecordHelper;
-import com.yimayhd.membercenter.mapper.MemberDurationDOMapper;
-import com.yimayhd.membercenter.mapper.MemberFirehoseDOMapper;
 import com.yimayhd.membercenter.repo.ItemRepo;
 import com.yimayhd.membercenter.repo.OrderRepo;
 import com.yimayhd.membercenter.repo.ResourceRepo;
@@ -106,11 +99,13 @@ public class MemberManager {
 			memberDO = MemberHelper.createMember(memberBuyDTO);
 		}else{
 			int period = memberBuyDTO.getPeriod();
+			Date lastEnd = memberDO.getEndTime() ;
 			Calendar calendar = Calendar.getInstance() ;
+			if( lastEnd != null && lastEnd.compareTo(new Date()) > 0 ){
+				calendar.setTime(lastEnd);
+			}
 			calendar.add(Calendar.DATE, period);
-			Date start = DateUtil.getDateStart(new Date()) ;
 			Date end = DateUtil.getDateEnd(calendar.getTime()) ;
-			memberDO.setStartTime(start);
 			memberDO.setEndTime(end);
 		}
 		memberDO.setStatus(MemberStatus.ACTIVE.getStatus());

@@ -69,4 +69,9 @@ public class MerchantServiceManager {
     public List<WxUserMerchantRelationDO> findByCondition(WxUserMerchantRelationDO wxUserMerchantRelationDO) {
         return wxUserMerchantRelationMapper.findByCondition(wxUserMerchantRelationDO);
     }
+
+
+    public BaseMerchantDO getBaseMerchantByMerchantUserId(long userId){
+        return baseMerchantMapper.getByUserId(userId);
+    }
 }

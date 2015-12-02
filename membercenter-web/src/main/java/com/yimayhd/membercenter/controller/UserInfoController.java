@@ -308,7 +308,11 @@ public class UserInfoController {
 	 * @return
 	 */
 	@RequestMapping(value = "/main")
-	public ModelAndView registerMain(MemeberBasicInfoVO memeberInfo) {
+	public ModelAndView registerMain(Long MERCHANTID,String OPENID) {
+		MemeberBasicInfoVO memeberInfo = new MemeberBasicInfoVO();
+		memeberInfo.setOpenId(OPENID);
+		memeberInfo.setMerchantId(MERCHANTID);
+		
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		
 		Asserts.AssertNotNull(memeberInfo, "memeberInfo");

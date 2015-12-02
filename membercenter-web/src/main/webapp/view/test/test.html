@@ -1,0 +1,24 @@
+<!--
+<h1 class="page-title">
+	<a href="" class="return-btn" onclick='history.go(-1)'>返回</a>
+</h1>
+ -->
+<body id="bg-fff">
+	测试
+
+	<input type="text" id="test" value="" />
+
+	<script type="text/javascript">
+		var contextPath = $("#contextPath").val();
+
+		$.post(contextPath + "/test/exception", {
+		}, function(data, status) {
+			alert(data);
+		});
+	</script>
+
+</body>
+
+
+
+

@@ -4,12 +4,17 @@ package com.yimayhd.membercenter.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.alibaba.rocketmq.client.producer.SendResult;
+import com.yimayhd.membercenter.Response;
+import com.yimayhd.membercenter.mq.MsgSenderService;
+import com.yimayhd.membercenter.vo.UserVO;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 
@@ -21,6 +26,8 @@ public class TestController {
 
     @Resource
     private UserService userService;
+    @Resource
+    private MsgSenderService msgSender;
 
     @RequestMapping("/test/send")
     public Map<String, Object> test(@RequestParam String mobile) {
@@ -55,14 +62,38 @@ public class TestController {
     }
     
     @RequestMapping("/test/exception")
-    public Map<String,String> testException(){
+    public Response testException(){
     	Map<String,String> map = new HashMap<String,String>();
     	map.put("message","error happen");
     	
     	throw new RuntimeException("测试异常");
-    	
     	//return map;
 
     }
+    
+    @RequestMapping("/test/testMQSend")
+    public SendResult testMQSend(){
+    	UserVO vo = new UserVO();
+    	vo.setUserId(123456L);
+    	vo.setName("sunshine");
+    	return msgSender.sendMessage(vo,"topic1","tag1");
+    }
+    
+    @RequestMapping("/test/testMQRecieve")
+    public SendResult testMQRecieve(){
+    	UserVO vo = new UserVO();
+    	vo.setUserId(123456L);
+    	vo.setName("sunshine");
+    	return msgSender.sendMessage(vo,"topic1","tag1");
+    }
+    
+    @RequestMapping("/test/view")
+    public ModelAndView testView(){
+    	ModelAndView mv = new ModelAndView();
+    	mv.setViewName("/test/test");
+    	
+    	return mv;
+    }
+    
 }
 

@@ -23,7 +23,6 @@ import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.result.MemResultSupport;
 import com.yimayhd.membercenter.idgen.IDPool;
 import com.yimayhd.membercenter.mapper.MemberDOMapper;
-import com.yimayhd.membercenter.mapper.MemberRecordDOMapper;
 import com.yimayhd.membercenter.mq.MsgSender;
 
 public class MemberDao {
@@ -32,7 +31,7 @@ public class MemberDao {
 	@Autowired
 	private MemberDOMapper memberDOMapper;
 	@Autowired
-	private MemberRecordDOMapper memberRecordDOMapper ;
+	private MemberRecordDao memberRecordDao;
 	@Autowired
 	private MsgSender msgSender;
 	@Autowired
@@ -83,23 +82,24 @@ public class MemberDao {
 					@Override
 					public Boolean doInTransaction(TransactionStatus status) {
 						try {
-							int count = 0 ;
+							MemberDO dbMember = null;
 							if( isNew ){
-								count = memberDOMapper.insert(memberDO);
+								dbMember = insert(memberDO);
 							}else{
-								count = memberDOMapper.update(memberDO);
+								dbMember = update(memberDO);
 							}
-							if( count != 1){
+							if( dbMember == null ){
 								status.setRollbackOnly(); 
 								return false;
 							}
-							int recordCount = memberRecordDOMapper.insert(memberRecordDO);
-							if( recordCount != 1){
+							MemberRecordDO recordInsertResult = memberRecordDao.insert(memberRecordDO);
+							if( recordInsertResult == null ){
 								status.setRollbackOnly(); 
 								return false;
 							}
 							return true;
 						} catch (Exception e) {
+							status.setRollbackOnly(); 
 							logger.error("db error!  memberDO={}, memberRecordDO={} ", JSON.toJSONString(memberDO), JSON.toJSONString(memberRecordDO), e);
 							return false;
 						}
@@ -137,13 +137,14 @@ public class MemberDao {
 					@Override
 					public Boolean doInTransaction(TransactionStatus status) {
 						try {
-							int count = memberDOMapper.update(memberDO);
-							if( count != 1){
+							MemberDO updateResult = update(memberDO);
+							if( updateResult == null){
 								status.setRollbackOnly(); 
 								return false;
 							}
 							return true;
 						} catch (Exception e) {
+							status.setRollbackOnly(); 
 							logger.error("db error!  memberDO={}", JSON.toJSONString(memberDO), e);
 							return false;
 						}

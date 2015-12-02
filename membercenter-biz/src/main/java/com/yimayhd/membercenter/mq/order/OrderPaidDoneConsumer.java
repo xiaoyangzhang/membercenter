@@ -70,7 +70,7 @@ public class OrderPaidDoneConsumer extends BaseConsumer {
 			return false;
 		}
 		
-		int period = BizOrderUtil.getMemberRechargeDays(bizOrderDO);
+		int period = (int)BizOrderUtil.getMemberRechargeDays(bizOrderDO);
 		
 		MemberBuyDTO memberBuyDTO = new MemberBuyDTO();
 		memberBuyDTO.setBuyerId(orderDO.getBuyerId());

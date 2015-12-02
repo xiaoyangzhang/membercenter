@@ -132,6 +132,7 @@ public class MemberManager {
 	
 	public MemResult<Boolean> overdueMember(long id) {
 		MemberDO memberDO = memberDao.selectById(id);
+		
 		MemResult<Boolean> result = memberDao.overdueMember(memberDO);
 		return result ;
 	}

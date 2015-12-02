@@ -30,6 +30,7 @@
     <group name="mq">
         <property name="rocketmq.server.name" defaultValue="192.168.1.206:9876" description="rocketmq的注册中心地址"/>
         <property name="member.consume.member.group" defaultValue="member_consumer_member_group" description="member center消费member消息的group名称"></property>
+        <property name="member.consume.order.group" defaultValue="member_consumer_order_group" description="member center消费member消息的group名称"></property>
     </group>
     <group name="idgen">
     	<property name="memcenter.meber.idgen.key" defaultValue="member" description="member表使用idgen的key"></property>

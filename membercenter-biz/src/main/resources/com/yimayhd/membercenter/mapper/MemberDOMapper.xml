@@ -16,7 +16,7 @@
   <sql id="Base_Column_List" >
     id, user_id, type, status, code, start_time, end_time, version, gmt_created, gmt_modified
   </sql>
-  <select id="selectById" resultMap="BaseResultMap" parameterType="long" >
+  <select id="selectById" resultMap="BaseResultMap" parameterType="long">
     select 
     <include refid="Base_Column_List" />
     from member
@@ -32,11 +32,11 @@
     delete from member
     where id = #{id}
   </delete>
-  <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.MemberDO" useGeneratedKeys="true" keyProperty="id" >
-    insert into member (user_id, type, status,  code, 
+  <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.MemberDO">
+    insert into member (id, user_id, type, status,  code, 
       start_time, end_time, version, 
       gmt_created, gmt_modified)
-    values (#{userId}, #{type}, #{status},  #{code}, 
+    values (#{id}, #{userId}, #{type}, #{status},  #{code}, 
       #{startTime}, #{endTime}, 1, 
       #{gmtCreated}, #{gmtModified})
   </insert>

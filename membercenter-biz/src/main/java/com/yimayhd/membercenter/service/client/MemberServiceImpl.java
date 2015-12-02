@@ -20,6 +20,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	@MethodLogger(isHttpApi = false, isCatchException = false, isPrintArguments = true, isPrintResult = true)
 	public MemResult<Boolean> overdueMember(long id) {
 		return memberManager.overdueMember(id);
 	}

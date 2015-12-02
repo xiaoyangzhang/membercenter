@@ -27,6 +27,12 @@
         <property name="group" value="${member.consume.member.group}"/>
     </bean>
 
+    <bean id="orderPaidDoneConsumer" class="com.yimayhd.membercenter.mq.order.OrderPaidDoneConsumer"
+          init-method="init" destroy-method="destroy">
+        <property name="nameServer" value="${rocketmq.server.name}"/>
+        <property name="group" value="${member.consume.order.group}"/>
+    </bean>
+
 
 
 </beans>

@@ -90,7 +90,7 @@ public class TestController {
     @RequestMapping("/test/view")
     public ModelAndView testView(){
     	ModelAndView mv = new ModelAndView();
-    	mv.setViewName("/test/test");
+    	mv.setViewName("/test/index");
     	
     	return mv;
     }

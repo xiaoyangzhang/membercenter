@@ -14,7 +14,7 @@
     <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto.min.js"></script>
     <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto-public.js"></script>
     <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto-city.js"></script>
-    <title>商贸系统</title>
+    
 </head>
 <input type="hidden" name="contextPath" id="contextPath" value="$resourceContextTool.getContextPath()"/>
 

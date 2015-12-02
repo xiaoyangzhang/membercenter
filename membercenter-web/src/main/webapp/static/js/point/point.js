@@ -35,8 +35,16 @@ function pointDetailLoaded() {
 	
 	myScroll = new iScroll('wrapper', {
 		useTransition: true,
-		onScrollMove:function(){
-			if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
+		onScrollMove: function () {
+			if (this.y > 5 && !pullDownEl.className.match('flip')) {
+				pullDownEl.className = 'flip';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Release to refresh...';
+				this.minScrollY = 0;
+			} else if (this.y < 5 && pullDownEl.className.match('flip')) {
+				pullDownEl.className = '';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
+				this.minScrollY = -pullDownOffset;
+			} else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
 				pullUpEl.className = 'flip';
 				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Release to refresh...';
 				this.maxScrollY = this.maxScrollY;

@@ -43,7 +43,48 @@ function pointDetailLoaded() {
 } 
 
 function pointDetailPullUpAction () {
+	//页号
+	var pageNumber = $("#pageNumber").val();
+	//每页显示多少条
+	var pageSize = $("#pageSize").val();
+	var userId = $("#userId").val();
+	var merchantId = $("#merchantId").val();
 	
+	//获取当前积分
+	getCurrentPoint(userId,merchantId,function(data){
+		var isSuccessful = data.meta.success;
+		if (isSuccessful == true) {
+			$("#currentPoint").text(data.data.totalPoint);
+		}else{
+			alert("获取总积分错误:" + data.meta.message);
+		}
+	});
+
+	//获取积分明细
+	getPointDetailsByPage(pageNumber, pageSize, userId, merchantId, function(
+			data) {
+		var isSuccessful = data.meta.success;
+		if (isSuccessful == true) {
+			var pointDetails = data.data.pointDetails;
+			var totalPage = data.data.totalPage;
+			$("#totalPage").val(totalPage);
+
+			for (i in pointDetails) {
+				var detailStr = " <li> <span class='left'>"
+						+ pointDetails[i].source + "&nbsp; <br/><em>"
+						+ pointDetails[i].createDate
+						+ "</em></span><span class='right'> "
+						+ pointDetails[i].type + pointDetails[i].point
+						+ "<br/> <em>有效期至" + pointDetails[i].endDate
+						+ "</em></span></li> ";
+				$("#showPointDetailsDiv").append(detailStr);
+			}
+		}else{
+			alert("获取积分明细错误:" + data.meta.message);
+		}
+		
+		myScroll.refresh();
+	});
 }
 
 

@@ -50,7 +50,7 @@ public class MemeberPointController {
 	@RequestMapping(value = "/point/memeberTotalPoint")
 	public Response getMemeberTotalPoint(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
-
+		
 		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
 		Asserts.AssertNotNull(memeberInfo.getUserId(), "userId");
 		Asserts.AssertNotNull(memeberInfo.getMerchantId(), "merchantId");
@@ -83,6 +83,7 @@ public class MemeberPointController {
 		Map<String,Object> viewMap = new HashMap<String,Object>();
 		Long totalPoint = result.getValue().getRemainPoint();
 		viewMap.put("totalPoint", totalPoint);
+		
 		return new Response().success(viewMap);
 	}
 	
@@ -142,11 +143,14 @@ public class MemeberPointController {
 		Map<String,Object> viewMap = new HashMap<String,Object>();
 		viewMap.put("pointDetails", pointDetailList);
 		int totalPage = 0;
-		if(detailResult.getValue().getTotalCount() % pageSize != 0){
-			totalPage = (detailResult.getValue().getTotalCount()/ pageSize) + 1;
-		}else {
-			totalPage = detailResult.getValue().getTotalCount() / pageSize;
+		if(detailResult.getValue() != null ){
+			if(detailResult.getValue().getTotalCount() % pageSize != 0){
+				totalPage = (detailResult.getValue().getTotalCount()/ pageSize) + 1;
+			}else {
+				totalPage = detailResult.getValue().getTotalCount() / pageSize;
+			}
 		}
+		
 		
 		viewMap.put("totalPage", totalPage);
 		

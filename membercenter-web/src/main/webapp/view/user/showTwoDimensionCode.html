@@ -43,23 +43,6 @@
 
 
 <script type="text/javascript">
-	$("#code").qrcode({
-		render : "table", //table方式
-		width : 200, //宽度
-		height : 200, //高度
-		text : $("#codeInfo").val()
-	//任意内容
-	});
-	
-	var userId = $("#userId").val();
-	var merchantId = $("#merchantId").val();
-	//获取当前积分
-	getCurrentPoint(userId,merchantId,function(data){
-		var isSuccessful = data.meta.success;
-		if (isSuccessful == true) {
-			$("#currentPoint").text("前期积分:" + data.data.totalPoint);
-		}
-	});
 	
 	
 </script>

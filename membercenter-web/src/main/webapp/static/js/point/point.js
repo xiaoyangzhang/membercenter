@@ -85,6 +85,8 @@ function pointDetailPullUpAction () {
 						+ "</em></span></li> ";
 				$("#showPointDetailsDiv").append(detailStr);
 			}
+		}else{
+			alert("获取积分明细错误:" + data.meta.message);
 		}
 
 	});	
@@ -105,6 +107,8 @@ function initPointDetails(){
 		var isSuccessful = data.meta.success;
 		if (isSuccessful == true) {
 			$("#currentPoint").text(data.data.totalPoint);
+		}else{
+			alert("获取总积分错误:" + data.meta.message);
 		}
 	});
 
@@ -127,6 +131,8 @@ function initPointDetails(){
 						+ "</em></span></li> ";
 				$("#showPointDetailsDiv").append(detailStr);
 			}
+		}else{
+			alert("获取积分明细错误:" + data.meta.message);
 		}
 	});
 

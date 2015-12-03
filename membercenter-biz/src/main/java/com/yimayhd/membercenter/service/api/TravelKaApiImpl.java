@@ -70,7 +70,6 @@ public class TravelKaApiImpl implements TravelKaApi {
                 travelKa = TravelKaConverter.converntTravelKaDetail(userAbilityRelationDOs, memberProfileDO, userDO);
                 travelKa.isTravelKa = String.valueOf(BaseStatus.YES.getType());
 
-                //FIXME MOCK数据改掉
                 TravelKaClub travelKaClub = new TravelKaClub();
                 travelKaClub.liveCount = 77;
                 travelKaClub.informationsCount = 567;
@@ -94,7 +93,6 @@ public class TravelKaApiImpl implements TravelKaApi {
             } else {
                 // 只返回用户信息即可
                 TravelKaConverter.converntTravelKaDetail4UserInfo(userDO);
-                //FIXME 控制指针异常了
                 travelKa.isTravelKa = String.valueOf(BaseStatus.NO.getType());
             }
         }catch (Exception e){

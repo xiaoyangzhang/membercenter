@@ -379,6 +379,7 @@ public class UserInfoController {
 		// 添加模型数据 可以是任意的POJO对象
 		mv.addObject("memeberInfo", memeberInfo);
 		
+		/**
 		if(LOGGER.isDebugEnabled()){
 			TimeElapseCaculate.startSnapshort();
 		}
@@ -398,7 +399,7 @@ public class UserInfoController {
 		if(LOGGER.isDebugEnabled()){
 			LOGGER.debug(TIME_ELAPSE_HEAD + " sendPhoneVerifyCode:{}ms" + TimeElapseCaculate.endSnapshort());
 		}
-		
+		*/
 		mv.setViewName("user/checkAuthCode");
 		
 		return mv;

@@ -33,8 +33,10 @@ function initCheckAuthCode(){
 	Zepto(function($){
 		$('.sendcode-btn').countdown({autoTime:60});
 	 });
-	 
+	
+	
 	 $(".sendcode-btn").attr("href",contextPath + "/user/sendMsgCode?phone=" + $("#phone").val());
+	 
 }
 
 /**
@@ -64,8 +66,8 @@ function getTwoDimension(){
  * 校验注册必填项
  */
 function checkRegisterForm() {
-	
-	if(isEmpty(registerForm.phone) || registerForm.phone.length != 11 || registerForm.phone.substr(0,1) != '1') {
+	var s = registerForm.phone.value;
+	if(isEmpty(s) || s.length != 11 || s.substr(0,1) != '1') {
 		alert("请输入正确的手机号码!");
 		return ;
 	}

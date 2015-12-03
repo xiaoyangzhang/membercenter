@@ -1,22 +1,22 @@
 <body id="bg-fff">
 <title>获取二维码</title>
 
-<!-- <h1 class="page-title">
-	<a href='' class="return-btn" onclick='history.go(-1)'>返回</a>获取二维码
-</h1> -->
+ <h1 class="page-title">
+	<a href='' class="return-btn" onclick='history.go(-1)'>返回</a>
+</h1> 
 
 <script src="$resourceContextTool.getStaticResourcePath()/js/user/user.js"></script>
 <form name="authCodeForm" id="$resourceContextTool.getContextPath()/user/checkAuthCodeForm"
 	action="toDimensionCode" method="post">
 	
-	<div class="ipt-group">
+	<div class="ipt-group" style="margin-top: 46px;">
 		<label><em>手机号</em><input type="text" name="phone" value="$memeberInfo.phone" id="phone" readonly/></label>
 		<label><em>验证码</em><input type="text" value="" name="authCode" id="authCode" class="sort" />
-		<a href="" class="sendcode-btn">重新获取</a></label>
+		<a id="getsmscode" href="" class="sendcode-btn">获取验证码</a></label>
 	</div>
 	
 	<center>
-		<input type="button" name="button" value="获取二维码" class="submit-btn" onclick="getTwoDimension()" />
+		<input type="button" name="button" value="完成" class="submit-btn" onclick="getTwoDimension()" />
 	</center>
 	
 	<input type="hidden" name="openId" value="$memeberInfo.openId" />
@@ -26,5 +26,6 @@
 
 <script>
 initCheckAuthCode();
+
 </script>
 </body>

@@ -1,6 +1,6 @@
 #bg-fff{background:#fff;}
 
-.page-title{position:relative;text-align:center;padding:1rem 0;font-size:1.6rem;color:#222;border-bottom:1px solid #ccc;background:#efefef;}
+.page-title{position:relative;height: 22px;text-align:center;padding:1rem 0;font-size:1.6rem;color:#222;border-bottom:1px solid #ccc;background:#efefef;}
 .code-box{background:#fff;padding:0 7.8%;}
 /*.code-box .er-img{width:70%;margin:25% 0;padding:2%;background:rgba(240,240,240,0.5);border-radius:10px;}*/
 .code-box .er-img{width:100%;height: 205px;margin:0 auto;;border-radius:10px;position: relative;background: url("../img/YM_QRCodeBg.png") no-repeat center;background-size: 385px;padding: 111px 0;}

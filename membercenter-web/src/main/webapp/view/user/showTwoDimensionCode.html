@@ -21,7 +21,7 @@
 		$memeberInfo.name
 		#end
 		</span> 
-		<span class="t-right"><a href="#" class="link-btn" id="currentPoint" onclick='toPointDetailForm.submit()'>当前积分:--</a></span>
+		<span class="t-right"><a href="" class="link-btn" id="currentPoint" onclick='toPointDetailForm.submit()'>当前积分:--</a></span>
 		<form name="toPointDetailForm" method="post" action="$resourceContextTool.getContextPath()/point/toPointDetails">
 			<input type="hidden" name="merchantId" id="merchantId" value="$memeberInfo.merchantId" />
 			<input type="hidden" name="userId" id="userId" value="$memeberInfo.userId" />
@@ -30,7 +30,7 @@
 	<div class="er-img" id="code"></div>
 	<p class="clearfix">
 		#if ($nullTool.isNull($isFilledUserInfo) || $isFilledUserInfo == false) 
-		<a href="#" class="link-btn" id="fullfilUserInfo" onclick='toFulfillUserForm.submit()'>完善信息</a>
+		<a href="" class="link-btn" id="fullfilUserInfo" onclick='toFulfillUserForm.submit()'>完善信息</a>
 		#end
 	</p>
 	<div>

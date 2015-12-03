@@ -14,7 +14,7 @@ import net.pocrd.define.SecurityType;
 @ApiGroup(name = "membercenter", minCode = 16000000, maxCode = 17000000, codeDefine = MemberReturnCode.class, owner = "徐胜强")
 public interface PrivilegeApi {
 
-	@HttpApi(name = "membercenter.getPrivilegeInfoPageList", desc = "返回会员特权列表", security = SecurityType.None, owner = "徐胜强")
+	@HttpApi(name = "membercenter.getPrivilegeInfoPageList", desc = "返回会员特权列表,此方法已废弃，使用getMemberDetail和getMemberPurchuseDetail的方法", security = SecurityType.None, owner = "徐胜强")
 	public PrivilegeInfoPageList getPrivilegeInfoPageList(
 			@ApiAutowired(CommonParameter.applicationId) int appId,
 			@ApiAutowired(CommonParameter.domainId) int domainId, 

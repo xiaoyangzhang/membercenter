@@ -25,7 +25,6 @@ public class MemberApiImpl implements MemberApi {
 	@Override
 	@MethodLogger(isPrintArguments=true, isPrintResult =false, isHttpApi=true, isCatchException=true)
 	public MemberDetail getMemberDetail(int appId, int domainId, long deviceId, long userId, int versionCode) {
-		
 		MemResult<MemberDetail> result = memberManager.getMemberDetail(userId);
 		if( result == null || !result.isSuccess() ){
 			logger.error("getMemberDetail failed!  userId={}, Result={}", userId, JSON.toJSONString(result));

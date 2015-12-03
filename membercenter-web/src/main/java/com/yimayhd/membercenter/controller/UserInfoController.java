@@ -150,7 +150,7 @@ public class UserInfoController {
 		
 		//生成会员信息、用户信息
 		MerchantVO merchantVO = new MerchantVO();
-		merchantVO.setMerchantId(memeberInfo.getMerchantId());
+		merchantVO.setMerchantUserId(memeberInfo.getMerchantId());
 		merchantVO.setMobile(memeberInfo.getPhone());
 		merchantVO.setOpenId(memeberInfo.getOpenId());
 		
@@ -303,8 +303,6 @@ public class UserInfoController {
 	 * 
 	 * @Title registerMain
 	 * @Description 注册主入口，获取用户的openId,商户公众号的唯一标识传递到页面中
-	 * @param openId
-	 * @param merchantId
 	 * @return
 	 */
 	@RequestMapping(value = "/main")
@@ -331,7 +329,7 @@ public class UserInfoController {
 		//userService 根据openId,merchantId查询
 		MerchantVO merchantVO = new MerchantVO();
 		merchantVO.setOpenId(memeberInfo.getOpenId());
-		merchantVO.setMerchantId( memeberInfo.getMerchantId());
+		merchantVO.setMerchantUserId( memeberInfo.getMerchantId());
 		
 		MemResult<UserDO> memResult = merchantService.findUserByOpenIdAndMerchant(merchantVO);
 		LOGGER.debug("userDO:{}",JSON.toJSONString(memResult));

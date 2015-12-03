@@ -7,6 +7,7 @@ import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.BaseMerchantService;
 import com.yimayhd.membercenter.client.service.MerchantService;
 import com.yimayhd.membercenter.client.vo.MerchantPageQueryVO;
+import com.yimayhd.membercenter.client.vo.MerchantVO;
 import com.yimayhd.membercenter.entity.PageInfo;
 import com.yimayhd.membercenter.entity.TravelKa;
 import com.yimayhd.membercenter.entity.TravelKaPageInfoList;
@@ -113,4 +114,31 @@ public class LocalMemberTest extends LocalBaseTest{
 		MemResult<List<UserDO>> memResult = merchantService.findPageUsersByMerchant(merchantPageQueryVO);
 		printResult(memResult,"MemResult");
 	}
+
+
+
+	@Test
+	public void testRegisterUser(){
+		//生成会员信息、用户信息
+		MerchantVO merchantVO = new MerchantVO();
+		merchantVO.setMerchantUserId(1L);
+		merchantVO.setMobile("13581937677");
+		merchantVO.setOpenId("aaaaaaa");
+		MemResult<UserDO> memResult = merchantService.registerUser(merchantVO);
+		printResult(memResult,"MemResult");
+	}
+
+	@Test
+	public void testFindUserByOpenIdAndMerchant(){
+		//生成会员信息、用户信息
+		MerchantVO merchantVO = new MerchantVO();
+		merchantVO.setMerchantUserId(1L);
+		merchantVO.setMobile("13581937677");
+		merchantVO.setOpenId("aaaaaaa");
+		MemResult<UserDO> memResult = merchantService.findUserByOpenIdAndMerchant(merchantVO);
+		printResult(memResult,"MemResult");
+	}
+
+
+
 }

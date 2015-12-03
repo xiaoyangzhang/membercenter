@@ -10,6 +10,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.yimayhd.ic.client.model.domain.item.ItemDO;
+import com.yimayhd.ic.client.model.enums.ItemType;
 import com.yimayhd.ic.client.model.result.ICResult;
 import com.yimayhd.ic.client.service.item.ItemQueryService;
 import com.yimayhd.membercenter.MemberReturnCode;
@@ -41,6 +42,8 @@ public class ItemRepo {
 		for(ItemDO itemDO : itemDOs ){
 			MemeberItem item = new MemeberItem() ;
 			item.itemId = itemDO.getId() ;
+			ItemType itemType = ItemType.get(itemDO.getItemType()) ;
+			item.itemType = itemType == null ? null : itemType.name() ;
 			item.itemPics = itemDO.getPicUrls() ;
 			item.itemTitle = itemDO.getTitle() ;
 			item.originalPrice = itemDO.getOriginalPrice() ;

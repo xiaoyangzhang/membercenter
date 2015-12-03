@@ -15,6 +15,9 @@ public class MemeberItem  implements Serializable {
 	@Description("商品id")
 	public long itemId ;
 	
+	@Description("商品类型")
+	public String itemType ;
+	
 	@Description("商品图片")
 	public String itemPics ;
 	

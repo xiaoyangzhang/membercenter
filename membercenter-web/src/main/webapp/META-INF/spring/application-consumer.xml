@@ -77,5 +77,16 @@
         <property name="version" value="${consumer.resourcecenter.dubbo.version}"/>
         <property name="retries" value="${dubbo.retries}"/>
 	</bean>
+
+    <!-- ============================== snscecenter ================================== -->
+    <bean id="snsCenterService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+        <property name="interface" value="com.yimayhd.snscenter.client.service.SnsCenterService"/>
+        <property name="application" ref="dubboApplicationConfig"/>
+        <property name="registry" ref="dubboRegistryConfig"/>
+        <property name="timeout" value="${consumer.dubbo.timeout}"/>
+        <property name="check" value="${consumer.dubbo.check}"/>
+        <property name="version" value="${consumer.snscenter.dubbo.version}"/>
+        <property name="retries" value="${dubbo.retries}"/>
+    </bean>
     
 </beans>

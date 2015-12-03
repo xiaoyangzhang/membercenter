@@ -12,6 +12,9 @@ public class KaClub implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Description("是否是部长 0-否 1-是")
+    public int isMinister; // 是否是 部长 0-否 1-是
+
     @Description("俱乐部id")
     public long clubId;
 

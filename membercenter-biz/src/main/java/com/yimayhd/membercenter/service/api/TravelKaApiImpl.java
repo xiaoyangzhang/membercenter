@@ -69,26 +69,8 @@ public class TravelKaApiImpl implements TravelKaApi {
                 //4. 组装数据
                 travelKa = TravelKaConverter.converntTravelKaDetail(userAbilityRelationDOs, memberProfileDO, userDO);
                 travelKa.isTravelKa = String.valueOf(BaseStatus.YES.getType());
-
-                TravelKaClub travelKaClub = new TravelKaClub();
-                travelKaClub.liveCount = 77;
-                travelKaClub.informationsCount = 567;
+                TravelKaClub travelKaClub = memberProfileManager.getTravelKaClub(theUserId);
                 travelKa.travelKaClub = travelKaClub;
-
-                KaClub kaClub1 = new KaClub();
-                kaClub1.clubName = "城市生活";
-                kaClub1.clubId = 1;
-                kaClub1.clubImg = "xx/xx/xx.jpg";
-
-                KaClub kaClub2 = new KaClub();
-                kaClub2.clubName = "农庄生活";
-                kaClub2.clubId = 2;
-                kaClub2.clubImg = "yy/yy/yyy.jpg";
-                List<KaClub> kaClubs = new ArrayList<KaClub>();
-                kaClubs.add(kaClub1);
-                kaClubs.add(kaClub2);
-                travelKaClub.kaClubs = kaClubs;
-
 
             } else {
                 // 只返回用户信息即可

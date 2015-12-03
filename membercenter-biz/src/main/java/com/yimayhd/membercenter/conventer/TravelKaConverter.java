@@ -6,10 +6,21 @@ import com.yimayhd.membercenter.client.query.TravelkaPageQuery;
 import com.yimayhd.membercenter.entity.*;
 
 
+import com.yimayhd.membercenter.entity.Ability;
+import com.yimayhd.membercenter.entity.KaClub;
+import com.yimayhd.membercenter.entity.PageInfo;
+import com.yimayhd.membercenter.entity.TravelKa;
+import com.yimayhd.membercenter.entity.TravelKaClub;
+import com.yimayhd.membercenter.entity.TravelKaItem;
+import com.yimayhd.membercenter.entity.TravelKaPageInfoList;
+import com.yimayhd.membercenter.entity.UserInfo;
+import com.yimayhd.snscenter.client.result.ClubInfoDTO;
+import com.yimayhd.snscenter.client.result.ClubInfoListDTO;
 import com.yimayhd.user.client.domain.UserDO;
 
 import com.yimayhd.user.client.enums.AbilityEnum;
 
+import com.yimayhd.user.entity.*;
 import org.springframework.util.CollectionUtils;
 
 
@@ -171,6 +182,60 @@ public class TravelKaConverter {
         infoList.travelKaItemPageInfoList = travelKaItems;
         return infoList;
     }
+
+    public static TravelKaClub convertTravelKaClub(ClubInfoListDTO clubInfoListDTO){
+        if(clubInfoListDTO == null){
+            return null;
+        }
+        TravelKaClub travelKaClub = new TravelKaClub();
+        travelKaClub.liveCount = clubInfoListDTO.getSubjectNum()== 0 ? 0 :clubInfoListDTO.getSubjectNum();
+        travelKaClub.informationsCount =clubInfoListDTO.getDynamicNum()==0 ?0 :clubInfoListDTO.getDynamicNum();
+        ClubInfoDTO ministerColub = clubInfoListDTO.getClubInfoDTO();
+        KaClub minister = null;  // 是部长 的俱乐部
+        if(ministerColub != null){
+            minister =  convertKaClub(ministerColub);
+            minister.isMinister = 1;
+        }
+        List<ClubInfoDTO> clubInfoDTOs = clubInfoListDTO.getClubList();
+        List<KaClub> kaClubs = null; // 非部长的俱乐部
+        if(clubInfoDTOs!= null && clubInfoDTOs.size() > 0){
+            kaClubs = convertKaClubs(clubInfoDTOs);
+        }
+
+        if(minister!= null && kaClubs!=null){
+            kaClubs.add(0,minister);
+        }
+
+        if(kaClubs != null){
+            travelKaClub.kaClubs = kaClubs;
+        }
+        return travelKaClub;
+    }
+
+    private static List<KaClub>  convertKaClubs(List<ClubInfoDTO> clubInfoDTOs){
+        if(clubInfoDTOs == null || clubInfoDTOs.size() < 0){
+            return null;
+        }
+        List<KaClub> kaClubs = new ArrayList<KaClub>();
+        for(ClubInfoDTO clubInfoDTO : clubInfoDTOs){
+            KaClub kaClub = convertKaClub(clubInfoDTO);
+            kaClubs.add(kaClub);
+        }
+        return kaClubs;
+    }
+
+    private static KaClub convertKaClub(ClubInfoDTO clubInfoDTO){
+        if(clubInfoDTO == null){
+            return null;
+        }
+        KaClub kaClub = new KaClub();
+        kaClub.clubImg = clubInfoDTO.getLogoUrl() == null ? null :clubInfoDTO.getLogoUrl();
+        kaClub.clubName = clubInfoDTO.getClubName() == null ? null :clubInfoDTO.getClubName();
+        kaClub.clubId = clubInfoDTO.getId() ==0 ? 0 : clubInfoDTO.getId();
+        kaClub.isMinister = 0; // 默认都不是部长
+        return kaClub;
+    }
+
 
 
 }

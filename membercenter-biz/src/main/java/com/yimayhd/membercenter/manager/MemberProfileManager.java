@@ -2,6 +2,9 @@ package com.yimayhd.membercenter.manager;
 
 import java.util.List;
 
+import com.yimayhd.membercenter.entity.TravelKaClub;
+
+import com.yimayhd.membercenter.repo.SnsRepo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +42,9 @@ public class MemberProfileManager {
 
     @Autowired
     private UserRepo userRepo;   // 用户相关接口
+
+    @Autowired
+    private SnsRepo snsRepo; // sns
 
     public List<UserAbilityRelationDO> getUserAbilityRelationByUserId(long userId) {
         return userAbilityRelationMapper.getByUserId(userId);
@@ -99,6 +105,10 @@ public class MemberProfileManager {
             LOGGER.error("terminalDeviceDOMapper.getByDeviceCode(deviceCode); exception ,", e);
         }
         return terminalDeviceDO;
+    }
+
+    public TravelKaClub getTravelKaClub(long userId) {
+        return  snsRepo.getTravelKaClub(userId);
     }
 
 

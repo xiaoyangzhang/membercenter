@@ -127,7 +127,7 @@ function chkPhone(field_name,label_name,defaultEmpty) {
     if (typeof(defaultEmpty) == "undefined") defaultEmpty = true;	
     var s = field_name.value;
     var str=/^[0-9-;,]*$/;
-    if(isEmpty(s) || s.length < 11 || s.substr(0,1) != '1') {
+    if(isEmpty(s) || s.length != 11 || s.substr(0,1) != '1') {
 		if (!defaultEmpty ) {
 	               field_name.focus();
 	               field_name.style.background=fieldbg;

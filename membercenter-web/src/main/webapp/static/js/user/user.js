@@ -64,9 +64,14 @@ function getTwoDimension(){
  * 校验注册必填项
  */
 function checkRegisterForm() {
-	if (chkPhone(registerForm.phone, "手机号码", false)) {
-		registerForm.submit();
+	
+	if(isEmpty(registerForm.phone) || registerForm.phone.length != 11 || registerForm.phone.substr(0,1) != '1') {
+		alert("请输入正确的手机号码!");
+		return ;
 	}
+	
+	registerForm.submit();
+	
 }
 
 /**

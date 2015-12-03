@@ -91,6 +91,8 @@ public class TravelKaConverter {
         if(userDO.getCityCode() != 0){
             userInfo.cityCode = userDO.getCityCode();
         }
+        userInfo.province = userDO.getProvince() == null ? null : userDO.getProvince();
+        userInfo.city = userDO.getCity() == null ? null : userDO.getCity();
 
         userInfo.signature = userDO.getSignature() == null ? null : userDO.getSignature();
         return userInfo;

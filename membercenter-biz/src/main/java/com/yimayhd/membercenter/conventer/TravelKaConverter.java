@@ -143,6 +143,7 @@ public class TravelKaConverter {
 
     public static TravelkaPageQuery TravelkaPageQuery(PageInfo pageInfo){
         TravelkaPageQuery travelkaPageQuery = new TravelkaPageQuery();
+        travelkaPageQuery.setHasNextMod(true);
         travelkaPageQuery.setPageNo(pageInfo.pageNo);
         travelkaPageQuery.setPageSize(pageInfo.pageSize);
         return travelkaPageQuery;

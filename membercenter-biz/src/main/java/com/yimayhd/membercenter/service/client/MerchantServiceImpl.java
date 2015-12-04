@@ -95,16 +95,14 @@ public class MerchantServiceImpl implements MerchantService {
     public MemResult<UserDO> findUserByOpenIdAndMerchant(MerchantVO merchantVO) {
         LOGGER.info("findUserByOpenIdAndMerchant merchantVO = {}", merchantVO);
 
-        if (StringUtils.isBlank(merchantVO.getOpenId()) || null == merchantVO.getMerchantId()) {
-            LOGGER.error("parameter is not valid, openId={} and merchantId = {}",
-                    merchantVO.getOpenId(), merchantVO.getMerchantId());
+        if (StringUtils.isBlank(merchantVO.getOpenId())) {
+            LOGGER.error("parameter is not valid, openId={}", merchantVO.getOpenId());
             return MemResult.buildFailResult(MemberReturnCode.PARAMTER_ERROR_C,
                     MemberReturnCode.PARAMTER_ERROR.getDesc(), null);
         }
 
         WxUserMerchantRelationDO wxUserMerchantRelationDO = new WxUserMerchantRelationDO();
         wxUserMerchantRelationDO.setOpenId(merchantVO.getOpenId());
-        wxUserMerchantRelationDO.setMerchantId(merchantVO.getMerchantId());
         UserDO userDO = null;
         try {
             userDO = merchantServiceManager.findMerchantUserDO(wxUserMerchantRelationDO);

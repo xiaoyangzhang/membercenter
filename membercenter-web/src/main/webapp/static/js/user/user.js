@@ -107,6 +107,11 @@ function fullfillUser() {
  		return ;
  	}
  	
+ 	if(username.length > 8){
+ 		alert("名字超过最大限制");
+ 		return ;
+ 	}
+ 	
  	fulfillUserInfoForm.submit();
  }
 

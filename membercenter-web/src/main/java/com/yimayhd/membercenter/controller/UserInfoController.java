@@ -1,7 +1,10 @@
 package com.yimayhd.membercenter.controller;
 
 
+import java.io.UnsupportedEncodingException;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -26,6 +29,8 @@ import com.yimayhd.membercenter.vo.UserVO;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
+import com.yimayhd.user.session.manager.SessionConstant;
+import com.yimayhd.user.session.manager.SessionUtils;
 
 /**
  * 
@@ -47,6 +52,8 @@ public class UserInfoController {
 	
 	@Resource
 	private PointService pointService;
+	
+	
 
 	/**
 	 * 
@@ -55,12 +62,14 @@ public class UserInfoController {
 	 * @param userVO
 	 * @param memeberInfo
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/user/fulfillUserInfo")
-	public ModelAndView fulfillUserInfoView(UserVO userVO,MemeberBasicInfoVO memeberInfo) {
+	public ModelAndView fulfillUserInfoView(UserVO userVO,MemeberBasicInfoVO memeberInfo) throws UnsupportedEncodingException {
 		LOGGER.debug("user:{}",JSON.toJSONString(userVO));
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
-		
+//		String name = memeberInfo.getName();
+//		System.out.println(new String(name.getBytes("iso8859-1"),"UTF-8"));
 		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
 		Asserts.AssertNotNull(userVO, "userVO");
 
@@ -120,37 +129,21 @@ public class UserInfoController {
 	@RequestMapping(value = "/user/toDimensionCode")
 	public ModelAndView toDimensionCodeView(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("MemeberBasicInfoVO:{}",JSON.toJSONString(memeberInfo));
-		
-		boolean succeeded = true;
-		String message = "";
 
-		try {
-			Asserts.AssertNotNull(memeberInfo, "memeberInfo");
-			Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
-		} catch (InValidParamException e) {
-			succeeded = false;
-			message = e.getMessage();
-			LOGGER.error(e.getMessage());
-
-		}finally{
-			
-		}
+		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
+		Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
+		Asserts.AssertStringNotEmpty(memeberInfo.getOpenId(), "openId");
+		Asserts.AssertNotNull(memeberInfo.getMerchantId(),"merchantId");
 		
 		ModelAndView mv = new ModelAndView();
-		if (!succeeded) {
-			mv.addObject("message", message);
-			mv.setViewName("error");
-			return mv;
-		}
 		
 		if(LOGGER.isDebugEnabled()){
 			TimeElapseCaculate.startSnapshort();
 		}
 		 
-		
 		//生成会员信息、用户信息
 		MerchantVO merchantVO = new MerchantVO();
-		merchantVO.setMerchantId(memeberInfo.getMerchantId());
+		merchantVO.setMerchantUserId(memeberInfo.getMerchantId());
 		merchantVO.setMobile(memeberInfo.getPhone());
 		merchantVO.setOpenId(memeberInfo.getOpenId());
 		
@@ -165,6 +158,8 @@ public class UserInfoController {
 		}
 		
 		memeberInfo.setUserId(memResult.getValue().getId());
+		//生成用户凭证
+		SessionUtils.getSession().setAttribute(SessionConstant.USER_ID,memeberInfo);
 		
 		// 此处获取二维码串
 		BaseResult<String> dimensionResult = userService.getTwoDimensionCode(memResult.getValue().getId(),memeberInfo.getMerchantId());
@@ -193,7 +188,7 @@ public class UserInfoController {
 		}
 		
 		mv.addObject("codeInfo", codeInfo);
-		mv.addObject("memeberInfo",memeberInfo);
+		//mv.addObject("memeberInfo",memeberInfo);
 		
 		mv.setViewName("user/showTwoDimensionCode");
 
@@ -259,28 +254,14 @@ public class UserInfoController {
 	public Response checkMsgCode(MemeberBasicInfoVO memeberInfo,String authCode) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		LOGGER.debug("authCode:{}",authCode);
-		
-		boolean succeeded = true;
-		String message = "";
 
-		try {
-			Asserts.AssertNotNull(memeberInfo, "memeberInfo");
-			Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
-			Asserts.AssertStringNotEmpty(authCode, "authCode");
-		} catch (InValidParamException e) {
-			LOGGER.error("invalid parameter:{}",e.getMessage());
-			return new Response().failure(e.getMessage());
-
-		}
-
-		if (!succeeded) {
-			return new Response().failure(message);
-		}
+		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
+		Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
+		Asserts.AssertStringNotEmpty(authCode, "authCode");
 		
 		if(LOGGER.isDebugEnabled()){
 			TimeElapseCaculate.startSnapshort();
 		}
-		
 		
 		// 校验短信验证码
 		BaseResult<Boolean> result = userService.validatePhoneVerifyCode(memeberInfo.getPhone(), authCode);
@@ -303,12 +284,10 @@ public class UserInfoController {
 	 * 
 	 * @Title registerMain
 	 * @Description 注册主入口，获取用户的openId,商户公众号的唯一标识传递到页面中
-	 * @param openId
-	 * @param merchantId
 	 * @return
 	 */
 	@RequestMapping(value = "/main")
-	public ModelAndView registerMain(Long MERCHANTID,String OPENID) {
+	public ModelAndView registerMain(Long MERCHANTID,String OPENID,HttpServletRequest request) {
 		MemeberBasicInfoVO memeberInfo = new MemeberBasicInfoVO();
 		memeberInfo.setOpenId(OPENID);
 		memeberInfo.setMerchantId(MERCHANTID);
@@ -331,16 +310,18 @@ public class UserInfoController {
 		//userService 根据openId,merchantId查询
 		MerchantVO merchantVO = new MerchantVO();
 		merchantVO.setOpenId(memeberInfo.getOpenId());
-		merchantVO.setMerchantId( memeberInfo.getMerchantId());
+		merchantVO.setMerchantUserId( memeberInfo.getMerchantId());
 		
 		MemResult<UserDO> memResult = merchantService.findUserByOpenIdAndMerchant(merchantVO);
 		LOGGER.debug("userDO:{}",JSON.toJSONString(memResult));
 		
 		if(memResult.getValue() != null){
+			
 			memeberInfo.setUserId(memResult.getValue().getId());
 			memeberInfo.setPhone(memResult.getValue().getMobile());
 			memeberInfo.setName(memResult.getValue().getName());
-			mv.addObject("memeberInfo",memeberInfo);
+			
+			SessionUtils.getSession().setAttribute(SessionConstant.USER_ID,memeberInfo);
 			mv.addObject("userId",memResult.getValue().getId());
 			mv.setViewName("/user/showTwoDimensionCode");
 			

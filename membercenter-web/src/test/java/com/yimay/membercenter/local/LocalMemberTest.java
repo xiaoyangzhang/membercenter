@@ -88,7 +88,7 @@ public class LocalMemberTest extends LocalBaseTest{
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.pageSize = 10;
 		pageInfo.pageNo = 0;
-		TravelKaPageInfoList  travelKaPageInfoList = travelKaApi.getTravelKaListPage(1, 2, 3, 4, 5, pageInfo, "NEWJOIN");
+		TravelKaPageInfoList  travelKaPageInfoList = travelKaApi.getTravelKaListPage(1, 2, 3, 4, 5, pageInfo, "POPULARITY");
 		System.out.println("bbbbbb");
 	}
 
@@ -119,7 +119,7 @@ public class LocalMemberTest extends LocalBaseTest{
 
 	@Test
 	public void testRegisterUser(){
-		//生成会员信息、用户信息
+		//生成会员信息、用户信�?
 		MerchantVO merchantVO = new MerchantVO();
 		merchantVO.setMerchantUserId(1L);
 		merchantVO.setMobile("13581937677");
@@ -130,7 +130,7 @@ public class LocalMemberTest extends LocalBaseTest{
 
 	@Test
 	public void testFindUserByOpenIdAndMerchant(){
-		//生成会员信息、用户信息
+		//生成会员信息、用户信�?
 		MerchantVO merchantVO = new MerchantVO();
 		merchantVO.setMerchantUserId(1L);
 		merchantVO.setMobile("13581937677");

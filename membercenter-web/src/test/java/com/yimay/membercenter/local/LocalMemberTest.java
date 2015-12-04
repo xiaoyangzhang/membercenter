@@ -86,7 +86,7 @@ public class LocalMemberTest extends LocalBaseTest{
 	public void getTravelKaListPageTest() {
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.pageSize = 10;
-		pageInfo.pageNo = 1;
+		pageInfo.pageNo = 0;
 		TravelKaPageInfoList  travelKaPageInfoList = travelKaApi.getTravelKaListPage(1, 2, 3, 4, 5, pageInfo, "NEWJOIN");
 		System.out.println("bbbbbb");
 	}

@@ -28,6 +28,7 @@ import com.yimayhd.membercenter.utils.Asserts;
 import com.yimayhd.membercenter.utils.TimeElapseCaculate;
 import com.yimayhd.membercenter.vo.MemeberBasicInfoVO;
 import com.yimayhd.membercenter.vo.PointDetailVO;
+import com.yimayhd.user.session.manager.SessionUtils;
 
 
 /**
@@ -47,14 +48,16 @@ public class MemeberPointController {
 	 * @param memeberInfo
 	 * @return
 	 */
-	@RequestMapping(value = "/memeberTotalPoint")
+	@RequestMapping(value = "/point/memeberTotalPoint")
 	public Response getMemeberTotalPoint(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
-
-		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
-		Asserts.AssertNotNull(memeberInfo.getUserId(), "userId");
-		Asserts.AssertNotNull(memeberInfo.getMerchantId(), "merchantId");
 		
+		MemeberBasicInfoVO sessionInfo = (MemeberBasicInfoVO) SessionUtils.getSession().getAttribute(Constants.MEMBER_USER_INFO);
+		//FIXME
+		if(sessionInfo == null){
+			//session失效，
+		}
+
 		if(LOGGER.isDebugEnabled()){
 			TimeElapseCaculate.startSnapshort();
 		}
@@ -63,8 +66,8 @@ public class MemeberPointController {
 		CountReqDTO pointQueryRequestDTO = new CountReqDTO();
 //		pointQueryRequestDTO.setMemberId(11L);
 //		pointQueryRequestDTO.setVendorId(1L);
-		pointQueryRequestDTO.setMemberId(memeberInfo.getUserId());
-		pointQueryRequestDTO.setVendorId(memeberInfo.getMerchantId());
+		pointQueryRequestDTO.setMemberId(sessionInfo.getUserId());
+		pointQueryRequestDTO.setVendorId(sessionInfo.getMerchantId());
 		pointQueryRequestDTO.setIntegralType(PointType.POINT.getType());
 		
 		BaseResult<CountResultDTO> result = pointService.queryMemberPoint(pointQueryRequestDTO);
@@ -83,6 +86,7 @@ public class MemeberPointController {
 		Map<String,Object> viewMap = new HashMap<String,Object>();
 		Long totalPoint = result.getValue().getRemainPoint();
 		viewMap.put("totalPoint", totalPoint);
+		
 		return new Response().success(viewMap);
 	}
 	
@@ -93,7 +97,7 @@ public class MemeberPointController {
 	 * @param pageSize
 	 * @return
 	 */
-	@RequestMapping(value="/memberPointDetails")
+	@RequestMapping(value="/point/memberPointDetails")
 	public Response getMemberPointDetailsByPage(MemeberBasicInfoVO memeberInfo, int pageNumber,int pageSize) {
 		LOGGER.debug("memeberInfo:{}" ,JSON.toJSONString(memeberInfo));
 		LOGGER.debug("pageNumber:{}", pageNumber);
@@ -101,9 +105,12 @@ public class MemeberPointController {
 		
 		boolean succeeded = true;
 		String message = "";
-
-		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
-		Asserts.AssertNotNull(memeberInfo.getUserId(), "userId");
+		
+		MemeberBasicInfoVO sessionInfo = (MemeberBasicInfoVO) SessionUtils.getSession().getAttribute(Constants.MEMBER_USER_INFO);
+		//FIXME
+		if(sessionInfo == null){
+			//session失效，
+		}
 		
 		if (!succeeded) {
 			return new Response().failure(message);
@@ -119,8 +126,8 @@ public class MemeberPointController {
 //		detailReqDTO.setPageNo(1);
 //		detailReqDTO.setPageSize(10);
 		
-		detailReqDTO.setMemberId(memeberInfo.getUserId());
-		detailReqDTO.setVendorId(memeberInfo.getMerchantId());
+		detailReqDTO.setMemberId(sessionInfo.getUserId());
+		detailReqDTO.setVendorId(sessionInfo.getMerchantId());
 		detailReqDTO.setIntegralType(PointType.POINT.getType());
 		detailReqDTO.setPageNo(pageNumber);
 		detailReqDTO.setPageSize(pageSize);
@@ -142,11 +149,14 @@ public class MemeberPointController {
 		Map<String,Object> viewMap = new HashMap<String,Object>();
 		viewMap.put("pointDetails", pointDetailList);
 		int totalPage = 0;
-		if(detailResult.getValue().getTotalCount() % pageSize != 0){
-			totalPage = (detailResult.getValue().getTotalCount()/ pageSize) + 1;
-		}else {
-			totalPage = detailResult.getValue().getTotalCount() / pageSize;
+		if(detailResult.getValue() != null ){
+			if(detailResult.getValue().getTotalCount() % pageSize != 0){
+				totalPage = (detailResult.getValue().getTotalCount()/ pageSize) + 1;
+			}else {
+				totalPage = detailResult.getValue().getTotalCount() / pageSize;
+			}
 		}
+		
 		
 		viewMap.put("totalPage", totalPage);
 		
@@ -161,11 +171,11 @@ public class MemeberPointController {
 	 * @param memeberInfo
 	 * @return
 	 */
-	@RequestMapping(value = "/toPointDetails")
+	@RequestMapping(value = "/point/toPointDetails")
 	public ModelAndView toPointDetailsView(MemeberBasicInfoVO memeberInfo) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("point/pointDetails");
-		mv.addObject("memeberInfo",memeberInfo);
+		mv.addObject("phone",memeberInfo);
 		return mv;
 	}
 

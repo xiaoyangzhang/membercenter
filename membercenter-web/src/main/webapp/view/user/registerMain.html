@@ -1,10 +1,9 @@
 <body id="bg-fff">
+<title>登录页</title>
+<script src="$resourceContextTool.getStaticResourcePath()/js/user/user.js"></script>
 
-<h1 class="page-title">登录页</h1>
-<script src="$resourceContextTool.getResourcePath()/js/user/user.js"></script>
-
-<form name="registerForm" action="toAuthCodeView" method="post">
-	<div class="ipt-group">
+<form name="registerForm" action="$resourceContextTool.getContextPath()/user/toAuthCodeView" method="post">
+	<div class="ipt-group" style="margin-top: 46px;">
 		<label><em>手机号</em><input type="text" value="" name="phone" required="required" /></label>
 	</div>
 	<center>
@@ -12,9 +11,6 @@
 			class="submit-btn"
 			onclick="checkRegisterForm()"/>
 		</center>
-
-		<input type="hidden" name="openId" value="$memeberInfo.openId" />
-		<input type="hidden" name="merchantId" value="$memeberInfo.merchantId"/>
 </form>
 
 </body>

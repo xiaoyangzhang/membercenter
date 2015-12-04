@@ -6,16 +6,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">	
 	<meta name="keywords" content="your keywords">
 	<meta name="description" content="your description">
-	<link rel="stylesheet" href="$resourceContextTool.getResourcePath()/css/base.css">
-	<link rel="stylesheet" href="$resourceContextTool.getResourcePath()/css/wechat.css">
+	<link rel="stylesheet" href="$resourceContextTool.getStaticResourcePath()/css/base.css">
+	<link rel="stylesheet" href="$resourceContextTool.getStaticResourcePath()/css/wechat.css">
+	<!--<link rel="stylesheet" href="$resourceContextTool.getStaticResourcePath()/css/scroll.css"> -->
 		
-    <script src="$resourceContextTool.getResourcePath()/js/common/jquery.js"></script>
-    <script src="$resourceContextTool.getResourcePath()/js/common/verify.js"></script>
-    <script src="$resourceContextTool.getResourcePath()/js/common/zepto.min.js"></script>
-    <script src="$resourceContextTool.getResourcePath()/js/common/zepto-public.js"></script>
-    <script src="$resourceContextTool.getResourcePath()/js/common/zepto-city.js"></script>
-    <title>商贸系统</title>
+    <script src="$resourceContextTool.getStaticResourcePath()/js/common/jquery.js"></script>
+    <script src="$resourceContextTool.getStaticResourcePath()/js/common/verify.js"></script>
+    <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto.min.js"></script>
+    <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto-public.js"></script>
+    <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto-city.js"></script>
+    
 </head>
+<input type="hidden" name="contextPath" id="contextPath" value="$resourceContextTool.getContextPath()"/>
 
 $screen_content
 

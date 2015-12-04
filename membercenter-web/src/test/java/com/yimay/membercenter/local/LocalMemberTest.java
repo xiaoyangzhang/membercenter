@@ -5,9 +5,13 @@ import com.yimayhd.membercenter.api.TravelKaApi;
 import com.yimayhd.membercenter.client.domain.BaseMerchantDO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.BaseMerchantService;
+import com.yimayhd.membercenter.client.service.MerchantService;
+import com.yimayhd.membercenter.client.vo.MerchantPageQueryVO;
+import com.yimayhd.membercenter.client.vo.MerchantVO;
 import com.yimayhd.membercenter.entity.PageInfo;
 import com.yimayhd.membercenter.entity.TravelKa;
 import com.yimayhd.membercenter.entity.TravelKaPageInfoList;
+import com.yimayhd.user.client.domain.UserDO;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,6 +19,8 @@ import com.yimay.membercenter.LocalBaseTest;
 import com.yimayhd.membercenter.api.MemberApi;
 import com.yimayhd.membercenter.entity.member.MemberDetail;
 import com.yimayhd.membercenter.entity.member.MemberPurchauseDetail;
+
+import java.util.List;
 
 public class LocalMemberTest extends LocalBaseTest{
 	@Autowired
@@ -25,6 +31,9 @@ public class LocalMemberTest extends LocalBaseTest{
 
 	@Autowired
 	private BaseMerchantService baseMerchantService;
+
+	@Autowired
+	private MerchantService merchantService;
 
 	@Test
 	public void test(){
@@ -78,8 +87,8 @@ public class LocalMemberTest extends LocalBaseTest{
 	public void getTravelKaListPageTest() {
 		PageInfo pageInfo = new PageInfo();
 		pageInfo.pageSize = 10;
-		pageInfo.pageNo = 1;
-		TravelKaPageInfoList  travelKaPageInfoList = travelKaApi.getTravelKaListPage(1, 2, 3, 4, 5, pageInfo, "NEWJOIN");
+		pageInfo.pageNo = 0;
+		TravelKaPageInfoList  travelKaPageInfoList = travelKaApi.getTravelKaListPage(1, 2, 3, 4, 5, pageInfo, "POPULARITY");
 		System.out.println("bbbbbb");
 	}
 
@@ -89,4 +98,47 @@ public class LocalMemberTest extends LocalBaseTest{
 		MemResult<BaseMerchantDO> memResult = baseMerchantService.getMerchantByUserId(userId);
 		System.out.println("abc");
 	}
+
+
+
+	@Test
+	public void testFindPageUsersByMerchant(){
+		MerchantPageQueryVO merchantPageQueryVO = new MerchantPageQueryVO();
+		merchantPageQueryVO.setPageSize(10);
+		merchantPageQueryVO.setPageNo(1);
+//		merchantPageQueryVO.setCity();
+//		merchantPageQueryVO.setNickName();
+//		merchantPageQueryVO.setMerchantId();
+		merchantPageQueryVO.setMerchantUserId(1L);
+//		merchantPageQueryVO.setMobile();
+		MemResult<List<UserDO>> memResult = merchantService.findPageUsersByMerchant(merchantPageQueryVO);
+		printResult(memResult,"MemResult");
+	}
+
+
+
+	@Test
+	public void testRegisterUser(){
+		//生成会员信息、用户信�?
+		MerchantVO merchantVO = new MerchantVO();
+		merchantVO.setMerchantUserId(1L);
+		merchantVO.setMobile("13581937677");
+		merchantVO.setOpenId("aaaaaaa");
+		MemResult<UserDO> memResult = merchantService.registerUser(merchantVO);
+		printResult(memResult,"MemResult");
+	}
+
+	@Test
+	public void testFindUserByOpenIdAndMerchant(){
+		//生成会员信息、用户信�?
+		MerchantVO merchantVO = new MerchantVO();
+		merchantVO.setMerchantUserId(1L);
+		merchantVO.setMobile("13581937677");
+		merchantVO.setOpenId("aaaaaaa");
+		MemResult<UserDO> memResult = merchantService.findUserByOpenIdAndMerchant(merchantVO);
+		printResult(memResult,"MemResult");
+	}
+
+
+
 }

@@ -114,9 +114,8 @@ public class MemberPrivilegeManager {
 	            }
 			
 		} catch (Exception e) {
-			
+			//FIXME 徐盛强  不要将参数toString，因为这样打印的是对象的hash code，使用JSON.toJSONString()将它输出来,  不应该是db异常，还有NULLPointException，errorcode处理一下
 			log.error("MemberPrivilegeManager.pageQuery excrption memPrilvilegePageQuery : " + memPrilvilegePageQuery.toString(), e);
-			
 			pageResult.setReturnCode(MemberReturnCode.DB_READ_FAILED);
 			
 			return pageResult; 

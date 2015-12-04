@@ -4,20 +4,16 @@
     <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO">
 
         <id column="id" property="id" jdbcType="BIGINT"/>
-
         <result column="open_id" property="openId" jdbcType="VARCHAR"/>
-
-        <result column="merchant_id" property="merchantId" jdbcType="BIGINT"/>
-
+        <result column="merchant_user_id" property="merchantUserId" jdbcType="BIGINT"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
-
         <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
 
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,open_id,merchant_id,user_id, gmt_created, gmt_modified
+        id,open_id,merchant_user_id,user_id, gmt_created, gmt_modified
     </sql>
 
     <sql id="Search_Limit">
@@ -31,8 +27,8 @@
             <if test="openId != null">
                 AND open_id = #{openId}
             </if>
-            <if test="merchantId != null">
-                AND merchant_id = #{merchantId}
+            <if test="merchantUserId != null">
+                AND merchant_user_id = #{merchantUserId}
             </if>
         </where>
     </sql>
@@ -48,11 +44,11 @@
     <!--insert的时候要去掉ID，创建时间，更新时间和状态-->
     <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO"
             useGeneratedKeys="true" keyProperty="id">
-        insert into wx_user_merchant_relation  (open_id,merchant_id,user_id)
+        insert into wx_user_merchant_relation  (open_id,merchant_user_id,user_id)
         values (
           #{openId,jdbcType=VARCHAR},
         
-          #{merchantId,jdbcType=BIGINT},
+          #{merchantUserId,jdbcType=BIGINT},
         
           #{userId,jdbcType=BIGINT}
         
@@ -82,8 +78,8 @@
                 t.open_id = #{openId,jdbcType=VARCHAR},
             </if>
 
-            <if test="merchantId != null">
-                t.merchant_id = #{merchantId,jdbcType=BIGINT},
+            <if test="merchantUserId != null">
+                t.merchant_user_id = #{merchantUserId,jdbcType=BIGINT},
             </if>
 
             <if test="userId != null">

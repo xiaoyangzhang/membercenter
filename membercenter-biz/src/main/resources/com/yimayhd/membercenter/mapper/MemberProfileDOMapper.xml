@@ -127,8 +127,11 @@
     <select id="pageQuery" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.client.query.TravelkaPageQuery">
         SELECT
         <include refid="Base_Column_List" />
-        FROM member_profile ORDER BY #{orderbyCol} DESC
-
+        FROM member_profile ORDER BY gmt_created
+        <if test="orderbyCol != null">
+           , ${orderbyCol}
+        </if>
+        DESC
         limit #{startRow},#{pageSize}
     </select>
 

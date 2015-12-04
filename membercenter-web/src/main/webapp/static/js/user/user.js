@@ -1,9 +1,11 @@
+var contextPath=$("#contextPath").val();
+
 /*###########################ajax后台交互:start##################################################*/
 function sendAuthCode(phone,callback) {
 	var phone = $("#phone").val();
 	//alert(phone);
 	
-	$.post("sendMsgCode", {
+	$.post(contextPath + "/user/sendMsgCode", {
 		phone : phone
 	}, function(data, status) {
 		alert("验证发送成功!");
@@ -12,7 +14,7 @@ function sendAuthCode(phone,callback) {
 
 function checkAuthCode(phone,authCode,callback){
 	// 校验短信验证码
-	$.post("checkMsgCode", {
+	$.post(contextPath + "/user/checkMsgCode", {
 		phone : phone,
 		authCode : authCode
 	}, function(data, status) {
@@ -31,8 +33,10 @@ function initCheckAuthCode(){
 	Zepto(function($){
 		$('.sendcode-btn').countdown({autoTime:60});
 	 });
+	
+	
+	 $(".sendcode-btn").attr("href",contextPath + "/user/sendMsgCode?phone=" + $("#phone").val());
 	 
-	 $(".sendcode-btn").attr("href","sendMsgCode?phone=" + $("#phone").val());
 }
 
 /**
@@ -62,9 +66,14 @@ function getTwoDimension(){
  * 校验注册必填项
  */
 function checkRegisterForm() {
-	if (chkPhone(registerForm.phone, "手机号码", false)) {
-		registerForm.submit();
+	var s = registerForm.phone.value;
+	if(isEmpty(s) || s.length != 11 || s.substr(0,1) != '1') {
+		alert("请输入正确的手机号码!");
+		return ;
 	}
+	
+	registerForm.submit();
+	
 }
 
 /**
@@ -98,9 +107,34 @@ function fullfillUser() {
  		return ;
  	}
  	
+ 	if(username.length > 8){
+ 		alert("名字超过最大限制");
+ 		return ;
+ 	}
+ 	
  	fulfillUserInfoForm.submit();
  }
 
+
+function initTwoDimension(){
+	$("#code").qrcode({
+		render : "table", //table方式
+		width : 200, //宽度
+		height : 200, //高度
+		text : $("#codeInfo").val()
+	});
+	
+	var userId = $("#userId").val();
+	var merchantId = $("#merchantId").val();
+	//获取当前积分
+	getCurrentPoint(function(data){
+		var isSuccessful = data.meta.success;
+		if (isSuccessful == true) {
+			$("#currentPoint").text("当前积分:" + data.data.totalPoint);
+		}
+	});
+	
+}
 
 
 /*###########################用户相关页面js:end##########################################################*/

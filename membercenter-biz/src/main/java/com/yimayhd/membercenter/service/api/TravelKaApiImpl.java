@@ -5,7 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.yimayhd.membercenter.entity.*;
+import com.yimayhd.membercenter.entity.KaClub;
+import com.yimayhd.membercenter.entity.PageInfo;
+import com.yimayhd.membercenter.entity.TravelKa;
 import com.yimayhd.membercenter.entity.TravelKaClub;
+import com.yimayhd.membercenter.entity.TravelKaPageInfoList;
+import com.yimayhd.user.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +23,6 @@ import com.yimayhd.membercenter.client.domain.UserAbilityRelationDO;
 import com.yimayhd.membercenter.client.query.TravelkaPageQuery;
 import com.yimayhd.membercenter.client.result.BasePageResult;
 import com.yimayhd.membercenter.conventer.TravelKaConverter;
-import com.yimayhd.membercenter.entity.PageInfo;
-import com.yimayhd.membercenter.entity.TravelKa;
-import com.yimayhd.membercenter.entity.TravelKaPageInfoList;
 import com.yimayhd.membercenter.manager.MemberProfileManager;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.enums.BaseStatus;
@@ -51,26 +54,30 @@ public class TravelKaApiImpl implements TravelKaApi {
     ){
         TravelKa travelKa = null;
         try{
-            logger.info("TravelKaApiImpl method getTravelKaDetail userId:"+ theUserId);
-            //1 . 根据用户id 查询 大咖详情
-            MemberProfileDO memberProfileDO = memberProfileManager.getMemberProfileByUserId(theUserId);
-            UserDO userDO = memberProfileManager.getUserDOById(theUserId);
-            if(memberProfileDO != null){
-                //2. 根据用户id 去用户中心 查询用户详情
-                //3. 查询大咖能力
-                List<UserAbilityRelationDO> userAbilityRelationDOs =  memberProfileManager.getUserAbilityRelationByUserId(theUserId);
-                //4. 组装数据
-                travelKa = TravelKaConverter.converntTravelKaDetail(userAbilityRelationDOs, memberProfileDO, userDO);
-                travelKa.isTravelKa = String.valueOf(BaseStatus.YES.getType());
-                TravelKaClub travelKaClub = new TravelKaClub();
-                travelKaClub.liveCount = 77;
-                travelKaClub.informationsCount = 567;
-                travelKa.travelKaClub = travelKaClub;
-            } else {
-                // 只返回用户信息即可
-                TravelKaConverter.converntTravelKaDetail4UserInfo(userDO);
-                travelKa.isTravelKa = String.valueOf(BaseStatus.NO.getType());
+            if(theUserId <=0){
+                DubboExtProperty.setErrorCode(MemberReturnCode.PARAMTER_ERROR);
+                return null;
             }
+            logger.info("TravelKaApiImpl method getTravelKaDetail userId:"+ theUserId);
+//            //1 . 根据用户id 查询 大咖详情
+//            MemberProfileDO memberProfileDO = memberProfileManager.getMemberProfileByUserId(theUserId);
+//            UserDO userDO = memberProfileManager.getUserDOById(theUserId);
+//            if(memberProfileDO != null){
+//                //2. 根据用户id 去用户中心 查询用户详情
+//                //3. 查询大咖能力
+//                List<UserAbilityRelationDO> userAbilityRelationDOs =  memberProfileManager.getUserAbilityRelationByUserId(theUserId);
+//                //4. 组装数据
+//                travelKa = TravelKaConverter.converntTravelKaDetail(userAbilityRelationDOs, memberProfileDO, userDO);
+//                travelKa.isTravelKa = String.valueOf(BaseStatus.YES.getType());
+//                TravelKaClub travelKaClub = memberProfileManager.getTravelKaClub(theUserId);
+//                travelKa.travelKaClub = travelKaClub;
+//
+//            } else {
+//                // 只返回用户信息即可
+//                TravelKaConverter.converntTravelKaDetail4UserInfo(userDO);
+//                travelKa.isTravelKa = String.valueOf(BaseStatus.NO.getType());
+//            }
+            travelKa = memberProfileManager.getTravelKaDetail(theUserId);
         }catch (Exception e){
             DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
             logger.error("TravelKaApiImpl method getTravelKaDetail error",e);
@@ -93,11 +100,13 @@ public class TravelKaApiImpl implements TravelKaApi {
         TravelKaPageInfoList travelKaPageInfoList = null;
         try{
             TravelkaPageQuery travelkaPageQuery = TravelKaConverter.TravelkaPageQuery(pageInfo);
-            String orderCol = "";
-            if(type.equals("POPULARITY")){
-                orderCol = "sort_column1"; // 人气
-            }else if(type.equals("NEWJOIN")){
-                orderCol = "sort_column2"; //新晋
+            String orderCol = null;
+            if(type != null){
+                if(type.equals("POPULARITY")){
+                    orderCol = "sort_column1"; // 人气
+                }else if(type.equals("NEWJOIN")){
+                    orderCol = "sort_column2"; //新晋
+                }
             }
             travelkaPageQuery.setOrderbyCol(orderCol);
             BasePageResult<MemberProfileDO> basePageResult = memberProfileManager.pageQueryUser(travelkaPageQuery);

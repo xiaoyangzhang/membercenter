@@ -1,21 +1,19 @@
 
+var contextPath=$("#contextPath").val();
+
 /*#####################################ajax 后台交互:start##########################################*/
 
-function getCurrentPoint(userId, merchantId, callback) {
-	$.post("memeberTotalPoint", {
-		userId : userId,
-		merchantId : merchantId
+function getCurrentPoint( callback) {
+	$.post(contextPath + "/point/memeberTotalPoint", {
 	}, function(data, status) {
 		callback(data);
 	});
 }
 
-function getPointDetailsByPage(pageNumber, pageSize, userId, merchantId,
+function getPointDetailsByPage(pageNumber, pageSize,
 		callback) {
 	// 分页获取积分明细
-	$.post("memberPointDetails", {
-		userId : userId,
-		merchantId : merchantId,
+	$.post(contextPath + "/point/memberPointDetails", {
 		pageNumber : pageNumber,
 		pageSize : pageSize
 	}, function(data, status) {
@@ -33,17 +31,6 @@ function pointDetailLoaded() {
 	
 	myScroll = new iScroll('wrapper', {
 		useTransition: true,
-		onScrollMove:function(){
-			if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
-				pullUpEl.className = 'flip';
-				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Release to refresh...';
-				this.maxScrollY = this.maxScrollY;
-			} else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
-				pullUpEl.className = '';
-				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
-				this.maxScrollY = pullUpOffset;
-			}
-		},
 		onScrollEnd: function () {
 			pointDetailPullUpAction();	
 		}
@@ -53,45 +40,6 @@ function pointDetailLoaded() {
 
 function pointDetailPullUpAction () {
 	//页号
-	var currentPage = parseInt($("#pageNumber").val()) + 1;
-	
-	var totalPage = $("#totalPage").val();
-	if(currentPage >  parseInt(totalPage)){
-		return ;
-	}
-	
-	$("#pageNumber").val(currentPage);
-	
-	//每页显示多少条
-	var pageSize = $("#pageSize").val();
-	var userId = $("#userId").val();
-	var merchantId = $("#merchantId").val();
-	
-	//获取积分明细
-	getPointDetailsByPage(currentPage, pageSize, userId, merchantId, function(
-			data) {
-		var isSuccessful = data.meta.success;
-		if (isSuccessful == true) {
-			var pointDetails = data.data.pointDetails;
-			for (i in pointDetails) {
-				var detailStr = " <li> <span class='left'>"
-						+ pointDetails[i].source + "&nbsp; <br/><em>"
-						+ pointDetails[i].createDate
-						+ "</em></span><span class='right'> "
-						+ pointDetails[i].type + pointDetails[i].point
-						+ "<br/> <em>有效期至" + pointDetails[i].endDate
-						+ "</em></span></li> ";
-				$("#showPointDetailsDiv").append(detailStr);
-			}
-		}
-
-	});	
-	myScroll.refresh();	
-}
-
-
-function initPointDetails(){
-	//页号
 	var pageNumber = $("#pageNumber").val();
 	//每页显示多少条
 	var pageSize = $("#pageSize").val();
@@ -99,15 +47,17 @@ function initPointDetails(){
 	var merchantId = $("#merchantId").val();
 	
 	//获取当前积分
-	getCurrentPoint(userId,merchantId,function(data){
+	getCurrentPoint(function(data){
 		var isSuccessful = data.meta.success;
 		if (isSuccessful == true) {
 			$("#currentPoint").text(data.data.totalPoint);
+		}else{
+			alert("获取总积分错误:" + data.meta.message);
 		}
 	});
 
 	//获取积分明细
-	getPointDetailsByPage(pageNumber, pageSize, userId, merchantId, function(
+	getPointDetailsByPage(pageNumber, pageSize, function(
 			data) {
 		var isSuccessful = data.meta.success;
 		if (isSuccessful == true) {
@@ -125,6 +75,52 @@ function initPointDetails(){
 						+ "</em></span></li> ";
 				$("#showPointDetailsDiv").append(detailStr);
 			}
+		}else{
+			alert("获取积分明细错误:" + data.meta.message);
+		}
+		
+		myScroll.refresh();
+	});
+}
+
+
+function initPointDetails(){
+	//页号
+	var pageNumber = $("#pageNumber").val();
+	//每页显示多少条
+	var pageSize = $("#pageSize").val();
+	
+	//获取当前积分
+	getCurrentPoint(function(data){
+		var isSuccessful = data.meta.success;
+		if (isSuccessful == true) {
+			$("#currentPoint").text(data.data.totalPoint);
+		}else{
+			alert("获取总积分错误:" + data.meta.message);
+		}
+	});
+
+	//获取积分明细
+	getPointDetailsByPage(pageNumber, pageSize, function(
+			data) {
+		var isSuccessful = data.meta.success;
+		if (isSuccessful == true) {
+			var pointDetails = data.data.pointDetails;
+			var totalPage = data.data.totalPage;
+			$("#totalPage").val(totalPage);
+
+			for (i in pointDetails) {
+				var detailStr = " <li> <span class='left'>"
+						+ pointDetails[i].source + "&nbsp; <br/><em>"
+						+ pointDetails[i].createDate
+						+ "</em></span><span class='right'> "
+						+ pointDetails[i].type + pointDetails[i].point
+						+ "<br/> <em>有效期至" + pointDetails[i].endDate
+						+ "</em></span></li> ";
+				$("#showPointDetailsDiv").append(detailStr);
+			}
+		}else{
+			alert("获取积分明细错误:" + data.meta.message);
 		}
 	});
 

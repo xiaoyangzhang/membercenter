@@ -1,15 +1,16 @@
-<!--
-<h1 class="page-title">
-	<a href="" class="return-btn" onclick='history.go(-1)'>返回</a>
-</h1>
- -->
-<body id="bg-fff">
-<ul class="point-tab clearfix">
-	<li class="on">总积分</li>
-</ul>
 
-<script src="$resourceContextTool.getResourcePath()/js/point/point.js"></script>
-<script src="$resourceContextTool.getResourcePath()/js/common/iscroll.js"></script>
+<h1 class="page-title">
+	积分明细
+</h1>
+ 
+ <h1 class="page-title">
+	<a href='#' class="return-btn" onclick='history.go(-1)'>返回</a>
+</h1> 
+ 
+<body id="bg-fff">
+
+<script src="$resourceContextTool.getStaticResourcePath()/js/point/point.js"></script>
+<script src="$resourceContextTool.getStaticResourcePath()/js/common/iscroll.js"></script>
 
 
 <div class="point-box">
@@ -29,10 +30,8 @@
 			<div id="showPointDetailsDiv"> </div>
 		</div>	
 		<input type="hidden" name="pageNumber" id="pageNumber" value="1"/>	
-		<input type="hidden" name="totalPage" id="totalPage" value="$totalPage"/>	
+		<input type="hidden" name="totalPage" id="totalPage" />	
 		<input type="hidden" name="pageSize" id="pageSize" value="10"/>	
-		<input type="hidden" name="merchantId" id="merchantId" value="$memeberInfo.merchantId" />
-		<input type="hidden" name="userId" id="userId" value="$memeberInfo.userId" />
 		
 	</div>
 	<div id="pullUp">

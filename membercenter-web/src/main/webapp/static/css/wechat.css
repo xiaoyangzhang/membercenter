@@ -1,26 +1,26 @@
 #bg-fff{background:#fff;}
 
-.page-title{position:relative;text-align:center;padding:1rem 0;font-size:1.6rem;color:#222;border-bottom:1px solid #ccc;background:#efefef;}
+.page-title{position:relative;height: 22px;text-align:center;padding:1rem 0;font-size:1.6rem;color:#222;border-bottom:1px solid #ccc;background:#efefef;}
 .code-box{background:#fff;padding:0 7.8%;}
 /*.code-box .er-img{width:70%;margin:25% 0;padding:2%;background:rgba(240,240,240,0.5);border-radius:10px;}*/
-.code-box .er-img{width:152px;margin:30% auto;;border-radius:10px;padding: 1.8rem;}
-.code-box .er-img table{box-shadow: 1px 0px 15px 9px rgba(255, 255, 255, 0.8);}
-.code-box a.link-btn{color:rgba(249, 199, 0, 1);text-align:right;font-size:1.4rem;text-decoration:underline;float:right;}
+.code-box .er-img{width:100%;height: 205px;margin:0 auto;;border-radius:10px;position: relative;background: url("../img/YM_QRCodeBg.png") no-repeat center;background-size: 385px;padding: 111px 0;}
+.code-box .er-img table{box-shadow: 1px 0px 15px 9px rgba(255, 255, 255, 0.8);position: absolute;left: 50%;margin-left: -100px;margin-top: 6px;}
+.code-box a.link-btn{color:#f9c700;text-align:right;font-size:1.6rem;text-decoration:underline;float:right;}
 .code-box .header{padding:1rem 0;}
 .code-box .header span{display:inline-block;width:49%;font-size:1.4rem;}
 .code-box .header span.t-left{text-align:left;line-height: 60px;}
-.code-box .header span.t-left img{width: 60px;margin-right: 1rem;}
-.code-box .header span.t-right{text-align:right;}
+.code-box .header span.t-left img{width: 60px;margin-right: 1rem;border-radius: 50px;}
+.code-box .header span.t-right{text-align:right;padding-top: 5px;}
 
 .return-btn{width:1.25rem;height:1.25rem;background:url('../img/left-jt.jpg') no-repeat;background-size:100% 100%;position:absolute;left:10px;top:1.5rem;text-indent:-1000em;}
-.submit-btn{width:90%;background:#f9c700;border:none;padding:1rem 0;color:#fff;text-align:center;margin:10% 0;border-radius:2px;}
+.submit-btn{width:90%;background:#f9c700;border:none;padding:1rem 0;color:#fff;text-align:center;margin:10% 0;border-radius:2px;font-size: 1.6rem;}
 
 .ipt-group,
 .ipt-input{min-height:160px;color:#bbb;}
 .ipt-group label{display:block;border-bottom:1px solid #ccc;background:#fff;padding:0 1rem;font-size:1.4rem;position:relative;}
 .ipt-group label em,
-.ipt-input label em{display:inline-block;min-width:5rem;text-align:right;}
-.ipt-group label input{width:65%;border:none;background:#fff;padding:1rem;}
+.ipt-input label em{display:inline-block;min-width:5rem;text-align:right;font-size: 1.6rem;}
+.ipt-group label input{width:65%;border:none;background:#fff;padding:1rem;font-size: 1.6rem;}
 .ipt-group label input.sort{width:50%;}
 .ipt-group label input:focus {outline: none;}
 
@@ -35,9 +35,9 @@
 .point-tab li.on{border-bottom:3px solid #0099d9;color:#009bd9;padding-bottom:0;}
 
 .point-box{padding:3%;}
-.point-box ul li{border-bottom:1px solid #e2f2f2;padding:2% 0;line-height:1.7;font-size:1.2rem;}
+.point-box ul li{border-bottom:1px solid #e2f2f2;padding:2% 0;line-height:1.2;font-size:1.6rem;}
 .point-box ul li span.left{display:inline-block;width:50%;text-align:left;color:#222222;}
 .point-box ul li span.right{display:inline-block;width:45%;text-align:right;color:#ff8600;}
 
 .point-box ul li span.left em,
-.point-box ul li span.right em{color:#b0ada7;font-size:1rem;}
+.point-box ul li span.right em{color:#b0ada7;font-size:1.4rem;}

@@ -104,6 +104,7 @@ public class MerchantServiceImpl implements MerchantService {
         WxUserMerchantRelationDO wxUserMerchantRelationDO = new WxUserMerchantRelationDO();
         wxUserMerchantRelationDO.setOpenId(merchantVO.getOpenId());
         wxUserMerchantRelationDO.setMerchantUserId(merchantVO.getMerchantUserId());
+
         UserDO userDO = null;
         try {
             userDO = merchantServiceManager.findMerchantUserDO(wxUserMerchantRelationDO);

@@ -100,11 +100,13 @@ public class TravelKaApiImpl implements TravelKaApi {
         TravelKaPageInfoList travelKaPageInfoList = null;
         try{
             TravelkaPageQuery travelkaPageQuery = TravelKaConverter.TravelkaPageQuery(pageInfo);
-            String orderCol = "";
-            if(type.equals("POPULARITY")){
-                orderCol = "sort_column1"; // 人气
-            }else if(type.equals("NEWJOIN")){
-                orderCol = "sort_column2"; //新晋
+            String orderCol = null;
+            if(type != null){
+                if(type.equals("POPULARITY")){
+                    orderCol = "sort_column1"; // 人气
+                }else if(type.equals("NEWJOIN")){
+                    orderCol = "sort_column2"; //新晋
+                }
             }
             travelkaPageQuery.setOrderbyCol(orderCol);
             BasePageResult<MemberProfileDO> basePageResult = memberProfileManager.pageQueryUser(travelkaPageQuery);

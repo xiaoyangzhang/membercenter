@@ -13,6 +13,7 @@ public class TravelkaPageQuery extends PageQuery {
 
     private String orderbyCol;
 
+
     public List<Long> getIds() {
         return ids;
     }

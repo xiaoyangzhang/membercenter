@@ -21,7 +21,6 @@ import com.yimayhd.membercenter.Response;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.MerchantService;
 import com.yimayhd.membercenter.client.vo.MerchantVO;
-import com.yimayhd.membercenter.exception.InValidParamException;
 import com.yimayhd.membercenter.utils.Asserts;
 import com.yimayhd.membercenter.utils.TimeElapseCaculate;
 import com.yimayhd.membercenter.vo.MemeberBasicInfoVO;
@@ -84,6 +83,7 @@ public class UserInfoController {
 			TimeElapseCaculate.startSnapshort();
 		}
 		// 更新用户信息
+		userVO.setUserId(sessionInfo.getUserId());
 		UserDO userDO = Converter.contertToUserDO(userVO);
 		BaseResult<Boolean> result = userService.updateUserDO(userDO);
 		

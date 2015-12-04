@@ -24,7 +24,6 @@ import com.yimay.integral.client.service.PointService;
 import com.yimayhd.membercenter.Constants;
 import com.yimayhd.membercenter.Converter;
 import com.yimayhd.membercenter.Response;
-import com.yimayhd.membercenter.utils.Asserts;
 import com.yimayhd.membercenter.utils.TimeElapseCaculate;
 import com.yimayhd.membercenter.vo.MemeberBasicInfoVO;
 import com.yimayhd.membercenter.vo.PointDetailVO;

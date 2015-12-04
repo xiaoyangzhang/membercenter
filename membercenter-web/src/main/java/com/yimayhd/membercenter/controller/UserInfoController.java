@@ -314,7 +314,7 @@ public class UserInfoController {
 		MerchantVO merchantVO = new MerchantVO();
 		merchantVO.setOpenId(memeberInfo.getOpenId());
 		merchantVO.setMerchantUserId( memeberInfo.getMerchantId());
-		
+		//FIXME  需要根据openId查询用户是
 		MemResult<UserDO> memResult = merchantService.findUserByOpenIdAndMerchant(merchantVO);
 		LOGGER.debug("userDO:{}",JSON.toJSONString(memResult));
 		

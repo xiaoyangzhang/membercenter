@@ -2,14 +2,14 @@
 <title>完善资料</title>
 
 <h1 class="page-title">
-	<a href="" class="return-btn" onclick='history.go(-1)'>返回</a>
+	<a href="#" class="return-btn" onclick='history.go(-1)'>返回</a>
 </h1>
 
  
 <form name="fulfillUserInfoForm" action="$resourceContextTool.getContextPath()/user/fulfillUserInfo" method="post">
 	<div class="ipt-input">
 		<label><em>手机号:</em><span>
-		$stringTool.hideStr($memeberInfo.phone,6,10)
+		$stringTool.hideStr($phone,6,10)
 		</span></label>
 		<label><em>名字:</em><input type="text" value="" id="name" name="name" required="required" /> </label>
 			
@@ -46,10 +46,6 @@
 			class="submit-btn" />
 	</center>
 
-	<input type="hidden" name="openId" value="$memeberInfo.openId" /> <input
-		type="hidden" name="merchantId" value="$memeberInfo.merchantId" /> <input
-		type="hidden" name="userId" value="$memeberInfo.userId" /> <input
-		type="hidden" name="id" value="$memeberInfo.userId" />
 </form>
 
 <script src="$resourceContextTool.getStaticResourcePath()/js/user/user.js"></script>

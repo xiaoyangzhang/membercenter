@@ -3,21 +3,17 @@ var contextPath=$("#contextPath").val();
 
 /*#####################################ajax 后台交互:start##########################################*/
 
-function getCurrentPoint(userId, merchantId, callback) {
+function getCurrentPoint( callback) {
 	$.post(contextPath + "/point/memeberTotalPoint", {
-		userId : userId,
-		merchantId : merchantId
 	}, function(data, status) {
 		callback(data);
 	});
 }
 
-function getPointDetailsByPage(pageNumber, pageSize, userId, merchantId,
+function getPointDetailsByPage(pageNumber, pageSize,
 		callback) {
 	// 分页获取积分明细
 	$.post(contextPath + "/point/memberPointDetails", {
-		userId : userId,
-		merchantId : merchantId,
 		pageNumber : pageNumber,
 		pageSize : pageSize
 	}, function(data, status) {
@@ -51,7 +47,7 @@ function pointDetailPullUpAction () {
 	var merchantId = $("#merchantId").val();
 	
 	//获取当前积分
-	getCurrentPoint(userId,merchantId,function(data){
+	getCurrentPoint(function(data){
 		var isSuccessful = data.meta.success;
 		if (isSuccessful == true) {
 			$("#currentPoint").text(data.data.totalPoint);
@@ -61,7 +57,7 @@ function pointDetailPullUpAction () {
 	});
 
 	//获取积分明细
-	getPointDetailsByPage(pageNumber, pageSize, userId, merchantId, function(
+	getPointDetailsByPage(pageNumber, pageSize, function(
 			data) {
 		var isSuccessful = data.meta.success;
 		if (isSuccessful == true) {
@@ -93,11 +89,9 @@ function initPointDetails(){
 	var pageNumber = $("#pageNumber").val();
 	//每页显示多少条
 	var pageSize = $("#pageSize").val();
-	var userId = $("#userId").val();
-	var merchantId = $("#merchantId").val();
 	
 	//获取当前积分
-	getCurrentPoint(userId,merchantId,function(data){
+	getCurrentPoint(function(data){
 		var isSuccessful = data.meta.success;
 		if (isSuccessful == true) {
 			$("#currentPoint").text(data.data.totalPoint);
@@ -107,7 +101,7 @@ function initPointDetails(){
 	});
 
 	//获取积分明细
-	getPointDetailsByPage(pageNumber, pageSize, userId, merchantId, function(
+	getPointDetailsByPage(pageNumber, pageSize, function(
 			data) {
 		var isSuccessful = data.meta.success;
 		if (isSuccessful == true) {

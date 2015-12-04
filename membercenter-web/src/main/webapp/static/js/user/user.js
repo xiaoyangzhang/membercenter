@@ -127,7 +127,7 @@ function initTwoDimension(){
 	var userId = $("#userId").val();
 	var merchantId = $("#merchantId").val();
 	//获取当前积分
-	getCurrentPoint(userId,merchantId,function(data){
+	getCurrentPoint(function(data){
 		var isSuccessful = data.meta.success;
 		if (isSuccessful == true) {
 			$("#currentPoint").text("当前积分:" + data.data.totalPoint);

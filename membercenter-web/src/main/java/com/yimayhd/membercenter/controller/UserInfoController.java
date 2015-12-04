@@ -72,6 +72,12 @@ public class UserInfoController {
 //		System.out.println(new String(name.getBytes("iso8859-1"),"UTF-8"));
 		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
 		Asserts.AssertNotNull(userVO, "userVO");
+		
+		MemeberBasicInfoVO sessionInfo = (MemeberBasicInfoVO) SessionUtils.getSession().getAttribute(Constants.MEMBER_USER_INFO);
+		//FIXME
+		if(sessionInfo == null){
+			//session失效，
+		}
 
 		ModelAndView mv = new ModelAndView();
 		if(LOGGER.isDebugEnabled()){
@@ -99,7 +105,7 @@ public class UserInfoController {
 		mv.addObject("isFilledUserInfo",true);
 
 		// 此处获取二维码串
-		BaseResult<String> dimensionResult = userService.getTwoDimensionCode(memeberInfo.getUserId(),memeberInfo.getMerchantId());
+		BaseResult<String> dimensionResult = userService.getTwoDimensionCode(sessionInfo.getUserId(),sessionInfo.getMerchantId());
 		LOGGER.debug("dimensionResult:{}" ,JSON.toJSONString(dimensionResult));
 		
 		if (!dimensionResult.isSuccess()) {
@@ -132,20 +138,25 @@ public class UserInfoController {
 
 		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
 		Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
-		Asserts.AssertStringNotEmpty(memeberInfo.getOpenId(), "openId");
-		Asserts.AssertNotNull(memeberInfo.getMerchantId(),"merchantId");
 		
+		String phone = memeberInfo.getPhone();
 		ModelAndView mv = new ModelAndView();
 		
 		if(LOGGER.isDebugEnabled()){
 			TimeElapseCaculate.startSnapshort();
 		}
 		 
+		MemeberBasicInfoVO sessionInfo = (MemeberBasicInfoVO) SessionUtils.getSession().getAttribute(Constants.MEMBER_USER_INFO);
+		//FIXME
+		if(sessionInfo == null){
+			//session失效，
+		}
+		
 		//生成会员信息、用户信息
 		MerchantVO merchantVO = new MerchantVO();
-		merchantVO.setMerchantId(memeberInfo.getMerchantId());
-		merchantVO.setMobile(memeberInfo.getPhone());
-		merchantVO.setOpenId(memeberInfo.getOpenId());
+		merchantVO.setMerchantId(sessionInfo.getMerchantId());
+		merchantVO.setMobile(phone);
+		merchantVO.setOpenId(sessionInfo.getOpenId());
 		
 		MemResult<UserDO> memResult = merchantService.registerUser(merchantVO);
 		LOGGER.debug("memResult:{}" ,JSON.toJSONString(memResult));
@@ -157,12 +168,16 @@ public class UserInfoController {
 			return mv;
 		}
 		
-		memeberInfo.setUserId(memResult.getValue().getId());
+		Long userId = memResult.getValue().getId();
+		//生成会话信息
+		sessionInfo.setUserId(userId);
+		SessionUtils.getSession().setAttribute(Constants.MEMBER_USER_INFO,sessionInfo);
+		
 		//生成用户凭证
-		SessionUtils.getSession().setAttribute(SessionConstant.USER_ID,memeberInfo);
+		SessionUtils.getSession().setAttribute(SessionConstant.USER_ID,userId);
 		
 		// 此处获取二维码串
-		BaseResult<String> dimensionResult = userService.getTwoDimensionCode(memResult.getValue().getId(),memeberInfo.getMerchantId());
+		BaseResult<String> dimensionResult = userService.getTwoDimensionCode(userId,sessionInfo.getMerchantId());
 		LOGGER.debug("dimensionResult:{}",JSON.toJSONString(dimensionResult));
 		
 		if(!dimensionResult.isSuccess()){
@@ -176,7 +191,7 @@ public class UserInfoController {
 		LOGGER.debug("codeInfo:{}" ,codeInfo);
 		
 		//查询用户信息，设置是否需要补全用户资料
-		UserDO userDO = userService.getUserDOById(memeberInfo.getUserId());
+		UserDO userDO = userService.getUserDOById(userId);
 		LOGGER.debug("userDO:{}" ,JSON.toJSONString(userDO));
 		
 		if(userDO != null && !StringUtils.isEmpty(userDO.getName())){
@@ -206,26 +221,14 @@ public class UserInfoController {
 	@RequestMapping(value = "/user/sendMsgCode")
 	public Response sendMsgCode(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
-		
-		boolean succeeded = true;
-		String message = "";
 
-		try {
-			Asserts.AssertNotNull(memeberInfo, "memeberInfo");
-			Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
-		} catch (InValidParamException e) {
-			LOGGER.error("invalid parameter:{}" ,e.getMessage());
-			return new Response().failure(e.getMessage());
-		}
+		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
+		Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
 		
 		if(LOGGER.isDebugEnabled()){
 			TimeElapseCaculate.startSnapshort();
 		}
-		
-		if (!succeeded) {
-			return new Response().failure(message);
-		}
-		
+
 		// 发送短信
 		BaseResult<Boolean> result = userService.sendPhoneVerifyCode(memeberInfo.getPhone());
 		LOGGER.debug("result:{}",JSON.toJSONString(result));
@@ -303,8 +306,6 @@ public class UserInfoController {
 		
 		ModelAndView mv = new ModelAndView();
 
-		mv.addObject("memeberInfo", memeberInfo);
-		
 		if(LOGGER.isDebugEnabled()){
 			TimeElapseCaculate.startSnapshort();
 		}
@@ -323,7 +324,8 @@ public class UserInfoController {
 			memeberInfo.setPhone(memResult.getValue().getMobile());
 			memeberInfo.setName(memResult.getValue().getName());
 			
-			SessionUtils.getSession().setAttribute(SessionConstant.USER_ID,memeberInfo);
+			//标记用户登录
+			SessionUtils.getSession().setAttribute(SessionConstant.USER_ID,memResult.getValue().getId());
 			mv.addObject("userId",memResult.getValue().getId());
 			mv.setViewName("/user/showTwoDimensionCode");
 			
@@ -337,11 +339,17 @@ public class UserInfoController {
 				mv.addObject("isFilledUserInfo",true);
 			}
 			
+			//存储OpenId&MerchantId
+			SessionUtils.getSession().setAttribute(Constants.MEMBER_USER_INFO,memeberInfo);
+			
 			return mv;
 		}
 		if(LOGGER.isDebugEnabled()){
 			LOGGER.debug(TIME_ELAPSE_HEAD + " findUserDOByOpenIdAndMerchantId and getTwoDimensionCode:{}ms",TimeElapseCaculate.endSnapshort());
 		}
+		
+		//存储OpenId&MerchantId
+		SessionUtils.getSession().setAttribute(Constants.MEMBER_USER_INFO,memeberInfo);
 		
 		mv.setViewName("user/registerMain");
 		
@@ -353,8 +361,6 @@ public class UserInfoController {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 
 		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
-		Asserts.AssertStringNotEmpty(memeberInfo.getOpenId(), "openId");
-		Asserts.AssertNotNull(memeberInfo.getMerchantId(), "merchantId");
 		Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
 		
 		ModelAndView mv = new ModelAndView();
@@ -391,15 +397,14 @@ public class UserInfoController {
 	@RequestMapping(value = "/user/toFullfillUserInfo")
 	public ModelAndView toFullfillUserInfoView(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
-		
-		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
-		Asserts.AssertStringNotEmpty(memeberInfo.getOpenId(), "openId");
-		Asserts.AssertNotNull(memeberInfo.getMerchantId(), "merchantId");
-		Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
-
+		MemeberBasicInfoVO sessionInfo = (MemeberBasicInfoVO) SessionUtils.getSession().getAttribute(Constants.MEMBER_USER_INFO);
+		//FIXME
+		if(sessionInfo == null){
+			//session失效，
+		}
 		ModelAndView mv = new ModelAndView();
 
-		mv.addObject("memeberInfo", memeberInfo);
+		mv.addObject("phone", sessionInfo.getPhone());
 		mv.setViewName("user/fulfillUserInfo");
 		
 		return mv;

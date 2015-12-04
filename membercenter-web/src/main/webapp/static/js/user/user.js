@@ -118,9 +118,9 @@ function fullfillUser() {
 
 function initTwoDimension(){
 	$("#code").qrcode({
-		render : "table", //table方式
-		width : 200, //宽度
-		height : 200, //高度
+		render : "canvas", //table方式
+		width : "200", //宽度
+		height : "200", //高度
 		text : $("#codeInfo").val()
 	});
 	

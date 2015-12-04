@@ -25,9 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by root on 15-11-25.
@@ -53,7 +51,7 @@ public class MerchantServiceImpl implements MerchantService {
 
         WxUserMerchantRelationDO wxQueryCondition = new WxUserMerchantRelationDO();
         wxQueryCondition.setOpenId(merchantVO.getOpenId());
-        wxQueryCondition.setMerchantId(merchantVO.getMerchantId());
+        wxQueryCondition.setMerchantUserId(merchantVO.getMerchantUserId());
         List<WxUserMerchantRelationDO> wxUserMerchantRelationDOList = merchantServiceManager.findByCondition(wxQueryCondition);
         if (CollectionUtils.isNotEmpty(wxUserMerchantRelationDOList)) {
             LOGGER.info("wxUserMerchantRelationDOList is not empty and size = {}, merchantVO={}", wxUserMerchantRelationDOList.size(), merchantVO);
@@ -74,7 +72,7 @@ public class MerchantServiceImpl implements MerchantService {
         }
 
         LOGGER.info("createUserDO.getId={}", createUserDO.getId());
-        BaseMerchantDO baseMerchantDO = merchantServiceManager.findBaseMerchantDOById(merchantVO.getMerchantId());
+        BaseMerchantDO baseMerchantDO = merchantServiceManager.getBaseMerchantByMerchantUserId(merchantVO.getMerchantUserId());
         if (null == baseMerchantDO) {
             LOGGER.info("merchant not found by merchantVO={}", merchantVO);
             return MemResult.buildFailResult(MemberReturnCode.MERCHANT_NOT_FOUND_ERROR.getCode(),
@@ -83,7 +81,7 @@ public class MerchantServiceImpl implements MerchantService {
 
         WxUserMerchantRelationDO wxUserMerchantRelationDO = new WxUserMerchantRelationDO();
         wxUserMerchantRelationDO.setOpenId(merchantVO.getOpenId());
-        wxUserMerchantRelationDO.setMerchantId(merchantVO.getMerchantId());
+        wxUserMerchantRelationDO.setMerchantUserId(merchantVO.getMerchantUserId());
         wxUserMerchantRelationDO.setUserId(createUserDO.getId());
 
         Long id = merchantServiceManager.saveUserMerchantRelation(wxUserMerchantRelationDO);
@@ -96,16 +94,16 @@ public class MerchantServiceImpl implements MerchantService {
     public MemResult<UserDO> findUserByOpenIdAndMerchant(MerchantVO merchantVO) {
         LOGGER.info("findUserByOpenIdAndMerchant merchantVO = {}", merchantVO);
 
-        if (StringUtils.isBlank(merchantVO.getOpenId()) || null == merchantVO.getMerchantId()) {
+        if (StringUtils.isBlank(merchantVO.getOpenId()) || null == merchantVO.getMerchantUserId()) {
             LOGGER.error("parameter is not valid, openId={} and merchantId = {}",
-                    merchantVO.getOpenId(), merchantVO.getMerchantId());
+                    merchantVO.getOpenId(), merchantVO.getMerchantUserId());
             return MemResult.buildFailResult(MemberReturnCode.PARAMTER_ERROR_C,
                     MemberReturnCode.PARAMTER_ERROR.getDesc(), null);
         }
 
         WxUserMerchantRelationDO wxUserMerchantRelationDO = new WxUserMerchantRelationDO();
         wxUserMerchantRelationDO.setOpenId(merchantVO.getOpenId());
-        wxUserMerchantRelationDO.setMerchantId(merchantVO.getMerchantId());
+        wxUserMerchantRelationDO.setMerchantUserId(merchantVO.getMerchantUserId());
         UserDO userDO = null;
         try {
             userDO = merchantServiceManager.findMerchantUserDO(wxUserMerchantRelationDO);
@@ -131,16 +129,10 @@ public class MerchantServiceImpl implements MerchantService {
             return MemResult.buildFailResult(MemberReturnCode.PARAMTER_ERROR_C,
                     MemberReturnCode.PARAMTER_ERROR.getDesc(), null);
         }
-        BaseMerchantDO baseMerchantDO = merchantServiceManager.getBaseMerchantByMerchantUserId(merchantUserId);
-        if (null == baseMerchantDO) {
-            LOGGER.error("baseMerchantDO is null");
-            return MemResult.buildFailResult(MemberReturnCode.MERCHANT_NOT_FOUND_ERROR_C,
-                    MemberReturnCode.MERCHANT_NOT_FOUND_ERROR.getDesc(), null);
-        }
 
         List<UserDO> userDOList = new ArrayList<UserDO>();
         WxUserMerchantRelationDO wxUserMerchantRelationDO = new WxUserMerchantRelationDO();
-        wxUserMerchantRelationDO.setMerchantId(baseMerchantDO.getId());
+        wxUserMerchantRelationDO.setMerchantUserId(merchantUserId);
         List<WxUserMerchantRelationDO> wxUserMerchantRelationDOList = merchantServiceManager.findByCondition(wxUserMerchantRelationDO);
         if (CollectionUtils.isEmpty(wxUserMerchantRelationDOList)) {
             return MemResult.buildSuccessResult(userDOList);
@@ -175,6 +167,6 @@ public class MerchantServiceImpl implements MerchantService {
 
     private boolean checkParam(MerchantVO merchantVO) {
         return StringUtils.isBlank(merchantVO.getOpenId()) ||
-                StringUtils.isBlank(merchantVO.getMobile()) || null == merchantVO.getMerchantId();
+                StringUtils.isBlank(merchantVO.getMobile()) || null == merchantVO.getMerchantUserId();
     }
 }

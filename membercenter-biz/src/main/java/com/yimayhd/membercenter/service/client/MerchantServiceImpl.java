@@ -93,33 +93,39 @@ public class MerchantServiceImpl implements MerchantService {
     @Override
     public MemResult<UserDO> findUserByOpenIdAndMerchant(MerchantVO merchantVO) {
         LOGGER.info("findUserByOpenIdAndMerchant merchantVO = {}", merchantVO);
-
+        MemResult memResult = new MemResult();
         if (StringUtils.isBlank(merchantVO.getOpenId()) || null == merchantVO.getMerchantUserId()) {
             LOGGER.error("parameter is not valid, openId={} and merchantId = {}",
                     merchantVO.getOpenId(), merchantVO.getMerchantUserId());
             return MemResult.buildFailResult(MemberReturnCode.PARAMTER_ERROR_C,
                     MemberReturnCode.PARAMTER_ERROR.getDesc(), null);
         }
-
         WxUserMerchantRelationDO wxUserMerchantRelationDO = new WxUserMerchantRelationDO();
         wxUserMerchantRelationDO.setOpenId(merchantVO.getOpenId());
         wxUserMerchantRelationDO.setMerchantUserId(merchantVO.getMerchantUserId());
-
-        UserDO userDO = null;
         try {
-            userDO = merchantServiceManager.findMerchantUserDO(wxUserMerchantRelationDO);
+            UserDO userDO = merchantServiceManager.findMerchantUserDO(wxUserMerchantRelationDO);
+            if (null == userDO){
+                wxUserMerchantRelationDO.setMerchantUserId(null);
+                userDO = merchantServiceManager.findMerchantUserDO(wxUserMerchantRelationDO);
+                if (null == userDO){
+                    return MemResult.buildFailResult(MemberReturnCode.USER_NOT_FOUND_C,
+                            MemberReturnCode.USER_NOT_FOUND.getDesc(), null);
+                }else{
+                    memResult.setValue(userDO);
+                    memResult.setErrorCode(MemberReturnCode.USER_NOT_REGISTER_C);
+                    memResult.setErrorMsg(MemberReturnCode.USER_NOT_REGISTER.getDesc());
+                    memResult.setSuccess(false);
+                    return memResult;
+                }
+            }else{
+                return MemResult.buildSuccessResult(userDO);
+            }
         } catch (BussinessException e) {
             LOGGER.error("merchantServiceManager.findMerchantUserDO occur error:{}", e);
             return MemResult.buildFailResult(MemberReturnCode.SYSTEM_ERROR_C,
                     MemberReturnCode.SYSTEM_ERROR.getDesc(), null);
         }
-
-        if (null == userDO) {
-            return MemResult.buildFailResult(MemberReturnCode.USER_NOT_FOUND_C,
-                    MemberReturnCode.USER_NOT_FOUND.getDesc(), null);
-        }
-
-        return MemResult.buildSuccessResult(userDO);
     }
 
     @Override

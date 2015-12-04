@@ -127,9 +127,9 @@
     <select id="pageQuery" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.client.query.TravelkaPageQuery">
         SELECT
         <include refid="Base_Column_List" />
-        FROM member_profile ORDER BY gmt_created
+        FROM member_profile ORDER BY
         <if test="orderbyCol != null">
-           , ${orderbyCol}
+            ${orderbyCol}
         </if>
         DESC
         limit #{startRow},#{pageSize}

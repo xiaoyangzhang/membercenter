@@ -1,6 +1,15 @@
 package com.yimayhd.membercenter.service.client;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.BaseMerchantDO;
@@ -18,16 +27,8 @@ import com.yimayhd.user.client.result.BasePageResult;
 import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
 import com.yimayhd.user.errorcode.UserServiceHttpCode;
-import net.pocrd.entity.ApiReturnCode;
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import net.pocrd.entity.ApiReturnCode;
 
 /**
  * Created by root on 15-11-25.

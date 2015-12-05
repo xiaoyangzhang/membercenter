@@ -42,9 +42,9 @@ public class LocalMemberTest extends LocalBaseTest{
 	private void process(){
 		try{
 			
-//			getMemberDetail();
+			getMemberDetail();
 			
-			getMemberPurchuseDetail();
+//			getMemberPurchuseDetail();
 		}catch(Exception e){
 			e.printStackTrace();
 		}

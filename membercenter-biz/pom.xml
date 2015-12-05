@@ -144,6 +144,10 @@
 			<groupId>com.yimayhd.snscenter</groupId>
 			<artifactId>snscenter-client</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.yiholiday.fhtd</groupId>
+			<artifactId>fhtd</artifactId>
+		</dependency>
 
 	</dependencies>
 

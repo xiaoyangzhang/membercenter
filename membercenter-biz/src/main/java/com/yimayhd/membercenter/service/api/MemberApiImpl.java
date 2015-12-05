@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
+import com.yiholiday.fhtd.logger.annot.MethodLogger;
 import com.yimayhd.membercenter.MemberReturnCode;
-import com.yimayhd.membercenter.annot.MethodLogger;
 import com.yimayhd.membercenter.api.MemberApi;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.entity.member.MemberDetail;
@@ -23,33 +23,47 @@ public class MemberApiImpl implements MemberApi {
 	
 	
 	@Override
-	@MethodLogger(isPrintArguments=true, isPrintResult =false, isHttpApi=true, isCatchException=true)
+	@MethodLogger(isPrintArguments=true, isPrintResult =false, isCatchException=true)
 	public MemberDetail getMemberDetail(int appId, int domainId, long deviceId, long userId, int versionCode) {
-		MemResult<MemberDetail> result = memberManager.getMemberDetail(userId);
-		if( result == null || !result.isSuccess() ){
-			logger.error("getMemberDetail failed!  userId={}, Result={}", userId, JSON.toJSONString(result));
-			if( result != null ){
-				int code = result.getErrorCode() ;
-				if( MemberReturnCode.MEMBER_NOT_FOUND.getCode() == code ){
-					DubboExtProperty.setErrorCode(MemberReturnCode.MEMBER_NOT_FOUND);
+		try{
+			MemResult<MemberDetail> result = memberManager.getMemberDetail(userId);
+			if( result == null || !result.isSuccess() ){
+				logger.error("getMemberDetail failed!  userId={}, Result={}", userId, JSON.toJSONString(result));
+				if( result != null ){
+					int code = result.getErrorCode() ;
+					if( MemberReturnCode.MEMBER_NOT_FOUND.getCode() == code ){
+						DubboExtProperty.setErrorCode(MemberReturnCode.MEMBER_NOT_FOUND);
+					}
 				}
+				return null;
 			}
-			return null;
+			MemberDetail detail = result.getValue();
+			return detail;
+			
+		}catch(Exception e){
+			logger.error("getMemberDetail userid={}, versionCode={}", userId, versionCode, e);
+			DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
 		}
-		MemberDetail detail = result.getValue();
-		return detail;
+		return null;
 	}
 
 	@Override
-	@MethodLogger(isPrintArguments=true, isPrintResult =false, isHttpApi=true, isCatchException=true)
+	@MethodLogger(isPrintArguments=true, isPrintResult =false, isCatchException=true)
 	public MemberPurchauseDetail getMemberPurchuseDetail(int appId, int domainId, long deviceId, long userId, int versionCode) {
-		MemResult<MemberPurchauseDetail> result = memberManager.getMemberPurchuseDetail(userId);
-		if( result == null || !result.isSuccess() ){
-			logger.error("getMemberDetail failed!  userId={}, Result={}", userId, JSON.toJSONString(result));
-			return null;
+		try{
+			
+			MemResult<MemberPurchauseDetail> result = memberManager.getMemberPurchuseDetail(userId);
+			if( result == null || !result.isSuccess() ){
+				logger.error("getMemberDetail failed!  userId={}, Result={}", userId, JSON.toJSONString(result));
+				return null;
+			}
+			MemberPurchauseDetail detail = result.getValue();
+			return detail;
+		}catch(Exception e){
+			logger.error("getMemberPurchuseDetail userid={}, versionCode={}", userId, versionCode, e);
+			DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
 		}
-		MemberPurchauseDetail detail = result.getValue();
-		return detail;
+		return null ;
 	}
 
 }

@@ -28,13 +28,7 @@ import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
 import com.yimayhd.user.errorcode.UserServiceHttpCode;
 
-<<<<<<< HEAD
 import net.pocrd.entity.ApiReturnCode;
-=======
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
->>>>>>> c3d1b12302aa9bce558b50cdee4798ac2c9345f8
 
 /**
  * Created by root on 15-11-25.

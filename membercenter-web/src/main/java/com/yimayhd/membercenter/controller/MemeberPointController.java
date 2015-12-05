@@ -24,10 +24,10 @@ import com.yimay.integral.client.service.PointService;
 import com.yimayhd.membercenter.Constants;
 import com.yimayhd.membercenter.Converter;
 import com.yimayhd.membercenter.Response;
-import com.yimayhd.membercenter.utils.Asserts;
 import com.yimayhd.membercenter.utils.TimeElapseCaculate;
 import com.yimayhd.membercenter.vo.MemeberBasicInfoVO;
 import com.yimayhd.membercenter.vo.PointDetailVO;
+import com.yimayhd.user.session.manager.SessionUtils;
 
 
 /**
@@ -51,10 +51,12 @@ public class MemeberPointController {
 	public Response getMemeberTotalPoint(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		
-		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
-		Asserts.AssertNotNull(memeberInfo.getUserId(), "userId");
-		Asserts.AssertNotNull(memeberInfo.getMerchantId(), "merchantId");
-		
+		MemeberBasicInfoVO sessionInfo = (MemeberBasicInfoVO) SessionUtils.getSession().getAttribute(Constants.MEMBER_USER_INFO);
+		//FIXME
+		if(sessionInfo == null){
+			//session失效，
+		}
+
 		if(LOGGER.isDebugEnabled()){
 			TimeElapseCaculate.startSnapshort();
 		}
@@ -63,8 +65,8 @@ public class MemeberPointController {
 		CountReqDTO pointQueryRequestDTO = new CountReqDTO();
 //		pointQueryRequestDTO.setMemberId(11L);
 //		pointQueryRequestDTO.setVendorId(1L);
-		pointQueryRequestDTO.setMemberId(memeberInfo.getUserId());
-		pointQueryRequestDTO.setVendorId(memeberInfo.getMerchantId());
+		pointQueryRequestDTO.setMemberId(sessionInfo.getUserId());
+		pointQueryRequestDTO.setVendorId(sessionInfo.getMerchantId());
 		pointQueryRequestDTO.setIntegralType(PointType.POINT.getType());
 		
 		BaseResult<CountResultDTO> result = pointService.queryMemberPoint(pointQueryRequestDTO);
@@ -102,9 +104,12 @@ public class MemeberPointController {
 		
 		boolean succeeded = true;
 		String message = "";
-
-		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
-		Asserts.AssertNotNull(memeberInfo.getUserId(), "userId");
+		
+		MemeberBasicInfoVO sessionInfo = (MemeberBasicInfoVO) SessionUtils.getSession().getAttribute(Constants.MEMBER_USER_INFO);
+		//FIXME
+		if(sessionInfo == null){
+			//session失效，
+		}
 		
 		if (!succeeded) {
 			return new Response().failure(message);
@@ -120,8 +125,8 @@ public class MemeberPointController {
 //		detailReqDTO.setPageNo(1);
 //		detailReqDTO.setPageSize(10);
 		
-		detailReqDTO.setMemberId(memeberInfo.getUserId());
-		detailReqDTO.setVendorId(memeberInfo.getMerchantId());
+		detailReqDTO.setMemberId(sessionInfo.getUserId());
+		detailReqDTO.setVendorId(sessionInfo.getMerchantId());
 		detailReqDTO.setIntegralType(PointType.POINT.getType());
 		detailReqDTO.setPageNo(pageNumber);
 		detailReqDTO.setPageSize(pageSize);
@@ -169,7 +174,7 @@ public class MemeberPointController {
 	public ModelAndView toPointDetailsView(MemeberBasicInfoVO memeberInfo) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("point/pointDetails");
-		mv.addObject("memeberInfo",memeberInfo);
+		mv.addObject("phone",memeberInfo);
 		return mv;
 	}
 

@@ -26,7 +26,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<api-util.version>1.3.7</api-util.version>
 		<user.version>1.5.2-SNAPSHOT</user.version>
-		<spring.version>4.0.2.RELEASE</spring.version>
+		<spring.version>4.1.6.RELEASE</spring.version>
 		<mybatis.version>3.2.8</mybatis.version>
 		<log4j-version>1.2.9</log4j-version>
 		<commons-lang3_version>3.3.1</commons-lang3_version>
@@ -40,6 +40,11 @@
 	</properties>
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>com.yimayhd.user</groupId>
+				<artifactId>session-manager</artifactId>
+				<version>${user.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>com.yimayhd.user</groupId>
 				<artifactId>user-client</artifactId>

@@ -50,7 +50,7 @@ public class MerchantServiceManager {
             return null;
         }
 
-        if (queryResultList.size() > 1) {
+        if (null != wxUserMerchantRelationDO.getMerchantUserId() && queryResultList.size() > 1) {
             LOGGER.info("to many WxUserMerchantRelationDO in db");
             throw new BussinessException("to many WxUserMerchantRelationDO in db");
         }

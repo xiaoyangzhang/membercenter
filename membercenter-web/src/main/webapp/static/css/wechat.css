@@ -12,7 +12,7 @@
 .code-box .header span.t-left img{width: 60px;margin-right: 1rem;border-radius: 50px;}
 .code-box .header span.t-right{text-align:right;padding-top: 5px;}
 
-.return-btn{width:1.25rem;height:1.25rem;background:url('../img/left-jt.jpg') no-repeat;background-size:100% 100%;position:absolute;left:10px;top:1.5rem;text-indent:-1000em;}
+.return-btn{width:1.25rem;height:1.25rem;border: none;background:url('../img/left-jt.jpg') no-repeat;background-size:100% 100%;position:absolute;left:10px;top:1.5rem;text-indent:-1000em;}
 .submit-btn{width:90%;background:#f9c700;border:none;padding:1rem 0;color:#fff;text-align:center;margin:10% 0;border-radius:2px;font-size: 1.6rem;}
 
 .ipt-group,

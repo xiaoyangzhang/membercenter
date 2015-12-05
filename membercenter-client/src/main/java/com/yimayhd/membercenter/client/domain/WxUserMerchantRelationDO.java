@@ -17,7 +17,7 @@ public class WxUserMerchantRelationDO implements Serializable{
 
     private String openId; // 微信openId
 
-    private Long merchantId; // 商家id
+    private Long merchantUserId; // 商家userId
 
     private Long userId; // 用户id,user的id
 
@@ -41,12 +41,12 @@ public class WxUserMerchantRelationDO implements Serializable{
 		this.openId = openId;
 	}
 
-	public Long getMerchantId() {
-		return merchantId;
+	public Long getMerchantUserId() {
+		return merchantUserId;
 	}
 
-	public void setMerchantId(Long merchantId) {
-		this.merchantId = merchantId;
+	public void setMerchantUserId(Long merchantUserId) {
+		this.merchantUserId = merchantUserId;
 	}
 
 	public Long getUserId() {
@@ -81,7 +81,7 @@ public class WxUserMerchantRelationDO implements Serializable{
 		builder.append(", openId=");
 		builder.append(openId);
 		builder.append(", merchantId=");
-		builder.append(merchantId);
+		builder.append(merchantUserId);
 		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", gmtCreated=");

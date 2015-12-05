@@ -107,22 +107,27 @@ function fullfillUser() {
  		return ;
  	}
  	
+ 	if(username.length > 8){
+ 		alert("名字超过最大限制");
+ 		return ;
+ 	}
+ 	
  	fulfillUserInfoForm.submit();
  }
 
 
 function initTwoDimension(){
 	$("#code").qrcode({
-		render : "table", //table方式
-		width : 200, //宽度
-		height : 200, //高度
+		render : "canvas", //table方式
+		width : "200", //宽度
+		height : "200", //高度
 		text : $("#codeInfo").val()
 	});
 	
 	var userId = $("#userId").val();
 	var merchantId = $("#merchantId").val();
 	//获取当前积分
-	getCurrentPoint(userId,merchantId,function(data){
+	getCurrentPoint(function(data){
 		var isSuccessful = data.meta.success;
 		if (isSuccessful == true) {
 			$("#currentPoint").text("当前积分:" + data.data.totalPoint);

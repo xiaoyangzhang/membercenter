@@ -60,6 +60,20 @@ public class TestController {
         map.put("result", baseResult.getValue());
         return map;
     }
+
+    @RequestMapping("/test/mobile")
+    public Map<String, Object> findMobile() {
+        Map<String, Object> map = new HashMap<>();
+        BaseResult<String> mobileResult = userService.findMobileByUserId(3500L);
+
+        BaseResult<UserDO> userDOBaseResult = userService.getUserDOByMobile("18601907819");
+        System.out.println("18601907819=" + userDOBaseResult.getValue().getId());
+        mobileResult = userService.findMobileByUserId(userDOBaseResult.getValue().getId());
+
+
+        map.put("result", mobileResult.getValue());
+        return map;
+    }
     
     @RequestMapping("/test/exception")
     public Response testException(){

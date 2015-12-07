@@ -23,7 +23,7 @@ public class MemberApiImpl implements MemberApi {
 	
 	
 	@Override
-	@MethodLogger(isPrintArguments=true, isPrintResult =false, isCatchException=true)
+	@MethodLogger(isPrintArguments=true, isPrintResult =false)
 	public MemberDetail getMemberDetail(int appId, int domainId, long deviceId, long userId, int versionCode) {
 		try{
 			MemResult<MemberDetail> result = memberManager.getMemberDetail(userId);
@@ -48,7 +48,7 @@ public class MemberApiImpl implements MemberApi {
 	}
 
 	@Override
-	@MethodLogger(isPrintArguments=true, isPrintResult =false, isCatchException=true)
+	@MethodLogger(isPrintArguments=true, isPrintResult =false)
 	public MemberPurchauseDetail getMemberPurchuseDetail(int appId, int domainId, long deviceId, long userId, int versionCode) {
 		try{
 			

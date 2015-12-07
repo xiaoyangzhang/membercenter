@@ -23,36 +23,58 @@
 
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
 
+
+
+        <result column="ext_long_1" property="extLong_1" jdbcType="BIGINT"/>
+
+        <result column="ext_long_2" property="extLong_2" jdbcType="BIGINT"/>
+
+        <result column="ext_text_1" property="extText_1" jdbcType="VARCHAR"/>
+
+        <result column="ext_text_2" property="extText_2" jdbcType="VARCHAR"/>
+
+        <result column="type" property="type" jdbcType="INTEGER"/>
+
 </resultMap>
 
     <sql id="Base_Column_List">
-        id,seller_id,name,partner_id,seller_private_key,alipay_public_key,seller_alipay_id,seller_app_id,gmt_created,gmt_modified
+        id,seller_id,name,partner_id,seller_private_key,alipay_public_key,seller_alipay_id,seller_app_id,gmt_created,gmt_modified,ext_long_1,ext_long_2,ext_text_1,ext_text_2,type
     </sql>
 
     <!--insert的时候要去掉ID，创建时间，更新时间和状态-->
     <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.MerchantDO"  useGeneratedKeys="true" keyProperty="id">
-        insert into merchant  (id,seller_id,name,partner_id,seller_private_key,alipay_public_key,seller_alipay_id,seller_app_id,gmt_created,gmt_modified)
+       insert into merchant  (id,seller_id,name,partner_id,seller_private_key,alipay_public_key,seller_alipay_id,seller_app_id,gmt_created,gmt_modified,ext_long_1,ext_long_2,ext_text_1,ext_text_2,type)
         values (
-        
+
           #{id,jdbcType=BIGINT},
-        
+
           #{sellerId,jdbcType=BIGINT},
-        
+
           #{name,jdbcType=VARCHAR},
-        
+
           #{partnerId,jdbcType=VARCHAR},
-        
+
           #{sellerPrivateKey,jdbcType=VARCHAR},
-        
+
           #{alipayPublicKey,jdbcType=VARCHAR},
-        
+
           #{sellerAlipayId,jdbcType=VARCHAR},
-        
+
           #{sellerAppId,jdbcType=VARCHAR},
-        
+
           #{gmtCreated,jdbcType=TIMESTAMP},
-        
-          #{gmtModified,jdbcType=TIMESTAMP}
+
+          #{gmtModified,jdbcType=TIMESTAMP},
+
+          #{extLong_1,jdbcType=BIGINT},
+
+          #{extLong_2,jdbcType=BIGINT},
+
+          #{extText_1,jdbcType=VARCHAR},
+
+          #{extText_2,jdbcType=VARCHAR},
+
+          #{type,jdbcType=INTEGER}
         
         )
     </insert>
@@ -107,6 +129,26 @@
         
             <if test="gmtModified != null">
                 t.gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+            </if>
+
+            <if test="extLong_1 != null">
+                t.ext_long_1 = #{extLong_1,jdbcType=BIGINT},
+            </if>
+
+            <if test="extLong_2 != null">
+                t.ext_long_2 = #{extLong_2,jdbcType=BIGINT},
+            </if>
+
+            <if test="extText_1 != null">
+                t.ext_text_1 = #{extText_1,jdbcType=VARCHAR},
+            </if>
+
+            <if test="extText_2 != null">
+                t.ext_text_2 = #{extText_2,jdbcType=VARCHAR},
+            </if>
+
+            <if test="type != null">
+                t.type = #{type,jdbcType=INTEGER}
             </if>
         
         </set>

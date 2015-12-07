@@ -31,7 +31,17 @@ public class MerchantDO implements Serializable {
 
     private Date gmtCreated; //
 
-    private Date gmtModified; // 
+    private Date gmtModified; //
+
+    private long extLong_1; //
+
+    private long extLong_2; //
+
+    private String extText_1; //
+
+    private String extText_2; //
+
+    private int type; //
 
 
     public void setId(long id){
@@ -114,4 +124,43 @@ public class MerchantDO implements Serializable {
         return gmtModified;
     }
 
+    public long getExtLong_1() {
+        return extLong_1;
+    }
+
+    public void setExtLong_1(long extLong_1) {
+        this.extLong_1 = extLong_1;
+    }
+
+    public long getExtLong_2() {
+        return extLong_2;
+    }
+
+    public void setExtLong_2(long extLong_2) {
+        this.extLong_2 = extLong_2;
+    }
+
+    public String getExtText_1() {
+        return extText_1;
+    }
+
+    public void setExtText_1(String extText_1) {
+        this.extText_1 = extText_1;
+    }
+
+    public String getExtText_2() {
+        return extText_2;
+    }
+
+    public void setExtText_2(String extText_2) {
+        this.extText_2 = extText_2;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 }

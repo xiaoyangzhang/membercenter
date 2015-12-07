@@ -30,7 +30,7 @@ public class Response {
 		return this;
 	}
 	
-	public Response failure(String message,int code) {
+	public Response failure(String message,String code) {
 		this.meta = new Meta(false, message,code);
 		return this;
 	}
@@ -47,7 +47,7 @@ public class Response {
 
 		private boolean success;
 		private String message;
-		private int code;
+		private String code;
 
 		public Meta(boolean success) {
 			this(success,"",null);
@@ -57,7 +57,7 @@ public class Response {
 			this(success,message,null);
 		}
 		
-		public Meta(boolean success, String message,Integer code) {
+		public Meta(boolean success, String message,String code) {
 			this.success = success;
 			this.message = message;
 		}
@@ -70,7 +70,7 @@ public class Response {
 			return message;
 		}
 		
-		public int getCode(){
+		public String getCode(){
 			return code;
 		}
 	}

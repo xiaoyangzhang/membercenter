@@ -52,10 +52,6 @@ public class MemeberPointController {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		
 		MemeberBasicInfoVO sessionInfo = (MemeberBasicInfoVO) SessionUtils.getSession().getAttribute(Constants.MEMBER_USER_INFO);
-		//FIXME
-		if(sessionInfo == null){
-			//session失效，
-		}
 
 		if(LOGGER.isDebugEnabled()){
 			TimeElapseCaculate.startSnapshort();
@@ -79,7 +75,8 @@ public class MemeberPointController {
 		
 		// 查询出用户总积分
 		if(!result.isSuccess()){
-			return new Response().failure("错误编码:" + result.getErrorCode());
+			LOGGER.error("error happen in pointService.queryMemberPoint,result={},memeberInfo={}",JSON.toJSONString(result),JSON.toJSONString(memeberInfo));
+			return new Response().failure(result.getResultMsg(),result.getErrorCode());
 		}
 		
 		Map<String,Object> viewMap = new HashMap<String,Object>();
@@ -97,7 +94,7 @@ public class MemeberPointController {
 	 * @return
 	 */
 	@RequestMapping(value="/point/memberPointDetails")
-	public Response getMemberPointDetailsByPage(MemeberBasicInfoVO memeberInfo, int pageNumber,int pageSize) {
+	public Response getMemberPointDetailsByPage(MemeberBasicInfoVO memeberInfo, Integer pageNumber,Integer pageSize) {
 		LOGGER.debug("memeberInfo:{}" ,JSON.toJSONString(memeberInfo));
 		LOGGER.debug("pageNumber:{}", pageNumber);
 		LOGGER.debug("pageSize:{}", pageSize);
@@ -140,8 +137,9 @@ public class MemeberPointController {
 		LOGGER.debug("detailResult:{}",detailResult);
 		
 		if(!detailResult.isSuccess()){
+			LOGGER.error("error happen in pointService.queryPointDetails,detailResult={},memeberInfo={},pageNumber={},pageSize={}",JSON.toJSONString(detailResult),JSON.toJSONString(memeberInfo),pageNumber,pageSize);
 			message = "错误编码:" + detailResult.getErrorCode();
-			return new Response().failure(message);
+			return new Response().failure(message,detailResult.getErrorCode());
 		}
 		
 		List<PointDetailVO> pointDetailList =	Converter.convertToPointDetailVO(detailResult.getValue());

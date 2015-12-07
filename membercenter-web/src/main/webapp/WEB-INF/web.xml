@@ -56,7 +56,7 @@
 		</init-param>
 		<init-param>
 			<param-name>notLoginUrl</param-name>
-			<param-value>/notauth.html</param-value>
+			<param-value>/notauth</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
@@ -70,6 +70,10 @@
 		<init-param>
 			<param-name>includePaths</param-name>
 			<param-value>/user/checkMsgCode,/user/sendMsgCode</param-value>
+		</init-param>
+		<init-param>
+			<param-name>notAuthUrl</param-name>
+			<param-value>/notauth</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>

@@ -8,19 +8,31 @@
  
 <form name="fulfillUserInfoForm" action="$resourceContextTool.getContextPath()/user/fulfillUserInfo" method="post">
 	<div class="ipt-input">
-		<label><em>手机号:</em><span>
-		$stringTool.hideStr($phone,6,10)
-		</span></label>
-		<label><em>名字:</em><input type="text" value="" id="name" name="name" required="required" /> </label>
+		<label>
+			<em>手机号:</em>
+			<span>$stringTool.hideStr($phone,6,10)</span>
+		</label>
+		<label>
+			<em>名字:</em>
+			<input type="text" value="" id="name" name="name" required="required" />
+		</label>
 			
-			<label><em>性别:</em>
-			<span>男<input type="radio" value="2" name="gender" checked="checked" />&nbsp;女
-				<input type="radio" value="1" name="gender" /></span></label> <label> <em>出生年月:</em>
+		<label>
+			<em>性别:</em>
+			<!--<span>男<input type="radio" value="2" name="gender" checked="checked" /><br>
+				女<input type="radio" value="1" name="gender" /></span>-->
+			<select name="gender">
+				<option value="1">女</option>
+				<option value="2">男</option>
+			</select>
+		</label>
+		<label>
+			<em>出生年月:</em>
 			<select id="ym-year" name="birthYear">
 			
-		   </select>
+		    </select>
 		   
-		 <select id="ym-month" name="birthMonth">
+			<select id="ym-month" name="birthMonth">
 				<option value="01">1月</option>
 				<option value="02">2月</option>
 				<option value="03">3月</option>
@@ -33,17 +45,20 @@
 				<option value="10">10月</option>
 				<option value="11">11月</option>
 				<option value="12">12月</option>
-		</select>
-		</label> <label> <em>所在城市:</em> <select id="ym-province" name="provinceCode" required="required">
+			</select>
+		</label>
+		<label>
+			<em>所在城市:</em>
+			<select id="ym-province" name="provinceCode" required="required">
 				<option value="">请选择省份</option>
-		</select> <select id="ym-city" name="cityCode" required="required">
+			</select>
+			<select id="ym-city" name="cityCode" required="required">
 				<option value="">请选择城市</option>
-		</select>
+			</select>
 		</label>
 	</div>
 	<center>
-		<input type="button" onclick="fullfillUser()" value="提交"
-			class="submit-btn" />
+		<input type="button" onclick="fullfillUser()" value="提  交" class="submit-btn" />
 	</center>
 
 </form>
@@ -51,6 +66,6 @@
 <script src="$resourceContextTool.getStaticResourcePath()/js/user/user.js"></script>
 
 <script>
-initFulfillUserInfo();
+	initFulfillUserInfo();
 </script>
 </body>

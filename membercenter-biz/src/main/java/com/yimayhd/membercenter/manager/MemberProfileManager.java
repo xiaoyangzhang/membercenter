@@ -131,7 +131,7 @@ public class MemberProfileManager {
                 travelKa.travelKaClub = travelKaClub;
             } else {
                 // 只返回用户信息即可
-                TravelKaConverter.converntTravelKaDetail4UserInfo(userDO);
+                travelKa = TravelKaConverter.converntTravelKaDetail4UserInfo(userDO);
                 travelKa.isTravelKa = String.valueOf(BaseStatus.NO.getType());
             }
         }catch(Exception e){

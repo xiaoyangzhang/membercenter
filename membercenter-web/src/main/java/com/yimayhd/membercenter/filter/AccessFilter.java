@@ -60,7 +60,7 @@ public class AccessFilter implements Filter{
 			return ;
 		}
 		
-		StringBuilder realSignBuilder = new StringBuilder(MixPolicyFactory.getPolicy(MixPolicyEnum.SIMPLE).mix(sign));
+		StringBuilder realSignBuilder = new StringBuilder(MixPolicyFactory.getPolicy(MixPolicyEnum.SIMPLE).mix(salt));
 		String [] fields = securityFields.split(JOIN_STR);
 		for(String field : fields){
 			if(request.getParameter(field) != null){

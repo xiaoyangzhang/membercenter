@@ -32,9 +32,11 @@ function checkAuthCode(phone,authCode,salt,sign,securityFields,callback){
 /*###########################用户相关页面js:start##########################################################*/
 function getSendMsgUrl(){
 	var phoneNO = $("#phone").val();
-	var data = ":" + phoneNO;
+	var dataArray = new Array();
+	dataArray[0] = phoneNO
+	//var data = ":" + phoneNO;
 	var salt = getSalt();
-	var sign = generateSign(salt,data);
+	var sign = generateSign(salt,dataArray);
 	var securityFields = "phone";
 	var url = contextPath + "/user/sendMsgCode?phone=" + $("#phone").val() + "&salt=" + salt + "&sign=" + sign + "&securityFields=" + securityFields;
 	

@@ -173,6 +173,7 @@ public class UserInfoController {
 		Long userId = memResult.getValue().getId();
 		//生成会话信息
 		sessionInfo.setUserId(userId);
+		sessionInfo.setPhone(memResult.getValue().getMobile());
 		SessionUtils.getSession().setAttribute(Constants.MEMBER_USER_INFO,sessionInfo);
 		
 		//生成用户凭证
@@ -281,6 +282,9 @@ public class UserInfoController {
 			LOGGER.debug(TIME_ELAPSE_HEAD + " validatePhoneVerifyCode:{}ms" + TimeElapseCaculate.endSnapshort());
 		}
 		
+//		MemeberBasicInfoVO sessionInfo = (MemeberBasicInfoVO) SessionUtils.getSession().getAttribute(Constants.MEMBER_USER_INFO);
+//		sessionInfo.setPhone(memeberInfo.getPhone());
+//		 SessionUtils.getSession().setAttribute(Constants.MEMBER_USER_INFO,sessionInfo);
 
 		return new Response().success();
 	}
@@ -398,10 +402,7 @@ public class UserInfoController {
 	public ModelAndView toFullfillUserInfoView(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 		MemeberBasicInfoVO sessionInfo = (MemeberBasicInfoVO) SessionUtils.getSession().getAttribute(Constants.MEMBER_USER_INFO);
-		//FIXME
-		if(sessionInfo == null){
-			//session失效，
-		}
+
 		ModelAndView mv = new ModelAndView();
 
 		mv.addObject("phone", sessionInfo.getPhone());

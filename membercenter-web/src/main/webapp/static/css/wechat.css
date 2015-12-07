@@ -4,7 +4,7 @@
 .code-box{background:#fff;padding:0 7.8%;}
 /*.code-box .er-img{width:70%;margin:25% 0;padding:2%;background:rgba(240,240,240,0.5);border-radius:10px;}*/
 .code-box .er-img{width:100%;height: 205px;margin:0 auto;;border-radius:10px;position: relative;background: url("../img/YM_QRCodeBg.png") no-repeat center;background-size: 385px;padding: 111px 0;}
-.code-box .er-img canvas{box-shadow: 1px 0px 15px 9px rgba(255, 255, 255, 0.8);position: absolute;left: 50%;margin-left: -100px;margin-top: 6px;}
+.code-box .er-img canvas{box-shadow: 1px 0px 15px 9px rgba(255, 255, 255, 0.8);position: absolute;left: 50%;margin-left: -100px;margin-top: 8px;}
 .code-box a.link-btn{color:#f9c700;text-align:right;font-size:1.6rem;text-decoration:underline;float:right;}
 .code-box .header{padding:1rem 0;}
 .code-box .header span{display:inline-block;width:49%;font-size:1.4rem;}

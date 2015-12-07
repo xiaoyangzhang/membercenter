@@ -350,7 +350,7 @@ public class UserInfoController {
 		
 		//存储OpenId&MerchantId
 		SessionUtils.getSession().setAttribute(Constants.MEMBER_USER_INFO,memeberInfo);
-		
+
 		mv.setViewName("user/registerMain");
 		
 		return mv;

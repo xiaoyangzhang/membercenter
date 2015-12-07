@@ -15,6 +15,7 @@
     <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto.min.js"></script>
     <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto-public.js"></script>
     <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto-city.js"></script>
+     <script src="$resourceContextTool.getStaticResourcePath()/js/common/auth.js"></script>
     
 </head>
 <input type="hidden" name="contextPath" id="contextPath" value="$resourceContextTool.getContextPath()"/>

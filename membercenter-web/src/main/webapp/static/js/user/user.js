@@ -1,22 +1,26 @@
 var contextPath=$("#contextPath").val();
 
 /*###########################ajax后台交互:start##################################################*/
-function sendAuthCode(phone,callback) {
-	var phone = $("#phone").val();
-	//alert(phone);
-	
+function sendAuthCode(phoneNO,salt,sign,securityField,callback) {
+	//sign=&salt=&securityField=phone
 	$.post(contextPath + "/user/sendMsgCode", {
-		phone : phone
+		phone : phoneNO,
+		salt  : salt,
+		sign  : sign,
+		securityFields : securityFields
 	}, function(data, status) {
-		alert("验证发送成功!");
+		callback(data);
 	});
 }
 
-function checkAuthCode(phone,authCode,callback){
+function checkAuthCode(phone,authCode,salt,sign,securityFields,callback){
 	// 校验短信验证码
 	$.post(contextPath + "/user/checkMsgCode", {
 		phone : phone,
-		authCode : authCode
+		authCode : authCode,
+		salt  : salt,
+		sign  : sign,
+		securityFields : securityFields
 	}, function(data, status) {
 		callback(data);
 	});
@@ -26,18 +30,26 @@ function checkAuthCode(phone,authCode,callback){
 
 
 /*###########################用户相关页面js:start##########################################################*/
+function getSendMsgUrl(){
+	var phoneNO = $("#phone").val();
+	var data = ":" + phoneNO;
+	var salt = getSalt();
+	var sign = generateSign(salt,data);
+	var securityFields = "phone";
+	var url = contextPath + "/user/sendMsgCode?phone=" + $("#phone").val() + "&salt=" + salt + "&sign=" + sign + "&securityFields=" + securityFields;
+	
+	return url;
+}
 /**
  * 初始化短信验证码页面
  */
 function initCheckAuthCode(){
+	
 	Zepto(function($){
-		$('.sendcode-btn').countdown({autoTime:60});
-	 });
-	
-	
-	 $(".sendcode-btn").attr("href",contextPath + "/user/sendMsgCode?phone=" + $("#phone").val());
-	 
+		$('.sendcode-btn').countdown({autoTime:60},getSendMsgUrl);
+	 }); 
 }
+
 
 /**
  * 跳转到二维码页面
@@ -49,8 +61,14 @@ function getTwoDimension(){
 			alert("请输入验证码!");
 			return;
 	 }
+	 var dataArray = new Array();
+	 dataArray[0] = phone;
+	 dataArray[1] = authCode;
 	 
-	 checkAuthCode(phone,authCode,function(data){
+	 var salt = getSalt();
+	 var sign = generateSign(salt,dataArray);
+	 var securityFields = "phone:authCode";
+	 checkAuthCode(phone,authCode,salt,sign,securityFields,function(data){
 		    var isSuccessful = data.meta.success;
 			if (isSuccessful == true) {
 				alert("验证成功!");

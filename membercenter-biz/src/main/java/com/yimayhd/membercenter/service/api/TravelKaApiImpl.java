@@ -53,24 +53,6 @@ public class TravelKaApiImpl implements TravelKaApi {
                 return null;
             }
             logger.info("TravelKaApiImpl method getTravelKaDetail userId:"+ theUserId);
-//            //1 . 根据用户id 查询 大咖详情
-//            MemberProfileDO memberProfileDO = memberProfileManager.getMemberProfileByUserId(theUserId);
-//            UserDO userDO = memberProfileManager.getUserDOById(theUserId);
-//            if(memberProfileDO != null){
-//                //2. 根据用户id 去用户中心 查询用户详情
-//                //3. 查询大咖能力
-//                List<UserAbilityRelationDO> userAbilityRelationDOs =  memberProfileManager.getUserAbilityRelationByUserId(theUserId);
-//                //4. 组装数据
-//                travelKa = TravelKaConverter.converntTravelKaDetail(userAbilityRelationDOs, memberProfileDO, userDO);
-//                travelKa.isTravelKa = String.valueOf(BaseStatus.YES.getType());
-//                TravelKaClub travelKaClub = memberProfileManager.getTravelKaClub(theUserId);
-//                travelKa.travelKaClub = travelKaClub;
-//
-//            } else {
-//                // 只返回用户信息即可
-//                TravelKaConverter.converntTravelKaDetail4UserInfo(userDO);
-//                travelKa.isTravelKa = String.valueOf(BaseStatus.NO.getType());
-//            }
             travelKa = memberProfileManager.getTravelKaDetail(theUserId);
         }catch (Exception e){
             DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);

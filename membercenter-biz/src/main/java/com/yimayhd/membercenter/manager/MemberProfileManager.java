@@ -2,6 +2,7 @@ package com.yimayhd.membercenter.manager;
 
 import java.util.List;
 
+import com.yimayhd.membercenter.client.domain.TravelKaVO;
 import com.yimayhd.membercenter.conventer.TravelKaConverter;
 import com.yimayhd.membercenter.entity.TravelKa;
 import com.yimayhd.membercenter.entity.TravelKaClub;
@@ -123,22 +124,50 @@ public class MemberProfileManager {
         try{
             MemberProfileDO memberProfileDO = getMemberProfileByUserId(userId);
             UserDO userDO = getUserDOById(userId);
+            TravelKaClub travelKaClub = getTravelKaClub(userId);
             if(memberProfileDO != null){
                 List<UserAbilityRelationDO> userAbilityRelationDOs = getUserAbilityRelationByUserId(userId);
                 travelKa = TravelKaConverter.converntTravelKaDetail(userAbilityRelationDOs, memberProfileDO, userDO);
                 travelKa.isTravelKa = String.valueOf(BaseStatus.YES.getType());
-                TravelKaClub travelKaClub = getTravelKaClub(userId);
-                travelKa.travelKaClub = travelKaClub;
+
             } else {
                 // 只返回用户信息即可
                 travelKa = TravelKaConverter.converntTravelKaDetail4UserInfo(userDO);
                 travelKa.isTravelKa = String.valueOf(BaseStatus.NO.getType());
             }
+            travelKa.travelKaClub = travelKaClub;
         }catch(Exception e){
             DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
             LOGGER.error("MemberProfileManager method getTravelKaDetail error",e);
         }
 
+        return travelKa;
+    }
+
+    public TravelKaVO getTravelKaVODetail(long userId){
+        if(userId<=0){
+            return null;
+        }
+
+        TravelKaVO travelKa = null;
+        try{
+            MemberProfileDO memberProfileDO = getMemberProfileByUserId(userId);
+            UserDO userDO = getUserDOById(userId);
+            if(memberProfileDO != null){
+                List<UserAbilityRelationDO> userAbilityRelationDOs = getUserAbilityRelationByUserId(userId);
+//                travelKa = TravelKaConverter.converntTravelKaDetail(userAbilityRelationDOs, memberProfileDO, userDO);
+//                travelKa.isTravelKa = String.valueOf(BaseStatus.YES.getType());
+                TravelKaClub travelKaClub = getTravelKaClub(userId);
+//                travelKa.travelKaClub = travelKaClub;
+            } else {
+                // 只返回用户信息即可
+//                travelKa = TravelKaConverter.converntTravelKaDetail4UserInfo(userDO);
+//                travelKa.isTravelKa = String.valueOf(BaseStatus.NO.getType());
+            }
+        }catch(Exception e){
+            DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
+            LOGGER.error("MemberProfileManager method getTravelKaDetail error",e);
+        }
         return travelKa;
     }
 

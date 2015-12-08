@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSON;
 import com.yimay.integral.client.service.PointService;
 import com.yimayhd.membercenter.Constants;
 import com.yimayhd.membercenter.Converter;
+import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.Response;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.MerchantService;
@@ -321,21 +322,40 @@ public class UserInfoController {
 		MerchantVO merchantVO = new MerchantVO();
 		merchantVO.setOpenId(memeberInfo.getOpenId());
 		merchantVO.setMerchantUserId(memeberInfo.getMerchantId());
-		// FIXME 需要根据openId查询用户是
+		
 		MemResult<UserDO> memResult = merchantService.findUserByOpenIdAndMerchant(merchantVO);
+		
 		LOGGER.debug("userDO:{}", JSON.toJSONString(memResult));
-
-		if (memResult.getValue() != null) {
-
+		
+		//判断用户是否存在
+		
+		if (memResult.getValue() != null) { //用户存在
+			
 			memeberInfo.setUserId(memResult.getValue().getId());
 			memeberInfo.setPhone(memResult.getValue().getMobile());
 			memeberInfo.setName(memResult.getValue().getName());
-
+		
 			// 标记用户登录
 			SessionUtils.getSession().setAttribute(SessionConstant.USER_ID, memResult.getValue().getId());
 			mv.addObject("userId", memResult.getValue().getId());
 			mv.setViewName("/user/showTwoDimensionCode");
-
+			
+			if(!memResult.isSuccess() && memResult.getErrorCode() == MemberReturnCode.USER_NOT_REGISTER_C){//未注册
+				//调用注册接口
+				BaseResult<String> phoneResult = userService.findMobileByUserId(memResult.getValue().getId());
+				
+				merchantVO.setMobile(phoneResult.getValue());
+				MemResult<UserDO> registerResult = merchantService.registerUser(merchantVO);
+				
+				if(!registerResult.isSuccess()){
+					LOGGER.error("error happen in merchantService.registerUser,registerResult={},merchantVO={}",JSON.toJSONString(registerResult),JSON.toJSONString(merchantVO));
+					mv.addObject("message", registerResult.getErrorMsg());
+					mv.addObject("errorCode", registerResult.getErrorCode());
+					mv.setViewName("error");
+					return mv;
+				}
+			}
+			
 			// 获取二维码信息
 			BaseResult<String> codeInfo = userService.getTwoDimensionCode(memResult.getValue().getId(),
 					memeberInfo.getMerchantId());
@@ -361,6 +381,7 @@ public class UserInfoController {
 
 			return mv;
 		}
+		
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug(TIME_ELAPSE_HEAD + " findUserDOByOpenIdAndMerchantId and getTwoDimensionCode:{}ms",
 					TimeElapseCaculate.endSnapshort());

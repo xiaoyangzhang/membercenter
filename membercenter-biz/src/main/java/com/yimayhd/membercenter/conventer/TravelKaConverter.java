@@ -1,6 +1,7 @@
 package com.yimayhd.membercenter.conventer;
 
 import com.yimayhd.membercenter.client.domain.MemberProfileDO;
+import com.yimayhd.membercenter.client.domain.TravelKaVO;
 import com.yimayhd.membercenter.client.domain.UserAbilityRelationDO;
 import com.yimayhd.membercenter.client.query.TravelkaPageQuery;
 import com.yimayhd.membercenter.entity.*;
@@ -180,6 +181,7 @@ public class TravelKaConverter {
             t.province = userDO.getProvince()==null ? null : userDO.getProvince();
             t.city = userDO.getCity() == null ? null : userDO.getCity();
             t.signature = userDO.getSignature() == null ? null : userDO.getSignature();
+            t.birthday = userDO.getBirthday() == null ? null : userDO.getBirthday().getTime();
             travelKaItems.add(t);
         }
         infoList.travelKaItemPageInfoList = travelKaItems;
@@ -196,8 +198,10 @@ public class TravelKaConverter {
         ClubInfoDTO ministerColub = clubInfoListDTO.getClubInfoDTO();
         KaClub minister = null;  // 是部长 的俱乐部
         if(ministerColub != null){
-            minister =  convertKaClub(ministerColub);
-            minister.isMinister = 1;
+            if(ministerColub.getId() > 0){
+                minister =  convertKaClub(ministerColub);
+                minister.isMinister = 1;
+            }
         }
         List<ClubInfoDTO> clubInfoDTOs = clubInfoListDTO.getClubList();
         List<KaClub> kaClubs = null; // 非部长的俱乐部
@@ -237,6 +241,25 @@ public class TravelKaConverter {
         kaClub.clubId = clubInfoDTO.getId() ==0 ? 0 : clubInfoDTO.getId();
         kaClub.isMinister = 0; // 默认都不是部长
         return kaClub;
+    }
+
+    public static TravelKaVO converntTravelKaVODetail( List<UserAbilityRelationDO> userAbilityRelationDOs , MemberProfileDO travelKaDO, UserDO userDO){
+        TravelKaVO travelKaVO = new TravelKaVO();
+//        setAbility(travelKa, userAbilityRelationDOs);
+//        travelKa.id = travelKaDO.getId();
+//        travelKa.userId = userDO.getId();
+//        travelKa.userInfo = convertUserDO2UserInfo(userDO);
+//        travelKa.serviceContent = travelKaDO.getServiceContent() == null ? null : travelKaDO.getServiceContent();
+//        travelKa.backgroundImg = travelKaDO.getBackgroundImg() == null ? null : travelKaDO.getBackgroundImg();
+//        travelKa.isDel = travelKaDO.getIsDel() == null ? null : travelKaDO.getIsDel();
+//        travelKa.gmtCreated = travelKaDO.getGmtCreated().getTime();
+//        travelKa.gmtModified = travelKaDO.getGmtModified().getTime();
+//        travelKa.identityValidated = travelKaDO.getIdentityValidated();
+//        travelKa.mobileValidated = travelKaDO.getMobileValidated();
+//        travelKa.occupationValidated = travelKaDO.getOccupationValidated();
+
+
+        return travelKaVO;
     }
 
 

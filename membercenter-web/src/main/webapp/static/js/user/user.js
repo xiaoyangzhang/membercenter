@@ -122,8 +122,7 @@ function fullfillUser() {
  	var province = $("#ym-province").val();
  	var city = $("#ym-city").val();
  	
- 	if(isEmpty(username) || isEmpty(sex) || isEmpty(birthdate) ||  province == ''|| city == '' ){
- 		alert("请完善信息!");
+ 	if( !checkEmpty(username,"名字") || !checkEmpty(sex,"性别") || !checkEmpty(birthdate,"出生年月") || !checkEmpty(province,"省份") ||  !checkEmpty(city,"城市")){
  		return ;
  	}
  	

@@ -41,6 +41,11 @@ function pointDetailLoaded() {
 function pointDetailPullUpAction () {
 	//页号
 	var pageNumber = $("#pageNumber").val();
+	var totalPage = $("totalPage").val();
+	if(pageNumber > totalPage){
+		return;
+	}
+	
 	//每页显示多少条
 	var pageSize = $("#pageSize").val();
 	var userId = $("#userId").val();
@@ -75,6 +80,8 @@ function pointDetailPullUpAction () {
 						+ "</em></span></li> ";
 				$("#pointDetails").append(detailStr);
 			}
+			
+			$("#pageNumber").val(parseInt(pageNumber.intValue()) + 1);
 		}else{
 			alert("获取积分明细错误:" + data.meta.message);
 		}

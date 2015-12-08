@@ -2,54 +2,50 @@
 <body id="bg-fff">
 <title>积分明细</title>
 
- <h1 class="page-title">
+<h1 class="page-title">
 	<button class="return-btn" onclick='history.back()'></button>
 </h1> 
-
 
 <script src="$resourceContextTool.getStaticResourcePath()/js/point/point.js"></script>
 <script src="$resourceContextTool.getStaticResourcePath()/js/common/iscroll.js"></script>
 
-<div class="point-box">
-	<ul>
-		<li>
-			<span class="left"> 
-				<strong >当前总积分</strong>	<br /> <br/>
-			</span> 
-			<span class="right"> 
-		   		<strong id="currentPoint"></strong><br /><br />
-			</span>
-		</li> 
-		
-	<input type="hidden" id="currentPage" value="1" />
-	<div id="wrapper">
-		<div id="scroller">
-			<div id="showPointDetailsDiv"> </div>
-		</div>	
-		<input type="hidden" name="pageNumber" id="pageNumber" value="1"/>	
-		<input type="hidden" name="totalPage" id="totalPage" />	
-		<input type="hidden" name="pageSize" id="pageSize" value="10"/>	
-		
+<input type="hidden" id="currentPage" value="1" />
+<input type="hidden" name="pageNumber" id="pageNumber" value="1"/>
+<input type="hidden" name="totalPage" id="totalPage" />
+<input type="hidden" name="pageSize" id="pageSize" value="10"/>
+
+<div id="wrapper">
+	<div id="scroller" class="point-box">
+			<ul class="pointTotal">
+				<li>
+					<span class="left">
+						<strong >当前总积分</strong>	<br /> <br/>
+					</span>
+					<span class="right">
+						<strong id="currentPoint"></strong><br /><br />
+					</span>
+				</li>
+			</ul>
+			<ul id="thelist">
+				<!--<li><span class="left">hello world&nbsp; <br><em>2015-12-01</em></span><span class="right"> +9<br> <em>有效期至2016-02-09</em></span></li>-->
+			</ul>
+		<div id="pullUp">
+			<span class="pullUpIcon"></span><span class="pullUpLabel">下拉刷新</span>
+		</div>
 	</div>
-	<div id="pullUp">
-		<span class="pullUpIcon"></span><span class="pullUpLabel">下拉刷新</span>
-	</div>	
-		
-	</ul>
 </div>
-
-
 
 <script type="text/javascript">
 
-var myScroll,pullUpEl, pullUpOffset,generatedCount = 0;
+	pointDetailPullUpAction()
+/*var myScroll,pullUpEl, pullUpOffset,generatedCount = 0;*/
 
-initPointDetails();
+/*initPointDetails();*/
 
-function back(){
+/*function back(){
 	alert('333333');
 	window.history.back(-1);
-}
+}*/
 </script>
 
 </body>

@@ -8,7 +8,7 @@
 	<meta name="description" content="your description">
 	<link rel="stylesheet" href="$resourceContextTool.getStaticResourcePath()/css/base.css">
 	<link rel="stylesheet" href="$resourceContextTool.getStaticResourcePath()/css/wechat.css">
-	<!--<link rel="stylesheet" href="$resourceContextTool.getStaticResourcePath()/css/scroll.css"> -->
+	<link rel="stylesheet" href="$resourceContextTool.getStaticResourcePath()/css/scroll.css">
 		
     <script src="$resourceContextTool.getStaticResourcePath()/js/common/jquery.js"></script>
     <script src="$resourceContextTool.getStaticResourcePath()/js/common/verify.js"></script>

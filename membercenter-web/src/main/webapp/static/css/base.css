@@ -21,5 +21,5 @@ img{vertical-align:top;border:0;}
 h1,h2,h3,h4,h5,h6{font-size:inherit; font-weight:normal;}
 address,cite,code,em,th,i{font-weight:normal; font-style:normal;}
 a{color:#666; text-decoration:none;}
-.clearfix{*zoom:1;}
+.clearfix{*zoom:1;position: fixed;bottom: 2rem;right: 10%;}
 .clearfix:after{display:block; overflow:hidden; clear:both; height:0; visibility:hidden; content:".";}

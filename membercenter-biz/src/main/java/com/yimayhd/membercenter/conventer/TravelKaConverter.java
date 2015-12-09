@@ -181,7 +181,9 @@ public class TravelKaConverter {
             t.province = userDO.getProvince()==null ? null : userDO.getProvince();
             t.city = userDO.getCity() == null ? null : userDO.getCity();
             t.signature = userDO.getSignature() == null ? null : userDO.getSignature();
-            t.birthday = userDO.getBirthday() == null ? null : userDO.getBirthday().getTime();
+            if(userDO.getBirthday() != null){
+                t.birthday = userDO.getBirthday().getTime();
+            }
             travelKaItems.add(t);
         }
         infoList.travelKaItemPageInfoList = travelKaItems;

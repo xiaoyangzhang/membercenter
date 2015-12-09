@@ -21,12 +21,16 @@ function getSalt(){
  * @returns {String}
  */
 function generateSign(salt,dataArray){
-	//对salt做混淆，混淆算法应同服务器端一致
+	var key1 = "jfslajfljsdljfldajfd";
+	var key2 = "4564s65a4f6we7fsdf8e";
+	var key3 = "djsafnsdkfjjsljflsj21";
+	
 	var sign = mix(salt);
 	for(var i = 0 ;i < dataArray.length; ++i){
 		sign += ":" + dataArray[i];
 	}
 	
+	sign = strEnc(sign,key1,key2,key3); 
 	return sign;
 }
 
@@ -50,5 +54,7 @@ function mix(target){
 	
 	return result;
 }
+
+
 
 

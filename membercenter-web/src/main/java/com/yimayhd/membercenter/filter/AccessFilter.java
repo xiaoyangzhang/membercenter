@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.yimayhd.membercenter.utils.Encrypt;
 import com.yimayhd.membercenter.utils.MixPolicyEnum;
 import com.yimayhd.membercenter.utils.MixPolicyFactory;
 
@@ -32,6 +33,10 @@ public class AccessFilter implements Filter {
 	private static final String INCLUDE_PARAM = "includePaths";
 	private static final String NOTAUTH = "notAuthUrl";
 	private String notAuthUrl = "";
+	private static final Encrypt ENCRYPT = new Encrypt();
+	private static final String DEFAULT_KEY1 = "jfslajfljsdljfldajfd";
+	private static final String DEFAULT_KEY2 = "4564s65a4f6we7fsdf8e";
+	private static final String DEFAULT_KEY3 = "djsafnsdkfjjsljflsj21";
 
 	private final Set<String> includeSet = new LinkedHashSet<String>();
 
@@ -76,8 +81,8 @@ public class AccessFilter implements Filter {
 				realSignBuilder.append(":").append(request.getParameter(field));
 			}
 		}
-
-		String realSign = realSignBuilder.toString();
+		
+		String realSign = ENCRYPT.strEnc(realSignBuilder.toString(), DEFAULT_KEY1, DEFAULT_KEY2, DEFAULT_KEY3);
 		if (!realSign.equals(sign)) {// 非法请求
 			request.getRequestDispatcher(notAuthUrl).forward(httpRequest, response);
 

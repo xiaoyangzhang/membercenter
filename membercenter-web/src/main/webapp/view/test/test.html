@@ -3,18 +3,18 @@
 	<a href="" class="return-btn" onclick='history.go(-1)'>返回</a>
 </h1>
  -->
+ <script src="$resourceContextTool.getStaticResourcePath()/js/common/encdec.js"></script>
 <body id="bg-fff">
 	测试
 
-	<input type="text" id="test" value="" />
-
 	<script type="text/javascript">
-		var contextPath = $("#contextPath").val();
-
-		$.post(contextPath + "/test/exception", {
-		}, function(data, status) {
-			alert(data);
-		});
+	var key1 = "jfslajfljsdljfldajfd";
+	var key2 = "4564s65a4f6we7fsdf8e";
+	var key3 = "djsafnsdkfjjsljflsj21";
+		var data = "sunshine";
+		
+		var  enResult = strEnc(data,key1,key2,key3); 
+		alert(enResult);
 	</script>
 
 </body>

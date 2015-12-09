@@ -48,7 +48,7 @@
 		<filter-class>com.yimayhd.user.session.manager.SessionFilter</filter-class>
 		<init-param>
 			<param-name>excludePaths</param-name>
-			<param-value>/static,/main,/user/checkMsgCode,/user/sendMsgCode,/user/toAuthCodeView,/user/toDimensionCode</param-value>
+			<param-value>/test/view,/static,/main,/user/checkMsgCode,/user/sendMsgCode,/user/toAuthCodeView,/user/toDimensionCode</param-value>
 		</init-param>
 		<init-param>
 			<param-name>staticSuffix</param-name>

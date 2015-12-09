@@ -79,7 +79,7 @@ public class LocalMemberTest extends LocalBaseTest{
 
 	@Test
 	public void getTravelKaDetailTest(){
-		TravelKa travelKa = travelKaApi.getTravelKaDetail(1, 2, 3, 4, 5, 9300);
+		TravelKa travelKa = travelKaApi.getTravelKaDetail(1, 2, 3, 4, 5, 401);
 		System.out.println("aaaaaaaaaaaaaaaaa");
 	}
 

@@ -52,6 +52,9 @@ public class TravelKaConverter {
     public static TravelKa converntTravelKaDetail4UserInfo(UserDO userDO){
         TravelKa travelKa = new TravelKa();
         travelKa.userInfo = convertUserDO2UserInfo(userDO);
+        if(userDO.getId() > 0){
+            travelKa.userId = userDO.getId();
+        }
         return travelKa;
     }
 

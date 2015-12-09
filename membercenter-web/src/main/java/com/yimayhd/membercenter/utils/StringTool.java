@@ -38,6 +38,14 @@ public class StringTool {
 		return target.substring(start, end);
 	}
 	
+	public static boolean isEmpty(String target){
+		return StringUtils.isEmpty(target);
+	}
+	
+	public static boolean isNotEmpty(String target){
+		return !StringUtils.isEmpty(target);
+	}
+	
 	public static void main(String [] args){
 		System.out.println(hideStr(subString("+8618611865094",3,13),3,7));
 	}

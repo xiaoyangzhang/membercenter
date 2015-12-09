@@ -70,7 +70,7 @@ function pointDetailPullUpAction () {
 	//页号
 	var pageNumber = $("#pageNumber").val();
 	var totalPage = $("#totalPage").val();
-	if(pageNumber > totalPage){
+	if(pageNumber >= totalPage){
 		$("#pullUp").hide();
 		return;
 	}
@@ -125,6 +125,7 @@ function initPointDetails(){
 	var pageNumber = $("#pageNumber").val();
 	//每页显示多少条
 	var pageSize = $("#pageSize").val();
+	var totalPage = $("#totalPage").val();
 	
 	//获取当前积分
 	getCurrentPoint(function(data){
@@ -143,6 +144,10 @@ function initPointDetails(){
 		if (isSuccessful == true) {
 			var pointDetails = data.data.pointDetails;
 			var totalPage = data.data.totalPage;
+			if(totalPage > 1 ){
+				$("#pullUp").show();
+			}
+			
 			$("#totalPage").val(totalPage);
 
 			for (i in pointDetails) {

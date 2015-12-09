@@ -105,7 +105,7 @@ function pointDetailPullUpAction () {
 						+ pointDetails[i].createDate
 						+ "</em></span><span class='right'> "
 						+ pointDetails[i].type + pointDetails[i].point
-						+ "<br/> <em>有效期至" + pointDetails[i].endDate
+						+ "<br/> <em>" + pointDetails[i].endDate
 						+ "</em></span></li> ";
 				$("#pointDetails").append(detailStr);
 			}
@@ -156,7 +156,7 @@ function initPointDetails(){
 						+ pointDetails[i].createDate
 						+ "</em></span><span class='right'> "
 						+ pointDetails[i].type + pointDetails[i].point
-						+ "<br/> <em>有效期至" + pointDetails[i].endDate
+						+ "<br/> <em>" + pointDetails[i].endDate
 						+ "</em></span></li> ";
 				$("#pointDetails").append(detailStr);
 			}

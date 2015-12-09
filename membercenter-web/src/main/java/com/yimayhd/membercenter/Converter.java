@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +31,9 @@ public class Converter {
 			for(PointDetailDTO dto : dtoResult.getList()){
 				PointDetailVO vo = new PointDetailVO();
 				vo.setCreateDate(dto.getRecordTime());
-				vo.setEndDate(dto.getEndDate());
+				if(StringUtils.isNotEmpty(dto.getEndDate())){
+					vo.setEndDate("有效期至" + dto.getEndDate());
+				}
 				vo.setPoint(dto.getPoint() + "");
 				vo.setType("");
 				if(dto.getType() == PointHandleStep.ADD_POINT.getType() || dto.getType() == PointHandleStep.RETURN_POINT.getType()){

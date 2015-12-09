@@ -96,6 +96,9 @@ public class TravelKaConverter {
         userInfo.city = userDO.getCity() == null ? null : userDO.getCity();
 
         userInfo.signature = userDO.getSignature() == null ? null : userDO.getSignature();
+        if(userDO.getBirthday() != null){
+            userInfo.birthday = userDO.getBirthday().getTime();
+        }
         return userInfo;
     }
 

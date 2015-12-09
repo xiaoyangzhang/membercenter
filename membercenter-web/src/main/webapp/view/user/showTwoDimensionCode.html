@@ -16,11 +16,14 @@
 
 <div class="code-box">
 	<input type="hidden" id="codeInfo" value="$codeInfo" />
+	
 	<div class="header">
 		<span class="t-left">
 	<!-- 	<img src="$resourceContextTool.getStaticResourcePath()/img/userLogo.png" alt=""/>	  -->
-		#if($nullTool.isNotNull($memeberInfo.name))
-		$memeberInfo.name
+		#if($stringTool.isNotEmpty($memeberInfo.name))
+		<label class="labelField">$memeberInfo.name</label>	
+		#else
+		<label class="labelField">$stringTool.hideStr($stringTool.subString($memeberInfo.phone,3,14),3,7)</label>	
 		#end
 		</span> 
 		<span class="t-right"><a href="$resourceContextTool.getContextPath()/point/toPointDetails" class="link-btn" id="currentPoint">当前积分:--</a></span>

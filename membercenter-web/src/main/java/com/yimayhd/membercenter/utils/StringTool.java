@@ -1,5 +1,7 @@
 package com.yimayhd.membercenter.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 
  * @Description    字符串相关处理工具类
@@ -28,8 +30,15 @@ public class StringTool {
 		return sb.toString();
 	}
 	
+	public static String subString(String target,int start,int end){
+		if(StringUtils.isEmpty(target)){
+			return target;
+		}
+		
+		return target.substring(start, end);
+	}
 	
 	public static void main(String [] args){
-		System.out.println(hideStr("18611865094",3,7));
+		System.out.println(hideStr(subString("+8618611865094",3,13),3,7));
 	}
 }

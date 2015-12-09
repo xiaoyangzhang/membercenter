@@ -27,12 +27,40 @@ function getPointDetailsByPage(pageNumber, pageSize,
 /*############################积分明细页面:start##############################################*/
 function pointDetailLoaded() {
 	pullUpEl = document.getElementById('pullUp');	
+	//pullUpEl = document.getElementById('pointDetails');
 	pullUpOffset = pullUpEl.offsetHeight;
 	
 	myScroll = new iScroll('wrapper', {
 		useTransition: true,
+		onRefresh: function () {
+			if (pullUpEl.className.match('loading')) {
+				pullUpEl.className = '';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载更多...';
+			}
+		},
+		onScrollMove : function(){
+			if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
+				pullUpEl.className = 'flip';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = '放开刷新...';
+				this.maxScrollY = this.maxScrollY;
+			} else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
+				pullUpEl.className = '';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载更多...';
+				this.maxScrollY = pullUpOffset;
+			}
+			//this.maxScrollY = pullUpOffset;
+			//console.log(this.maxScrollY);
+			//console.log($("#scroller").height());
+			console.log(pullUpOffset);
+		},
 		onScrollEnd: function () {
-			pointDetailPullUpAction();	
+			if (pullUpEl.className.match('flip')) {
+				pullUpEl.className = 'loading';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';
+				pointDetailPullUpAction();	// Execute custom function (ajax call?)
+			}
+			/*setTimeout(
+			pointDetailPullUpAction(),2000);*/
 		}
 	});
 	
@@ -41,8 +69,9 @@ function pointDetailLoaded() {
 function pointDetailPullUpAction () {
 	//页号
 	var pageNumber = $("#pageNumber").val();
-	var totalPage = $("totalPage").val();
+	var totalPage = $("#totalPage").val();
 	if(pageNumber > totalPage){
+		$("#pullUp").hide();
 		return;
 	}
 	
@@ -81,7 +110,7 @@ function pointDetailPullUpAction () {
 				$("#pointDetails").append(detailStr);
 			}
 			
-			$("#pageNumber").val(parseInt(pageNumber.intValue()) + 1);
+			$("#pageNumber").val(parseInt(pageNumber) + 1);
 		}else{
 			alert("获取积分明细错误:" + data.meta.message);
 		}

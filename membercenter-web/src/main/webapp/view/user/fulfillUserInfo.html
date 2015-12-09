@@ -9,7 +9,7 @@
 	<div class="ipt-input">
 		<label>
 			<em>手机号:</em>
-			<span>$stringTool.hideStr($phone,6,10)</span>
+			<span>$stringTool.hideStr($stringTool.subString($phone,3,14),3,7)</span>
 		</label>
 		<label>
 			<em>名字:</em>

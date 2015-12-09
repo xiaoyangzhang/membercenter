@@ -35,10 +35,20 @@
     <group name="idgen">
     	<property name="memcenter.meber.idgen.key" defaultValue="member" description="member表使用idgen的key"></property>
     </group>
-    
+    <group name="session">
+    	<property name="jedis.host" defaultValue="192.168.1.207" description="redis的ip"></property>
+    	<property name="jedis.port" defaultValue="6380" description="redis端口"></property>
+    	<property name="jedis.password" defaultValue="yimay2015" description="redis密码"></property>
+    	<property name="jedis.timeout" defaultValue="2000" description="jedis超时时间，单位s"></property>
+    	<property name="jedis.pool.maxIdle" defaultValue="8" description=""></property>
+    	<property name="jedis.sentinel" defaultValue="192.168.1.207:26379" description="哨兵地址"></property>
+    	<property name="verify.code.expire" defaultValue="120" description=""></property>
+    	<property name="session.time.out" defaultValue="180" description="会话有效期，单位秒"></property>
+    </group>
     <script>
         <generate template="config.properties" destfile="config.properties" charset="UTF-8"/>
         <generate template="logback.xml" destfile="WEB-INF/logback.xml" charset="UTF-8"/>
+         <generate template="redis.properties" destfile="WEB-INF/redis.properties" charset="UTF-8"/>
     </script>
 </config>
 

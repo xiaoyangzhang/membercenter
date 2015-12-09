@@ -182,7 +182,7 @@ public class TravelKaConverter {
             t.city = userDO.getCity() == null ? null : userDO.getCity();
             t.signature = userDO.getSignature() == null ? null : userDO.getSignature();
             if(userDO.getBirthday() != null){
-                t.birthday = userDO.getBirthday() == null ? null : userDO.getBirthday().getTime();
+                t.birthday = userDO.getBirthday().getTime();
             }
             travelKaItems.add(t);
         }

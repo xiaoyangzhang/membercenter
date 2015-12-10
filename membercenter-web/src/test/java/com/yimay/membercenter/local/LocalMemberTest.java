@@ -3,6 +3,7 @@ package com.yimay.membercenter.local;
 
 import com.yimayhd.membercenter.api.TravelKaApi;
 import com.yimayhd.membercenter.client.domain.BaseMerchantDO;
+import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.BaseMerchantService;
 import com.yimayhd.membercenter.client.service.MerchantService;
@@ -105,12 +106,12 @@ public class LocalMemberTest extends LocalBaseTest{
 	public void testFindPageUsersByMerchant(){
 		MerchantPageQueryVO merchantPageQueryVO = new MerchantPageQueryVO();
 		merchantPageQueryVO.setPageNo(1);
-		merchantPageQueryVO.setPageSize(10);
+		merchantPageQueryVO.setPageSize(20);
 //		merchantPageQueryVO.setCity();
 //		merchantPageQueryVO.setNickName();
 		merchantPageQueryVO.setMerchantUserId(123456789L);
 //		merchantPageQueryVO.setMobile();
-		MemResult<List<UserDO>> memResult = merchantService.findPageUsersByMerchant(merchantPageQueryVO);
+		MemPageResult<UserDO> memResult = merchantService.findPageUsersByMerchant(merchantPageQueryVO);
 		printResult(memResult,"MemResult");
 	}
 

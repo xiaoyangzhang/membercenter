@@ -373,7 +373,7 @@ public class UserInfoController {
 			mv.addObject("codeInfo", codeInfo.getValue());
 			mv.addObject("memeberInfo",memeberInfo);
 
-			if (!StringUtils.isEmpty(memResult.getValue().getName())) {
+			if (!StringUtils.isEmpty(memResult.getValue().getNickname())) {
 				mv.addObject("isFilledUserInfo", true);
 			}
 

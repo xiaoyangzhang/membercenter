@@ -55,10 +55,11 @@ public class Converter {
 	public static UserDO contertToUserDO(UserVO userVO){
 		UserDO userDO = new UserDO();
 		userDO.setId(userVO.getUserId());
-		userDO.setName(userVO.getName());
+		userDO.setNickname(userVO.getName());
 		userDO.setCityCode(userVO.getCityCode());
 		userDO.setProvinceCode(userVO.getProvinceCode());
 		userDO.setMobile(userVO.getPhone());
+		userDO.setGender(userVO.getGender());
 		String birthStr = userVO.getBirthYear() + "-" + userVO.getBirthMonth();
 
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM");

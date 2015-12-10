@@ -101,6 +101,7 @@ public class UserInfoController {
 
 		// 处理成功之后跳转到二维码页面
 		mv.addObject("memeberInfo", memeberInfo);
+		mv.addObject("nickName",userDO.getNickname());
 		mv.addObject("isFilledUserInfo", true);
 
 		// 此处获取二维码串
@@ -200,7 +201,7 @@ public class UserInfoController {
 		UserDO userDO = userService.getUserDOById(userId);
 		LOGGER.debug("userDO:{}", JSON.toJSONString(userDO));
 
-		if (userDO != null && !StringUtils.isEmpty(userDO.getName())) {
+		if (userDO != null && !StringUtils.isEmpty(userDO.getNickname())) {
 			mv.addObject("isFilledUserInfo", true);
 		}
 
@@ -209,6 +210,8 @@ public class UserInfoController {
 		}
 
 		mv.addObject("codeInfo", codeInfo);
+		mv.addObject("nickName",userDO.getNickname());
+		mv.addObject("phone",userDO.getMobile());
 		// mv.addObject("memeberInfo",memeberInfo);
 
 		mv.setViewName("user/showTwoDimensionCode");
@@ -333,7 +336,7 @@ public class UserInfoController {
 			
 			memeberInfo.setUserId(memResult.getValue().getId());
 			memeberInfo.setPhone(memResult.getValue().getMobile());
-			memeberInfo.setName(memResult.getValue().getName());
+			memeberInfo.setName(memResult.getValue().getNickname());
 		
 			// 标记用户登录
 			SessionUtils.getSession().setAttribute(SessionConstant.USER_ID, memResult.getValue().getId());
@@ -372,6 +375,8 @@ public class UserInfoController {
 
 			mv.addObject("codeInfo", codeInfo.getValue());
 			mv.addObject("memeberInfo",memeberInfo);
+			mv.addObject("nickName",memResult.getValue().getNickname());
+			mv.addObject("phone",memResult.getValue().getMobile());
 
 			if (!StringUtils.isEmpty(memResult.getValue().getNickname())) {
 				mv.addObject("isFilledUserInfo", true);

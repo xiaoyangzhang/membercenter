@@ -21,10 +21,10 @@
 		<span class="t-left">
 	<!-- 	<img src="$resourceContextTool.getStaticResourcePath()/img/userLogo.png" alt=""/>	  -->
 	会员名:
-		#if($stringTool.isNotEmpty($memeberInfo.name))
-		<label class="labelField">$memeberInfo.name</label>	
-		#else
-		<label class="labelField">$stringTool.hideStr($stringTool.subString($memeberInfo.phone,3,14),3,7)</label>	
+		#if($stringTool.isNotEmpty($nickName))
+		<label class="labelField">$nickName</label>	
+		#elseif($stringTool.isNotEmpty($phone))
+		<label class="labelField">$stringTool.hideStr($stringTool.subString($phone,3,14),3,7)</label>	
 		#end
 		</span> 
 		<span class="t-right"><a href="$resourceContextTool.getContextPath()/point/toPointDetails" class="link-btn" id="currentPoint">当前积分:--</a></span>

@@ -1,5 +1,7 @@
 package com.yimayhd.membercenter.test;
 
+import com.alibaba.fastjson.JSON;
+import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.MerchantService;
 import com.yimayhd.membercenter.client.vo.MerchantPageQueryVO;
@@ -46,7 +48,8 @@ public class MemberTest{
 //		merchantPageQueryVO.setMerchantId();
 		merchantPageQueryVO.setMerchantUserId(1L);
 //		merchantPageQueryVO.setMobile();
-		MemResult<List<UserDO>> memResult = merchantService.findPageUsersByMerchant(merchantPageQueryVO);
+		MemPageResult<UserDO> memResult = merchantService.findPageUsersByMerchant(merchantPageQueryVO);
+		JSON.toJSONString(memResult);
 	}
 	
 }

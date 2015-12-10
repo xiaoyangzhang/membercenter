@@ -1,6 +1,7 @@
 package com.yimayhd.membercenter.client.service;
 
 
+import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.vo.MerchantPageQueryVO;
 import com.yimayhd.membercenter.client.vo.MerchantVO;
@@ -32,5 +33,5 @@ public interface MerchantService {
      * @param merchantPageQueryVO   MerchantPageQueryVO
      * @return  MemResult<List<UserDO>>
      */
-    MemResult<List<UserDO>> findPageUsersByMerchant(MerchantPageQueryVO merchantPageQueryVO);
+    MemPageResult<UserDO> findPageUsersByMerchant(MerchantPageQueryVO merchantPageQueryVO);
 }

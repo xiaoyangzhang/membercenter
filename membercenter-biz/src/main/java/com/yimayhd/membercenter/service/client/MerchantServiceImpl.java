@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.yimayhd.membercenter.client.result.MemPageResult;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -132,12 +133,14 @@ public class MerchantServiceImpl implements MerchantService {
     }
 
     @Override
-    public MemResult<List<UserDO>> findPageUsersByMerchant(MerchantPageQueryVO merchantPageQueryVO) {
+    public MemPageResult<UserDO> findPageUsersByMerchant(MerchantPageQueryVO merchantPageQueryVO) {
+        MemPageResult<UserDO> memPageResult = new MemPageResult<UserDO>();
+
         Long merchantUserId = merchantPageQueryVO.getMerchantUserId();
         if (null == merchantUserId) {
             LOGGER.error("merchantUserId is null");
-            return MemResult.buildFailResult(MemberReturnCode.PARAMTER_ERROR_C,
-                    MemberReturnCode.PARAMTER_ERROR.getDesc(), null);
+            memPageResult.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+            return memPageResult;
         }
 
         List<UserDO> userDOList = new ArrayList<UserDO>();
@@ -145,17 +148,24 @@ public class MerchantServiceImpl implements MerchantService {
         wxUserMerchantRelationDO.setMerchantUserId(merchantUserId);
         List<WxUserMerchantRelationDO> wxUserMerchantRelationDOList = merchantServiceManager.findByCondition(wxUserMerchantRelationDO);
         if (CollectionUtils.isEmpty(wxUserMerchantRelationDOList)) {
-            return MemResult.buildSuccessResult(userDOList);
+            memPageResult.setList(userDOList);
+            return memPageResult;
         }
 
         try{
             UserDOPageQuery userDOPageQuery = MemberConverter.do2UserDOPageQuery(merchantPageQueryVO,wxUserMerchantRelationDOList);
+            memPageResult.setPageNo(merchantPageQueryVO.getPageNo());
+            memPageResult.setPageSize(merchantPageQueryVO.getPageSize());
+
             BasePageResult<UserDO> basePageResult = userService.findPageResultByCondition(userDOPageQuery);
-            return MemResult.buildSuccessResult(basePageResult.getList());
+            memPageResult.setTotalCount(basePageResult.getTotalCount());
+            memPageResult.setHasNext(basePageResult.isHasNext());
+            memPageResult.setList(basePageResult.getList());
+            return memPageResult;
         }catch (Exception e){
             LOGGER.error("userService.findPageResultByCondition(userDOPageQuery) Exception" + e);
-            return MemResult.buildFailResult(MemberReturnCode.SYSTEM_ERROR_C,
-                    MemberReturnCode.SYSTEM_ERROR.getDesc(), null);
+            memPageResult.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+            return memPageResult;
         }
     }
 

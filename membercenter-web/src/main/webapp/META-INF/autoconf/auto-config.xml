@@ -44,11 +44,14 @@
     	<property name="jedis.sentinel" defaultValue="192.168.1.207:26379" description="哨兵地址"></property>
     	<property name="verify.code.expire" defaultValue="120" description=""></property>
     	<property name="session.time.out" defaultValue="180" description="会话有效期，单位秒"></property>
+    	<property name="jedis.usePool" defaultValue="true" description="是否使用jedis连接池"></property>
+    	<property name="jedis.master" defaultValue="mymaster" description=""></property>
+    	
     </group>
     <script>
         <generate template="config.properties" destfile="config.properties" charset="UTF-8"/>
         <generate template="logback.xml" destfile="WEB-INF/logback.xml" charset="UTF-8"/>
-         <generate template="redis.properties" destfile="WEB-INF/redis.properties" charset="UTF-8"/>
+        <generate template="redis.properties" destfile="WEB-INF/redis.properties" charset="UTF-8"/>
     </script>
 </config>
 

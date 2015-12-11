@@ -2,13 +2,13 @@ package com.yimayhd.membercenter.vo;
 
 import java.io.Serializable;
 
-public class UserVO implements Serializable{
-	
+public class UserVO implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1782483298710673233L;
-	
+
 	// 用户Id
 	private Long userId;
 	// 性别 1:男,2:女
@@ -17,6 +17,9 @@ public class UserVO implements Serializable{
 	private String birthYear;
 	// 生日的月份
 	private String birthMonth;
+
+	// 生日的日
+	private String birthDay;
 	// 手机号码
 	private String phone;
 
@@ -88,6 +91,14 @@ public class UserVO implements Serializable{
 
 	public void setProvinceCode(Integer provinceCode) {
 		this.provinceCode = provinceCode;
+	}
+
+	public String getBirthDay() {
+		return birthDay;
+	}
+
+	public void setBirthDay(String birthDay) {
+		this.birthDay = birthDay;
 	}
 
 }

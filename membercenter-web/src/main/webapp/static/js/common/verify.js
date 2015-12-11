@@ -13,8 +13,13 @@ function  isEmpty(val){
  * @param field
  * @returns {Boolean}
  */
-function checkEmpty(val,field){
+function checkEmpty(val,field,defaultVal){
 	if(isEmpty(val)){
+		alert(field + "不能为空");
+		return false;
+	}
+	
+	if(defaultVal != 'undefined' && val == defaultVal){
 		alert(field + "不能为空");
 		return false;
 	}

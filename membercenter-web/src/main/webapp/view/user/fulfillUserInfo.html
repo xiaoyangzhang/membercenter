@@ -1,12 +1,12 @@
 <body id="bg-fff">
 
-<h1 class="page-title">
+<h1 class="page-title" style="margin: 0 1rem;">
 	<button class="return-btn" onclick='history.back()'></button>完善资料
 </h1> 
 
  
 <form name="fulfillUserInfoForm" action="$resourceContextTool.getContextPath()/user/fulfillUserInfo" method="post">
-	<div class="ipt-input">
+	<div class="ipt-input" style="padding:0 1rem;">
 		<label>
 			<em>手机号:</em>
 			<span>$stringTool.hideStr($stringTool.subString($phone,3,14),3,7)</span>
@@ -20,18 +20,20 @@
 			<em>性别:</em>
 			<!--<span>男<input type="radio" value="2" name="gender" checked="checked" /><br>
 				女<input type="radio" value="1" name="gender" /></span>-->
-			<select name="gender" id="gender">
-				<option value="3">女</option>
+			<select name="gender" id="gender" style="min-width:18%;">
+				<option value="-1">请选择</option>
 				<option value="2">男</option>
+				<option value="3">女</option>
 			</select>
 		</p>
 		<p>
-			<em>出生年月:</em>
-			<select id="ym-year" name="birthYear">
-			
+			<em>出生日期:</em>
+			<select id="ym-year" name="birthYear" style="min-width:18%;">
+				
 		    </select>
 		   
-			<select id="ym-month" name="birthMonth">
+			<select id="ym-month" name="birthMonth" style="min-width:15%;margin-left: 1%;">
+				<option value="-1">请选择</option>
 				<option value="01">1月</option>
 				<option value="02">2月</option>
 				<option value="03">3月</option>
@@ -45,6 +47,11 @@
 				<option value="11">11月</option>
 				<option value="12">12月</option>
 			</select>
+			
+			<select id="ym-day" name="birthDay" style="min-width:15%;margin-left: 1%;">
+				<option value="-1">请选择</option>
+			</select>
+
 		</p>
 		<p>
 			<em>所在城市:</em>
@@ -63,7 +70,16 @@
 </form>
 
 <script src="$resourceContextTool.getStaticResourcePath()/js/user/user.js"></script>
-
+<!-- 
+<link href="$resourceContextTool.getStaticResourcePath()/css/mobiscroll.css" rel="stylesheet" type="text/css">
+<script src="$resourceContextTool.getStaticResourcePath()/js/common/mobiscroll_002.js" type="text/javascript"></script>
+<script src="$resourceContextTool.getStaticResourcePath()/js/common/mobiscroll.js"></script>
+<script src="$resourceContextTool.getStaticResourcePath()/js/common/mobiscroll_004.js" type="text/javascript"></script>
+<link href="$resourceContextTool.getStaticResourcePath()/css/mobiscroll_002.css" rel="stylesheet" type="text/css">
+<link href="$resourceContextTool.getStaticResourcePath()/css/mobiscroll_003.css" rel="stylesheet" type="text/css">
+<script src="$resourceContextTool.getStaticResourcePath()/js/common/mobiscroll_003.js" type="text/javascript"></script>
+ -->
+ 
 <script>
 	initFulfillUserInfo();
 </script>

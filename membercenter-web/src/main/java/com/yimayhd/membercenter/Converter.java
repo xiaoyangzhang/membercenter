@@ -33,6 +33,8 @@ public class Converter {
 				vo.setCreateDate(dto.getRecordTime());
 				if(StringUtils.isNotEmpty(dto.getEndDate())){
 					vo.setEndDate("有效期至" + dto.getEndDate());
+				}else{
+					vo.setEndDate("");
 				}
 				vo.setPoint(dto.getPoint() + "");
 				vo.setType("");
@@ -60,9 +62,9 @@ public class Converter {
 		userDO.setProvinceCode(userVO.getProvinceCode());
 		userDO.setMobile(userVO.getPhone());
 		userDO.setGender(userVO.getGender());
-		String birthStr = userVO.getBirthYear() + "-" + userVO.getBirthMonth();
+		String birthStr = userVO.getBirthYear() + "-" + userVO.getBirthMonth() + "-" + userVO.getBirthDay();
 
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM");
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			Date birthDate  = sdf.parse(birthStr);
 			userDO.setBirthday(birthDate);

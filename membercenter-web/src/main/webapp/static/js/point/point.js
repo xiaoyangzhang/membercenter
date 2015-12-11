@@ -100,14 +100,25 @@ function pointDetailPullUpAction () {
 			$("#totalPage").val(totalPage);
 
 			for (i in pointDetails) {
-				var detailStr = " <li> <span class='left'>"
+				if(pointDetails[i].type == "+"){
+					var detailStr = " <li> <span class='left'>"
 						+ pointDetails[i].source + "&nbsp; <br/><em>"
 						+ pointDetails[i].createDate
 						+ "</em></span><span class='right'> "
 						+ pointDetails[i].type + pointDetails[i].point
 						+ "<br/> <em>" + pointDetails[i].endDate
 						+ "</em></span></li> ";
+					$("#pointDetails").append(detailStr);
+				}else{
+					+ pointDetails[i].source + "&nbsp; <br/><em>"
+					+ pointDetails[i].createDate
+					+ "</em></span><span class='right'> <i class='iColor' style='color:#2EA917;'>"
+					+ pointDetails[i].type + pointDetails[i].point
+					+ "</i><br/> <em>" + pointDetails[i].endDate
+					+ "</em></span></li> ";
 				$("#pointDetails").append(detailStr);
+				}
+				
 			}
 			
 			$("#pageNumber").val(parseInt(pageNumber) + 1);
@@ -151,7 +162,8 @@ function initPointDetails(){
 			$("#totalPage").val(totalPage);
 
 			for (i in pointDetails) {
-				var detailStr = " <li> <span class='left'>"
+				if(pointDetails[i].type == "+"){
+					var detailStr = " <li> <span class='left'>"
 						+ pointDetails[i].source + "&nbsp; <br/><em>"
 						+ pointDetails[i].createDate
 						+ "</em></span><span class='right'> "
@@ -159,6 +171,17 @@ function initPointDetails(){
 						+ "<br/> <em>" + pointDetails[i].endDate
 						+ "</em></span></li> ";
 				$("#pointDetails").append(detailStr);
+				}else {
+					var detailStr = " <li> <span class='left'>"
+						+ pointDetails[i].source + "&nbsp; <br/><em>"
+						+ pointDetails[i].createDate
+						+ "</em></span><span class='right'><i style='color:#2EA917;'> "
+						+ pointDetails[i].type + pointDetails[i].point
+						+ "</i><br/> <em>" + pointDetails[i].endDate
+						+ "</em></span></li> ";
+					$("#pointDetails").append(detailStr);
+				}
+				
 			}
 		}else{
 			alert("获取积分明细错误:" + data.meta.message);

@@ -13,6 +13,7 @@
         <property name="consumer.order.dubbo.version" defaultValue="1.0.0.test" description="版本号"/>
         <property name="consumer.item.dubbo.version" defaultValue="1.0.0.test" description="版本号"/>
         <property name="consumer.resourcecenter.dubbo.version" defaultValue="1.0.0.test" description="版本号"/>
+        <property name="consumer.snscenter.dubbo.version" defaultValue="1.0.0.test" description="版本号"/>
     </group>
     <group name="">
     	<property name="app.name" defaultValue="membercenter" description="应用名称"/>
@@ -41,6 +42,7 @@
     	<property name="jedis.password" defaultValue="yimay2015" description="redis密码"></property>
     	<property name="jedis.timeout" defaultValue="2000" description="jedis超时时间，单位s"></property>
     	<property name="jedis.pool.maxIdle" defaultValue="8" description=""></property>
+    	<property name="jedis.pool.maxTotal" defaultValue="20" description="redis 最大连接数"/>
     	<property name="jedis.sentinel" defaultValue="192.168.1.207:26379" description="哨兵地址"></property>
     	<property name="verify.code.expire" defaultValue="120" description=""></property>
     	<property name="session.time.out" defaultValue="180" description="会话有效期，单位秒"></property>
@@ -49,7 +51,7 @@
     	
     </group>
     <script>
-        <generate template="config.properties" destfile="config.properties" charset="UTF-8"/>
+        <generate template="config.properties" destfile="WEB-INF/config.properties" charset="UTF-8"/>
         <generate template="logback.xml" destfile="WEB-INF/logback.xml" charset="UTF-8"/>
         <generate template="redis.properties" destfile="WEB-INF/redis.properties" charset="UTF-8"/>
     </script>

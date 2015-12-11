@@ -10,6 +10,7 @@
        " default-lazy-init="true" >
  
 	<context:property-placeholder ignore-unresolvable="true" location="classpath:*.properties" />
+	<context:property-placeholder ignore-unresolvable="true" location="/WEB-INF/config.properties" />
 
 
     <import resource="../META-INF/spring/application-persistance.xml" />

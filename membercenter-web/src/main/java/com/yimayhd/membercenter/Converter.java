@@ -45,7 +45,7 @@ public class Converter {
 				}	
 				//vo.setTransId(dto.getFromId() + "");
 				//设置商户名
-				vo.setSource(dtoResult.getMemberName());
+				vo.setSource(dtoResult.getVendorName());
 				voList.add(vo);
 				
 			}

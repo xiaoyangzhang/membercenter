@@ -174,12 +174,11 @@ function fullfillUser() {
  		return ;
  	}
  	
- 	if(username.length > 8){
- 		alert("名字超过最大限制");
+ 	/*if(username.length > 10){
+ 		alert("会员名长度不能大于10位");
  		return ;
- 	}
- 	
- 	fulfillUserInfoForm.submit();
+ 	}*/
+	fulfillUserInfoForm.submit();
  }
 
 

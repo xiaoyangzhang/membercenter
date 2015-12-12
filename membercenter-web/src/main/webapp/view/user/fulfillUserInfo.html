@@ -5,7 +5,7 @@
 </h1> 
 
  
-<form name="fulfillUserInfoForm" action="$resourceContextTool.getContextPath()/user/fulfillUserInfo" method="post">
+<form name="fulfillUserInfoForm" id="fulfillUserInfoForm" action="$resourceContextTool.getContextPath()/user/fulfillUserInfo" method="post">
 	<div class="ipt-input" style="padding:0 1rem;">
 		<label>
 			<em>手机号:</em>
@@ -13,7 +13,7 @@
 		</label>
 		<label>
 			<em>名字:</em>
-			<input type="text" value="" id="name" name="name" required="required" />
+			<input type="text" value="" id="name" name="name"/>
 		</label>
 			
 		<p>
@@ -81,6 +81,28 @@
  -->
  
 <script>
+	$("#fulfillUserInfoForm").validate({
+		rules: {
+			name: {
+				required:true,
+				maxlength: 10,
+				carNum:true
+			}
+		},
+		messages: {
+			name: {
+				required:"请填写用户名",
+				maxlength: "会员名长度不能大于10位"
+			}
+		},
+		//错误信息显示位置
+		errorPlacement: function (error, element) {
+			element.parent().append(error);
+		}
+	})
+
 	initFulfillUserInfo();
+
+
 </script>
 </body>

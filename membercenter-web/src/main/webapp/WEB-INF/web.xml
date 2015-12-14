@@ -67,10 +67,12 @@
 	<filter>
 		<filter-name>securityFilter</filter-name>
 		<filter-class>com.yimayhd.membercenter.filter.AccessFilter</filter-class>
+		 
 		<init-param>
 			<param-name>includePaths</param-name>
 			<param-value>/user/checkMsgCode,/user/sendMsgCode</param-value>
 		</init-param>
+		 
 		<init-param>
 			<param-name>notAuthUrl</param-name>
 			<param-value>/notauth</param-value>

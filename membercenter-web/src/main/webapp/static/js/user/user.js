@@ -105,11 +105,11 @@ function initFulfillUserInfo(){
 	 });
 	 
 	 var yearCounts = 85;
-	 var startYear = 1930;
+	 var startYear = 2010;
 
 	 $("#ym-year").append("<option value=''>请选择</option>");
 	 for(var i = 0;i < yearCounts;++i){
-		 $("#ym-year").append("<option value='" + (startYear + i) + "'>" + (startYear + i) +  "</option>");
+		 $("#ym-year").append("<option value='" + (startYear - i) + "'>" + (startYear - i) +  "</option>");
 	 }
 	 
 	 $("#ym-month").on("change",function(){

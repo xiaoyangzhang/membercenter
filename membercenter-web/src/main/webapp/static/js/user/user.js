@@ -107,7 +107,7 @@ function initFulfillUserInfo(){
 	 var yearCounts = 85;
 	 var startYear = 1930;
 
-	 $("#ym-year").append("<option value='-1'>请选择</option>");
+	 $("#ym-year").append("<option value=''>请选择</option>");
 	 for(var i = 0;i < yearCounts;++i){
 		 $("#ym-year").append("<option value='" + (startYear + i) + "'>" + (startYear + i) +  "</option>");
 	 }
@@ -145,7 +145,7 @@ function generateDay(){
 	}
 	
 	$("#ym-day").children().remove();
-	$("#ym-day").append("<option value='-1'>请选择</option>");
+	$("#ym-day").append("<option value=''>请选择</option>");
 	for(var i = 1;i < 10; ++i){
 		$("#ym-day").append("<option value='0" + i + "'>0" +  i +  "</option>");
 	}

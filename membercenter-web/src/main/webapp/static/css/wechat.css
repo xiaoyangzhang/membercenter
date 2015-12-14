@@ -1,5 +1,7 @@
 #bg-fff{background:#fff;}
 
+.error{color: #ff0000;padding-left: 7rem !important;}
+
 .page-title{position:relative;height: 22px;text-align:center;padding:1rem 0;margin: 0 2rem;font-size:1.6rem;color:#222;border-bottom:1px solid #ccc;}
 .code-box{background:#fff;padding:0;}
 /*.code-box .er-img{width:70%;margin:25% 0;padding:2%;background:rgba(240,240,240,0.5);border-radius:10px;}*/
@@ -28,7 +30,7 @@
 
 .ipt-input label,
 .ipt-input p{display:block;background:#fff;padding:0 0 0 1rem;font-size:1.4rem;position:relative;margin-bottom:0.75rem;}
-.ipt-input label input[type=text]{min-width:60%;border:1px solid #e2e2e2;background:#fff;padding:0.75rem 5%;border-radius:5px;}
+.ipt-input label input[type=text]{min-width:60%;border:1px solid #e2e2e2;background:#fff;padding:0.75rem 5px !important;border-radius:5px;}
 .ipt-input p select{border-radius:5px;min-width: 30%;}
 .ipt-input p select:nth-child(3){margin-left: 1%;}
 .ipt-input label span{display:inline-block;padding:0.75rem 0rem;}

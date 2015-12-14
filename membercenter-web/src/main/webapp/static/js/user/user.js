@@ -105,11 +105,11 @@ function initFulfillUserInfo(){
 	 });
 	 
 	 var yearCounts = 85;
-	 var startYear = 1930;
+	 var startYear = 2010;
 
-	 $("#ym-year").append("<option value='-1'>请选择</option>");
+	 $("#ym-year").append("<option value=''>请选择</option>");
 	 for(var i = 0;i < yearCounts;++i){
-		 $("#ym-year").append("<option value='" + (startYear + i) + "'>" + (startYear + i) +  "</option>");
+		 $("#ym-year").append("<option value='" + (startYear - i) + "'>" + (startYear - i) +  "</option>");
 	 }
 	 
 	 $("#ym-month").on("change",function(){
@@ -145,7 +145,7 @@ function generateDay(){
 	}
 	
 	$("#ym-day").children().remove();
-	$("#ym-day").append("<option value='-1'>请选择</option>");
+	$("#ym-day").append("<option value=''>请选择</option>");
 	for(var i = 1;i < 10; ++i){
 		$("#ym-day").append("<option value='0" + i + "'>0" +  i +  "</option>");
 	}
@@ -170,16 +170,17 @@ function fullfillUser() {
  	var province = $("#ym-province").val();
  	var city = $("#ym-city").val();
  	
- 	if( !checkEmpty(username,"名字") || !checkEmpty(sex,"性别","-1") || !checkEmpty(ymYear,"出生日期","-1") || !checkEmpty(ymMonth,"出生日期","-1") || !checkEmpty(ymDay,"出生日期","-1") || !checkEmpty(province,"省份") ||  !checkEmpty(city,"城市")){
+ 	/*if( !checkEmpty(username,"名字") || !checkEmpty(sex,"性别","-1") || !checkEmpty(ymYear,"出生日期","-1") || !checkEmpty(ymMonth,"出生日期","-1") || !checkEmpty(ymDay,"出生日期","-1") || !checkEmpty(province,"省份") ||  !checkEmpty(city,"城市")){
  		return ;
- 	}
+ 	}*/
  	
- 	if(username.length > 8){
- 		alert("名字超过最大限制");
+ 	/*if(username.length > 10){
+ 		alert("会员名长度不能大于10位");
  		return ;
- 	}
- 	
- 	fulfillUserInfoForm.submit();
+ 	}*/
+	if($("#fulfillUserInfoForm").valid()){
+		fulfillUserInfoForm.submit();
+	}
  }
 
 

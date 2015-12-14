@@ -26,3 +26,8 @@ function checkEmpty(val,field,defaultVal){
 	
 	return true;
 }
+
+jQuery.validator.addMethod("carNum",function(value,element){
+	return this.optional(element) || /^[^_][\u4e00-\u9fa5\da-zA-Z\-\_]+$/.test(value);
+	//return this.optional(element) || /^[^_][A-Za-z]*[a-z0-9_]*$/.test(value);
+},"不能输入特殊字符！");

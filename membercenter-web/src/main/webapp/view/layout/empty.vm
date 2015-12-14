@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="$resourceContextTool.getStaticResourcePath()/css/scroll.css">
 		
     <script src="$resourceContextTool.getStaticResourcePath()/js/common/jquery.js"></script>
+    <script src="$resourceContextTool.getStaticResourcePath()/js/common/jquery.validate.min.js"></script>
     <script src="$resourceContextTool.getStaticResourcePath()/js/common/verify.js"></script>
     <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto.min.js"></script>
     <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto-public.js"></script>

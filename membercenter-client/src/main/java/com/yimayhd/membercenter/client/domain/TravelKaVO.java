@@ -9,6 +9,9 @@ public class TravelKaVO  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /** travelKa id*/
+    private long id;
+
     /** userId*/
     private long userId;
 
@@ -52,5 +55,13 @@ public class TravelKaVO  implements Serializable {
 
     public void setOptions(long options) {
         this.options = options;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

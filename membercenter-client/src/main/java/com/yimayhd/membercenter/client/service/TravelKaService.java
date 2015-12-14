@@ -22,7 +22,7 @@ public interface TravelKaService {
      * @param travelkaPageQuery
      * @return
      */
-    public MemPageResult<TravelKaVO> getTravelKaListPage(TravelkaPageQuery travelkaPageQuery);
+    public MemPageResult<TravelKaVO> getTravelKaListManagerPage(TravelkaPageQuery travelkaPageQuery);
 
 
 }

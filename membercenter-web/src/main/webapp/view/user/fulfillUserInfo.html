@@ -5,7 +5,7 @@
 </h1> 
 
  
-<form name="fulfillUserInfoForm" action="$resourceContextTool.getContextPath()/user/fulfillUserInfo" method="post">
+<form name="fulfillUserInfoForm" id="fulfillUserInfoForm" action="$resourceContextTool.getContextPath()/user/fulfillUserInfo" method="post">
 	<div class="ipt-input" style="padding:0 1rem;">
 		<label>
 			<em>手机号:</em>
@@ -13,7 +13,7 @@
 		</label>
 		<label>
 			<em>名字:</em>
-			<input type="text" value="" id="name" name="name" required="required" />
+			<input type="text" value="" id="name" name="name"/>
 		</label>
 			
 		<p>
@@ -21,7 +21,7 @@
 			<!--<span>男<input type="radio" value="2" name="gender" checked="checked" /><br>
 				女<input type="radio" value="1" name="gender" /></span>-->
 			<select name="gender" id="gender" style="min-width:18%;">
-				<option value="-1">请选择</option>
+				<option value="">请选择</option>
 				<option value="2">男</option>
 				<option value="3">女</option>
 			</select>
@@ -33,7 +33,7 @@
 		    </select>
 		   
 			<select id="ym-month" name="birthMonth" style="min-width:15%;margin-left: 1%;">
-				<option value="-1">请选择</option>
+				<option value="">请选择</option>
 				<option value="01">1月</option>
 				<option value="02">2月</option>
 				<option value="03">3月</option>
@@ -49,7 +49,7 @@
 			</select>
 			
 			<select id="ym-day" name="birthDay" style="min-width:15%;margin-left: 1%;">
-				<option value="-1">请选择</option>
+				<option value="">请选择</option>
 			</select>
 
 		</p>
@@ -81,6 +81,64 @@
  -->
  
 <script>
+	$("#fulfillUserInfoForm").validate({
+		rules: {
+			name: {
+				required:true,
+				maxlength: 10,
+				carNum:true
+			},
+			gender: {
+				required:true
+			},
+			birthYear: {
+				required:true
+			},
+			birthMonth: {
+				required:true
+			},
+			birthDay: {
+				required:true
+			},
+			provinceCode: {
+				required:true
+			},
+			cityCode: {
+				required:true
+			}
+		},
+		messages: {
+			name: {
+				required:"请填写用户名",
+				maxlength: "会员名长度不能大于10位"
+			},
+			gender: {
+				required:"请选择"
+			},
+			birthYear: {
+				required:"请选择"
+			},
+			birthMonth: {
+				required:"请选择"
+			},
+			birthDay: {
+				required:"请选择"
+			},
+			provinceCode: {
+				required:"请选择"
+			},
+			cityCode: {
+				required:"请选择"
+			}
+		},
+		//错误信息显示位置
+		errorPlacement: function (error, element) {
+			element.parent().append(error);
+		}
+	})
+
 	initFulfillUserInfo();
+
+
 </script>
 </body>

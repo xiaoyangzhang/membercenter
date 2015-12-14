@@ -1,6 +1,7 @@
 #bg-fff{background:#fff;}
 
-.error{color: #ff0000;padding-left: 7rem !important;}
+.error{color: #ff0000;}
+label.error{padding-left: 7rem !important;}
 
 .page-title{position:relative;height: 22px;text-align:center;padding:1rem 0;margin: 0 2rem;font-size:1.6rem;color:#222;border-bottom:1px solid #ccc;}
 .code-box{background:#fff;padding:0;}

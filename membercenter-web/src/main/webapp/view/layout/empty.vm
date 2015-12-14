@@ -6,18 +6,18 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<meta name="keywords" content="your keywords">
 	<meta name="description" content="your description">
-	<link rel="stylesheet" href="$resourceContextTool.getStaticResourcePath()/css/base.css">
-	<link rel="stylesheet" href="$resourceContextTool.getStaticResourcePath()/css/wechat.css">
-	<link rel="stylesheet" href="$resourceContextTool.getStaticResourcePath()/css/scroll.css">
+	<link rel="stylesheet" href="$resourceContextTool.getStaticResourcePath()/css/base.css?version=$resourceContextTool.getStaticResourceVersion()">
+	<link rel="stylesheet" href="$resourceContextTool.getStaticResourcePath()/css/wechat.css?version=$resourceContextTool.getStaticResourceVersion()">
+	<link rel="stylesheet" href="$resourceContextTool.getStaticResourcePath()/css/scroll.css?version=$resourceContextTool.getStaticResourceVersion()">
 		
-    <script src="$resourceContextTool.getStaticResourcePath()/js/common/jquery.js"></script>
-    <script src="$resourceContextTool.getStaticResourcePath()/js/common/jquery.validate.min.js"></script>
-    <script src="$resourceContextTool.getStaticResourcePath()/js/common/verify.js"></script>
-    <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto.min.js"></script>
-    <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto-public.js"></script>
-    <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto-city.js"></script>
-    <script src="$resourceContextTool.getStaticResourcePath()/js/common/encdec.min.js"></script>
-    <script src="$resourceContextTool.getStaticResourcePath()/js/common/auth.js"></script>
+    <script src="$resourceContextTool.getStaticResourcePath()/js/common/jquery.js?version=$resourceContextTool.getStaticResourceVersion()"></script>
+    <script src="$resourceContextTool.getStaticResourcePath()/js/common/jquery.validate.min.js?version=$resourceContextTool.getStaticResourceVersion()"></script>
+    <script src="$resourceContextTool.getStaticResourcePath()/js/common/verify.js?version=$resourceContextTool.getStaticResourceVersion()"></script>
+    <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto.min.js?version=$resourceContextTool.getStaticResourceVersion()" ></script>
+    <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto-public.js?version=$resourceContextTool.getStaticResourceVersion()"></script>
+    <script src="$resourceContextTool.getStaticResourcePath()/js/common/zepto-city.js?version=$resourceContextTool.getStaticResourceVersion()" ></script>
+    <script src="$resourceContextTool.getStaticResourcePath()/js/common/encdec.min.js?version=$resourceContextTool.getStaticResourceVersion()"></script>
+    <script src="$resourceContextTool.getStaticResourcePath()/js/common/auth.js?version=$resourceContextTool.getStaticResourceVersion()"></script>
    
 </head>
 <input type="hidden" name="contextPath" id="contextPath" value="$resourceContextTool.getContextPath()"/>

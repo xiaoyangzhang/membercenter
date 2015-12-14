@@ -8,6 +8,7 @@ public class ResourceContextTool {
 	public static final String DEFAULT_CONFIG_PATH = "velocityTool.properties";
 	public static final String STATIC_RESOURCE_PATH_PROP = "static.resource.path";
 	public static final String CONTEXT_PATH = "context.path";
+	public static final String STATIC_VERSION="static.resource.version";
 	
 	private static Properties prop  = new Properties();
 	
@@ -28,6 +29,12 @@ public class ResourceContextTool {
 	
 	public static String getContextPath(){
 		String val = prop.getProperty(CONTEXT_PATH);
+		return val == null ? "" : val;
+	}
+	
+	
+	public static String getStaticResourceVersion(){
+		String val = prop.getProperty(STATIC_VERSION);
 		return val == null ? "" : val;
 	}
 	

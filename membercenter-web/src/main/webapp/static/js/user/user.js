@@ -170,15 +170,17 @@ function fullfillUser() {
  	var province = $("#ym-province").val();
  	var city = $("#ym-city").val();
  	
- 	if( !checkEmpty(username,"名字") || !checkEmpty(sex,"性别","-1") || !checkEmpty(ymYear,"出生日期","-1") || !checkEmpty(ymMonth,"出生日期","-1") || !checkEmpty(ymDay,"出生日期","-1") || !checkEmpty(province,"省份") ||  !checkEmpty(city,"城市")){
+ 	/*if( !checkEmpty(username,"名字") || !checkEmpty(sex,"性别","-1") || !checkEmpty(ymYear,"出生日期","-1") || !checkEmpty(ymMonth,"出生日期","-1") || !checkEmpty(ymDay,"出生日期","-1") || !checkEmpty(province,"省份") ||  !checkEmpty(city,"城市")){
  		return ;
- 	}
+ 	}*/
  	
  	/*if(username.length > 10){
  		alert("会员名长度不能大于10位");
  		return ;
  	}*/
-	fulfillUserInfoForm.submit();
+	if($("#fulfillUserInfoForm").valid()){
+		fulfillUserInfoForm.submit();
+	}
  }
 
 

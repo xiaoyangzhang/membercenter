@@ -3,10 +3,13 @@ package com.yimay.membercenter.local;
 
 import com.yimayhd.membercenter.api.TravelKaApi;
 import com.yimayhd.membercenter.client.domain.BaseMerchantDO;
+import com.yimayhd.membercenter.client.domain.TravelKaVO;
+import com.yimayhd.membercenter.client.query.TravelkaPageQuery;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.BaseMerchantService;
 import com.yimayhd.membercenter.client.service.MerchantService;
+import com.yimayhd.membercenter.client.service.TravelKaService;
 import com.yimayhd.membercenter.client.vo.MerchantPageQueryVO;
 import com.yimayhd.membercenter.client.vo.MerchantVO;
 import com.yimayhd.membercenter.entity.PageInfo;
@@ -36,6 +39,9 @@ public class LocalMemberTest extends LocalBaseTest{
 	@Autowired
 	private MerchantService merchantService;
 
+	@Autowired
+	private TravelKaService travelKaService;
+
 	@Test
 	public void test(){
 		process();
@@ -52,10 +58,10 @@ public class LocalMemberTest extends LocalBaseTest{
 		}
 		System.err.println();
 	}
-	
+
 	private void getMemberDetail(){
 		System.err.println();
-		long userId = 401 ;
+		long userId = 10600 ;
 		int appId =1 ;
 		int domainId = 1 ;
 		int versionCode = 10 ;
@@ -136,6 +142,22 @@ public class LocalMemberTest extends LocalBaseTest{
 		merchantVO.setOpenId("aaaaaaa");
 		MemResult<UserDO> memResult = merchantService.findUserByOpenIdAndMerchant(merchantVO);
 		printResult(memResult,"MemResult");
+	}
+
+	@Test
+	public void getTravelKaDetailVOTest(){
+		long userId = 10L;
+		MemResult<TravelKaVO> result = travelKaService.getTravelKaDetail(userId);
+		System.out.println("123");
+	}
+
+	@Test
+	public void getTravelKaListManagerPageTest(){
+		TravelkaPageQuery travelkaPageQuery = new TravelkaPageQuery();
+		travelkaPageQuery.setPageNo(0);
+		travelkaPageQuery.setPageSize(10);
+		MemPageResult<TravelKaVO> travelKaVOMemPageResult = travelKaService.getTravelKaListManagerPage(travelkaPageQuery);
+		System.out.println("456");
 	}
 
 

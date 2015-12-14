@@ -143,6 +143,14 @@
         <include refid="querySqlString"/>
     </select>
 
+    <select id="pageQueryManager" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.client.query.TravelkaPageQuery">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM member_profile ORDER BY gmt_created
+        DESC
+        limit #{startRow},#{pageSize}
+    </select>
+
 
 
 </mapper>

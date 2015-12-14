@@ -253,21 +253,37 @@ public class TravelKaConverter {
 
     public static TravelKaVO converntTravelKaVODetail( List<UserAbilityRelationDO> userAbilityRelationDOs , MemberProfileDO travelKaDO, UserDO userDO){
         TravelKaVO travelKaVO = new TravelKaVO();
-//        setAbility(travelKa, userAbilityRelationDOs);
-//        travelKa.id = travelKaDO.getId();
-//        travelKa.userId = userDO.getId();
-//        travelKa.userInfo = convertUserDO2UserInfo(userDO);
-//        travelKa.serviceContent = travelKaDO.getServiceContent() == null ? null : travelKaDO.getServiceContent();
-//        travelKa.backgroundImg = travelKaDO.getBackgroundImg() == null ? null : travelKaDO.getBackgroundImg();
-//        travelKa.isDel = travelKaDO.getIsDel() == null ? null : travelKaDO.getIsDel();
-//        travelKa.gmtCreated = travelKaDO.getGmtCreated().getTime();
-//        travelKa.gmtModified = travelKaDO.getGmtModified().getTime();
-//        travelKa.identityValidated = travelKaDO.getIdentityValidated();
-//        travelKa.mobileValidated = travelKaDO.getMobileValidated();
-//        travelKa.occupationValidated = travelKaDO.getOccupationValidated();
-
-
+        travelKaVO.setId(travelKaDO.getId());
+        travelKaVO.setUserId(userDO.getId());
+        travelKaVO.setOptions(userDO.getOptions() == 0 ? 0 : userDO.getOptions());
+        travelKaVO.setName(userDO.getName() == null ? null : userDO.getName());
+        travelKaVO.setNickName(userDO.getNickname() == null ? null : userDO.getNickname());
         return travelKaVO;
+    }
+
+    public static List<TravelKaVO> convertTravelKaList( List<MemberProfileDO> memberProfileDOs,Map<Long,UserDO> userDOMap, int pageNo, boolean hasNext){
+        List<TravelKaVO> list = new ArrayList<TravelKaVO>();
+        if(CollectionUtils.isEmpty(memberProfileDOs)){
+            return null;
+        }
+        if(CollectionUtils.isEmpty(userDOMap)){
+            return null;
+        }
+        for(MemberProfileDO memberProfileDO : memberProfileDOs){
+            TravelKaVO travelKaVO = new TravelKaVO();
+            travelKaVO.setName(userDOMap.get(memberProfileDO.getUserId()).getName());
+            if(userDOMap.containsKey(memberProfileDO.getUserId())){
+                UserDO userDO = userDOMap.get(memberProfileDO.getUserId());
+                travelKaVO.setName(userDO.getName() == null ? null : userDO.getName());
+                travelKaVO.setNickName(userDO.getNickname() == null ? null : userDO.getNickname());
+                travelKaVO.setOptions(userDO.getOptions());
+                travelKaVO.setId(memberProfileDO.getId());
+                travelKaVO.setUserId(userDO.getId());
+            }
+
+            list.add(travelKaVO);
+        }
+        return list;
     }
 
 

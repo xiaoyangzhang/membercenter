@@ -18,11 +18,9 @@ function checkAuthCode(phone,authCode,salt,sign,securityFields,callback){
 	$.post(contextPath + "/user/checkMsgCode", {
 		phone : phone,
 		authCode : authCode,
-		salt  : salt,
-		sign  : sign,
-		securityFields : securityFields
-	}, function(data, status) {
-		callback(data);
+		token:$("#token").val()
+	}, function(result, status) {
+		callback(result);
 	});
 }
 
@@ -32,13 +30,16 @@ function checkAuthCode(phone,authCode,salt,sign,securityFields,callback){
 /*###########################用户相关页面js:start##########################################################*/
 function getSendMsgUrl(){
 	var phoneNO = $("#phone").val();
+	/*
 	var dataArray = new Array();
 	dataArray[0] = phoneNO
 	//var data = ":" + phoneNO;
 	var salt = getSalt();
 	var sign = generateSign(salt,dataArray);
 	var securityFields = "phone";
-	var url = contextPath + "/user/sendMsgCode?phone=" + $("#phone").val() + "&salt=" + salt + "&sign=" + sign + "&securityFields=" + securityFields;
+	*/
+	
+	var url = contextPath + "/user/sendMsgCode?phone=" + $("#phone").val() + "&token=" + $("#token").val();
 	
 	return url;
 }
@@ -70,8 +71,8 @@ function getTwoDimension(){
 	 var salt = getSalt();
 	 var sign = generateSign(salt,dataArray);
 	 var securityFields = "phone:authCode";
-	 checkAuthCode(phone,authCode,salt,sign,securityFields,function(data){
-		    var isSuccessful = data.meta.success;
+	 checkAuthCode(phone,authCode,salt,sign,securityFields,function(result){
+		    var isSuccessful = result.meta.success;
 			if (isSuccessful == true) {
 				alert("验证成功!");
 				authCodeForm.submit();
@@ -192,8 +193,8 @@ function initTwoDimension(){
 		text : $("#codeInfo").val()
 	});
 	
-	var userId = $("#userId").val();
-	var merchantId = $("#merchantId").val();
+	//var userId = $("#userId").val();
+	//var merchantId = $("#merchantId").val();
 	//获取当前积分
 	getCurrentPoint(function(data){
 		var isSuccessful = data.meta.success;

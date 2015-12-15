@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimayhd.membercenter.Response;
+import com.yimayhd.membercenter.utils.HttpRequestUtil;
 
 /**
  * 
@@ -31,9 +32,7 @@ public class MemberExceptionHandler implements HandlerExceptionResolver {
 			Exception ex) {
 		LOGGER.error("发生异常:",ex);
 		
-		if (!(request.getHeader("accept").indexOf("application/json") > -1
-				|| (request.getHeader("X-Requested-With") != null
-						&& request.getHeader("X-Requested-With").indexOf("XMLHttpRequest") > -1))) {
+		if (!HttpRequestUtil.isAjax(request)) {
 			Map<String, Object> model = new HashMap<String, Object>();
 			model.put("ex", ex);
 			

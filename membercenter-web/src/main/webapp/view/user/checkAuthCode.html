@@ -7,7 +7,7 @@
 <script src="$resourceContextTool.getStaticResourcePath()/js/user/user.js?version=$resourceContextTool.getStaticResourceVersion()"></script>
 <form name="authCodeForm" id="$resourceContextTool.getContextPath()/user/checkAuthCodeForm"
 	action="$resourceContextTool.getContextPath()/user/toDimensionCode" method="post">
-	
+	<input type="hidden" name="token" value="$token" id="token"/>
 	<div class="ipt-group">
 		<label><em>手机号</em><input type="text" name="phone" value="$memeberInfo.phone" id="phone" readonly/></label>
 		<label><em>验证码</em><input type="text" value="" name="authCode" id="authCode" class="sort" />

@@ -5,6 +5,7 @@
 <script src="$resourceContextTool.getStaticResourcePath()/js/user/user.js"></script>
 
 <form name="registerForm" action="$resourceContextTool.getContextPath()/user/toAuthCodeView?version=$resourceContextTool.getStaticResourceVersion()" method="post">
+	<input type="hidden" name="token" value="$token"/>
 	<div class="ipt-group">
 		<label><em>手机号</em><input type="text" value="" name="phone" required="required" /></label>
 	</div>

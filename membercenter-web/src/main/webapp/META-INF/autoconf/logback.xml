@@ -73,10 +73,11 @@
         </layout>
     </appender>
 
+<!-- 
     <appender name="MONITOR" class="com.yimayhd.troy.client.metrics.log.MonitorLogbackAppender">
         <noneStackEnable>true</noneStackEnable>
     </appender>
-    
+  -->   
     <!--myibatis log configure -->
     <logger name="org.mybatis" level="TRACE"/>
     <logger name="java.sql.Connection" level="DEBUG"/>
@@ -91,6 +92,8 @@
          -->
         <appender-ref ref="INFO"/>
         <appender-ref ref="ERROR"/>
+        <!-- 
         <appender-ref ref="MONITOR" />
+         -->
     </root>
 </configuration>

@@ -210,16 +210,20 @@ public class TravelKaConverter {
             minsterKaClubs = convertKaClubs(minsters, true);
         }
         List<ClubInfoDTO> clubInfoDTOs = clubInfoListDTO.getMemberClubList();
+
+        List<KaClub> kaClubList = new ArrayList<KaClub>();
+
+        if(minsterKaClubs !=null && minsterKaClubs.size() > 0){
+            kaClubList.addAll(minsterKaClubs);
+        }
+
         List<KaClub> kaClubs = null; // 非部长的俱乐部
         if(clubInfoDTOs!= null && clubInfoDTOs.size() > 0){
             kaClubs = convertKaClubs(clubInfoDTOs,false);
+            kaClubList.addAll(kaClubs);
         }
-
-        if(kaClubs != null){
-            travelKaClub.kaClubs = kaClubs;
-        }
-        if(minsterKaClubs !=null && minsterKaClubs.size() > 0){
-            kaClubs.addAll(minsterKaClubs);
+        if(kaClubList != null){
+            travelKaClub.kaClubs = kaClubList;
         }
         return travelKaClub;
     }

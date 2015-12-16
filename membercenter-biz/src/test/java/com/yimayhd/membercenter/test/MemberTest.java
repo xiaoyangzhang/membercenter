@@ -33,23 +33,4 @@ public class MemberTest{
 		context = new ClassPathXmlApplicationContext(ctx);
 	}
 
-
-
-	@Autowired
-	private MerchantService merchantService;
-	
-	@Test
-	public void testFindPageUsersByMerchant(){
-		MerchantPageQueryVO merchantPageQueryVO = new MerchantPageQueryVO();
-		merchantPageQueryVO.setPageSize(10);
-		merchantPageQueryVO.setPageNo(1);
-//		merchantPageQueryVO.setCity();
-//		merchantPageQueryVO.setNickName();
-//		merchantPageQueryVO.setMerchantId();
-		merchantPageQueryVO.setMerchantUserId(1L);
-//		merchantPageQueryVO.setMobile();
-		MemPageResult<UserDO> memResult = merchantService.findPageUsersByMerchant(merchantPageQueryVO);
-		JSON.toJSONString(memResult);
-	}
-	
 }

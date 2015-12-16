@@ -115,8 +115,8 @@ public class LocalMemberTest extends LocalBaseTest{
 		merchantPageQueryVO.setPageSize(20);
 //		merchantPageQueryVO.setCity();
 //		merchantPageQueryVO.setNickName();
-		merchantPageQueryVO.setMerchantUserId(123456789L);
-//		merchantPageQueryVO.setMobile();
+		merchantPageQueryVO.setMerchantUserId(5300L);
+		merchantPageQueryVO.setMobile("18039262076");
 		MemPageResult<UserDO> memResult = merchantService.findPageUsersByMerchant(merchantPageQueryVO);
 		printResult(memResult,"MemResult");
 	}
@@ -136,10 +136,10 @@ public class LocalMemberTest extends LocalBaseTest{
 	@Test
 	public void testFindUserByOpenIdAndMerchant(){
 		MerchantVO merchantVO = new MerchantVO();
-		merchantVO.setMerchantUserId(1L);
+//		merchantVO.setMerchantUserId(1L);
 		merchantVO.setMobile("13581937677");
-		merchantVO.setMerchantUserId(8790L);
-		merchantVO.setOpenId("aaaaaaa");
+//		merchantVO.setMerchantUserId(8790L);
+//		merchantVO.setOpenId("aaaaaaa");
 		MemResult<UserDO> memResult = merchantService.findUserByOpenIdAndMerchant(merchantVO);
 		printResult(memResult,"MemResult");
 	}

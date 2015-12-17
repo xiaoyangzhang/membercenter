@@ -42,6 +42,7 @@ import com.yimayhd.user.session.manager.SessionUtils;
 public class UserInfoController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserInfoController.class);
 	private static final String TIME_ELAPSE_HEAD = Constants.TIME_ELAPSE_HEAD;
+	private static final String REQUEST_PHONE = "requestPhone";
 
 	@Resource
 	private UserService userService;
@@ -232,6 +233,12 @@ public class UserInfoController {
 
 		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
 		Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
+		
+		//判断输入的手机号码是否一致
+		String requestPhone = (String) SessionUtils.getSession().getAttribute(REQUEST_PHONE);
+		if(StringUtils.isEmpty(requestPhone) || !requestPhone.equals(memeberInfo.getPhone())){
+			return new Response().failure("发送短信的手机号码与注册手机号码不一致!");
+		}
 
 		if (LOGGER.isDebugEnabled()) {
 			TimeElapseCaculate.startSnapshort();
@@ -408,6 +415,7 @@ public class UserInfoController {
 		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
 		Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
 
+		SessionUtils.getSession().setAttribute(REQUEST_PHONE, memeberInfo.getPhone());
 		ModelAndView mv = new ModelAndView();
 
 		// 添加模型数据 可以是任意的POJO对象

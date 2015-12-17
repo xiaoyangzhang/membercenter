@@ -43,6 +43,10 @@ public class MemberProfileDO implements Serializable {
 
     private int sortColumn2; // 新晋旅游咖排序字段
 
+    private String nickname; // 昵称
+
+    private String name; // 用户姓名
+
 
     public void setId(long id){
         this.id = id;
@@ -164,4 +168,19 @@ public class MemberProfileDO implements Serializable {
         return sortColumn2;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

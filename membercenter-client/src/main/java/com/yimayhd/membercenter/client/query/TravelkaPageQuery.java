@@ -13,6 +13,10 @@ public class TravelkaPageQuery extends PageQuery {
 
     private String orderbyCol;
 
+    private String name;
+
+    private String nickName;
+
 
     public List<Long> getIds() {
         return ids;
@@ -28,5 +32,21 @@ public class TravelkaPageQuery extends PageQuery {
 
     public void setOrderbyCol(String orderbyCol) {
         this.orderbyCol = orderbyCol;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

@@ -33,10 +33,12 @@
 
         <result column="sort_column2" property="sortColumn2" jdbcType="INTEGER"/>
 
+        <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
 </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,service_content,identity_no,occupation_id,background_img,certificates_img,is_del,gmt_modified,gmt_created,identity_validated,mobile_validated,occupation_validated,sort_column1,sort_column2
+        id,user_id,service_content,identity_no,occupation_id,background_img,certificates_img,is_del,gmt_modified,gmt_created,identity_validated,mobile_validated,occupation_validated,sort_column1,sort_column2,nickname,name
     </sql>
 
 
@@ -146,10 +148,34 @@
     <select id="pageQueryManager" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.client.query.TravelkaPageQuery">
         SELECT
         <include refid="Base_Column_List" />
-        FROM member_profile ORDER BY gmt_created
-        DESC
+        FROM member_profile
+        <include refid="pageQueryManagerSqlString"/>
+        ORDER BY gmt_created DESC
         limit #{startRow},#{pageSize}
     </select>
+
+    <select id="queryCountManager" resultType="int" parameterType="com.yimayhd.membercenter.client.query.TravelkaPageQuery">
+        SELECT
+        COUNT(*)
+        FROM member_profile
+        <include refid="pageQueryManagerSqlString"/>
+    </select>
+
+    <sql id="pageQueryManagerSqlString">
+        <where>
+
+            <if test="name != null">
+                AND
+                name like CONCAT('%', #{name}, '%')
+            </if>
+
+            <if test="nickName != null">
+                AND
+                nickname like CONCAT('%', #{nickName}, '%')
+            </if>
+
+        </where>
+    </sql>
 
 
 

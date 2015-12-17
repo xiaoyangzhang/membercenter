@@ -275,7 +275,7 @@ public class TravelKaConverter {
         if(CollectionUtils.isEmpty(userDOMap)){
             return null;
         }
-        for(MemberProfileDO memberProfileDO : memberProfileDOs){
+         for(MemberProfileDO memberProfileDO : memberProfileDOs){
             TravelKaVO travelKaVO = new TravelKaVO();
             travelKaVO.setName(userDOMap.get(memberProfileDO.getUserId()).getName());
             if(userDOMap.containsKey(memberProfileDO.getUserId())){
@@ -285,6 +285,7 @@ public class TravelKaConverter {
                 travelKaVO.setOptions(userDO.getOptions());
                 travelKaVO.setId(memberProfileDO.getId());
                 travelKaVO.setUserId(userDO.getId());
+                travelKaVO.setAvatar(userDO.getAvatar() == null ? null : userDO.getAvatar());
             }
 
             list.add(travelKaVO);

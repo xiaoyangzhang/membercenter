@@ -156,6 +156,9 @@ public class LocalMemberTest extends LocalBaseTest{
 		TravelkaPageQuery travelkaPageQuery = new TravelkaPageQuery();
 		travelkaPageQuery.setPageNo(0);
 		travelkaPageQuery.setPageSize(10);
+//		travelkaPageQuery.setNickName("li");
+//		travelkaPageQuery.setName("未");
+		System.out.println("---------------travelkaPageQuery name =="+travelkaPageQuery.getName());
 		MemPageResult<TravelKaVO> travelKaVOMemPageResult = travelKaService.getTravelKaListManagerPage(travelkaPageQuery);
 		System.out.println("456");
 	}

@@ -222,7 +222,7 @@ public class MemberProfileManager {
             List<MemberProfileDO> userDOs = memberProfileDOMapper.pageQueryManager(userPageQuery);
             basePageResult.setList(userDOs);
             if (userPageQuery.isNeedCount()) {
-                int count = memberProfileDOMapper.queryCount(userPageQuery);
+                int count = memberProfileDOMapper.queryCountManager(userPageQuery);
                 basePageResult.setTotalCount(count);
                 basePageResult.setHasNext(count > userPageQuery.getPageNo() * userPageQuery.getOldPageSize());
             } else if (userPageQuery.isHasNextMod()) {

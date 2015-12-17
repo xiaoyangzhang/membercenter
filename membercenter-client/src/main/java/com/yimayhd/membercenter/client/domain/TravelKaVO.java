@@ -25,6 +25,9 @@ public class TravelKaVO  implements Serializable {
     private long options;
 
 
+    /** 用户头像*/
+    private String avatar;
+
     public String getName() {
         return name;
     }
@@ -63,5 +66,13 @@ public class TravelKaVO  implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

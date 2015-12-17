@@ -20,6 +20,8 @@ public interface MemberProfileDOMapper {
 
     int queryCount(TravelkaPageQuery travelkaPageQuery);
 
+    int queryCountManager(TravelkaPageQuery travelkaPageQuery);
+
     List<MemberProfileDO> pageQueryManager(TravelkaPageQuery travelkaPageQuery);
 
 }

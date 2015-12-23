@@ -4,6 +4,7 @@ import com.yimayhd.membercenter.client.domain.MemberProfileDO;
 import com.yimayhd.membercenter.client.domain.TravelKaVO;
 import com.yimayhd.membercenter.client.domain.UserAbilityRelationDO;
 import com.yimayhd.membercenter.client.enums.AbilityEnum;
+import com.yimayhd.membercenter.client.enums.AbilityTestEnum;
 import com.yimayhd.membercenter.client.query.TravelkaPageQuery;
 import com.yimayhd.membercenter.entity.*;
 
@@ -16,6 +17,7 @@ import com.yimayhd.membercenter.entity.TravelKaClub;
 import com.yimayhd.membercenter.entity.TravelKaItem;
 import com.yimayhd.membercenter.entity.TravelKaPageInfoList;
 import com.yimayhd.membercenter.entity.UserInfo;
+import com.yimayhd.membercenter.util.ConfigUtil;
 import com.yimayhd.snscenter.client.result.ClubInfoDTO;
 import com.yimayhd.snscenter.client.result.ClubInfoListDTO;
 import com.yimayhd.user.client.domain.UserDO;
@@ -35,7 +37,16 @@ public class TravelKaConverter {
 
     public static TravelKa converntTravelKaDetail( List<UserAbilityRelationDO> userAbilityRelationDOs , MemberProfileDO travelKaDO, UserDO userDO){
         TravelKa travelKa = new TravelKa();
-        setAbility(travelKa, userAbilityRelationDOs);
+        String flag = ConfigUtil.getProperty("memcenter.ability.isproduction");
+        if(flag != null && !flag.equals("")){
+            if(flag.equals("true")){
+                setAbility(travelKa, userAbilityRelationDOs);
+            }
+            if(flag.equals("false")){
+                setTestAbility(travelKa, userAbilityRelationDOs);
+            }
+        }
+
         travelKa.id = travelKaDO.getId();
         travelKa.userId = userDO.getId();
         travelKa.userInfo = convertUserDO2UserInfo(userDO);
@@ -72,6 +83,22 @@ public class TravelKaConverter {
             travelKa.abilities = list;
         }
     }
+
+    /** 测试 环境*/
+    private static void setTestAbility(TravelKa travelKa, List<UserAbilityRelationDO> userAbilityRelationDOs){
+        List<Ability> list = new ArrayList<Ability>();
+        if(userAbilityRelationDOs != null){
+            for(UserAbilityRelationDO userAbilityRelationDO :userAbilityRelationDOs){
+                Ability ability = new Ability();
+                ability.name = AbilityTestEnum.getById(userAbilityRelationDO.getAbilityId()).getName();
+                ability.id = userAbilityRelationDO.getId();
+                ability.img =AbilityTestEnum.getById(userAbilityRelationDO.getAbilityId()).getImg();
+                list.add(ability);
+            }
+            travelKa.abilities = list;
+        }
+    }
+
 
     public static UserInfo convertUserDO2UserInfo(UserDO userDO){
         if(userDO == null){

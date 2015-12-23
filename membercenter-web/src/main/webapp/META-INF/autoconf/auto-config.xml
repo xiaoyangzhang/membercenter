@@ -26,6 +26,8 @@
         <property name="db.pool.minIdle" defaultValue="5" description="db最小空闲连接数"/>
         <property name="db.pool.maxIdle" defaultValue="30" description="db最大空闲连接数"/>
         <property name="db.pool.maxActive" defaultValue="100" description="db最大活跃连接数"/>
+
+        <property name="memcenter.ability.isproduction" defaultValue="true" description="大咖个人能力图片是否是线上环境"/>
         
     </group>
     <group name="mq">

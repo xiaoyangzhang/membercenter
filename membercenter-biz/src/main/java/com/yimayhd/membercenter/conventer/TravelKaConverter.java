@@ -310,7 +310,6 @@ public class TravelKaConverter {
         }
          for(MemberProfileDO memberProfileDO : memberProfileDOs){
             TravelKaVO travelKaVO = new TravelKaVO();
-            travelKaVO.setName(userDOMap.get(memberProfileDO.getUserId()).getName());
             if(userDOMap.containsKey(memberProfileDO.getUserId())){
                 UserDO userDO = userDOMap.get(memberProfileDO.getUserId());
                 travelKaVO.setName(userDO.getName() == null ? null : userDO.getName());
@@ -319,6 +318,7 @@ public class TravelKaConverter {
                 travelKaVO.setId(memberProfileDO.getId());
                 travelKaVO.setUserId(userDO.getId());
                 travelKaVO.setAvatar(userDO.getAvatar() == null ? null : userDO.getAvatar());
+                travelKaVO.setName(userDOMap.get(memberProfileDO.getUserId()).getName());
             }
 
             list.add(travelKaVO);

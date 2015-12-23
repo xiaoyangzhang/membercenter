@@ -25,6 +25,9 @@ import com.yimayhd.user.client.domain.UserDO;
 
 
 import com.yimayhd.user.entity.*;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 
@@ -34,17 +37,20 @@ import java.util.*;
  * Created by houdh on 2015/11/26.
  */
 public class TravelKaConverter {
+    private final static Logger log = LoggerFactory.getLogger(TravelKaConverter.class);
 
     public static TravelKa converntTravelKaDetail( List<UserAbilityRelationDO> userAbilityRelationDOs , MemberProfileDO travelKaDO, UserDO userDO){
         TravelKa travelKa = new TravelKa();
         String flag = ConfigUtil.getProperty("memcenter.ability.isproduction");
-        if(flag != null && !flag.equals("")){
+        if(StringUtils.isNotBlank(flag)){
             if(flag.equals("true")){
                 setAbility(travelKa, userAbilityRelationDOs);
             }
             if(flag.equals("false")){
                 setTestAbility(travelKa, userAbilityRelationDOs);
             }
+        } else {
+            log.error("  ConfigUtil.getProperty(\"memcenter.ability.isproduction\") is null");
         }
 
         travelKa.id = travelKaDO.getId();

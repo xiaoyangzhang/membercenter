@@ -39,6 +39,7 @@
         <include refid="Base_Column_List" />
         from wx_user_merchant_relation
         <include refid="Search_Limit" />
+        ORDER BY gmt_created DESC
     </select>
 
     <!--insert的时候要去掉ID，创建时间，更新时间和状态-->

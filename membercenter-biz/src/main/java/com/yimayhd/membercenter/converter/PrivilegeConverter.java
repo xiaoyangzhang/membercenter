@@ -57,7 +57,7 @@ public class PrivilegeConverter {
 		}
 		PrivilegeInfo privilegeInfo = new PrivilegeInfo();
 		
-		privilegeInfo.title = privilegeDO.getImageUrl();
+		privilegeInfo.title = privilegeDO.getTitle();
 		privilegeInfo.imageUrl = privilegeDO.getImageUrl();
 		privilegeInfo.imageShowUrl = privilegeDO.getImageShowUrl();
 		privilegeInfo.description = privilegeDO.getDescription();

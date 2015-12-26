@@ -3,6 +3,7 @@ package com.yimayhd.membercenter.repo;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.yimayhd.ic.client.model.enums.ItemPicUrlsKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class ItemRepo {
 			item.itemId = itemDO.getId() ;
 			ItemType itemType = ItemType.get(itemDO.getItemType()) ;
 			item.itemType = itemType == null ? null : itemType.name() ;
-			item.itemPics = itemDO.getPicUrls() ;
+			item.itemPics = itemDO.getPicUrls(ItemPicUrlsKey.SMALL_LIST_PIC) ;
 			item.itemTitle = itemDO.getTitle() ;
 			item.originalPrice = itemDO.getOriginalPrice() ;
 			item.price = itemDO.getPrice() ;

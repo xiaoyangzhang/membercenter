@@ -59,25 +59,25 @@ public class OrderPaidDoneConsumer extends BaseConsumer {
 			return true;
 		}
 		
-		MemResult<BizOrderDO> orderResult = orderRepo.getBizOrderById(bizOrderDO.getBizOrderId());
-		if( orderResult == null || !orderResult.isSuccess() || orderResult.getValue() == null ){
-			logger.error(log+"  get BizOrderDO failed!  result={}", JSON.toJSONString(orderResult));
-			return false;
-		}
-		BizOrderDO orderDO = orderResult.getValue() ;
-		if( PayStatus.PAID.getStatus() != orderDO.getPayStatus() ){
-			logger.error(log+"  BizOrderDO status Error!  status={}", orderDO.getPayStatus() );
-			return false;
-		}
+//		MemResult<BizOrderDO> orderResult = orderRepo.getBizOrderById(bizOrderDO.getBizOrderId());
+//		if( orderResult == null || !orderResult.isSuccess() || orderResult.getValue() == null ){
+//			logger.error(log+"  get BizOrderDO failed!  result={}", JSON.toJSONString(orderResult));
+//			return false;
+//		}
+//		BizOrderDO orderDO = orderResult.getValue() ;
+//		if( PayStatus.PAID.getStatus() != orderDO.getPayStatus() ){
+//			logger.error(log+"  BizOrderDO status Error!  status={}", orderDO.getPayStatus() );
+//			return false;
+//		}
 		
 		int period = (int)BizOrderUtil.getMemberRechargeDays(bizOrderDO);
 		
 		MemberBuyDTO memberBuyDTO = new MemberBuyDTO();
-		memberBuyDTO.setBuyerId(orderDO.getBuyerId());
-		memberBuyDTO.setOuterId(String.valueOf(orderDO.getBizOrderId()));
+		memberBuyDTO.setBuyerId(bizOrderDO.getBuyerId());
+		memberBuyDTO.setOuterId(String.valueOf(bizOrderDO.getBizOrderId()));
 		memberBuyDTO.setOuterType(MemberRecordOutType.BUY.getType());
 		memberBuyDTO.setPeriod(period);
-		memberBuyDTO.setSellerId(orderDO.getSellerId());
+		memberBuyDTO.setSellerId(bizOrderDO.getSellerId());
 		
 		MemResult<Boolean> result = memberManager.finishMemberPay(memberBuyDTO);
 		if( result == null || !result.isSuccess() || result.getValue() == null || !result.getValue() ){

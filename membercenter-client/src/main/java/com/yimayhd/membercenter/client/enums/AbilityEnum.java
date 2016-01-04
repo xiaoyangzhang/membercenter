@@ -7,16 +7,16 @@ public enum AbilityEnum {
 
     //机场接送，景点讲解，陪游陪玩，找吃找喝，购物达人，摄影达人，英语达人，唱歌跳舞，游泳潜水，卖萌逗趣
 
-    AIRPORT_SHUTTLE("机场接送",1,"L1taJTBCVT1R4cSCrK.png"),
-    SCENEY_DESC("景点讲解",2,"L1tyJTBXJT1R4cSCrK.png"),
-    ACCOMPANY_PLAY("陪游陪玩",3,"L1VtJTBCLT1R4cSCrK.png"),
-    FIND_EAT_DRINK("找吃找喝",4,"L13tJTB5dT1R4cSCrK.png"),
-    SHOPPING_DAREN("购物达人",5,"L1ttJTBXJT1R4cSCrK.png"),
-    PHOTOGRAPHY_DAREN("摄影达人",6,"L1VRJTBC_T1R4cSCrK.png"),
-    ENGLISH_DAREN("英语达人",7,"L1VyJTBCVT1R4cSCrK.png"),
-    SING_DANCE("唱歌跳舞",8,"L1IRJTB5dT1R4cSCrK.png"),
-    SWIMMING("游泳潜水",9,"L11tJTB5hT1R4cSCrK.png"),
-    ACTING_CUTE("卖萌逗趣",10,"L1OtJTByKT1R4cSCrK.png");
+    AIRPORT_SHUTTLE("机场接送",1,"T1lyKTByhT1R4cSCrK.png"),
+    SCENEY_DESC("景点讲解",2,"T14aKTByhT1R4cSCrK.png"),
+    ACCOMPANY_PLAY("陪游陪玩",3,"T1QaKTByhT1R4cSCrK.png"),
+    FIND_EAT_DRINK("找吃找喝",4,"T1kaJTBKJT1R4cSCrK.png"),
+    SHOPPING_DAREN("购物达人",5,"T1FR_TBydT1R4cSCrK.png"),
+    PHOTOGRAPHY_DAREN("摄影达人",6,"T1aahTBydT1R4cSCrK.png"),
+    ENGLISH_DAREN("英语达人",7,"T15aDTByhT1R4cSCrK.png"),
+    SING_DANCE("唱歌跳舞",8,"T1JahTBy_T1R4cSCrK.png"),
+    SWIMMING("游泳潜水",9,"T17aKTBydT1R4cSCrK.png"),
+    ACTING_CUTE("卖萌逗趣",10,"T1KyKTByhT1R4cSCrK.png");
 
 
 

@@ -29,7 +29,7 @@ import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
 import com.yimayhd.user.session.manager.SessionConstant;
-import com.yimayhd.user.session.manager.SessionManager;
+import com.yimayhd.user.session.manager.SessionUtils;
 
 /**
  * 
@@ -52,9 +52,7 @@ public class UserInfoController {
 
 	@Resource
 	private PointService pointService;
-	
-	@Resource
-	private SessionManager sessionManager;
+
 	
 
 	/**
@@ -448,7 +446,7 @@ public class UserInfoController {
 	public ModelAndView toFullfillUserInfoView(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}", JSON.toJSONString(memeberInfo));
 		
-		String phone = sessionManager.getUser().getMobile();
+		String phone = "";
 
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("phone", phone);

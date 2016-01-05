@@ -164,12 +164,12 @@
     <sql id="pageQueryManagerSqlString">
         <where>
 
-            <if test="name != null">
+            <if test="name != null and name != '' ">
                 AND
                 name like CONCAT('%', #{name}, '%')
             </if>
 
-            <if test="nickName != null">
+            <if test="nickName != null and name != ''">
                 AND
                 nickname like CONCAT('%', #{nickName}, '%')
             </if>

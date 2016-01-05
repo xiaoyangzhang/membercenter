@@ -188,6 +188,11 @@ public class MemberProfileManager {
         List<UserDO> userList = getUserList(userIds);
         Map<Long,UserDO> userDOMap = praseUserData(userList);
         List<TravelKaVO> travelKaVOs = TravelKaConverter.convertTravelKaList(memberProfileDOs, userDOMap, basePageResult.getPageNo(), basePageResult.isHasNext());
+        
+        int count = memberProfileDOMapper.queryCountManager(travelkaPageQuery);
+        memPageResult.setTotalCount(count);
+        memPageResult.setHasNext(count > travelkaPageQuery.getPageNo() * travelkaPageQuery.getOldPageSize());
+        
         memPageResult.setList(travelKaVOs);
         return memPageResult;
     }

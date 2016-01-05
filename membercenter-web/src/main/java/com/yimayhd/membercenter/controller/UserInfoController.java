@@ -29,7 +29,7 @@ import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
 import com.yimayhd.user.session.manager.SessionConstant;
-import com.yimayhd.user.session.manager.SessionUtils;
+import com.yimayhd.user.session.manager.SessionManager;
 
 /**
  * 
@@ -52,6 +52,10 @@ public class UserInfoController {
 
 	@Resource
 	private PointService pointService;
+	
+	@Resource
+	private SessionManager sessionManager;
+	
 
 	/**
 	 * 
@@ -415,9 +419,7 @@ public class UserInfoController {
 		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
 		Asserts.AssertStringNotEmpty(memeberInfo.getPhone(), "phone");
 
-		SessionUtils.getSession().setAttribute(REQUEST_PHONE, memeberInfo.getPhone());
 		ModelAndView mv = new ModelAndView();
-
 		// 添加模型数据 可以是任意的POJO对象
 		mv.addObject("memeberInfo", memeberInfo);
 
@@ -445,12 +447,11 @@ public class UserInfoController {
 	@RequestMapping(value = "/user/toFullfillUserInfo")
 	public ModelAndView toFullfillUserInfoView(MemeberBasicInfoVO memeberInfo) {
 		LOGGER.debug("memeberInfo:{}", JSON.toJSONString(memeberInfo));
-		MemeberBasicInfoVO sessionInfo = (MemeberBasicInfoVO) SessionUtils.getSession()
-				.getAttribute(Constants.MEMBER_USER_INFO);
+		
+		String phone = sessionManager.getUser().getMobile();
 
 		ModelAndView mv = new ModelAndView();
-
-		mv.addObject("phone", sessionInfo.getPhone());
+		mv.addObject("phone", phone);
 		mv.setViewName("user/fulfillUserInfo");
 
 		return mv;

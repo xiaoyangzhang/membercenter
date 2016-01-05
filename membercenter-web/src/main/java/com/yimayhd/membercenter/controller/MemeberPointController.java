@@ -27,8 +27,6 @@ import com.yimayhd.membercenter.Response;
 import com.yimayhd.membercenter.utils.TimeElapseCaculate;
 import com.yimayhd.membercenter.vo.MemeberBasicInfoVO;
 import com.yimayhd.membercenter.vo.PointDetailVO;
-import com.yimayhd.user.session.manager.SessionUtils;
-
 
 /**
  * 用户积分相关

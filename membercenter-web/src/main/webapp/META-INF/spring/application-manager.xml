@@ -7,7 +7,7 @@
 	<context:annotation-config />
 
 	<bean id="merchantServiceManager" class="com.yimayhd.membercenter.manager.MerchantServiceManager"></bean>
-
+	
 	<bean id="memberProfileManager" class="com.yimayhd.membercenter.manager.MemberProfileManager"/>
 	
 	<bean id="memberPrivilegeManager" class="com.yimayhd.membercenter.manager.MemberPrivilegeManager"></bean>
@@ -24,4 +24,5 @@
         <constructor-arg name="allocCount" value="20"/>
     </bean>
 	
+	<bean id="sessionManager" class="com.yimayhd.user.session.manager.SessionManager" />
 </beans>

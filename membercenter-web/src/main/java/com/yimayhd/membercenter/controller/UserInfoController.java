@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -139,6 +140,7 @@ public class UserInfoController {
 			mv.setViewName("error");
 			return mv;
 		}
+		cachedMemberInfo.setPhone(userDOResult.getValue().getMobile());
 		cachedMemberInfo.setUserId(userDOResult.getValue().getId());
 		memberUserBiz.cacheMemberInfo(cachedMemberInfo, loginResult.getValue().getToken());
 		
@@ -271,17 +273,14 @@ public class UserInfoController {
 	 * @return
 	 */
 	@RequestMapping(value = "/main")
-	public ModelAndView registerMain(Long MERCHANTID, String OPENID) {
+	public ModelAndView registerMain(@RequestParam("MERCHANTID") Long merchantId, @RequestParam("OPENID") String openId) {
+		Asserts.AssertNotNull(merchantId, "MERCHANTID");
+		Asserts.AssertStringNotEmpty(openId, "OPENID");
+
 		MemeberBasicInfoVO memeberInfo = new MemeberBasicInfoVO();
-		Long merchantId = MERCHANTID;
-		String openId = OPENID;
 		memeberInfo.setOpenId(openId);
 		memeberInfo.setMerchantId(merchantId);
 		LOGGER.debug("memeberInfo:{}", JSON.toJSONString(memeberInfo));
-
-		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
-		Asserts.AssertStringNotEmpty(memeberInfo.getOpenId(), "openId");
-		Asserts.AssertNotNull(memeberInfo.getMerchantId(), "merchantId");
 
 		ModelAndView mv = new ModelAndView();
 

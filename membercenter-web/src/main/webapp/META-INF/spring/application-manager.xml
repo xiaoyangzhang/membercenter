@@ -23,7 +23,6 @@
         <constructor-arg name="configKey" value="${memcenter.meber.idgen.key}"/>
         <constructor-arg name="allocCount" value="20"/>
     </bean>
-	<!--  
+	
 	<bean id="sessionManager" class="com.yimayhd.user.session.manager.SessionManager" />
-	-->
 </beans>

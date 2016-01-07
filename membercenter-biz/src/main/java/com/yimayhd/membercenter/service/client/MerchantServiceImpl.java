@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.dubbo.common.utils.CollectionUtils;
+import com.alibaba.fastjson.JSONObject;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.BaseMerchantDO;
 import com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO;
@@ -43,6 +44,7 @@ public class MerchantServiceImpl implements MerchantService {
 
     @Resource
     private MerchantServiceManager merchantServiceManager;
+   
 
     @Override
     public MemResult<UserDO> registerUser(MerchantVO merchantVO) {
@@ -189,4 +191,35 @@ public class MerchantServiceImpl implements MerchantService {
         return StringUtils.isBlank(merchantVO.getOpenId()) ||
                 StringUtils.isBlank(merchantVO.getMobile()) || null == merchantVO.getMerchantUserId();
     }
+
+	@Override
+	public MemResult<WxUserMerchantRelationDO> findWxUserRelationByUserId(Long userId) {
+		MemResult<WxUserMerchantRelationDO> result = new MemResult<WxUserMerchantRelationDO>();
+		result.setSuccess(false);
+		if(userId == null){
+			result.setErrorMsg("userId is required!");
+			LOGGER.error("userId is required!userId={}",userId);
+			
+			return result;
+		}
+		WxUserMerchantRelationDO queryDO = new WxUserMerchantRelationDO();
+		queryDO.setUserId(userId);
+		List<WxUserMerchantRelationDO> wxListResult = null;
+		try{
+			wxListResult = merchantServiceManager.findByCondition(queryDO);
+			LOGGER.debug("wxListResult={}",JSONObject.toJSONString(wxListResult));
+			if(!CollectionUtils.isEmpty(wxListResult)){
+				result.setValue(wxListResult.get(0));
+				result.setSuccess(true);
+			}else{
+				result.setErrorMsg("no data to find!");
+			}
+			
+		}catch(Exception e){
+			result.setErrorMsg(e.getMessage());
+			LOGGER.error("findByCondition error,userId={},wxListResult={}",userId,wxListResult,e);
+		}
+				
+		return result;
+	}
 }

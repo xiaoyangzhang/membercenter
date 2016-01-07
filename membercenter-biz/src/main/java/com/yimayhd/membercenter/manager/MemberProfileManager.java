@@ -182,7 +182,9 @@ public class MemberProfileManager {
         BasePageResult basePageResult = pageQueryUserManager(travelkaPageQuery);
         List<MemberProfileDO> memberProfileDOs = basePageResult.getList();
         if(CollectionUtils.isEmpty(memberProfileDOs)){
-            return null;
+        	memPageResult.setTotalCount(0);
+        	memPageResult.setHasNext(false);
+            return memPageResult;
         }
         List<Long> userIds = transData(memberProfileDOs);
         List<UserDO> userList = getUserList(userIds);

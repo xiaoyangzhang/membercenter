@@ -295,8 +295,8 @@ public class TravelKaConverter {
         travelKaVO.setId(travelKaDO.getId());
         travelKaVO.setUserId(userDO.getId());
         travelKaVO.setOptions(userDO.getOptions() == 0 ? 0 : userDO.getOptions());
-        travelKaVO.setName(userDO.getName() == null ? null : userDO.getName());
-        travelKaVO.setNickName(userDO.getNickname() == null ? null : userDO.getNickname());
+        travelKaVO.setName(travelKaDO.getName());
+        travelKaVO.setNickName(travelKaDO.getNickname() );
         return travelKaVO;
     }
 
@@ -312,13 +312,13 @@ public class TravelKaConverter {
             TravelKaVO travelKaVO = new TravelKaVO();
             if(userDOMap.containsKey(memberProfileDO.getUserId())){
                 UserDO userDO = userDOMap.get(memberProfileDO.getUserId());
-                travelKaVO.setName(userDO.getName() == null ? null : userDO.getName());
-                travelKaVO.setNickName(userDO.getNickname() == null ? null : userDO.getNickname());
+                travelKaVO.setName(memberProfileDO.getName());
+                travelKaVO.setNickName(memberProfileDO.getNickname());
                 travelKaVO.setOptions(userDO.getOptions());
                 travelKaVO.setId(memberProfileDO.getId());
                 travelKaVO.setUserId(userDO.getId());
                 travelKaVO.setAvatar(userDO.getAvatar() == null ? null : userDO.getAvatar());
-                travelKaVO.setName(userDOMap.get(memberProfileDO.getUserId()).getName());
+                //travelKaVO.setName(userDOMap.get(memberProfileDO.getUserId()).getName());
             }
 
             list.add(travelKaVO);

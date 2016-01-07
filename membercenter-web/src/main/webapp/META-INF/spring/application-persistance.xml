@@ -65,4 +65,33 @@
 	<bean id="memberRecordDao" class="com.yimayhd.membercenter.dao.MemberRecordDao"></bean>
 
 	<bean id="baseMerchartDao" class="com.yimayhd.membercenter.dao.BaseMerchartDao"/>
+	
+	
+	<!-- ==================   tair start    ==================== -->
+	<bean id="persistenceDefaultTairManager" class="com.taobao.tair.impl.DefaultTairManager" init-method="init"
+			>
+		<property name="configServerList">
+			<list>
+				<value>${tair.configServer.main}</value>
+				<value>${tair.configServer.slave}</value>
+			</list>
+		</property>
+		<property name="groupName" value="${tair.groupName.per}" />
+		<property name="timeout" value="${tair.timeout}" />
+	</bean>
+	<bean id="tempDefaultTairManager" class="com.taobao.tair.impl.DefaultTairManager" init-method="init"
+			>
+		<property name="configServerList">
+			<list>
+				<value>${tair.configServer.main}</value>
+				<value>${tair.configServer.slave}</value>
+			</list>
+		</property>
+		<property name="groupName" value="${tair.groupName.temp}" />
+		<property name="timeout" value="${tair.timeout}" />
+	</bean>
+	<bean id="cacheManager" class="com.yimayhd.membercenter.cache.CacheManager">
+		<property name="tairManager" ref="tempDefaultTairManager"/>
+		<property name="namespace" value="${tair.namespace}"/>
+	</bean>
 </beans>

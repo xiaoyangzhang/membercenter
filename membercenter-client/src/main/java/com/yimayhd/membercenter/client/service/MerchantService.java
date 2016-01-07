@@ -1,6 +1,7 @@
 package com.yimayhd.membercenter.client.service;
 
 
+import com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.vo.MerchantPageQueryVO;
@@ -34,4 +35,12 @@ public interface MerchantService {
      * @return  MemResult<List<UserDO>>
      */
     MemPageResult<UserDO> findPageUsersByMerchant(MerchantPageQueryVO merchantPageQueryVO);
+    
+    /**
+     * 根据用户id查询微信与用户映射表
+     * @param userId
+     * @return
+     */
+    MemResult<WxUserMerchantRelationDO> findWxUserRelationByUserId(Long userId);
+    
 }

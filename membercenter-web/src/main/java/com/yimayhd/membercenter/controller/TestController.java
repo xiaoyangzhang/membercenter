@@ -10,6 +10,7 @@ import com.yimayhd.membercenter.mq.MsgSenderService;
 import com.yimayhd.membercenter.vo.UserVO;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.result.BaseResult;
+import com.yimayhd.user.client.result.login.LoginResult;
 import com.yimayhd.user.client.service.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -107,6 +108,13 @@ public class TestController {
     	mv.setViewName("/test/test");
     	
     	return mv;
+    }
+    
+    
+    @RequestMapping("/test/longinV2")
+    public LoginResult longinV2(){
+    	LoginResult result = userService.loginV2("188884","3233232");
+    	return result;
     }
     
 }

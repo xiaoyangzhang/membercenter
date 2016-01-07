@@ -23,6 +23,10 @@
     <import resource="../META-INF/spring/application-export-client.xml" />
     <import resource="../META-INF/spring/application-export-api.xml"/>
     <import resource="../META-INF/spring/application-annot.xml" />
+    <import resource="../META-INF/spring/application-biz.xml" />
+    <import resource="../META-INF/spring/application-session.xml" />
+    
+    
     <!--  
     <import resource="classpath:application-session.xml"></import>
     <import resource="classpath:mvc-session.xml"></import>

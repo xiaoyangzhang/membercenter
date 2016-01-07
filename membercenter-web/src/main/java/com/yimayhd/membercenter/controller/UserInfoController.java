@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.yimayhd.membercenter.Constants;
+import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.Response;
 import com.yimayhd.membercenter.biz.MemberUserBiz;
 import com.yimayhd.membercenter.client.result.MemResult;
@@ -22,6 +23,7 @@ import com.yimayhd.membercenter.utils.TimeElapseCaculate;
 import com.yimayhd.membercenter.vo.MemeberBasicInfoVO;
 import com.yimayhd.membercenter.vo.UserVO;
 import com.yimayhd.user.client.domain.UserDO;
+import com.yimayhd.user.client.result.login.LoginResult;
 
 /**
  * 
@@ -117,11 +119,18 @@ public class UserInfoController {
 			TimeElapseCaculate.startSnapshort();
 		}
 		
-		memberUserBiz.register();
 		MemeberBasicInfoVO cachedMemberInfo = memberUserBiz.getCachedMemberInfo();
-		MemResult<UserDO> loginResult = memberUserBiz.login(cachedMemberInfo.getOpenId(), cachedMemberInfo.getMerchantId());
+		MemResult<UserDO> userDOResult = memberUserBiz.register(cachedMemberInfo.getOpenId(),cachedMemberInfo.getMerchantId());
+		
+		if(userDOResult.isSuccess() == false){
+			mv.addObject("message", userDOResult.getErrorMsg());
+			mv.addObject("errorCode", userDOResult.getErrorCode());
+			mv.setViewName("error");
+			return mv;
+		}
+		
+		MemResult<LoginResult> loginResult = memberUserBiz.login(userDOResult.getValue().getId());
 		//设置登录状态
-
 		if (!loginResult.isSuccess()) {
 			LOGGER.error("error happen in merchantService.registerUser,loginResult={},memeberInfo={}",
 					JSON.toJSONString(loginResult), JSON.toJSONString(memeberInfo));
@@ -130,9 +139,11 @@ public class UserInfoController {
 			mv.setViewName("error");
 			return mv;
 		}
+		cachedMemberInfo.setUserId(userDOResult.getValue().getId());
+		memberUserBiz.cacheMemberInfo(cachedMemberInfo, loginResult.getValue().getToken());
 		
 		// 此处获取二维码串
-		MemResult<String> dimensionResult = memberUserBiz.getTwoDimensionCode();
+		MemResult<String> dimensionResult = memberUserBiz.getTwoDimensionCode(cachedMemberInfo.getMerchantId(),cachedMemberInfo.getUserId());
 		LOGGER.debug("dimensionResult:{}", JSON.toJSONString(dimensionResult));
 
 		if (!dimensionResult.isSuccess()) {
@@ -145,10 +156,6 @@ public class UserInfoController {
 
 		String codeInfo = dimensionResult.getValue();
 		LOGGER.debug("codeInfo:{}", codeInfo);
-
-		// 查询用户信息，设置是否需要补全用户资料
-		MemResult<UserDO> userDOResult = memberUserBiz.getUser();
-		LOGGER.debug("userDOResult:{}", JSON.toJSONString(userDOResult));
 
 		if (userDOResult.isSuccess()  && !StringUtils.isEmpty(userDOResult.getValue().getNickname())) {
 			mv.addObject("isFilledUserInfo", true);
@@ -234,7 +241,7 @@ public class UserInfoController {
 		MemResult<Boolean> result = memberUserBiz.verifyPhoneSmsCode(memeberInfo.getPhone(), authCode);
 		LOGGER.debug("result:{}", JSON.toJSONString(result));
 
-		if (!result.isSuccess() || result.getValue().booleanValue() == false) {
+		if (!result.isSuccess()) {
 			LOGGER.error("error happen in userService.validatePhoneVerifyCode,result={},phone={},authCode={}",
 					JSON.toJSONString(result), memeberInfo.getPhone(), authCode);
 			return new Response().failure(result.getErrorMsg(), result.getErrorCode() + "");
@@ -270,10 +277,6 @@ public class UserInfoController {
 		String openId = OPENID;
 		memeberInfo.setOpenId(openId);
 		memeberInfo.setMerchantId(merchantId);
-		//保存openid与商户编号
-		memberUserBiz.removeCacheMemberInfo();
-		memberUserBiz.cacheMemberInfo(memeberInfo);
-
 		LOGGER.debug("memeberInfo:{}", JSON.toJSONString(memeberInfo));
 
 		Asserts.AssertNotNull(memeberInfo, "memeberInfo");
@@ -285,46 +288,51 @@ public class UserInfoController {
 		if (LOGGER.isDebugEnabled()) {
 			TimeElapseCaculate.startSnapshort();
 		}
-		// 判断会员是否已经注册，注册后就跳转到二维码页面
 		
 		//登录 FIXME 需要优化，调用次数太多
-		MemResult<UserDO> loginResult = memberUserBiz.login(openId, merchantId);
-		if(loginResult.isSuccess()){
+		//查询用户是否存在
+		MemResult<UserDO> userDOResult = memberUserBiz.getUser(openId, merchantId);
+		boolean isLogin = false;
+		if(userDOResult.isSuccess()){
+			//直接触发登录
+			MemResult<LoginResult> loginResult = memberUserBiz.login(userDOResult.getValue().getId());
+			memeberInfo.setPhone(userDOResult.getValue().getMobile());
+			memeberInfo.setUserId(userDOResult.getValue().getId());
+			memberUserBiz.removeCacheMemberInfo();
+			memberUserBiz.cacheMemberInfo(memeberInfo,loginResult.getValue().getToken());
+			isLogin = true;
+		}else if(userDOResult.getErrorCode() == MemberReturnCode.USER_NOT_REGISTER_C){ //需要注册
+			userDOResult = memberUserBiz.register(openId, merchantId);
+			if(userDOResult.isSuccess()){
+				//直接触发登录
+				MemResult<LoginResult> loginResult = memberUserBiz.login(userDOResult.getValue().getId());
+				memeberInfo.setPhone(userDOResult.getValue().getMobile());
+				memeberInfo.setUserId(userDOResult.getValue().getId());
+				memberUserBiz.removeCacheMemberInfo();
+				memberUserBiz.cacheMemberInfo(memeberInfo,loginResult.getValue().getToken());
+				isLogin = true;
+			}
+		}
+		
+		if(isLogin){
 			// 获取二维码信息
 			MemResult<String> codeInfo = memberUserBiz.getTwoDimensionCode();
 			mv.addObject("codeInfo", codeInfo.getValue());
-			mv.addObject("memeberInfo",memeberInfo);
-			mv.addObject("nickName",loginResult.getValue().getNickname());
-			mv.addObject("phone",loginResult.getValue().getMobile());
-			mv.setViewName("/user/showTwoDimensionCode");
-			
-			if (!StringUtils.isEmpty(loginResult.getValue().getNickname())) {
+			mv.addObject("memeberInfo", memeberInfo);
+			mv.addObject("nickName", userDOResult.getValue().getNickname());
+			mv.addObject("phone", userDOResult.getValue().getMobile());
+			if (!StringUtils.isEmpty(userDOResult.getValue().getNickname())) {
 				mv.addObject("isFilledUserInfo", true);
 			}
-			
-			return mv;
-		}else if(memberUserBiz.isNeedAutoReg(openId, merchantId)){
-			//注册
-			memberUserBiz.register(openId, merchantId);
-			//登录
-			// userService 根据openId,merchantId查询
-			loginResult = memberUserBiz.login(openId, merchantId);
-			MemResult<String> codeInfo = memberUserBiz.getTwoDimensionCode();
-			mv.addObject("codeInfo", codeInfo.getValue());
-			mv.addObject("memeberInfo",memeberInfo);
-			mv.addObject("nickName",loginResult.getValue().getNickname());
-			mv.addObject("phone",loginResult.getValue().getMobile());
 			mv.setViewName("/user/showTwoDimensionCode");
 			
-			if (!StringUtils.isEmpty(loginResult.getValue().getNickname())) {
-				mv.addObject("isFilledUserInfo", true);
-			}
-			//FIXME 判断登录结果
-			return mv;
+		}else{
+			mv.setViewName("user/registerMain");
 		}
-
-		mv.setViewName("user/registerMain");
-
+		
+		//保存openid与商户编号
+		memberUserBiz.removeCacheMemberInfo();
+		memberUserBiz.cacheMemberInfo(memeberInfo);
 		return mv;
 	}
 

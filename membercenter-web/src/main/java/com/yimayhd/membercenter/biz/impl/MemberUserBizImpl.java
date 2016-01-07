@@ -1,7 +1,9 @@
 package com.yimayhd.membercenter.biz.impl;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +22,13 @@ import com.yimayhd.membercenter.vo.MemeberBasicInfoVO;
 import com.yimayhd.membercenter.vo.UserVO;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.result.BaseResult;
+import com.yimayhd.user.client.result.login.LoginResult;
 import com.yimayhd.user.client.service.UserService;
 import com.yimayhd.user.session.manager.SessionManager;
 
 public class MemberUserBizImpl implements MemberUserBiz{
 	private static final Logger LOGGER = LoggerFactory.getLogger(MemberUserBizImpl.class);
-	
+	public static final String USER_TOKEN_KEY = "USER_TOKEN_KEY";
 	
 	@Resource
 	private CacheManager cacheManager;
@@ -43,18 +46,22 @@ public class MemberUserBizImpl implements MemberUserBiz{
 	private int cacheValidTime = DEFAULT_CACHE_VALID_TIME; //默认30分钟
 	
 	@Override
-	public MemResult<UserDO> login(String openId, Long merchantId) {
-		MerchantVO merchantVO = new MerchantVO();
-		merchantVO.setOpenId(openId);
-		merchantVO.setMerchantUserId(merchantId);
-		MemResult<UserDO> memResult = merchantService.findUserByOpenIdAndMerchant(merchantVO);
-		
-		LOGGER.debug("memResult={}",JSONObject.toJSONString(memResult));
-		if(memResult.isSuccess() == false || memResult.getValue() == null){
-			memResult.setSuccess(false);
+	public MemResult<LoginResult> login(Long userId) {
+		sessionManager.removeToken(getRequest());
+		MemResult<LoginResult> loginResult = new MemResult<LoginResult>();
+		// 触发登录操作
+		LoginResult result = userService.loginByUserId(userId);
+		if (result.isSuccess()) {
+			// 设置cookie信息
+			String token = result.getToken();
+			Cookie cookie = new Cookie("token", token);
+			cookie.setHttpOnly(true);
+			cookie.setPath("/");
+			getResponse().addCookie(cookie);
 		}
-		
-		return memResult;
+		loginResult.setValue(result);
+
+		return loginResult;
 	}
 	
 	public boolean isNeedAutoReg(String openId, Long merchantId){
@@ -139,11 +146,21 @@ public class MemberUserBizImpl implements MemberUserBiz{
 		
 		return null;
 	}
+	
+	public HttpServletResponse getResponse(){
+		ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		if(attrs != null){
+			return attrs.getResponse();
+		}
+		
+		return null;
+	}
+
 
 	@Override
 	public MemResult<Boolean> updateUser(UserVO userVO) {
 		if(userVO.getUserId() == null){
-			userVO.setUserId(sessionManager.getUserId());
+			userVO.setUserId(sessionManager.getUser().getId());
 		}
 		UserDO userDO = Converter.contertToUserDO(userVO);
 		BaseResult<Boolean> result = userService.updateUserDO(userDO);
@@ -162,7 +179,10 @@ public class MemberUserBizImpl implements MemberUserBiz{
 		MemeberBasicInfoVO memberInfo = getCachedMemberInfo();
 		if(memberInfo != null){
 			Long merchantId = memberInfo.getMerchantId();
-			Long userId = sessionManager.getUserId();
+			Long userId = memberInfo.getUserId();
+			if(userId == null){
+				userId = sessionManager.getUser().getId();
+			}
 			
 			BaseResult<String> dimensionResult = userService.getTwoDimensionCode(userId,merchantId);
 			if(dimensionResult.isSuccess()){
@@ -235,8 +255,51 @@ public class MemberUserBizImpl implements MemberUserBiz{
 
 	@Override
 	public MemResult<UserDO> getUser(String openId, Long merchantId) {
-		// TODO Auto-generated method stub
-		return null;
+		MerchantVO merchantVO = new MerchantVO();
+		merchantVO.setOpenId(openId);
+		merchantVO.setMerchantUserId(merchantId);
+		MemResult<UserDO> memResult = merchantService.findUserByOpenIdAndMerchant(merchantVO);
+		
+		return memResult;
 	}
-	
+
+	@Override
+	public MemResult<String> cacheMemberInfo(MemeberBasicInfoVO vo, String key) {
+//		HttpServletRequest request =  getRequest();
+//		String key = sessionManager.getTokenFromCookie(request);
+		boolean result = cacheManager.addToTair(MEMBER_INFO_CACHE_HEAD + key,vo,cacheValidTime);
+		MemResult<String> memResult = new  MemResult<String>();
+		memResult.setSuccess(result);
+		memResult.setValue(key);
+		
+		return memResult;
+	}
+
+	@Override
+	public MemeberBasicInfoVO getCachedMemberInfo(String key) {
+//		HttpServletRequest request =  getRequest();
+//		String key = sessionManager.getTokenFromCookie(request);
+		MemeberBasicInfoVO memberInfo = (MemeberBasicInfoVO) (cacheManager.getFormTair((MEMBER_INFO_CACHE_HEAD + key)));
+		
+		return memberInfo;
+	}
+
+	@Override
+	public MemResult<String> getTwoDimensionCode(Long merchantId,Long userId) {
+		MemResult<String> result = new MemResult<String>();
+		result.setSuccess(false);
+
+		if (userId == null) {
+			userId = sessionManager.getUser().getId();
+		}
+
+		BaseResult<String> dimensionResult = userService.getTwoDimensionCode(userId, merchantId);
+		if (dimensionResult.isSuccess()) {
+			result.setSuccess(true);
+			result.setValue(dimensionResult.getValue());
+		}
+
+		return result;
+	}
+
 }

@@ -16,20 +16,15 @@ import com.yimay.integral.client.model.result.point.DetailResultDTO;
 import com.yimay.integral.client.service.PointService;
 import com.yimayhd.membercenter.biz.MemberPointBiz;
 import com.yimayhd.membercenter.biz.MemberUserBiz;
-import com.yimayhd.membercenter.cache.CacheManager;
 import com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.MerchantService;
-import com.yimayhd.membercenter.vo.MemeberBasicInfoVO;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.service.UserService;
 import com.yimayhd.user.session.manager.SessionManager;
 
 public class MemberPointBizImpl implements MemberPointBiz{
 	private static final Logger LOGGER = LoggerFactory.getLogger(MemberPointBizImpl.class);
-	
-	@Resource
-	private CacheManager cacheManager;
 	@Resource
 	private SessionManager sessionManager;
 	@Resource
@@ -43,7 +38,7 @@ public class MemberPointBizImpl implements MemberPointBiz{
 	
 	
 	@Override
-	public MemResult<CountResultDTO> getMemeberTotalPoint() {
+	public MemResult<CountResultDTO> getMemeberTotalPoint(Long userId,Long merchantId) {
 		MemResult<CountResultDTO>  result = new MemResult<CountResultDTO>();
 		
 		UserDO userDO = sessionManager.getUser();
@@ -56,10 +51,7 @@ public class MemberPointBizImpl implements MemberPointBiz{
 			
 			return result;
 		}
-		
-		Long userId = userDO.getId();
-		
-		Long merchantId = getCachedMerchantId();
+
 		if(merchantId == null){
 			MemResult<WxUserMerchantRelationDO> wxResult = merchantService.findWxUserRelationByUserId(userId);
 			if(wxResult.isSuccess() == false){
@@ -89,7 +81,7 @@ public class MemberPointBizImpl implements MemberPointBiz{
 	}
 
 	@Override
-	public MemResult<DetailResultDTO<PointDetailDTO>> getMemberPointDetailsByPage(int pageNumber,int pageSize) {
+	public MemResult<DetailResultDTO<PointDetailDTO>> getMemberPointDetailsByPage(Long userId,Long merchantId,int pageNumber,int pageSize) {
 		LOGGER.debug("pageNumber={},pageSize={}",pageNumber,pageSize);
 		
 		MemResult<DetailResultDTO<PointDetailDTO>> result = new MemResult<DetailResultDTO<PointDetailDTO>>();
@@ -103,9 +95,7 @@ public class MemberPointBizImpl implements MemberPointBiz{
 			
 			return result;
 		}
-		
-		Long userId = userDO.getId();
-		Long merchantId = getCachedMerchantId();
+
 		if(merchantId == null){
 			MemResult<WxUserMerchantRelationDO> wxResult = merchantService.findWxUserRelationByUserId(userId);
 			if(wxResult.isSuccess() == false){
@@ -134,21 +124,4 @@ public class MemberPointBizImpl implements MemberPointBiz{
 		
 		return result;
 	}
-
-	@Override
-	public MemResult<CountResultDTO> getMemeberTotalPoint(Long userId, Long merchantId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public Long getCachedMerchantId(){
-		MemeberBasicInfoVO cachedMemberInfo = memberUserBiz.getCachedMemberInfo();
-		Long merchantId = null;
-		if(cachedMemberInfo != null && cachedMemberInfo.getMerchantId() != null){
-			merchantId = cachedMemberInfo.getMerchantId();
-		}
-		
-		return merchantId;
-	}
-
 }

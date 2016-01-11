@@ -89,7 +89,7 @@ public class MemberUserBizImpl implements MemberUserBiz{
 		return false;
 	}
 	
-	public MemResult<UserDO> register(String openId, Long merchantId, String phone){
+	public MemResult<UserDO> register(String openId, Long merchantId ){
 		LOGGER.debug("openId={},merchantId={}",openId,merchantId);
 		
 		MemResult<UserDO> result = new MemResult<UserDO>();
@@ -108,7 +108,7 @@ public class MemberUserBizImpl implements MemberUserBiz{
 			
 		}else if(!memResult.isSuccess()){ //新用户注册
 			//从缓存中获取手机号码
-			//String phone = getCachedMemberInfo().getPhone();
+			String phone = getCachedMemberInfo().getPhone();
 			merchantVO.setMobile(phone);
 			registerResult = merchantService.registerUser(merchantVO);
 		}
@@ -368,18 +368,6 @@ public class MemberUserBizImpl implements MemberUserBiz{
 			result.setValue(dimensionResult.getValue());
 		}
 
-		return result;
-	}
-	
-	public MemResult<String> getPhoneByUserId(Long userId){
-		MemResult<String> result = new MemResult<String>();
-		result.setSuccess(false);
-		BaseResult<String> userResult = userService.findMobileByUserId(userId);
-		result.setSuccess(userResult.isSuccess());
-		result.setErrorCode(userResult.getErrorCode());
-		result.setErrorMsg(userResult.getErrorMsg());
-		result.setValue(userResult.getValue());
-		
 		return result;
 	}
 

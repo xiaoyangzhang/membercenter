@@ -94,9 +94,4 @@
 		<property name="tairManager" ref="tempDefaultTairManager"/>
 		<property name="namespace" value="${tair.namespace}"/>
 	</bean>
-	<bean id="tairSessionManager" class="com.yimayhd.membercenter.session.TairSessionManager">
-		<property name="cacheManager" ref="cacheManager"/>
-		<property name="sessionLiveTime" value="3600"/>
-	</bean>
-	
 </beans>

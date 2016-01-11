@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,10 +34,9 @@ import com.yimayhd.user.client.result.login.LoginResult;
  * @version V1.0
  */
 @RestController
-public class UserInfoController extends BaseController{
+public class UserInfoController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserInfoController.class);
 	private static final String TIME_ELAPSE_HEAD = Constants.TIME_ELAPSE_HEAD;
-	private static final String MEMBER_INFO_KEY = "member";
 	@Resource
 	private MemberUserBiz memberUserBiz;
 	
@@ -61,9 +61,7 @@ public class UserInfoController extends BaseController{
 		Asserts.AssertNotNull(userVO, "userVO");
 		
 		ModelAndView mv = new ModelAndView();
-		MemeberBasicInfoVO cacheMemeberInfo = (MemeberBasicInfoVO) getSession().getAttribute(MEMBER_INFO_KEY);
-		Long userId = cacheMemeberInfo.getUserId();
-		userVO.setUserId(userId);
+		
 		MemResult<Boolean> updateResult = memberUserBiz.updateUser(userVO);
 		LOGGER.debug("updateResult={}",updateResult);
 		
@@ -81,8 +79,7 @@ public class UserInfoController extends BaseController{
 		mv.addObject("isFilledUserInfo", true);
 
 		// 此处获取二维码串
-		Long merchantId  = cacheMemeberInfo.getMerchantId();
-		MemResult<String> dimensionResult = memberUserBiz.getTwoDimensionCode(merchantId,userId);
+		MemResult<String> dimensionResult = memberUserBiz.getTwoDimensionCode();
 		LOGGER.debug("dimensionResult:{}", JSON.toJSONString(dimensionResult));
 
 		if (!dimensionResult.isSuccess()) {
@@ -123,8 +120,8 @@ public class UserInfoController extends BaseController{
 			TimeElapseCaculate.startSnapshort();
 		}
 		
-		MemeberBasicInfoVO cachedMemberInfo = (MemeberBasicInfoVO) getSession().getAttribute(MEMBER_INFO_KEY);
-		MemResult<UserDO> userDOResult = memberUserBiz.register(cachedMemberInfo.getOpenId(),cachedMemberInfo.getMerchantId(),cachedMemberInfo.getPhone());
+		MemeberBasicInfoVO cachedMemberInfo = memberUserBiz.getCachedMemberInfo();
+		MemResult<UserDO> userDOResult = memberUserBiz.register(cachedMemberInfo.getOpenId(),cachedMemberInfo.getMerchantId());
 		
 		if(userDOResult.isSuccess() == false){
 			mv.addObject("message", userDOResult.getErrorMsg());
@@ -145,10 +142,7 @@ public class UserInfoController extends BaseController{
 		}
 		cachedMemberInfo.setPhone(userDOResult.getValue().getMobile());
 		cachedMemberInfo.setUserId(userDOResult.getValue().getId());
-		/**
 		memberUserBiz.cacheMemberInfo(cachedMemberInfo, loginResult.getValue().getToken());
-		*/
-		getSession().addAttribute(MEMBER_INFO_KEY,cachedMemberInfo);
 		
 		// 此处获取二维码串
 		MemResult<String> dimensionResult = memberUserBiz.getTwoDimensionCode(cachedMemberInfo.getMerchantId(),cachedMemberInfo.getUserId());
@@ -260,15 +254,10 @@ public class UserInfoController extends BaseController{
 		}
 		
 		//完善缓存中的信息
-		/**
 		MemeberBasicInfoVO cachedMemberInfo = memberUserBiz.getCachedMemberInfo();
-		*/
-		MemeberBasicInfoVO cachedMemberInfo = (MemeberBasicInfoVO) getSession().getAttribute(MEMBER_INFO_KEY);
 		cachedMemberInfo.setPhone(memeberInfo.getPhone());
-		/**
 		memberUserBiz.cacheMemberInfo(cachedMemberInfo);
-		*/
-		getSession().addAttribute(MEMBER_INFO_KEY, cachedMemberInfo);
+		
 		// MemeberBasicInfoVO sessionInfo = (MemeberBasicInfoVO)
 		// SessionUtils.getSession().getAttribute(Constants.MEMBER_USER_INFO);
 		// sessionInfo.setPhone(memeberInfo.getPhone());
@@ -299,7 +288,6 @@ public class UserInfoController extends BaseController{
 			TimeElapseCaculate.startSnapshort();
 		}
 		
-		
 		//登录 FIXME 需要优化，调用次数太多
 		//查询用户是否存在
 		MemResult<UserDO> userDOResult = memberUserBiz.getUser(openId, merchantId);
@@ -307,50 +295,27 @@ public class UserInfoController extends BaseController{
 		if(userDOResult.isSuccess()){
 			//直接触发登录
 			MemResult<LoginResult> loginResult = memberUserBiz.login(userDOResult.getValue().getId());
-			if(loginResult.isSuccess() == false){
-				mv.addObject("message", loginResult.getErrorMsg());
-				mv.addObject("errorCode", loginResult.getErrorCode());
-				mv.setViewName("error");
-			}
-			
 			memeberInfo.setPhone(userDOResult.getValue().getMobile());
 			memeberInfo.setUserId(userDOResult.getValue().getId());
-			
-			getSession().addAttribute(MEMBER_INFO_KEY, memeberInfo);
-			/**
 			memberUserBiz.removeCacheMemberInfo();
 			memberUserBiz.cacheMemberInfo(memeberInfo,loginResult.getValue().getToken());
-			*/
 			isLogin = true;
 		}else if(userDOResult.getErrorCode() == MemberReturnCode.USER_NOT_REGISTER_C){ //需要注册
-			MemResult<String > phoneResult = memberUserBiz.getPhoneByUserId(userDOResult.getValue().getId());
-			
-			userDOResult = memberUserBiz.register(openId, merchantId,phoneResult.getValue());
+			userDOResult = memberUserBiz.register(openId, merchantId);
 			if(userDOResult.isSuccess()){
 				//直接触发登录
 				MemResult<LoginResult> loginResult = memberUserBiz.login(userDOResult.getValue().getId());
-				if(loginResult.isSuccess() == false){
-					mv.addObject("message", loginResult.getErrorMsg());
-					mv.addObject("errorCode", loginResult.getErrorCode());
-					mv.setViewName("error");
-				}
-				
 				memeberInfo.setPhone(userDOResult.getValue().getMobile());
 				memeberInfo.setUserId(userDOResult.getValue().getId());
-				/**
 				memberUserBiz.removeCacheMemberInfo();
 				memberUserBiz.cacheMemberInfo(memeberInfo,loginResult.getValue().getToken());
-				*/
-				getSession().addAttribute(MEMBER_INFO_KEY, memeberInfo);
-				
 				isLogin = true;
 			}
 		}
 		
 		if(isLogin){
 			// 获取二维码信息
-			MemeberBasicInfoVO  cachedMemberInfo = (MemeberBasicInfoVO) getSession().getAttribute(MEMBER_INFO_KEY);
-			MemResult<String> codeInfo = memberUserBiz.getTwoDimensionCode(cachedMemberInfo.getMerchantId(),cachedMemberInfo.getUserId());
+			MemResult<String> codeInfo = memberUserBiz.getTwoDimensionCode();
 			mv.addObject("codeInfo", codeInfo.getValue());
 			mv.addObject("memeberInfo", memeberInfo);
 			mv.addObject("nickName", userDOResult.getValue().getNickname());
@@ -365,11 +330,8 @@ public class UserInfoController extends BaseController{
 		}
 		
 		//保存openid与商户编号
-		/**
 		memberUserBiz.removeCacheMemberInfo();
 		memberUserBiz.cacheMemberInfo(memeberInfo);
-		*/
-		getSession().addAttribute(MEMBER_INFO_KEY, memeberInfo);
 		return mv;
 	}
 
@@ -408,10 +370,8 @@ public class UserInfoController extends BaseController{
 	@RequestMapping(value = "/user/toFullfillUserInfo")
 	public ModelAndView toFullfillUserInfoView(MemeberBasicInfoVO memeberInfo,HttpServletRequest request) {
 		LOGGER.debug("memeberInfo:{}", JSON.toJSONString(memeberInfo));
-		/**
+		
 		MemeberBasicInfoVO cacheMemberInfo =  memberUserBiz.getCachedMemberInfo();
-		*/
-		MemeberBasicInfoVO cacheMemberInfo  = (MemeberBasicInfoVO) getSession().getAttribute(MEMBER_INFO_KEY);
 		String phone = cacheMemberInfo.getPhone();
 
 		ModelAndView mv = new ModelAndView();
@@ -420,4 +380,5 @@ public class UserInfoController extends BaseController{
 
 		return mv;
 	}
+
 }

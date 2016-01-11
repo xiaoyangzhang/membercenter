@@ -31,10 +31,9 @@ import com.yimayhd.membercenter.vo.PointDetailVO;
  *
  */
 @RestController
-public class MemeberPointController extends BaseController{
+public class MemeberPointController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MemeberPointController.class);
 	private static final String TIME_ELAPSE_HEAD=Constants.TIME_ELAPSE_HEAD;
-	private static final String MEMBER_INFO_KEY = "member";
 	
 	@Resource
 	private MemberPointBiz memberPointBiz;
@@ -49,10 +48,7 @@ public class MemeberPointController extends BaseController{
 		LOGGER.debug("memeberInfo:{}",JSON.toJSONString(memeberInfo));
 	
 		//查询积分
-		MemeberBasicInfoVO  cachedMemberInfo = (MemeberBasicInfoVO) getSession().getAttribute(MEMBER_INFO_KEY);
-		Long userId = cachedMemberInfo.getUserId();
-		Long merchantId = cachedMemberInfo.getMerchantId();
-		MemResult<CountResultDTO> result = memberPointBiz.getMemeberTotalPoint(userId,merchantId);
+		MemResult<CountResultDTO> result = memberPointBiz.getMemeberTotalPoint();
 		
 		if(LOGGER.isDebugEnabled()){
 			LOGGER.debug(TIME_ELAPSE_HEAD + " sendPhoneVerifyCode:{}ms" ,TimeElapseCaculate.endSnapshort());
@@ -89,10 +85,7 @@ public class MemeberPointController extends BaseController{
 		LOGGER.debug("pageNumber:{}", pageNumber);
 		LOGGER.debug("pageSize:{}", pageSize);
 	
-		MemeberBasicInfoVO  cachedMemberInfo = (MemeberBasicInfoVO) getSession().getAttribute(MEMBER_INFO_KEY);
-		Long userId = cachedMemberInfo.getUserId();
-		Long merchantId = cachedMemberInfo.getMerchantId();
-		MemResult<DetailResultDTO<PointDetailDTO>>  detailResult = memberPointBiz.getMemberPointDetailsByPage(userId,merchantId,pageNumber,pageSize);
+		MemResult<DetailResultDTO<PointDetailDTO>>  detailResult = memberPointBiz.getMemberPointDetailsByPage(pageNumber,pageSize);
 		
 		if(LOGGER.isDebugEnabled()){
 			LOGGER.debug(TIME_ELAPSE_HEAD + " queryPointChangeDetails:{}ms",TimeElapseCaculate.endSnapshort());

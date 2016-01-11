@@ -6,6 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class CommonController {
+
     @RequestMapping("/notauth")
     public ModelAndView toNotAuthView(){
     	ModelAndView mv = new ModelAndView();
@@ -13,7 +14,6 @@ public class CommonController {
     	
     	return mv;
     }
-  
     
 }
 

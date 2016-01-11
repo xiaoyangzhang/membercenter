@@ -49,7 +49,7 @@ public interface MemberUserBiz {
 	 * @param merchantId
 	 * @return
 	 */
-	public  MemResult<UserDO> register(String openId,Long merchantId,String phone);
+	public  MemResult<UserDO> register(String openId,Long merchantId);
 	
 	/**
 	 * 删除缓存的会员信息
@@ -119,8 +119,5 @@ public interface MemberUserBiz {
 	 * @return
 	 */
 	public MemResult<UserDO> register();
-	
-	
-	public MemResult<String> getPhoneByUserId(Long userId);
 	
 }

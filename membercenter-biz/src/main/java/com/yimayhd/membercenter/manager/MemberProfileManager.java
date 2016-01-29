@@ -9,6 +9,7 @@ import com.yimayhd.membercenter.client.domain.TravelKaVO;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.conventer.TravelKaConverter;
+import com.yimayhd.membercenter.entity.Ability;
 import com.yimayhd.membercenter.entity.TravelKa;
 import com.yimayhd.membercenter.entity.TravelKaClub;
 
@@ -22,11 +23,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import com.yimayhd.membercenter.MemberReturnCode;
+import com.yimayhd.membercenter.client.domain.AbilityDO;
 import com.yimayhd.membercenter.client.domain.MemberProfileDO;
 import com.yimayhd.membercenter.client.domain.TerminalDeviceDO;
 import com.yimayhd.membercenter.client.domain.UserAbilityRelationDO;
+import com.yimayhd.membercenter.client.enums.AbilityEnum;
 import com.yimayhd.membercenter.client.query.TravelkaPageQuery;
 import com.yimayhd.membercenter.client.result.BasePageResult;
+import com.yimayhd.membercenter.mapper.AbilityMapper;
 import com.yimayhd.membercenter.mapper.MemberProfileDOMapper;
 import com.yimayhd.membercenter.mapper.TerminalDeviceDOMapper;
 import com.yimayhd.membercenter.mapper.UserAbilityRelationMapper;
@@ -49,6 +53,9 @@ public class MemberProfileManager {
 
     @Autowired
     private TerminalDeviceDOMapper terminalDeviceDOMapper;
+    
+    @Autowired
+    private AbilityMapper abilityMapper;
 
     @Autowired
     private UserRepo userRepo;   // 用户相关接口
@@ -132,7 +139,30 @@ public class MemberProfileManager {
             TravelKaClub travelKaClub = getTravelKaClub(userId);
             if(memberProfileDO != null){
                 List<UserAbilityRelationDO> userAbilityRelationDOs = getUserAbilityRelationByUserId(userId);
+                List<AbilityDO> abilities = abilityMapper.getAll();
+                Map<Long,AbilityDO> abilityMap = new HashMap<Long,AbilityDO>();
+                if(!CollectionUtils.isEmpty(abilities)){
+                	for(AbilityDO abilityDO : abilities){
+                		abilityMap.put(abilityDO.getId(), abilityDO);
+                	}
+                }
+                
                 travelKa = TravelKaConverter.converntTravelKaDetail(userAbilityRelationDOs, memberProfileDO, userDO);
+                
+                //设置大咔能力
+                List<Ability> list = new ArrayList<Ability>();
+                if(userAbilityRelationDOs != null){
+                    for(UserAbilityRelationDO userAbilityRelationDO :userAbilityRelationDOs){
+                        Ability ability = new Ability();
+                        AbilityDO abilityDO = abilityMap.get(userAbilityRelationDO.getAbilityId());
+                        ability.name = abilityDO.getName();
+                        ability.id = userAbilityRelationDO.getId();
+                        ability.img =abilityDO.getImg();
+                        list.add(ability);
+                    }
+                    travelKa.abilities = list;
+                }                
+                
                 travelKa.isTravelKa = String.valueOf(BaseStatus.YES.getType());
 
             } else {

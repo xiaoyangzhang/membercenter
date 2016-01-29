@@ -13,7 +13,10 @@
 	<packaging>jar</packaging>
 	<name>membercenter-biz</name>
 	<dependencies>
-		
+		<dependency>
+				<groupId>com.yimayhd.user</groupId>
+				<artifactId>session-manager</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.yimayhd.item</groupId>
 			<artifactId>itemcenter-client</artifactId>

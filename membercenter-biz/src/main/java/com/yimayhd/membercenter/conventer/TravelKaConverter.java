@@ -41,6 +41,8 @@ public class TravelKaConverter {
 
     public static TravelKa converntTravelKaDetail( List<UserAbilityRelationDO> userAbilityRelationDOs , MemberProfileDO travelKaDO, UserDO userDO){
         TravelKa travelKa = new TravelKa();
+        
+        /**
         String flag = ConfigUtil.getProperty("memcenter.ability.isproduction");
         if(StringUtils.isNotBlank(flag)){
             if(flag.equals("true")){
@@ -52,6 +54,7 @@ public class TravelKaConverter {
         } else {
             log.error("  ConfigUtil.getProperty(\"memcenter.ability.isproduction\") is null");
         }
+        */
 
         travelKa.id = travelKaDO.getId();
         travelKa.userId = userDO.getId();

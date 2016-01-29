@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+           http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd"
+	default-lazy-init="true">
+	<context:annotation-config />
+
+	<!-- ==========================  api  ========================== -->
+	<bean id="travelKaApi" class="com.yimayhd.membercenter.service.api.TravelKaApiImpl"/>
+	<bean id="privilegeApi" class="com.yimayhd.membercenter.service.api.PrivilegeApiImpl"/>
+	<bean id="memberApi" class="com.yimayhd.membercenter.service.api.MemberApiImpl"/>
+
+
+
+	<!--  ==========================  dubbo  ==========================  -->
+	<bean id="merchantService" class="com.yimayhd.membercenter.service.client.MerchantServiceImpl"></bean>
+	<bean id="memberService" class="com.yimayhd.membercenter.service.client.MemberServiceImpl"></bean>
+	<bean id="memberPrivilegeService" class="com.yimayhd.membercenter.service.client.MemberPrivilegeServiceImpl"></bean>
+	<bean id="baseMerchantService" class="com.yimayhd.membercenter.service.client.BaseMerchantServiceImpl"></bean>
+	<bean id="travelKaService" class="com.yimayhd.membercenter.service.client.TravelKaServiceImpl"></bean>
+	
+</beans>

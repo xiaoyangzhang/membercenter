@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+       default-lazy-init="true">
+
+       <bean id="merchantServiceExport" class="com.alibaba.dubbo.config.spring.ServiceBean">
+              <property name="interface" value="com.yimayhd.membercenter.client.service.MerchantService"/>
+              <property name="ref" ref="merchantService"/>
+              <property name="application" ref="dubboApplicationConfig"/>
+              <property name="registry" ref="dubboRegistryConfig"/>
+              <property name="protocol" ref="dubboProtocolConfig"/>
+              <property name="version" value="${export.dubbo.version}"/>
+              <property name="timeout" value="${export.dubbo.timeout}"/>
+              <property name="retries" value="${dubbo.retries}"/>
+       </bean>
+       <bean id="memberServiceExport" class="com.alibaba.dubbo.config.spring.ServiceBean">
+              <property name="interface" value="com.yimayhd.membercenter.client.service.MemberService"/>
+              <property name="ref" ref="memberService"/>
+              <property name="application" ref="dubboApplicationConfig"/>
+              <property name="registry" ref="dubboRegistryConfig"/>
+              <property name="protocol" ref="dubboProtocolConfig"/>
+              <property name="version" value="${export.dubbo.version}"/>
+              <property name="timeout" value="${export.dubbo.timeout}"/>
+              <property name="retries" value="${dubbo.retries}"/>
+       </bean>
+
+       <bean id="baseMerchantServiceExport" class="com.alibaba.dubbo.config.spring.ServiceBean">
+              <property name="interface" value="com.yimayhd.membercenter.client.service.BaseMerchantService"/>
+              <property name="ref" ref="baseMerchantService"/>
+              <property name="application" ref="dubboApplicationConfig"/>
+              <property name="registry" ref="dubboRegistryConfig"/>
+              <property name="protocol" ref="dubboProtocolConfig"/>
+              <property name="version" value="${export.dubbo.version}"/>
+              <property name="timeout" value="${export.dubbo.timeout}"/>
+              <property name="retries" value="${dubbo.retries}"/>
+       </bean>
+
+       <bean id="travelKaServiceExport" class="com.alibaba.dubbo.config.spring.ServiceBean">
+              <property name="interface" value="com.yimayhd.membercenter.client.service.TravelKaService"/>
+              <property name="ref" ref="travelKaService"/>
+              <property name="application" ref="dubboApplicationConfig"/>
+              <property name="registry" ref="dubboRegistryConfig"/>
+              <property name="protocol" ref="dubboProtocolConfig"/>
+              <property name="version" value="${export.dubbo.version}"/>
+              <property name="timeout" value="${export.dubbo.timeout}"/>
+              <property name="retries" value="${dubbo.retries}"/>
+       </bean>
+
+</beans>

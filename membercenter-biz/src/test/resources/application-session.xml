@@ -10,7 +10,7 @@
     
 	<bean id="imageVerifyCodeValidate" class="com.yimayhd.user.session.manager.ImageVerifyCodeValidate"></bean>
 
-    <bean id="sessionTempDefaultTairManager" class="com.taobao.tair.impl.DefaultTairManager" init-method="init">
+    <bean id="sessionTempDefaultTairManager" class="com.taobao.tair.impl.DefaultTairManager" init-method="init" destroy-method="close">
 		<property name="configServerList">
 			<list>
 				<value>${tair.configServer.main}</value>

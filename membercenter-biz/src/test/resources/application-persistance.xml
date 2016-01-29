@@ -68,7 +68,7 @@
 	
 	
 	<!-- ==================   tair start    ==================== -->
-	<bean id="persistenceDefaultTairManager" class="com.taobao.tair.impl.DefaultTairManager" init-method="init"
+	<bean id="persistenceDefaultTairManager" class="com.taobao.tair.impl.DefaultTairManager" init-method="init" destroy-method="close"
 			>
 		<property name="configServerList">
 			<list>
@@ -79,7 +79,7 @@
 		<property name="groupName" value="${tair.groupName.per}" />
 		<property name="timeout" value="${tair.timeout}" />
 	</bean>
-	<bean id="tempDefaultTairManager" class="com.taobao.tair.impl.DefaultTairManager" init-method="init"
+	<bean id="tempDefaultTairManager" class="com.taobao.tair.impl.DefaultTairManager" init-method="init" destroy-method="close"
 			>
 		<property name="configServerList">
 			<list>

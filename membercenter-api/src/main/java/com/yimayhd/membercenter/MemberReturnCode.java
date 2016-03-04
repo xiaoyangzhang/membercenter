@@ -76,6 +76,13 @@ public class MemberReturnCode  extends AbstractReturnCode {
 	/**************************************item********************************************/
 	public static final int PAGE_QUERY_ITEM_FAILED_C = 16006000;
 	public static final MemberReturnCode PAGE_QUERY_ITEM_FAILED = new MemberReturnCode(PAGE_QUERY_ITEM_FAILED_C, "分页查询商品信息失败") ;
+
+	/**************************************item********************************************/
+	public static final int PAGE_QUERY_USER_MENU_FAILED_C = 16007001;
+	public static final MemberReturnCode PAGE_QUERY_USER_MENU_FAILED = new MemberReturnCode(PAGE_QUERY_USER_MENU_FAILED_C, "获取菜单权限失败") ;
+
+	public static final int PAGE_QUERY_USER_URL_FAILED_C = 16007001;
+	public static final MemberReturnCode PAGE_QUERY_USER_URL_FAILED = new MemberReturnCode(PAGE_QUERY_USER_URL_FAILED_C, "获取URL权限失败") ;
 	
 	
 }

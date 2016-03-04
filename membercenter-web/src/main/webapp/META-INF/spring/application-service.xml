@@ -20,5 +20,6 @@
 	<bean id="memberPrivilegeService" class="com.yimayhd.membercenter.service.client.MemberPrivilegeServiceImpl"></bean>
 	<bean id="baseMerchantService" class="com.yimayhd.membercenter.service.client.BaseMerchantServiceImpl"></bean>
 	<bean id="travelKaService" class="com.yimayhd.membercenter.service.client.TravelKaServiceImpl"></bean>
+	<bean id="userPermissionService" class="com.yimayhd.membercenter.service.client.UserPermissionServiceImpl"></bean>
 	
 </beans>

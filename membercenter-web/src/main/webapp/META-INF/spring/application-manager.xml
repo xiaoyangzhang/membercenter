@@ -13,6 +13,7 @@
 	<bean id="memberPrivilegeManager" class="com.yimayhd.membercenter.manager.MemberPrivilegeManager"></bean>
 	<bean id="memberManager" class="com.yimayhd.membercenter.manager.MemberManager"></bean>
     <bean id="baseMerchantManager" class="com.yimayhd.membercenter.manager.BaseMerchantManager"/>
+    <bean id="userPermissionManager" class="com.yimayhd.membercenter.manager.UserPermissionManager"/>
 	
 	
 	

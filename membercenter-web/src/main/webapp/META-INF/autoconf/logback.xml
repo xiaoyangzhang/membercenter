@@ -79,10 +79,11 @@
     </appender>
   -->   
     <!--myibatis log configure -->
-    <logger name="org.mybatis" level="TRACE"/>
+    <logger name="org.mybatis" level="DEBUG"/>
     <logger name="java.sql.Connection" level="DEBUG"/>
     <logger name="java.sql.Statement" level="DEBUG"/>
     <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+    <logger name=" com.yimayhd.membercenter.manager" level="DEBUG"/>
 
     <!--<logger name="com.pajk.sims"/>-->
     <root level="INFO">

@@ -1,5 +1,6 @@
 package com.yimayhd.membercenter.client.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * @table ha_menu
  * @author czf
  **/
-public class HaMenuDO{
+public class HaMenuDO implements Serializable{
 
 
     private static final long serialVersionUID = 832142812705236148L;
@@ -20,6 +21,7 @@ public class HaMenuDO{
     private int level; // 菜单级别
     private int leaf; // 是否叶子节点
     private long parentId; // 伏击菜单ID
+    private long domain; // domain
     private Date gmtCreated; // 创建时间
     private Date gmtModified; // 更新时间
     private int status; // 状态（0：删除；1：正常）
@@ -120,5 +122,13 @@ public class HaMenuDO{
 
     public void setHaMenuDOList(List<HaMenuDO> haMenuDOList) {
         this.haMenuDOList = haMenuDOList;
+    }
+
+    public long getDomain() {
+        return domain;
+    }
+
+    public void setDomain(long domain) {
+        this.domain = domain;
     }
 }

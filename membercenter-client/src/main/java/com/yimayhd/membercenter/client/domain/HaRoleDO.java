@@ -13,6 +13,7 @@ public class HaRoleDO implements Serializable {
     private static final long serialVersionUID = 4253103877866042198L;
 
     protected long id;//主键
+    private long domain; // domain
     protected Date gmtCreated;//创建时间
     protected Date gmtModified;//更新时间
     protected int status;//1-正常0-删除
@@ -56,5 +57,13 @@ public class HaRoleDO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public long getDomain() {
+        return domain;
+    }
+
+    public void setDomain(long domain) {
+        this.domain = domain;
     }
 }

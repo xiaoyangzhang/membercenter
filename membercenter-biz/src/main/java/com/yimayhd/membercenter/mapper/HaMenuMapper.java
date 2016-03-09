@@ -1,6 +1,7 @@
 package com.yimayhd.membercenter.mapper;
 
 import com.yimayhd.membercenter.client.domain.HaMenuDO;
+import com.yimayhd.membercenter.query.HaMenuQuery;
 
 import java.util.List;
 
@@ -10,7 +11,5 @@ import java.util.List;
  */
 public interface HaMenuMapper{
 
-    List<HaMenuDO> getMenuListByUserId(long id);
-    List<HaMenuDO> getUrlListByUserId(long id);
-    List<HaMenuDO> getMenuList();
+    List<HaMenuDO> getMenuList(HaMenuQuery haMenuQuery);
 }

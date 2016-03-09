@@ -112,4 +112,13 @@
     <update id="delete" parameterType="long">
       update ha_user_role t set t.status = 0 where t.id = #{value}
     </update>
+
+    <select id="getHaRoleList" parameterType="com.yimayhd.membercenter.client.query.UserMenuQuery" resultType="java.lang.Long">
+        SELECT
+            ha_role_id
+        FROM
+            ha_user_role
+        WHERE
+            ha_user_id = #{userId,jdbcType=BIGINT}
+    </select>
 </mapper>

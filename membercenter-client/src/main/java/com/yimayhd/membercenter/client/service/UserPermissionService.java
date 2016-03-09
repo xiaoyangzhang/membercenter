@@ -1,6 +1,8 @@
 package com.yimayhd.membercenter.client.service;
 
 import com.yimayhd.membercenter.client.domain.HaMenuDO;
+import com.yimayhd.membercenter.client.dto.UserMenuOptionDTO;
+import com.yimayhd.membercenter.client.query.UserMenuQuery;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 
 /**
@@ -8,18 +10,11 @@ import com.yimayhd.membercenter.client.result.MemPageResult;
  */
 public interface UserPermissionService {
     /**
-     * 根据用户ID获取菜单权限列表
-     * @param id
+     * 根据用户ID获取用户权限列表
+     * @param userMenuQuery
+     * @param userMenuOptionDTO
      * @return
-     * @throws Exception
      */
-    MemPageResult<HaMenuDO> getMenuListByUserId(long id);
+    MemPageResult<HaMenuDO> getMenuListByUserId(UserMenuQuery userMenuQuery,UserMenuOptionDTO userMenuOptionDTO);
 
-    /**
-     * 根据用户ID获取权限url
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    MemPageResult<HaMenuDO> getUrlListByUserId(long id);
 }

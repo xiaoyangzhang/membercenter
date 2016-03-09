@@ -9,7 +9,7 @@
 
 		<result column="url" property="url" jdbcType="VARCHAR" />
 
-		<result column="reqtype" property="reqtype" jdbcType="INTEGER" />
+		<result column="req_type" property="reqType" jdbcType="INTEGER" />
 
 		<result column="type" property="type" jdbcType="INTEGER" />
 
@@ -18,6 +18,8 @@
 		<result column="leaf" property="leaf" jdbcType="INTEGER" />
 
 		<result column="parent_id" property="parentId" jdbcType="BIGINT" />
+
+		<result column="domain" property="domain" jdbcType="BIGINT" />
 
 		<result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
 
@@ -40,14 +42,14 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id,name,url,reqtype,type,level,leaf,parent_id,gmt_created,gmt_modified,status
+		id,name,url,req_type,type,level,leaf,parent_id,domain,gmt_created,gmt_modified,status
 	</sql>
 
 	<!--insert的时候要去掉ID，创建时间，更新时间和状态 -->
 	<insert id="add" parameterType="com.yimayhd.membercenter.client.domain.HaMenuDO"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into ha_menu
-		(id,name,url,reqtype,type,level,leaf,parent_id,gmt_created,gmt_modified,status)
+		(id,name,url,req_type,type,level,leaf,parent_id,domain,gmt_created,gmt_modified,status)
 		values (
 
 		#{id,jdbcType=BIGINT},
@@ -65,6 +67,8 @@
 		#{leaf,jdbcType=INTEGER},
 
 		#{parentId,jdbcType=BIGINT},
+
+		#{domain,jdbcType=BIGINT},
 
 		#{gmtCreated,jdbcType=TIMESTAMP},
 
@@ -99,7 +103,7 @@
 			</if>
 
 			<if test="reqtype != null">
-				t.reqtype = #{reqtype,jdbcType=INTEGER},
+				t.req_type = #{reqtype,jdbcType=INTEGER},
 			</if>
 
 			<if test="type != null">
@@ -254,7 +258,7 @@
 
 	</select>
 
-	<select id="getMenuList" resultMap="menuListAll">
+	<!--<select id="getMenuList" resultMap="menuListAll">
 		SELECT
 		A.id,
 		A.name,
@@ -292,5 +296,19 @@
 		and hm.status = 1
 		and hm.level = 3) C
 		on B.id = C.parent_id
+	</select>-->
+
+	<select id="getMenuList" parameterType="com.yimayhd.membercenter.query.HaMenuQuery" resultMap="BaseResultMap">
+		SELECT
+		id,name,url,req_type,type,level,leaf,parent_id,domain,gmt_created,gmt_modified
+		FROM
+		ha_menu
+		WHERE
+		domain = #{domain}
+		AND
+		id IN
+		<foreach collection="menuIdList" index="index" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
 	</select>
 </mapper>

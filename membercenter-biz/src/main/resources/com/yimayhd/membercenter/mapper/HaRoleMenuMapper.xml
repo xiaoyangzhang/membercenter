@@ -17,6 +17,7 @@
 
 </resultMap>
 
+
     <sql id="Base_Column_List">
         id,ha_menu_id,ha_role_id,gmt_created,gmt_modified,status
     </sql>
@@ -112,4 +113,16 @@
     <update id="delete" parameterType="long">
       update ha_role_menu t set t.status = 0 where t.id = #{value}
     </update>
+
+    <select id="getHaRoleIdList" parameterType="com.yimayhd.membercenter.query.HaRoleMenuQuery" resultType="java.lang.Long">
+        SELECT
+            ha_menu_id
+        FROM
+            ha_role_menu
+        WHERE
+            ha_role_id IN
+            <foreach collection="roleIdList" index="index" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+    </select>
 </mapper>

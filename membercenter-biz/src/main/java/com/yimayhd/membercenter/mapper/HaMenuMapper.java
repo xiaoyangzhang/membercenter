@@ -12,4 +12,6 @@ import java.util.List;
 public interface HaMenuMapper{
 
     List<HaMenuDO> getMenuList(HaMenuQuery haMenuQuery);
+
+    List<HaMenuDO> getAllMenuList(HaMenuQuery haMenuQuery);
 }

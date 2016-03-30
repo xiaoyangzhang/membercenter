@@ -9,6 +9,7 @@ public class HaMenuQuery {
     private List<Long> menuIdList;
     private long domain;//domain
     private List<Integer> typeList;
+    private int type;
 
     public HaMenuQuery() {
     }
@@ -35,5 +36,13 @@ public class HaMenuQuery {
 
     public void setTypeList(List<Integer> typeList) {
         this.typeList = typeList;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

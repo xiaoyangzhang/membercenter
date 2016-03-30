@@ -91,6 +91,18 @@ public class MemberReturnCode  extends AbstractReturnCode {
 	public static final int PAGE_QUERY_USER_MENU_FAILED_C = 16007001;
 	public static final MemberReturnCode PAGE_QUERY_USER_MENU_FAILED = new MemberReturnCode(PAGE_QUERY_USER_MENU_FAILED_C, "获取菜单权限失败") ;
 
-	public static final int PAGE_QUERY_USER_URL_FAILED_C = 16007001;
+	public static final int PAGE_QUERY_USER_URL_FAILED_C = 16007002;
 	public static final MemberReturnCode PAGE_QUERY_USER_URL_FAILED = new MemberReturnCode(PAGE_QUERY_USER_URL_FAILED_C, "获取URL权限失败") ;
+<<<<<<< HEAD
+=======
+
+	public static final int USER_NON_ROLE_C = 16007003;
+	public static final MemberReturnCode USER_NON_ROLE_ERROR = new MemberReturnCode(USER_NON_ROLE_C, "没有给用户分配角色") ;
+
+	public static final int USER_ROLE_NON_URL_C = 16007003;
+	public static final MemberReturnCode USER_ROLE_NON_URL_ERROR = new MemberReturnCode(USER_ROLE_NON_URL_C, "用户角色没有任何权限") ;
+
+	public static final int PAGE_QUERY_ALL_MENU_FAILED_C = 16007004;
+	public static final MemberReturnCode PAGE_QUERY_ALL_MENU_FAILED = new MemberReturnCode(PAGE_QUERY_ALL_MENU_FAILED_C, "获取全部菜单权限失败") ;
+>>>>>>> e0151bd5758c608bc788a7b75a8f64cb77e086df
 }

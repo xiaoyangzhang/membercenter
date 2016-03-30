@@ -311,4 +311,16 @@
 			#{item}
 		</foreach>
 	</select>
+	<select id="getAllMenuList" parameterType="com.yimayhd.membercenter.query.HaMenuQuery" resultMap="BaseResultMap">
+		SELECT
+		id,name,url,req_type,type,level,leaf,parent_id,domain,gmt_created,gmt_modified
+		FROM
+		ha_menu
+		WHERE
+		domain = #{domain}
+		<if test="type == 1">
+			and type = #{type}
+		</if>
+	</select>
+
 </mapper>

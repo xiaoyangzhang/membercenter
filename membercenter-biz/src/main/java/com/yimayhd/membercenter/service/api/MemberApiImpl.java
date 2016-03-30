@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
-import com.yiholiday.fhtd.logger.annot.MethodLogger;
+import com.yimayhd.fhtd.logger.annot.MethodLogger;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.api.MemberApi;
 import com.yimayhd.membercenter.client.result.MemResult;

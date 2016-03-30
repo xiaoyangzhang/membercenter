@@ -25,10 +25,20 @@ public class MemberReturnCode  extends AbstractReturnCode {
 	public static final MemberReturnCode DB_READ_FAILED = new MemberReturnCode(DB_READ_FAILED_C, "读数据库失败") ;
 	
 	public static final int PARAMTER_ERROR_C = 16000003;
-	public static final MemberReturnCode PARAMTER_ERROR = new MemberReturnCode(PARAMTER_ERROR_C, "参数 错误") ;
+	public static final MemberReturnCode PARAMTER_ERROR = new MemberReturnCode(PARAMTER_ERROR_C, "参数错误") ;
 	
-	
-	
+	public static final int DUBBO_ERROR_C = 16000004;
+    public static final MemberReturnCode DUBBO_ERROR = new MemberReturnCode(DUBBO_ERROR_C, "dubbo接口失败") ;
+    
+    public static final int NO_EXAMIN_DATA_C = 16000005;
+    public static final MemberReturnCode EXAMIN_DATA_ERROR = new MemberReturnCode(NO_EXAMIN_DATA_C, "无审核数据") ;
+    
+    public static final int DB_UPDATE_FAILED_C = 16000006;
+    public static final MemberReturnCode DB_UPDATE_FAILED = new MemberReturnCode(DB_UPDATE_FAILED_C, "更新数据库失败") ;
+    
+    
+    public static final int DB_EXAMINE_FAILED_C = 16000007;
+    public static final MemberReturnCode DB_EXAMINE_FAILED = new MemberReturnCode(DB_EXAMINE_FAILED_C, "已通过审核") ;
 	
 	/**************************************ORDER********************************************/
 	public static final int BIZ_ORDER_NOT_FOUND_C = 16001000;
@@ -83,6 +93,4 @@ public class MemberReturnCode  extends AbstractReturnCode {
 
 	public static final int PAGE_QUERY_USER_URL_FAILED_C = 16007001;
 	public static final MemberReturnCode PAGE_QUERY_USER_URL_FAILED = new MemberReturnCode(PAGE_QUERY_USER_URL_FAILED_C, "获取URL权限失败") ;
-	
-	
 }

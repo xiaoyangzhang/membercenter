@@ -46,7 +46,7 @@
 		<property name="basePackage" value="com.yimayhd.membercenter.mapper" />
 	</bean>
 
-	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
 		<constructor-arg index="0" ref="sqlSessionFactory"/>
 	</bean>
 

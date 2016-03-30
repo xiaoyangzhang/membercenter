@@ -139,7 +139,8 @@ public class MemberUserBizImpl implements MemberUserBiz{
 		LOGGER.debug("vo={}",JSONObject.toJSONString(vo));
 		
 		HttpServletRequest request =  getRequest();
-		String key = sessionManager.getTokenFromCookie(request);
+//		String key = sessionManager.getTokenFromCookie(request);
+		String key = "";
 		LOGGER.debug("key={}",key);
 		
 		boolean result = cacheManager.addToTair(MEMBER_INFO_CACHE_HEAD + key,vo,cacheValidTime);
@@ -155,7 +156,8 @@ public class MemberUserBizImpl implements MemberUserBiz{
 	@Override
 	public MemResult<Boolean> removeCacheMemberInfo() {
 		HttpServletRequest request =  getRequest();
-		String key = sessionManager.getTokenFromCookie(request);
+//		String key = sessionManager.getTokenFromCookie(request);
+		String key = "";
 		LOGGER.debug("key={}",key);
 		
 		boolean result = cacheManager.deleteFromTair(MEMBER_INFO_CACHE_HEAD + key);
@@ -233,7 +235,8 @@ public class MemberUserBizImpl implements MemberUserBiz{
 	@Override
 	public MemeberBasicInfoVO getCachedMemberInfo() {
 		HttpServletRequest request =  getRequest();
-		String key = sessionManager.getTokenFromCookie(request);
+//		String key = sessionManager.getTokenFromCookie(request);
+		String key = "";
 		LOGGER.debug("key={}",key);
 		
 		MemeberBasicInfoVO memberInfo = (MemeberBasicInfoVO) (cacheManager.getFormTair((MEMBER_INFO_CACHE_HEAD + key)));

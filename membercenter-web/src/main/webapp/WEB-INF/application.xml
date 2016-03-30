@@ -9,13 +9,12 @@
  	 http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.2.xsd
        " default-lazy-init="true" >
  
-	<context:property-placeholder ignore-unresolvable="true" location="classpath:*.properties" />
-	<context:property-placeholder ignore-unresolvable="true" location="/WEB-INF/config.properties" />
+<!-- 	<context:property-placeholder ignore-unresolvable="true" location="classpath:*.properties" />
+	<context:property-placeholder ignore-unresolvable="true" location="classpath:config.properties" /> -->
 
-
+ 	<import resource="../META-INF/spring/application-service.xml" />
     <import resource="../META-INF/spring/application-persistance.xml" />
     <import resource="../META-INF/spring/application-manager.xml" />
-    <import resource="../META-INF/spring/application-service.xml" />
     <import resource="../META-INF/spring/application-mq.xml" />
     <import resource="../META-INF/spring/application-repo.xml" />
     <import resource="../META-INF/spring/application-common.xml" />
@@ -24,7 +23,7 @@
     <import resource="../META-INF/spring/application-export-api.xml"/>
     <import resource="../META-INF/spring/application-annot.xml" />
     <import resource="../META-INF/spring/application-biz.xml" />
-    <import resource="../META-INF/spring/application-session.xml" />
+	<import resource="../META-INF/spring/application-session.xml" />
     
     
     <!--  

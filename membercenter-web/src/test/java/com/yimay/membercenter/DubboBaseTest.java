@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(value = SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
+        "file:src/main/webapp/META-INF/spring/application-service.xml",
         "file:src/main/webapp/META-INF/spring/application-annot.xml",
         "file:src/main/webapp/META-INF/spring/application-biz.xml",
         "file:src/main/webapp/META-INF/spring/application-common.xml",
@@ -18,7 +19,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
         "file:src/main/webapp/META-INF/spring/application-mq.xml",
         "file:src/main/webapp/META-INF/spring/application-persistance.xml",
         "file:src/main/webapp/META-INF/spring/application-repo.xml",
-        "file:src/main/webapp/META-INF/spring/application-service.xml",
         "file:src/main/webapp/META-INF/spring/application-session.xml"
 })
 public class DubboBaseTest {

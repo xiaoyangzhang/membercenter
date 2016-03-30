@@ -37,6 +37,10 @@
     </group>
     <group name="idgen">
     	<property name="memcenter.meber.idgen.key" defaultValue="member" description="member表使用idgen的key"></property>
+    	<property name="examine.done.domain" defaultValue="examine" description="examine表使用idgen的domain"></property>
+    	<property name="examine.done.key" defaultValue="examine_done" description="examine表使用idgen的key"></property>
+    	<property name="examine.detail.domain" defaultValue="examine" description="examine表使用idgen的domain"></property>
+    	<property name="examine.detail.key" defaultValue="examine_detail" description="examine表使用idgen的key"></property>
     </group>
     
     <group name="tair">

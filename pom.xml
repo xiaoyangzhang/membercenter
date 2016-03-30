@@ -25,7 +25,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<api-util.version>1.3.7</api-util.version>
-		<user.version>1.5.3-SNAPSHOT</user.version>
+		<user.version>1.7.0-SNAPSHOT</user.version>
 		<spring.version>4.1.6.RELEASE</spring.version>
 		<mybatis.version>3.2.8</mybatis.version>
 		<log4j-version>1.2.9</log4j-version>
@@ -37,6 +37,8 @@
 		<api-util.version>1.3.7</api-util.version>
 		<jackson.version>2.6.3</jackson.version>
 		<point.version>1.0-SNAPSHOT</point.version>
+		<commentcenter.version>1.0.2-SNAPSHOT</commentcenter.version>
+		<fhtd.version>0.1.0-SNAPSHOT</fhtd.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -46,9 +48,19 @@
 				<version>${user.version}</version>
 			</dependency>
 			<dependency>
+				<groupId>com.yimayhd.commentcenter</groupId>
+				<artifactId>commentcenter-client</artifactId>
+				<version>${commentcenter.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>com.yimayhd.user</groupId>
 				<artifactId>user-client</artifactId>
 				<version>${user.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.yimayhd.fhtd</groupId>
+				<artifactId>fhtd</artifactId>
+				<version>${fhtd.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.yimayhd.membercenter</groupId>
@@ -442,12 +454,6 @@
 				<artifactId>snscenter-client</artifactId>
 				<version>0.0.6-SNAPSHOT</version>
 			</dependency>
-			<dependency>
-				<groupId>com.yiholiday.fhtd</groupId>
-				<artifactId>fhtd</artifactId>
-				<version>0.1.0-SNAPSHOT</version>
-			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
 	<build>
@@ -474,4 +480,10 @@
 		</plugins>
 		<finalName>membercenter</finalName>
 	</build>
+	    <distributionManagement>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<url>http://192.168.1.95:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>

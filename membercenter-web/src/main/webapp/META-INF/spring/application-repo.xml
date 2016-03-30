@@ -14,4 +14,7 @@
 	<bean id="itemRepo" class="com.yimayhd.membercenter.repo.ItemRepo"/>
 	<bean id="resourceRepo" class="com.yimayhd.membercenter.repo.ResourceRepo"/>
 	<bean id="snsRepo" class="com.yimayhd.membercenter.repo.SnsRepo"/>
+	<bean id="merchantRepo" class="com.yimayhd.membercenter.repo.MerchantRepo"/>
+	<bean id="commentRepo" class="com.yimayhd.membercenter.repo.CommentRepo"/>
+	<bean id="userOptionRepo" class="com.yimayhd.membercenter.repo.UserOptionRepo"/>
 </beans>

@@ -142,16 +142,18 @@
 			<groupId>com.yimayhd.membercenter</groupId>
 			<artifactId>membercenter-api</artifactId>
 		</dependency>
-
+		<dependency>
+				<groupId>com.yimayhd.commentcenter</groupId>
+				<artifactId>commentcenter-client</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.yimayhd.snscenter</groupId>
 			<artifactId>snscenter-client</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.yiholiday.fhtd</groupId>
+			<groupId>com.yimayhd.fhtd</groupId>
 			<artifactId>fhtd</artifactId>
 		</dependency>
-
 	</dependencies>
 
 

@@ -154,6 +154,14 @@
 			<groupId>com.yimayhd.fhtd</groupId>
 			<artifactId>fhtd</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.yimayhd.stone</groupId>
+			<artifactId>stone</artifactId>
+		</dependency>
+		<dependency>
+		<groupId>com.yimayhd.msgcenter</groupId>
+		<artifactId>msgcenter-client</artifactId>
+		</dependency>
 	</dependencies>
 
 

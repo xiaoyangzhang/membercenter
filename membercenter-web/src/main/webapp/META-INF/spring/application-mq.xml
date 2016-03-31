@@ -33,6 +33,12 @@
         <property name="group" value="${member.consume.order.group}"/>
     </bean>
 
+    <bean id="examineConsumer" class="com.yimayhd.membercenter.mq.examine.ExamineConsumer"
+          init-method="init" destroy-method="destroy">
+        <property name="nameServer" value="${rocketmq.server.name}"/>
+        <property name="group" value="${member.consume.order.group}"/>
+    </bean>
+
 
 
 </beans>

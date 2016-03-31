@@ -43,4 +43,7 @@
     </bean>
 	
 	<bean id="sessionManager" class="com.yimayhd.user.session.manager.SessionManager" />
+
+    <bean id="jxMsgManager" class="com.yimayhd.membercenter.manager.msgpush.JxMsgManager"/>
+    <bean id="msgHandlerManager" class="com.yimayhd.membercenter.manager.msgpush.MsgHandlerManager"/>
 </beans>

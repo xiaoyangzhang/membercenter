@@ -21,6 +21,15 @@ public enum HaMenuRequestType {
         this.type = type;
         this.desc = desc;
     }
+    
+    public static HaMenuRequestType getRequestType(int type){
+    	for( HaMenuRequestType reqType : HaMenuRequestType.values() ){
+    		if( reqType.type == type ){
+    			return reqType ;
+    		}
+    	}
+    	return null ;
+    }
 
     public int getType() {
         return type;

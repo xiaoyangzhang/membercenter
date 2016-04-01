@@ -1,6 +1,7 @@
 package com.yimayhd.membercenter.manager.msgpush;
 
 import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
+import com.yimayhd.stone.enums.DomainType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -22,7 +23,11 @@ public class MsgHandlerManager {
      */
     public boolean pushExamineMsg(ExamineDO examineDO){
 
-
+        DomainType domainType = DomainType.getByType(examineDO.getDomainId());
+        switch (domainType){
+            case DOMAIN_JX:
+                return jxMsgManager.pushExamineMsg(examineDO);
+        }
         return true;
     }
 
@@ -33,7 +38,11 @@ public class MsgHandlerManager {
      */
     public boolean sendExamineSms(ExamineDO examineDO){
 
-
+        DomainType domainType = DomainType.getByType(examineDO.getDomainId());
+        switch (domainType){
+            case DOMAIN_JX:
+                return jxMsgManager.sendExamineSms(examineDO);
+        }
         return true;
     }
 

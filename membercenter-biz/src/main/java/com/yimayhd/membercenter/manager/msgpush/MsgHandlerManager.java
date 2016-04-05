@@ -26,7 +26,7 @@ public class MsgHandlerManager {
         DomainType domainType = DomainType.getByType(examineDO.getDomainId());
         switch (domainType){
             case DOMAIN_JX:
-                return jxMsgManager.pushExamineMsg(examineDO);
+                //return jxMsgManager.pushExamineMsg(examineDO);
         }
         return true;
     }
@@ -41,7 +41,7 @@ public class MsgHandlerManager {
         DomainType domainType = DomainType.getByType(examineDO.getDomainId());
         switch (domainType){
             case DOMAIN_JX:
-                return jxMsgManager.sendExamineSms(examineDO);
+                //return jxMsgManager.sendExamineSms(examineDO);
         }
         return true;
     }

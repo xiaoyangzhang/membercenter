@@ -17,4 +17,5 @@
 	<bean id="merchantRepo" class="com.yimayhd.membercenter.repo.MerchantRepo"/>
 	<bean id="commentRepo" class="com.yimayhd.membercenter.repo.CommentRepo"/>
 	<bean id="userOptionRepo" class="com.yimayhd.membercenter.repo.UserOptionRepo"/>
+	<bean id="msgRepo" class="com.yimayhd.membercenter.repo.MsgRepo"/>
 </beans>

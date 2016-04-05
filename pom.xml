@@ -459,10 +459,6 @@
 			<dependency>
 				<groupId>com.yimayhd.stone</groupId>
 				<artifactId>stone</artifactId>
-<<<<<<< HEAD
-				<version>0.0.1-SNAPSHOT</version>
-			</dependency>
-=======
 				<version>${stone.version}</version>
 			</dependency>
 			<dependency>
@@ -484,9 +480,6 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-
-
->>>>>>> bbdf5aacbafb227879e7454caf7dc48dd5cf9d21
 		</dependencies>
 	</dependencyManagement>
 	<build>

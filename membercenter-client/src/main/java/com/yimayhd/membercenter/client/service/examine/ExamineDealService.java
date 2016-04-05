@@ -18,7 +18,7 @@ import com.yimayhd.membercenter.client.result.MemResult;
 
 /**
  * 〈一句话功能简述〉<br> 
- * 〈功能详细描述〉
+ * 〈审核信息service〉
  *
  * @author liubb
  * @see [相关类/方法]（可选）

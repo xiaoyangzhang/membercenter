@@ -42,6 +42,8 @@ public class UserConverter {
         userDO.setNickname(talentDO.getNickName());
         userDO.setCity(talentDO.getCity());
         userDO.setCityCode(talentDO.getCityCode());
+        userDO.setProvince(talentDO.getProvince());
+        userDO.setProvinceCode(talentDO.getProvinceCode());
         return userDO;
     }
     
@@ -65,6 +67,8 @@ public class UserConverter {
         talentInfoDO.setNickName(userDO.getNickname());
         talentInfoDO.setCity(userDO.getCity());
         talentInfoDO.setCityCode(userDO.getCityCode());
+        talentInfoDO.setProvince(userDO.getProvince());
+        talentInfoDO.setProvinceCode(userDO.getProvinceCode());
         return talentInfoDO;
     }
     

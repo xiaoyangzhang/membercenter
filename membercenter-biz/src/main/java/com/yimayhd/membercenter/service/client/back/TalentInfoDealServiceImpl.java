@@ -18,9 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yimayhd.membercenter.MemberReturnCode;
+import com.yimayhd.membercenter.client.domain.BankDO;
 import com.yimayhd.membercenter.client.domain.CertificatesDO;
 import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
 import com.yimayhd.membercenter.client.dto.AccountDTO;
+import com.yimayhd.membercenter.client.dto.BankInfoDTO;
 import com.yimayhd.membercenter.client.dto.TalentInfoDTO;
 import com.yimayhd.membercenter.client.query.InfoQueryDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
@@ -47,7 +49,7 @@ public class TalentInfoDealServiceImpl implements TalentInfoDealService {
 
     @Autowired
     TalentBackInfoManager talentBackInfoManager;
-    
+
     @Autowired
     TalentExamineManager talentExamineManager;
 
@@ -59,14 +61,21 @@ public class TalentInfoDealServiceImpl implements TalentInfoDealService {
      */
     @Override
     public MemResult<Boolean> updateTalentInfo(TalentInfoDTO talentInfoDTO) {
-        // 参数校验
-        if(ParmCheckUtil.checkUpdateTalentInfoNull(talentInfoDTO)){
-            MemResult<Boolean> baseResult = new MemResult<Boolean>();
-            baseResult.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
-            logger.info("updateTalentInfo parm:{} isn't ok", JSONObject.toJSONString(talentInfoDTO));
-            return baseResult;
+        MemResult<Boolean> baseResult = new MemResult<Boolean>();
+        try {
+            // 参数校验
+            if (ParmCheckUtil.checkUpdateTalentInfoNull(talentInfoDTO)) {
+                baseResult.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+                logger.info("updateTalentInfo parm:{} isn't ok", JSONObject.toJSONString(talentInfoDTO));
+                return baseResult;
+            }
+            return talentBackInfoManager.updateTalentBackInfo(talentInfoDTO.getTalentInfoDO(),
+                    talentInfoDTO.getPictureTextDTO(), talentInfoDTO.getDomainId());
+        } catch (Exception e) {
+            logger.error("updateTalentInfo par:{} error:{}", JSONObject.toJSONString(talentInfoDTO), e);
+            baseResult.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
         }
-        return talentBackInfoManager.updateTalentBackInfo(talentInfoDTO.getTalentInfoDO(), talentInfoDTO.getPictureTextDTO(), talentInfoDTO.getDomainId());
+        return baseResult;
     }
 
     /*
@@ -106,58 +115,93 @@ public class TalentInfoDealServiceImpl implements TalentInfoDealService {
         result.setValue(certificatesDOs);
         return result;
     }
-    
+
     /*
      * (non-Javadoc)
      * @see com.yimayhd.membercenter.client.service.talent.TalentInfoDealService#queryTalentInfoByUserId(long, int)
      */
     @Override
     public MemResult<TalentInfoDTO> queryTalentInfoByUserId(long userId, int domainId) {
-        //参数校验
-        if(ParmCheckUtil.checkUserIdAndDomainId(userId, domainId)){
-            MemResult<TalentInfoDTO> baseResult = new MemResult<TalentInfoDTO>();
-            baseResult.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
-            logger.info("queryTalentInfoByUserId userId:{}, domainId:{} isn't ok", userId, domainId);
-            return baseResult;
+        MemResult<TalentInfoDTO> baseResult = new MemResult<TalentInfoDTO>();
+        try {
+            // 参数校验
+            if (ParmCheckUtil.checkUserIdAndDomainId(userId, domainId)) {
+                baseResult.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+                logger.info("queryTalentInfoByUserId userId:{}, domainId:{} isn't ok", userId, domainId);
+                return baseResult;
+            }
+            return talentBackInfoManager.queryTalentBackInfo(userId, domainId);
+        } catch (Exception e) {
+            logger.error("queryTalentInfoByUserId par:{} error:{}", userId, e);
+            baseResult.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
         }
-        return talentBackInfoManager.queryTalentBackInfo(userId, domainId);
+        return baseResult;
     }
 
     @Override
     public MemResult<AccountDTO> queryMerchantAccountInfoById(InfoQueryDTO infoQueryDTO) {
         MemResult<AccountDTO> result = new MemResult<AccountDTO>();
-        if(ParmCheckUtil.checkQueryDTO(infoQueryDTO)){
-            result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
-            logger.info("queryMerchantCountInfoById par:{} is error", JSONObject.toJSONString(infoQueryDTO));
+        try {
+            if (ParmCheckUtil.checkQueryDTO(infoQueryDTO)) {
+                result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+                logger.info("queryMerchantCountInfoById par:{} is error", JSONObject.toJSONString(infoQueryDTO));
+                return result;
+            }
+            // 数据转换
+            ExamineDO examineDO = ExamineConverter.examineQueryToDO(infoQueryDTO);
+            MemResult<ExamineDO> queryResult = talentExamineManager.queryMerchantExamineInfoById(examineDO);
+            if (queryResult.isSuccess()) {
+                // 数据转换
+                AccountDTO accountDTO = ExamineConverter.examineToAccount(queryResult.getValue());
+                result.setValue(accountDTO);
+                logger.info("queryMerchantCountInfoById par:{} return success", JSONObject.toJSONString(infoQueryDTO));
+            } else {
+                result.setReturnCode(queryResult.getReturnCode());
+                logger.info("queryMerchantCountInfoById par:{} return error:{}", JSONObject.toJSONString(infoQueryDTO),
+                        queryResult.getErrorMsg());
+            }
             return result;
-        }
-        //数据转换
-        ExamineDO examineDO = ExamineConverter.examineQueryToDO(infoQueryDTO);
-        MemResult<ExamineDO> queryResult = talentExamineManager.queryMerchantExamineInfoById(examineDO);
-        if(queryResult.isSuccess()){
-            //数据转换
-            AccountDTO accountDTO = ExamineConverter.examineToAccount(queryResult.getValue());
-            result.setValue(accountDTO);
-            logger.info("queryMerchantCountInfoById par:{} return success", JSONObject.toJSONString(infoQueryDTO));
-        }else{
-            result.setReturnCode(queryResult.getReturnCode());
-            logger.info("queryMerchantCountInfoById par:{} return error:{}", JSONObject.toJSONString(infoQueryDTO), queryResult.getErrorMsg());
+        } catch (Exception e) {
+            logger.error("queryMerchantAccountInfoById par:{} error:{}", JSONObject.toJSONString(infoQueryDTO), e);
+            result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
         }
         return result;
     }
 
-    
     @Override
     public MemResult<Boolean> updateMerchantAccountInfo(AccountDTO accountDTO) {
         MemResult<Boolean> result = new MemResult<Boolean>();
-        //参数校验
-        if(ParmCheckUtil.checkAccountInfoDTO(accountDTO)){
-            result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
-            logger.info("updateMerchantAccountInfo par:{} is error", JSONObject.toJSONString(accountDTO));
-            return result;
+        try {
+            // 参数校验
+            if (ParmCheckUtil.checkAccountInfoDTO(accountDTO)) {
+                result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+                logger.info("updateMerchantAccountInfo par:{} is error", JSONObject.toJSONString(accountDTO));
+                return result;
+            }
+            return talentExamineManager.updateMerchantAccountInfoById(accountDTO);
+        } catch (Exception e) {
+            logger.error("updateMerchantAccountInfo par:{} error:{}", JSONObject.toJSONString(accountDTO), e);
+            result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
         }
-        return talentExamineManager.updateMerchantAccountInfoById(accountDTO);
+        return result;
     }
 
-
+    @Override
+    public MemResult<List<BankInfoDTO>> queryBankList() {
+        MemResult<List<BankInfoDTO>> result = new MemResult<List<BankInfoDTO>>();
+        MemResult<List<BankDO>> bankResult = talentBackInfoManager.queryBankInfo();
+        if(bankResult.isSuccess()){
+            List<BankInfoDTO> bankList = new ArrayList<BankInfoDTO>();
+            for (BankDO bankDO : bankResult.getValue()) {
+                BankInfoDTO bankInfoDTO = new BankInfoDTO();
+                bankInfoDTO.setBankId(bankDO.getBankId());
+                bankInfoDTO.setBankName(bankDO.getBankName());
+                bankList.add(bankInfoDTO);
+            }
+            result.setValue(bankList);
+        }else{
+            result.setReturnCode(bankResult.getReturnCode()); 
+        }
+        return result;
+    }
 }

@@ -58,7 +58,8 @@ public class ParmCheckUtil {
                 || StringUtils.isBlank(talentInfoDO.getNickName()) || StringUtils.isBlank(talentInfoDO.getReallyName())
                 || StringUtils.isBlank(talentInfoDO.getCity()) || null == talentInfoDO.getBirthday()
                 || ParmCheckUtil.checkListNull(pictureTextDTO.getPicTexts())
-                || ParmCheckUtil.checkListNull(talentInfoDO.getPictures())) {
+                || ParmCheckUtil.checkListNull(talentInfoDO.getPictures())
+                || StringUtils.isBlank(talentInfoDO.getServeDesc())) {
             return true;
         }
         return false;
@@ -102,16 +103,16 @@ public class ParmCheckUtil {
     /**
      * 
      * 功能描述: <br>
-     * 〈checkQueryMerchantList〉
-     *
+     * 〈checkQueryMerchantList〉 || (StringUtils.isBlank(talentQuery.tagId) &&
+     * StringUtils.isBlank(talentQuery.searchWord))
+     * 
      * @param talentQuery
      * @return
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
     public static boolean checkQueryMerchantList(TalentQuery talentQuery) {
-        if (null == talentQuery || null == talentQuery.pageInfo || (StringUtils.isBlank(talentQuery.tagId) && StringUtils.isBlank(talentQuery.searchWord))
-                || (StringUtils.isNotBlank(talentQuery.tagId)
+        if (null == talentQuery || null == talentQuery.pageInfo || (StringUtils.isNotBlank(talentQuery.tagId)
                 && null == ServiceTypeOption.valueOfCode(talentQuery.tagId))) {
             return true;
         }
@@ -166,7 +167,8 @@ public class ParmCheckUtil {
      * @since [产品/模块版本](可选)
      */
     public static boolean checkQueryDTO(InfoQueryDTO examineQueryDTO) {
-        if (MIN_CODE >= examineQueryDTO.getSellerId() || !ExamineType.has(examineQueryDTO.getType())
+        if (MIN_CODE >= examineQueryDTO.getSellerId()
+                || (examineQueryDTO.getType() > 0 && !ExamineType.has(examineQueryDTO.getType()))
                 || MIN_CODE >= examineQueryDTO.getDomainId()) {
             return true;
         }

@@ -11,7 +11,6 @@ import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.entity.merchant.MerchantQuery;
 import com.yimayhd.membercenter.util.ParmCheckUtil;
 import com.yimayhd.user.client.domain.MerchantDO;
-import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.dto.MerchantDTO;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
 import com.yimayhd.user.client.enums.MerchantOption;
@@ -34,7 +33,7 @@ public class MerchantConverter {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public static MerchantInfoDO merchantToDO(MerchantDO merchantDO, UserDO userDO, int type) {
+    public static MerchantInfoDO merchantToDO(MerchantDO merchantDO, int type) {
         MerchantInfoDO merchantInfoDO = new MerchantInfoDO();
         merchantInfoDO.setSellerId(merchantDO.getSellerId());
         merchantInfoDO.setName(merchantDO.getName());
@@ -48,7 +47,8 @@ public class MerchantConverter {
         merchantInfoDO.setLongitude(merchantDO.getLon());
         merchantInfoDO.setMerchantAddress(merchantDO.getAddress());
         merchantInfoDO.setMerchantBackPic(merchantDO.getBackgroudImage());
-        merchantInfoDO.setMerchantTel(merchantDO.getServiceTel());
+        merchantInfoDO.setMerchantTel(merchantDO.getMerchantPrincipalTel());
+        merchantInfoDO.setServiceTel(merchantDO.getServiceTel());
         // 店铺服务类型
         List<ServiceFacilityOption> facilityOptions = ServiceFacilityOption
                 .getContainedOptions(merchantDO.getServiceType());
@@ -77,8 +77,8 @@ public class MerchantConverter {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public static MerchantInfoDO merchantToDO(MerchantDO merchantDO, UserDO userDO) {
-        return merchantToDO(merchantDO, userDO, 0);
+    public static MerchantInfoDO merchantToDO(MerchantDO merchantDO) {
+        return merchantToDO(merchantDO, 0);
     }
 
     /**
@@ -119,8 +119,8 @@ public class MerchantConverter {
             List<MerchantInfoDO> merchantList = new ArrayList<MerchantInfoDO>();
             for (MerchantUserDTO merchantUser : result.getList()) {
                 // 判断是否为空
-                if (null != merchantUser.getMerchantDO() && null != merchantUser.getUserDO()) {
-                    merchantList.add(merchantToDO(merchantUser.getMerchantDO(), merchantUser.getUserDO()));
+                if (null != merchantUser.getMerchantDO()) {
+                    merchantList.add(merchantToDO(merchantUser.getMerchantDO()));
                 }
             }
             pageResult.setList(merchantList);
@@ -150,7 +150,7 @@ public class MerchantConverter {
         merchantDO.setDomainId(domainId);
         merchantDO.setCityCode(talentInfoDO.getCityCode());
         merchantDO.setCityName(talentInfoDO.getCity());
-        merchantDO.setTitle(talentInfoDO.getServeDesc());
+        merchantDO.setTitle(talentInfoDO.getServeDesc().toUpperCase());
         merchantDO.setName(talentInfoDO.getNickName());
         merchantDO.setMerchantPrincipalTel(talentInfoDO.getTelNum());
         // 达人轮播图

@@ -20,6 +20,7 @@ import com.yimayhd.membercenter.entity.merchant.Merchant;
 import com.yimayhd.membercenter.entity.talent.TalentInfo;
 import com.yimayhd.membercenter.entity.talent.TalentInfoList;
 import com.yimayhd.membercenter.entity.talent.TalentQuery;
+import com.yimayhd.user.client.enums.ServiceTypeOption;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -40,7 +41,7 @@ public class TalentApiTest extends BaseTest{
     
     @Test
     public void getTalentDetail(){
-        TalentInfo talentDetail = talentMemberApi.getTalentDetail(0, 1200, 0, 0, 0, 11);
+        TalentInfo talentDetail = talentMemberApi.getTalentDetail(21, 1200, 0, 0, 0, 25);
         System.out.println("-------->");
         System.out.println("---->" + JSONObject.toJSONString(talentDetail));
         System.out.println("-------->");
@@ -50,13 +51,13 @@ public class TalentApiTest extends BaseTest{
     @Test
     public void queryTalentList(){
         TalentQuery talentQueryDTO = new TalentQuery();
-        //talentQueryDTO.setTagId(ServiceTypeOption.CAR.getCode());
-        talentQueryDTO.searchWord = "家";
+        talentQueryDTO.tagId = ServiceTypeOption.CAR.getCode();
+//        talentQueryDTO.searchWord = "家";
         PageInfo pageInfo = new PageInfo();
         pageInfo.pageNo= 1;
         pageInfo.pageSize = 10;
         talentQueryDTO.pageInfo = pageInfo;
-        TalentInfoList queryTalentList = talentMemberApi.queryTalentList(0, 1200, 0, 0, 0, talentQueryDTO);
+        TalentInfoList queryTalentList = talentMemberApi.queryTalentList(21, 1200, 0, 0, 0, talentQueryDTO);
         System.out.println("-------->");
         System.out.println("---->" + JSONObject.toJSONString(queryTalentList));
         System.out.println("-------->");
@@ -65,10 +66,9 @@ public class TalentApiTest extends BaseTest{
     
     @Test
     public void queryMerchantInfo(){
-        Merchant talentDetail = merchantApi.queryMerchantInfo(0, 1200, 0, 0, 0, 11);
+        Merchant talentDetail = merchantApi.queryMerchantInfo(21, 1200, 0, 0, 0, 13);
         System.out.println("-------->");
         System.out.println("---->" + JSONObject.toJSONString(talentDetail));
         System.out.println("-------->");
     }
-    
 }

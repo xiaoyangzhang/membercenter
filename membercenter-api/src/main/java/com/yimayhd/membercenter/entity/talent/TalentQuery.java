@@ -30,7 +30,7 @@ public class TalentQuery implements Serializable {
      */
     private static final long serialVersionUID = 3565630820397407075L;
     
-    @Description("0-全部  1-全程伴游 2-包车服务 4-咨询规划")
+    @Description("空-全部  1-全程伴游 2-包车服务 3-咨询规划 4-私人定制")
     public String tagId;
     
     @Description("0-升序 1-降序  默认降序")

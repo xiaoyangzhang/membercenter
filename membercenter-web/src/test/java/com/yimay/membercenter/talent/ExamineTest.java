@@ -56,7 +56,7 @@ public class ExamineTest extends BaseTest {
         InfoQueryDTO examineQueryDTO = new InfoQueryDTO();
         examineQueryDTO.setDomainId(domainId);
         examineQueryDTO.setSellerId(userId);
-        examineQueryDTO.setType(ExamineType.TALENT.getId());
+//        examineQueryDTO.setType(ExamineType.TALENT.getId());
         MemResult<String> result = examineDealService.queryExamineDealResult(examineQueryDTO);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
@@ -79,7 +79,7 @@ public class ExamineTest extends BaseTest {
     public void examineInfoIsOk() {
         ExamineDealDTO examineDealDTO = new ExamineDealDTO();
         examineDealDTO.setDomainId(domainId);
-        examineDealDTO.setSellerId(userId + 2);
+        examineDealDTO.setSellerId(userId + 4);
         examineDealDTO.setType(ExamineType.TALENT.getId());
         examineDealDTO.setCheckIsOk(true);
         examineDealDTO.setExamineMes("审核通过");

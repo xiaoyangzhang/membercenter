@@ -57,12 +57,17 @@ public class TalentConverter {
         talentInfoDO.setAvatar(userDO.getAvatar());
         talentInfoDO.setGender(userDO.getGender());
         talentInfoDO.setNickName(userDO.getNickname());
+        talentInfoDO.setReallyName(userDO.getName());
         // 图片数据处理 轮播图
         talentInfoDO.setPictures(merchantDO.getLoopImages());
         talentInfoDO.setServeDesc(merchantDO.getTitle());
         talentInfoDO.setServeCount(merchantDO.getSalesQuantity());
         talentInfoDO.setCity(userDO.getCity());
         talentInfoDO.setCityCode(userDO.getCityCode());
+        talentInfoDO.setProvince(userDO.getProvince());
+        talentInfoDO.setProvinceCode(userDO.getProvinceCode());
+        talentInfoDO.setBirthday(userDO.getBirthday());
+        
         talentInfoDO.setTelNum(merchantDO.getMerchantPrincipalTel());
         // 是否是认证用户
         talentInfoDO.setType(UserOptions.CERTIFICATED.has(userDO.getOptions()));
@@ -71,7 +76,7 @@ public class TalentConverter {
         if (IconType.EXPERT.getType() == type) {
             // 达人技能
             List<CertificateOption> certificateOptions = CertificateOption
-                    .getContainedOptions(merchantDO.getCertificate());
+                    .getContainedOptions(merchantDO.getServiceType());
             // type > 0 获取详情信息
             if (!ParmCheckUtil.checkListNull(certificateOptions)) {
                 for (CertificateOption option : certificateOptions) {

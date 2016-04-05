@@ -27,7 +27,11 @@
     <include refid="Base_Column_List" />
     from examine_detail
     where 
-    seller_id = #{sellerId,jdbcType=BIGINT} and domain_id = #{domainId,jdbcType=INTEGER} and type = #{type,jdbcType=INTEGER}
+    seller_id = #{sellerId,jdbcType=BIGINT} and domain_id = #{domainId,jdbcType=INTEGER} 
+     <if test="type > 0" >
+         and type = #{type,jdbcType=INTEGER}
+      </if>
+  	limit 0,1
   </select>
   
   <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.examine.ExamineDO" >

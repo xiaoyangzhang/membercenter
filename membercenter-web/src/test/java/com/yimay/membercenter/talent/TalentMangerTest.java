@@ -22,6 +22,7 @@ import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.manager.talent.TalentInfoManager;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
 import com.yimayhd.user.client.enums.MerchantOption;
+import com.yimayhd.user.client.enums.ServiceTypeOption;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -40,7 +41,7 @@ public class TalentMangerTest extends BaseTest {
     
     @Test
     public void queryTalentInfo(){
-        long talentId = 10000000;
+        long talentId = 19000;
         MemResult<MerchantUserDTO> result = talentInfoManager.queryTalentInfo(talentId, domainId);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
@@ -51,7 +52,7 @@ public class TalentMangerTest extends BaseTest {
     public void queryTalentList(){
         TalentQueryDTO talentQueryDTO = new TalentQueryDTO();
         talentQueryDTO.setDomainId(domainId);
-//        talentQueryDTO.setTagId(ServiceTypeOption.CAR.getCode());
+        talentQueryDTO.setTagId(ServiceTypeOption.CAR.getCode());
         talentQueryDTO.setSearchWord("家");
         talentQueryDTO.setPageNo(1);
         talentQueryDTO.setPageSize(10);

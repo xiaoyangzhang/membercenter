@@ -40,6 +40,9 @@ public class MemberReturnCode extends AbstractReturnCode {
     
     public static final int DB_SELLERNAME_FAILED_C = 16000008;
     public static final MemberReturnCode DB_SELLERNAME_FAILED = new MemberReturnCode(DB_SELLERNAME_FAILED_C, "商户名称已存在");
+    
+    public static final int DB_TALENT_FAILED_C = 16000008;
+    public static final MemberReturnCode DB_TALENT_FAILED = new MemberReturnCode(DB_TALENT_FAILED_C, "用户非达人");
 
     /************************************** ORDER ********************************************/
     public static final int BIZ_ORDER_NOT_FOUND_C = 16001000;

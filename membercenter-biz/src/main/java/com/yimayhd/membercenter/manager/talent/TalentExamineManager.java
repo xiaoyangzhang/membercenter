@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,12 +79,19 @@ public class TalentExamineManager {
     public MemResult<Boolean> submitMerchantExamineInfo(ExamineDO examineDO) {
         MemResult<Boolean> result = new MemResult<Boolean>();
         try {
-            // do 需要修改
+            result = checkSellerNameIsExist(examineDO.getSellerName(), examineDO.getDomainId());
+            //判断sellerName是否已经存在
+            if(!result.isSuccess()){
+                logger.info("submitMerchantExaminInfo par:{} sellerName exists", JSONObject.toJSONString(examineDO));
+                return result;
+            }
+            // do 判断是否已经存在
             ExamineDO examine = examineDOMapper.selectBySellerId(examineDO);
             if (null != examine) {
                 // 判断是否已经审核通过
                 if (examine.getStatues() == ExamineStatus.EXAMIN_OK.getId()) {
                     result.setReturnCode(MemberReturnCode.DB_EXAMINE_FAILED);
+                    logger.info("submitMerchantExaminInfo par:{} has already checked", JSONObject.toJSONString(examineDO));
                     return result;
                 }
                 examineDOMapper.updateByPrimaryKey(unionAll(examineDO, examine));
@@ -98,6 +106,24 @@ public class TalentExamineManager {
         return result;
     }
     
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈根据sellerName检查是否已经存在〉
+     *
+     * @param sellerName
+     * @param domainId
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public MemResult<Boolean> checkSellerNameIsExist(String sellerName, int domainId){
+        MemResult<Boolean> merchantListResult = new MemResult<Boolean>();
+        if(StringUtils.isNotBlank(sellerName)){
+            merchantListResult = merchantRepo.getMerchantList(sellerName, domainId);
+        }
+        return merchantListResult;
+    }
     /**
      *
      * 功能描述: <br>
@@ -225,6 +251,12 @@ public class TalentExamineManager {
     public MemResult<Boolean> updateMerchantExamineById(ExamineDO examineDO) {
         MemResult<Boolean> baseResult = new MemResult<Boolean>();
         try {
+            baseResult = checkSellerNameIsExist(examineDO.getSellerName(), examineDO.getDomainId());
+            //判断sellerName是否已经存在
+            if(!baseResult.isSuccess()){
+                logger.error("updateMerchantExamineById par:{} sellerName exists", JSONObject.toJSONString(examineDO));
+                return baseResult;
+            }
             ExamineDO examine = examineDOMapper.selectBySellerId(examineDO);
             // 无审核记录
             if (null == examine) {

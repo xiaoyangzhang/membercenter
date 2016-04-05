@@ -13,6 +13,7 @@ import java.util.List;
 
 import com.yimayhd.membercenter.client.domain.CertificatesDO;
 import com.yimayhd.membercenter.client.dto.AccountDTO;
+import com.yimayhd.membercenter.client.dto.BankInfoDTO;
 import com.yimayhd.membercenter.client.dto.TalentInfoDTO;
 import com.yimayhd.membercenter.client.query.InfoQueryDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
@@ -98,4 +99,15 @@ public interface TalentInfoDealService {
      * @since [产品/模块版本](可选)
      */
     MemResult<Boolean> updateMerchantAccountInfo(AccountDTO accountDTO);
+    
+   /**
+    * 
+    * 功能描述: <br>
+    * 〈获取银行信息列表〉
+    *
+    * @return
+    * @see [相关类/方法](可选)
+    * @since [产品/模块版本](可选)
+    */
+    MemResult<List<BankInfoDTO>> queryBankList();
 }

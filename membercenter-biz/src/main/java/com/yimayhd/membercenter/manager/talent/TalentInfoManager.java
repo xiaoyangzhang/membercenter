@@ -82,19 +82,23 @@ public class TalentInfoManager {
         merchantPageQuery.setDomainId(talentQueryDTO.getDomainId());
         merchantPageQuery.setPageNo(talentQueryDTO.getPageNo());
         merchantPageQuery.setPageSize(talentQueryDTO.getPageSize());
-        merchantPageQuery.setServiceSort(talentQueryDTO.sortType ? SequenceEnum.DESC.getType() : SequenceEnum.ASC.getType());
-        //根据参数选择查询实现
-        if(StringUtils.isNotBlank(talentQueryDTO.getSearchWord())){
-            merchantPageQuery.setTitle(talentQueryDTO.getSearchWord());
-        }else{
-            merchantPageQuery.setServiceType(ServiceTypeOption.valueOfCode(talentQueryDTO.getTagId()).getOption());
+        merchantPageQuery
+                .setServiceSort(talentQueryDTO.sortType ? SequenceEnum.DESC.getType() : SequenceEnum.ASC.getType());
+        // 根据参数选择查询实现
+        if (StringUtils.isNotBlank(talentQueryDTO.getSearchWord())) {
+            merchantPageQuery.setTitle(talentQueryDTO.getSearchWord().toUpperCase());
+        } else {
+            //达人类型是否为空
+            if (StringUtils.isNotBlank(talentQueryDTO.getTagId())) {
+                merchantPageQuery.setServiceType(ServiceTypeOption.valueOfCode(talentQueryDTO.getTagId()).getOption());
+            }
         }
-        if (pageResult.isSuccess()) {
-            MemPageResult<MerchantUserDTO> result = merchantRepo.getMerchantUserList(merchantPageQuery);
-            pageResult = TalentConverter.merchantListToTalentList(pageResult, result);
-        }
+
+        MemPageResult<MerchantUserDTO> result = merchantRepo.getMerchantUserList(merchantPageQuery);
+        pageResult = TalentConverter.merchantListToTalentList(pageResult, result);
+
         logger.info("queryTalentList param:{} return:{}", JSONObject.toJSONString(talentQueryDTO),
-                JSONObject.toJSONString(pageResult.getReturnCode()));
+                JSONObject.toJSONString(result.getReturnCode()));
         return pageResult;
     }
 
@@ -111,7 +115,7 @@ public class TalentInfoManager {
     public MemPageResult<MerchantInfoDO> queryMerchantList(MerchantQueryDTO merchantQueryDTO) {
         MemPageResult<MerchantInfoDO> baseResult = new MemPageResult<MerchantInfoDO>();
         MerchantPageQuery merchantPageQuery = new MerchantPageQuery();
-        merchantPageQuery.setOption(MerchantOption.valueOfCode(merchantQueryDTO.getMerchantType()).getOption());
+        merchantPageQuery.setOption(MerchantOption.valueOfName(merchantQueryDTO.getMerchantType()).getOption());
         merchantPageQuery.setDomainId(merchantQueryDTO.getDomainId());
         merchantPageQuery.setPageNo(merchantQueryDTO.getPageNo());
         merchantPageQuery.setPageSize(merchantQueryDTO.getPageSize());

@@ -21,9 +21,11 @@ import com.yimayhd.commentcenter.client.domain.PicTextDO;
 import com.yimayhd.commentcenter.client.dto.ComentDEditTO;
 import com.yimayhd.commentcenter.client.dto.ComentDTO;
 import com.yimayhd.commentcenter.client.dto.ComentQueryDTO;
+import com.yimayhd.commentcenter.client.enums.IconType;
 import com.yimayhd.commentcenter.client.enums.PictureText;
 import com.yimayhd.commentcenter.client.result.PicTextResult;
 import com.yimayhd.membercenter.MemberReturnCode;
+import com.yimayhd.membercenter.client.domain.BankDO;
 import com.yimayhd.membercenter.client.domain.PictureTextDO;
 import com.yimayhd.membercenter.client.domain.talent.TalentInfoDO;
 import com.yimayhd.membercenter.client.dto.PictureTextDTO;
@@ -32,13 +34,17 @@ import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.converter.MerchantConverter;
 import com.yimayhd.membercenter.converter.TalentConverter;
 import com.yimayhd.membercenter.converter.UserConverter;
+import com.yimayhd.membercenter.mapper.BankDOMapper;
 import com.yimayhd.membercenter.repo.CommentRepo;
 import com.yimayhd.membercenter.repo.MerchantRepo;
 import com.yimayhd.membercenter.repo.UserRepo;
+import com.yimayhd.membercenter.util.ParmCheckUtil;
 import com.yimayhd.user.client.domain.MerchantDO;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.dto.MerchantDTO;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
+import com.yimayhd.user.client.enums.MerchantOption;
+import com.yimayhd.user.client.enums.UserOptions;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -64,6 +70,9 @@ public class TalentBackInfoManager {
     @Autowired
     TalentExamineManager examineManager;
 
+    @Autowired
+    BankDOMapper bankDOMapper;
+
     /**
      * 
      * 功能描述: <br>
@@ -81,6 +90,11 @@ public class TalentBackInfoManager {
         logger.debug(" user:{}, picText:{}, domainId:{} saveTalentBackInfo begin --->",
                 JSONObject.toJSONString(talentInfoDO), JSONObject.toJSONString(pictureTextDTO), domainId);
         MemResult<Boolean> baseResult = new MemResult<Boolean>();
+        // 判断是否是达人
+        // if(!checkIsTalent(talentInfoDO.getId())){
+        // baseResult.setReturnCode(MemberReturnCode.DB_TALENT_FAILED);
+        // return baseResult;
+        // }
         // userDO转换
         UserDO userDO = UserConverter.talentInfoConverterToUserDO(talentInfoDO);
         // 保存user信息
@@ -99,6 +113,9 @@ public class TalentBackInfoManager {
                 // 店铺更新ID
                 merchantDO.setId(merchantResult.getValue().getMerchantDO().getId());
                 MerchantDTO merchantDTO = MerchantConverter.merchantDOToDTO(merchantDO);
+                // 目前不需要
+                // merchantDTO.setOption(userOption(merchantDO.getOption(),
+                // merchantResult.getValue().getMerchantDO().getOption()));
                 // 更新店铺信息
                 MemResult<Boolean> merchantUpdateResult = merchantRepo.updateMerchantInfo(merchantDTO);
                 if (merchantUpdateResult.isSuccess()) {
@@ -142,6 +159,50 @@ public class TalentBackInfoManager {
             logger.info("saveTalentBackInfo userId:{} updateUserDO error", talentInfoDO.getId());
             return baseResult;
         }
+    }
+
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈userOption更新〉
+     *
+     * @param currentOption
+     * @param lastOption
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public static long userOption(long currentOption, long lastOption) {
+        List<MerchantOption> merchantOptions = MerchantOption.getContainedMerchantOptions(lastOption);
+        for (MerchantOption merchantOption : merchantOptions) {
+            if (merchantOption.getOption() == currentOption) {
+                return lastOption;
+            }
+        }
+        merchantOptions.addAll(MerchantOption.getContainedMerchantOptions(currentOption));
+        return MerchantOption.addOption(merchantOptions.toArray(new MerchantOption[merchantOptions.size()]));
+    }
+
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈校验用户是否是达人〉
+     *
+     * @param userId
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public boolean checkIsTalent(long userId) {
+        // 只查询用户信息
+        UserDO userDO = userRepo.getUserDOById(userId);
+        if (null != userDO) {
+            if (UserOptions.USER_TALENT.has(userDO.getOptions())) {
+                return true;
+            }
+        }
+        logger.info("checkIsTalent userId:{} isn't talent,return false", userId);
+        return false;
     }
 
     /**
@@ -230,13 +291,12 @@ public class TalentBackInfoManager {
         TalentInfoDTO talentInfoDTO = new TalentInfoDTO();
         talentInfoDTO.setDomainId(domainId);
         // 查询是否已经入住
-        MemResult<MerchantUserDTO> merchantResult = merchantRepo.queryMerchantBySellerId(sellerId,
-                domainId);
+        MemResult<MerchantUserDTO> merchantResult = merchantRepo.queryMerchantBySellerId(sellerId, domainId);
         if (merchantResult.isSuccess()) {
             logger.info("queryTalentBackInfo userId:{} queryMerchantBySellerId success ", sellerId);
             // 查询全部信息
             TalentInfoDO talentInfoDO = TalentConverter.merchantToTalent(merchantResult.getValue().getMerchantDO(),
-                    merchantResult.getValue().getUserDO());
+                    merchantResult.getValue().getUserDO(), IconType.EXPERT.getType());
             // 基本信息
             talentInfoDTO.setTalentInfoDO(talentInfoDO);
             MemResult<PicTextResult> picText = queryPictureText(domainId, talentInfoDO.getId());
@@ -320,5 +380,32 @@ public class TalentBackInfoManager {
             pictureTextList.add(pictureTextDO);
         }
         return pictureTextList;
+    }
+
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈查询银行列表〉
+     *
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public MemResult<List<BankDO>> queryBankInfo() {
+        MemResult<List<BankDO>> baseResult = new MemResult<List<BankDO>>();
+        try {
+            List<BankDO> bankList = bankDOMapper.selectBankNameAndId();
+            // logger.info("queryBankInfo bankList size is:{} ", e);
+            if (ParmCheckUtil.checkListNull(bankList)) {
+                baseResult.setReturnCode(new MemberReturnCode(16000009,"未获取到银行列表"));
+            } else {
+                baseResult.setValue(bankList);
+            }
+            return baseResult;
+        } catch (Exception e) {
+            baseResult.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+            logger.error("queryBankInfo error:{} ", e);
+        }
+        return baseResult;
     }
 }

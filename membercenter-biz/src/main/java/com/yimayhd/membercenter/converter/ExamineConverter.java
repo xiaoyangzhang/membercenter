@@ -309,11 +309,12 @@ public class ExamineConverter {
         MerchantDO merchantDO = new MerchantDO();
         merchantDO.setSellerId(examineDO.getSellerId());
         merchantDO.setDomainId(examineDO.getDomainId());
-        merchantDO.setName(examineDO.getSellerName());
         merchantDO.setMerchantPrincipalTel(String.valueOf(examineDO.getTelNum()));
         //信息明细
         Map<String, String> featureMap = PicFeatureUtil.fromString(examineDO.getFeature());
         merchantDO.setAddress(featureMap.get(ExamineDetail.ADDRESS.getId()));
+        //店铺名称
+        merchantDO.setName(featureMap.get(ExamineDetail.MERCHANT_NAME.getId()));
         //达人
         if(ExamineType.TALENT.getId() == examineDO.getType()){
             merchantDO.setOption(MerchantOption.TALENT.getOption());

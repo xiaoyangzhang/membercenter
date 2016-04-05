@@ -21,6 +21,7 @@ import com.yimayhd.membercenter.client.domain.CertificatesDO;
 import com.yimayhd.membercenter.client.domain.PictureTextDO;
 import com.yimayhd.membercenter.client.domain.talent.TalentInfoDO;
 import com.yimayhd.membercenter.client.dto.AccountDTO;
+import com.yimayhd.membercenter.client.dto.BankInfoDTO;
 import com.yimayhd.membercenter.client.dto.PictureTextDTO;
 import com.yimayhd.membercenter.client.dto.TalentInfoDTO;
 import com.yimayhd.membercenter.client.query.InfoQueryDTO;
@@ -61,27 +62,38 @@ public class TalentInfoDealTest extends BaseTest {
             String pictureUrl = "T1jyJTBXAT1RXrhCrK.jpg";
             TalentInfoDTO talentInfoDTO = new TalentInfoDTO();
             TalentInfoDO talentInfoDO = new TalentInfoDO();
-            talentInfoDO.setId(userId + 2);
+            talentInfoDO.setId(userId + 4);
             talentInfoDO.setAvatar(pictureUrl);
-            talentInfoDO.setNickName("pztyz1"  + i);
+            talentInfoDO.setNickName("pztyz"  + i);
             talentInfoDO.setReallyName("刘二斌121"  + i);
             talentInfoDO.setGender(1);
             talentInfoDO.setServeDesc("大家好才是真的好  test" + i);
             talentInfoDO.setServeCount(100 + i);
             talentInfoDO.setCity("北京市");
             talentInfoDO.setCityCode(110100);
+            talentInfoDO.setServeDesc("飞吧飞吧飞");
             List<String> pictures = new ArrayList<String>();
             pictures.add(pictureUrl);
             pictures.add(pictureUrl);
             talentInfoDO.setPictures(pictures);
 
             List<CertificatesDO> certificates = new ArrayList<CertificatesDO>();
-            CertificatesDO certificatesDO = new CertificatesDO();
-            certificatesDO.setId(Integer.valueOf(ServiceTypeOption.TRAVEL.getCode()));
-            certificatesDO.setName(ServiceTypeOption.TRAVEL.getDesc());
-            certificatesDO.setType(Integer.valueOf(MerchantOption.TALENT.getCode()));
-            certificates.add(certificatesDO);
-//            talentInfoDO.setCertificates(certificates);
+            CertificatesDO certificatesDO1 = new CertificatesDO();
+            certificatesDO1.setId(Integer.valueOf(ServiceTypeOption.TRAVEL.getCode()));
+            certificatesDO1.setName(ServiceTypeOption.TRAVEL.getDesc());
+            certificatesDO1.setType(Integer.valueOf(MerchantOption.TALENT.getCode()));
+            certificates.add(certificatesDO1);
+            CertificatesDO certificatesDO2 = new CertificatesDO();
+            certificatesDO2.setId(Integer.valueOf(ServiceTypeOption.ASK.getCode()));
+            certificatesDO2.setName(ServiceTypeOption.ASK.getDesc());
+            certificatesDO2.setType(Integer.valueOf(MerchantOption.TALENT.getCode()));
+            certificates.add(certificatesDO2);
+            CertificatesDO certificatesDO3 = new CertificatesDO();
+            certificatesDO3.setId(Integer.valueOf(ServiceTypeOption.CAR.getCode()));
+            certificatesDO3.setName(ServiceTypeOption.CAR.getDesc());
+            certificatesDO3.setType(Integer.valueOf(MerchantOption.TALENT.getCode()));
+            certificates.add(certificatesDO3);
+            talentInfoDO.setCertificates(certificates);
             talentInfoDO.setType(true);
             talentInfoDO.setTelNum("18651664499");
             talentInfoDO.setBirthday(new Date());
@@ -106,7 +118,7 @@ public class TalentInfoDealTest extends BaseTest {
 
     @Test
     public void queryTalentInfoByUserId() {
-        MemResult<TalentInfoDTO> result = talentInfoDealService.queryTalentInfoByUserId(userId, domainId);
+        MemResult<TalentInfoDTO> result = talentInfoDealService.queryTalentInfoByUserId(19000, domainId);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
         System.out.println("----->");
@@ -116,7 +128,7 @@ public class TalentInfoDealTest extends BaseTest {
     public void queryMerchantAccountInfoById() {
         InfoQueryDTO infoQueryDTO = new InfoQueryDTO();
         infoQueryDTO.setDomainId(domainId);
-        infoQueryDTO.setSellerId(userId);
+        infoQueryDTO.setSellerId(19000);
         infoQueryDTO.setType(ExamineType.TALENT.getId());
         MemResult<AccountDTO> result = talentInfoDealService.queryMerchantAccountInfoById(infoQueryDTO);
         System.out.println("----->");
@@ -137,6 +149,14 @@ public class TalentInfoDealTest extends BaseTest {
         accountDTO.setFinanceTel("18651664499");
         accountDTO.setFinanceMail("test@yimayholiday.com");
         MemResult<Boolean> result = talentInfoDealService.updateMerchantAccountInfo(accountDTO);
+        System.out.println("----->");
+        System.out.println("*****  " + JSONObject.toJSONString(result));
+        System.out.println("----->");
+    }
+    
+    @Test
+    public void queryBankList(){
+        MemResult<List<BankInfoDTO>> result = talentInfoDealService.queryBankList();
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
         System.out.println("----->");

@@ -47,6 +47,10 @@ public class TalentInfoDO implements Serializable {
     
     private int cityCode;//城市编码
     
+    private String province;//省份
+    
+    private int provinceCode;//省份编码
+    
     private List<String> pictures;//轮播图
     
     private List<CertificatesDO> certificates;//认证信息
@@ -167,6 +171,22 @@ public class TalentInfoDO implements Serializable {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public int getProvinceCode() {
+        return provinceCode;
+    }
+
+    public void setProvinceCode(int provinceCode) {
+        this.provinceCode = provinceCode;
     }
     
 }

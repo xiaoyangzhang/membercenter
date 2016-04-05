@@ -92,6 +92,9 @@ public class MerchantRepo {
             BasePageResult<MerchantUserDTO> result = merchantService.getMerchantUserList(merchantPageQuery);
             if (result.isSuccess() && null != result.getList()) {
                 baseResult.setList(result.getList());
+                baseResult.setPageNo(result.getPageNo());
+                baseResult.setTotalCount(result.getTotalCount());
+                baseResult.setPageSize(result.getPageSize());
                 return baseResult;
             }
             baseResult.setReturnCode(MemberReturnCode.MEMBER_NOT_FOUND);
@@ -184,12 +187,11 @@ public class MerchantRepo {
             merchantQuery.setDomainId(domainId);
             merchantQuery.setName(sellerName);
             BaseResult<List<MerchantDO>> merchantResult = merchantService.getMerchantList(merchantQuery);
-            if(merchantResult.isSuccess() && !ParmCheckUtil.checkListNull(merchantResult.getValue())){
+            //返回列表为空   不存在sellerName
+            if(merchantResult.isSuccess() && ParmCheckUtil.checkListNull(merchantResult.getValue())){
                 return baseResult;
             }
-            baseResult.setErrorCode(merchantResult.getErrorCode());
-            baseResult.setErrorMsg(merchantResult.getResultMsg());
-            baseResult.setSuccess(false);
+            baseResult.setReturnCode(MemberReturnCode.DB_SELLERNAME_FAILED);
             logger.debug("getMerchantList par:{} return error:{}", JSONObject.toJSONString(merchantQuery),
                     JSONObject.toJSONString(merchantResult));
         }catch(Exception e){

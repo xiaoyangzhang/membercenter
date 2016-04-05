@@ -37,76 +37,89 @@ public class MerchantApiImpl implements MerchantApi {
 
     @Autowired
     TalentInfoManager talentInfoManager;
-    
+
     /**
      * 查询商家基本信息
      */
     @Override
     public Merchant queryMerchantInfo(int appId, long domainId, long deviceId, long userId, int versionCode,
             long merchantId) {
-        if (0 >= merchantId) {
-            DubboExtProperty.setErrorCode(MemberReturnCode.PARAMTER_ERROR);
-            logger.info("getTalentDetail merchantId is null");
-            return null;
-        }
-        MemResult<MerchantUserDTO> result = talentInfoManager.queryTalentInfo(merchantId, domainId);
-        if (result.isSuccess()) {
-            MerchantInfoDO merchantInfoDO = MerchantConverter.merchantToDO(result.getValue().getMerchantDO(),
-                    result.getValue().getUserDO(), IconType.MUSTSHOP.getType());
+        try {
+            if (0 >= merchantId) {
+                DubboExtProperty.setErrorCode(MemberReturnCode.PARAMTER_ERROR);
+                logger.info("getTalentDetail merchantId is null");
+                return null;
+            }
+            MemResult<MerchantUserDTO> result = talentInfoManager.queryTalentInfo(merchantId, domainId);
             Merchant merchant = new Merchant();
-            merchant.sellerId = merchantInfoDO.getSellerId();
-            merchant.name = merchantInfoDO.getName();
-            merchant.avgprice = merchantInfoDO.getAvgprice();
-            merchant.serviceTel = merchantInfoDO.getServiceTel();
-            merchant.serviceTime = merchantInfoDO.getServiceTime();
-            merchant.cityCode = String.valueOf(merchantInfoDO.getCityCode());
-            merchant.city = merchantInfoDO.getCityName();
-            merchant.latitude = merchantInfoDO.getLatitude();
-            merchant.longitude = merchantInfoDO.getLongitude();
-            merchant.icon = merchantInfoDO.getIcon();
-            //技能数据转换
-            merchant.certificates = TalentConverter.certificateConvert(merchantInfoDO.getCertificates());
-            merchant.certificateType = IconType.MUSTSHOP.getType();
+            if (result.isSuccess()) {
+                MerchantInfoDO merchantInfoDO = MerchantConverter.merchantToDO(result.getValue().getMerchantDO(),
+                        IconType.MUSTSHOP.getType());
+                merchant.sellerId = merchantInfoDO.getSellerId();
+                merchant.name = merchantInfoDO.getName();
+                merchant.avgprice = merchantInfoDO.getAvgprice();
+                merchant.address = merchantInfoDO.getMerchantAddress();
+                merchant.serviceTel = merchantInfoDO.getServiceTel();
+                merchant.serviceTime = merchantInfoDO.getServiceTime();
+                merchant.cityCode = String.valueOf(merchantInfoDO.getCityCode());
+                merchant.city = merchantInfoDO.getCityName();
+                merchant.latitude = merchantInfoDO.getLatitude();
+                merchant.longitude = merchantInfoDO.getLongitude();
+                merchant.icon = merchantInfoDO.getIcon();
+                // 技能数据转换
+                merchant.certificates = TalentConverter.certificateConvert(merchantInfoDO.getCertificates());
+                merchant.certificateType = IconType.MUSTSHOP.getType();
+                // return merchant;
+            }
+            // DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
             return merchant;
+        } catch (Exception e) {
+            logger.error("queryMerchantInfo par:{} error:{}", merchantId, e);
+            DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
         }
-        DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
         return null;
     }
 
     /**
-     *  查询商家列表信息
+     * 查询商家列表信息
      */
     @Override
     public MerchantList queryMerchantList(int appId, long domainId, long deviceId, long userId, int versionCode,
             MerchantQuery mechantQuery) {
-        //参数校验
-        if (null == mechantQuery || StringUtils.isBlank(mechantQuery.merchantType)
-                || null == MerchantOption.valueOfCode(mechantQuery.merchantType)) {
-            DubboExtProperty.setErrorCode(MemberReturnCode.PARAMTER_ERROR);
-            logger.info("queryMerchantList mechantQuery is null");
-            return null;
-        }
-        MerchantQueryDTO merchantQueryDTO = MerchantConverter.merchantQuery(mechantQuery, domainId);
-        MemPageResult<MerchantInfoDO> pageResult = talentInfoManager.queryMerchantList(merchantQueryDTO);
-        if (pageResult.isSuccess()) {
-            MerchantList merchantList = new MerchantList();
-            merchantList.pageNo = pageResult.getPageNo();
-            merchantList.hasNext = pageResult.isHasNext();
-            List<MerchantInfo> list = new ArrayList<MerchantInfo>();
-            for (MerchantInfoDO merchantInfoDO : pageResult.getList()) {
-                MerchantInfo merchant = new MerchantInfo();
-                merchant.sellerId = merchantInfoDO.getSellerId();
-                merchant.name = merchantInfoDO.getName();
-                merchant.avgprice = merchantInfoDO.getAvgprice();
-                merchant.cityCode = String.valueOf(merchantInfoDO.getCityCode());
-                merchant.city = merchantInfoDO.getCityName();
-                merchant.icon = merchantInfoDO.getIcon();
-                list.add(merchant);
+        try {
+            // 参数校验
+            if (null == mechantQuery || StringUtils.isBlank(mechantQuery.merchantType)
+                    || null == MerchantOption.valueOfName(mechantQuery.merchantType)) {
+                DubboExtProperty.setErrorCode(MemberReturnCode.PARAMTER_ERROR);
+                logger.info("queryMerchantList mechantQuery is null");
+                return null;
             }
-            merchantList.merchantList = list;
+            MerchantQueryDTO merchantQueryDTO = MerchantConverter.merchantQuery(mechantQuery, domainId);
+            MemPageResult<MerchantInfoDO> pageResult = talentInfoManager.queryMerchantList(merchantQueryDTO);
+            MerchantList merchantList = new MerchantList();
+            if (pageResult.isSuccess()) {
+                merchantList.pageNo = pageResult.getPageNo();
+                merchantList.hasNext = pageResult.isHasNext();
+                List<MerchantInfo> list = new ArrayList<MerchantInfo>();
+                for (MerchantInfoDO merchantInfoDO : pageResult.getList()) {
+                    MerchantInfo merchant = new MerchantInfo();
+                    merchant.sellerId = merchantInfoDO.getSellerId();
+                    merchant.name = merchantInfoDO.getName();
+                    merchant.avgprice = merchantInfoDO.getAvgprice();
+                    merchant.cityCode = String.valueOf(merchantInfoDO.getCityCode());
+                    merchant.city = merchantInfoDO.getCityName();
+                    merchant.icon = merchantInfoDO.getIcon();
+                    list.add(merchant);
+                }
+                merchantList.merchantList = list;
+                // return merchantList;
+            }
+            // DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
             return merchantList;
+        } catch (Exception e) {
+            logger.error("queryMerchantList par:{} error:{}", mechantQuery, e);
+            DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
         }
-        DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
         return null;
     }
 }

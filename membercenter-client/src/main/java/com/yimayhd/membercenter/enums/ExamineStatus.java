@@ -39,4 +39,13 @@ public enum ExamineStatus {
     public int getId() {
         return id;
     }
+
+    public static ExamineStatus getByStatus(int status) {
+        for (ExamineStatus examineStatus : values()) {
+            if (examineStatus.getId() == status) {
+                return examineStatus;
+            }
+        }
+        return null;
+    }
 }

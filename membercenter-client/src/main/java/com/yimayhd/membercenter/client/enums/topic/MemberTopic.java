@@ -4,7 +4,8 @@ import com.yimayhd.membercenter.client.constant.MemberConstant;
 
 public enum MemberTopic {
 	MEMBER_TAKE_EFFECT(MemberConstant.TOPIC_MEMBER, "MEMBER_TAKE_EFFECT", "会员生效"),
-	MEMBER_OVERDUE(MemberConstant.TOPIC_MEMBER, "MEMBER_OVERDUE", "会员过期")
+	MEMBER_OVERDUE(MemberConstant.TOPIC_MEMBER, "MEMBER_OVERDUE", "会员过期"),
+	EXAMINE_RESULT(MemberConstant.TOPIC_MEMBER,"EXAMINE_RESULT","商户审核结果")
 	
 	;
 

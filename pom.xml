@@ -39,6 +39,8 @@
 		<point.version>1.0-SNAPSHOT</point.version>
 		<commentcenter.version>1.0.2-SNAPSHOT</commentcenter.version>
 		<fhtd.version>0.1.0-SNAPSHOT</fhtd.version>
+		<stone.version>0.0.1-SNAPSHOT</stone.version>
+		<msg.version>0.0.6-SNAPSHOT</msg.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -457,8 +459,34 @@
 			<dependency>
 				<groupId>com.yimayhd.stone</groupId>
 				<artifactId>stone</artifactId>
+<<<<<<< HEAD
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
+=======
+				<version>${stone.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.yimayhd.msgcenter</groupId>
+				<artifactId>msgcenter-client</artifactId>
+				<version>${msg.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>ch.qos.logback</groupId>
+						<artifactId>logback-classic</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>ch.qos.logback</groupId>
+						<artifactId>logback-core</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+
+>>>>>>> bbdf5aacbafb227879e7454caf7dc48dd5cf9d21
 		</dependencies>
 	</dependencyManagement>
 	<build>

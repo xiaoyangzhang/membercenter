@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import com.yimayhd.membercenter.client.enums.topic.MemberTopic;
+import com.yimayhd.membercenter.mq.MsgSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +67,9 @@ public class TalentExamineManager {
     
     @Autowired
     UserOptionRepo userOptionRepo;
+
+    @Autowired
+    MsgSender msgSender;
 
     /**
      * 
@@ -286,6 +291,10 @@ public class TalentExamineManager {
                             JSONObject.toJSONString(merchantDO), JSONObject.toJSONString(memResult.getReturnCode()));
                 //更新user option
                 addUserOption(examineDO.getSellerId(), examineDO.getType());
+                examineDO.setTelNum(examine.getTelNum());
+                //发送审核状态到mq消息
+                msgSender.sendMessage(examineDO,MemberTopic.EXAMINE_RESULT.getTopic(),MemberTopic.EXAMINE_RESULT.getTags());
+
             }
             logger.info("updateMerchantExaminById param:{} update success", JSONObject.toJSONString(examineDO));
             // baseResult.setReturnCode(MemberReturnCode.DB_UPDATE_FAILED);

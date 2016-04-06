@@ -40,6 +40,9 @@ public class Merchant implements Serializable {
     @Description("店铺图标")
     public String icon;
     
+    @Description("店铺背景图")
+    public String backPic;
+    
     @Description("经度")
     public double longitude;
     

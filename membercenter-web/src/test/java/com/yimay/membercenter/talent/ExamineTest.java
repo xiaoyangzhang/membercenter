@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.fastjson.JSONObject;
 import com.yimayhd.membercenter.client.dto.ExamineDealDTO;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
+import com.yimayhd.membercenter.client.dto.ExamineResultDTO;
 import com.yimayhd.membercenter.client.query.InfoQueryDTO;
 import com.yimayhd.membercenter.client.query.examine.ExaminePageQueryDTO;
 import com.yimayhd.membercenter.client.result.MemPageResult;
@@ -57,7 +58,7 @@ public class ExamineTest extends BaseTest {
         examineQueryDTO.setDomainId(domainId);
         examineQueryDTO.setSellerId(userId);
 //        examineQueryDTO.setType(ExamineType.TALENT.getId());
-        MemResult<String> result = examineDealService.queryExamineDealResult(examineQueryDTO);
+        MemResult<ExamineResultDTO> result = examineDealService.queryExamineDealResult(examineQueryDTO);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
         System.out.println("----->");

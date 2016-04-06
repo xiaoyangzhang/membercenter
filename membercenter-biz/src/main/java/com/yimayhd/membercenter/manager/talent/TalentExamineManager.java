@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import com.yimayhd.membercenter.client.enums.topic.MemberTopic;
-import com.yimayhd.membercenter.mq.MsgSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,13 +61,12 @@ public class TalentExamineManager {
 
     @Autowired
     IDPool examineDetailIdPool;
-    
-    
+
     @Autowired
     UserOptionRepo userOptionRepo;
 
-    @Autowired
-    MsgSender msgSender;
+    // @Autowired
+    // MsgSender msgSender;
 
     /**
      * 
@@ -85,8 +82,8 @@ public class TalentExamineManager {
         MemResult<Boolean> result = new MemResult<Boolean>();
         try {
             result = checkSellerNameIsExist(examineDO.getSellerName(), examineDO.getDomainId());
-            //判断sellerName是否已经存在
-            if(!result.isSuccess()){
+            // 判断sellerName是否已经存在
+            if (!result.isSuccess()) {
                 logger.info("submitMerchantExaminInfo par:{} sellerName exists", JSONObject.toJSONString(examineDO));
                 return result;
             }
@@ -96,7 +93,8 @@ public class TalentExamineManager {
                 // 判断是否已经审核通过
                 if (examine.getStatues() == ExamineStatus.EXAMIN_OK.getId()) {
                     result.setReturnCode(MemberReturnCode.DB_EXAMINE_FAILED);
-                    logger.info("submitMerchantExaminInfo par:{} has already checked", JSONObject.toJSONString(examineDO));
+                    logger.info("submitMerchantExaminInfo par:{} has already checked",
+                            JSONObject.toJSONString(examineDO));
                     return result;
                 }
                 examineDOMapper.updateByPrimaryKey(unionAll(examineDO, examine));
@@ -110,7 +108,7 @@ public class TalentExamineManager {
         }
         return result;
     }
-    
+
     /**
      * 
      * 功能描述: <br>
@@ -122,32 +120,32 @@ public class TalentExamineManager {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> checkSellerNameIsExist(String sellerName, int domainId){
+    public MemResult<Boolean> checkSellerNameIsExist(String sellerName, int domainId) {
         MemResult<Boolean> merchantListResult = new MemResult<Boolean>();
-        if(StringUtils.isNotBlank(sellerName)){
+        if (StringUtils.isNotBlank(sellerName)) {
             merchantListResult = merchantRepo.getMerchantList(sellerName, domainId);
         }
         return merchantListResult;
     }
+
     /**
      *
      * 功能描述: <br>
-     * 〈对象取并集〉
-     *  分页提交新增
-     *  还好代码灵活
+     * 〈对象取并集〉 分页提交新增 还好代码灵活
+     * 
      * @param examineMater
      * @param examineSlave
      * @return
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    private static ExamineDO unionAll(ExamineDO examineMater, ExamineDO examineSlave){
+    private static ExamineDO unionAll(ExamineDO examineMater, ExamineDO examineSlave) {
         examineMater.setId(examineSlave.getId());
         // 图片
         Map<String, String> pictureMasterMap = PicFeatureUtil.fromString(examineMater.getPicturesUrl());
         // 图片
         Map<String, String> pictureSlaveMap = PicFeatureUtil.fromString(examineSlave.getPicturesUrl());
-        //新覆盖旧
+        // 新覆盖旧
         pictureSlaveMap.putAll(pictureMasterMap);
         examineMater.setPicturesUrl(PicFeatureUtil.toString(pictureSlaveMap));
         // 信息明细
@@ -162,11 +160,11 @@ public class TalentExamineManager {
         Map<String, String> certificateSlaveMap = PicFeatureUtil.fromString(examineSlave.getCertificate());
         certificateSlaveMap.putAll(certificateMasterMap);
         examineMater.setCertificate(PicFeatureUtil.toString(certificateSlaveMap));
-        
+
         examineMater.setGmtModified(new Date());
         return examineMater;
     }
-    
+
     /**
      * 
      * 功能描述: <br>
@@ -257,8 +255,8 @@ public class TalentExamineManager {
         MemResult<Boolean> baseResult = new MemResult<Boolean>();
         try {
             baseResult = checkSellerNameIsExist(examineDO.getSellerName(), examineDO.getDomainId());
-            //判断sellerName是否已经存在
-            if(!baseResult.isSuccess()){
+            // 判断sellerName是否已经存在
+            if (!baseResult.isSuccess()) {
                 logger.error("updateMerchantExamineById par:{} sellerName exists", JSONObject.toJSONString(examineDO));
                 return baseResult;
             }
@@ -288,12 +286,12 @@ public class TalentExamineManager {
                 // 初始化店铺信息
                 MemResult<MerchantDO> memResult = merchantRepo.saveMerchant(merchantDO);
                 logger.info("updateMerchantExaminById param:{} saveMerchant return:{}",
-                            JSONObject.toJSONString(merchantDO), JSONObject.toJSONString(memResult.getReturnCode()));
-                //更新user option
+                        JSONObject.toJSONString(merchantDO), JSONObject.toJSONString(memResult.getReturnCode()));
+                // 更新user option
                 addUserOption(examineDO.getSellerId(), examineDO.getType());
                 examineDO.setTelNum(examine.getTelNum());
-                //发送审核状态到mq消息
-                msgSender.sendMessage(examineDO,MemberTopic.EXAMINE_RESULT.getTopic(),MemberTopic.EXAMINE_RESULT.getTags());
+                // 发送审核状态到mq消息
+                // msgSender.sendMessage(examineDO,MemberTopic.EXAMINE_RESULT.getTopic(),MemberTopic.EXAMINE_RESULT.getTags());
 
             }
             logger.info("updateMerchantExaminById param:{} update success", JSONObject.toJSONString(examineDO));
@@ -306,7 +304,6 @@ public class TalentExamineManager {
         return baseResult;
     }
 
-    
     /**
      * 
      * 功能描述: <br>
@@ -318,20 +315,22 @@ public class TalentExamineManager {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> addUserOption(long userId, int type){
+    public MemResult<Boolean> addUserOption(long userId, int type) {
         List<UserOptions> userOptionsList = new ArrayList<UserOptions>();
-        //达人
-        if(ExamineType.TALENT.getId() == type){
+        // 达人
+        if (ExamineType.TALENT.getId() == type) {
             userOptionsList.add(UserOptions.TRAVEL_KA);
-            //达人默认大V
+            // 达人默认大V
             userOptionsList.add(UserOptions.CERTIFICATED);
-        }else{
+        } else {
             userOptionsList.add(UserOptions.COMMERCIAL_TENANT);
         }
         MemResult<Boolean> optionsResult = userOptionRepo.addUserOption(userId, userOptionsList);
-        logger.info("addUserOption userId:{}, list.size:{} add return:{}", userId, userOptionsList.size(), JSONObject.toJSONString(optionsResult));
+        logger.info("addUserOption userId:{}, list.size:{} add return:{}", userId, userOptionsList.size(),
+                JSONObject.toJSONString(optionsResult));
         return optionsResult;
     }
+
     /**
      * 
      * 功能描述: <br>

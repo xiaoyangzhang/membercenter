@@ -66,6 +66,7 @@ public class MerchantApiImpl implements MerchantApi {
                 merchant.latitude = merchantInfoDO.getLatitude();
                 merchant.longitude = merchantInfoDO.getLongitude();
                 merchant.icon = merchantInfoDO.getIcon();
+                merchant.backPic = merchantInfoDO.getMerchantBackPic();
                 // 技能数据转换
                 merchant.certificates = TalentConverter.certificateConvert(merchantInfoDO.getCertificates());
                 merchant.certificateType = IconType.MUSTSHOP.getType();

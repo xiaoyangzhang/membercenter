@@ -44,6 +44,8 @@ public class MemberReturnCode extends AbstractReturnCode {
     public static final int DB_TALENT_FAILED_C = 16000008;
     public static final MemberReturnCode DB_TALENT_FAILED = new MemberReturnCode(DB_TALENT_FAILED_C, "用户非达人");
 
+    public static final int DB_BANK_FAILED_C = 16000009;
+    public static final MemberReturnCode DB_BANK_FAILED = new MemberReturnCode(DB_BANK_FAILED_C, "未获取到银行列表");
     /************************************** ORDER ********************************************/
     public static final int BIZ_ORDER_NOT_FOUND_C = 16001000;
     public static final MemberReturnCode BIZ_ORDER_NOT_FOUND = new MemberReturnCode(BIZ_ORDER_NOT_FOUND_C, "订单未找到");

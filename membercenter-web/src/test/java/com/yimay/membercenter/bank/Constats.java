@@ -38,13 +38,13 @@ public class Constats {
         provinceMap.put("10","江苏省");
         provinceMap.put("11","浙江省");
         provinceMap.put("12","安徽省");
-//        provinceMap.put("13","福建省");
+        provinceMap.put("13","福建省");
         provinceMap.put("14","江西省");
-//        provinceMap.put("15","山东省");
-//        provinceMap.put("16","河南省");
-//        provinceMap.put("17","湖北省");
-//        provinceMap.put("18","湖南省");
-//        provinceMap.put("19","广东省");
+        provinceMap.put("15","山东省");
+        provinceMap.put("16","河南省");
+        provinceMap.put("17","湖北省");
+        provinceMap.put("18","湖南省");
+        provinceMap.put("19","广东省");
         provinceMap.put("20","广西壮族自治区");
         provinceMap.put("21","海南省");
         provinceMap.put("22","四川省");
@@ -59,7 +59,7 @@ public class Constats {
         provinceMap.put("31","新疆维吾尔族自治区");
         provinceMap.put("32","台湾");
         provinceMap.put("33","香港");
-//        provinceMap.put("34","澳门");
+        provinceMap.put("34","澳门");
         bankMap.put("1","中国工商银行");
         bankMap.put("2","中国农业银行");
         bankMap.put("3","中国银行");

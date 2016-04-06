@@ -397,7 +397,7 @@ public class TalentBackInfoManager {
             List<BankDO> bankList = bankDOMapper.selectBankNameAndId();
             // logger.info("queryBankInfo bankList size is:{} ", e);
             if (ParmCheckUtil.checkListNull(bankList)) {
-                baseResult.setReturnCode(new MemberReturnCode(16000009,"未获取到银行列表"));
+                baseResult.setReturnCode(MemberReturnCode.DB_BANK_FAILED);
             } else {
                 baseResult.setValue(bankList);
             }

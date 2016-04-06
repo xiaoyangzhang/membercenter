@@ -100,6 +100,11 @@ public class CrawlerTest extends BaseTest{
                 return 1;
             }
             return 0;
+        }else{
+            String xml = result.substring(result.indexOf("<tbody>") + "<tbody>".length(), result.indexOf("</tbody>"));
+            if (StringUtils.isNotBlank(xml) && xml.contains("</tr>") && xml.contains("</td>")) {
+                return 1;
+            }
         }
         int totalCount = Integer.valueOf(result.substring(result.indexOf(">共") + 2, result.indexOf("记录")));
         return totalCount % 20 == 0 ? totalCount / 20 : totalCount / 20 + 1;
@@ -125,5 +130,4 @@ public class CrawlerTest extends BaseTest{
             thread.insert();
         }
     }
-    
 }

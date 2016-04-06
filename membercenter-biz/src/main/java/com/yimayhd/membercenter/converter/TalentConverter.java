@@ -27,7 +27,7 @@ import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
 import com.yimayhd.user.client.enums.CertificateOption;
 import com.yimayhd.user.client.enums.SequenceEnum;
-import com.yimayhd.user.client.enums.ServiceTypeOption;
+import com.yimayhd.user.client.enums.ServiceFacilityOption;
 import com.yimayhd.user.client.enums.UserOptions;
 
 /**
@@ -76,7 +76,7 @@ public class TalentConverter {
         if (IconType.EXPERT.getType() == type) {
             // 达人技能
             List<CertificateOption> certificateOptions = CertificateOption
-                    .getContainedOptions(merchantDO.getServiceType());
+                    .getContainedOptions(merchantDO.getCertificate());
             // type > 0 获取详情信息
             if (!ParmCheckUtil.checkListNull(certificateOptions)) {
                 for (CertificateOption option : certificateOptions) {
@@ -89,11 +89,11 @@ public class TalentConverter {
             }
         } else if (IconType.MUSTSHOP.getType() == type) {
             // 店铺服务类型
-            List<ServiceTypeOption> facilityOptions = ServiceTypeOption
+            List<ServiceFacilityOption > facilityOptions = ServiceFacilityOption 
                     .getContainedOptions(merchantDO.getServiceType());
             // type > 0 获取详情信息
             if (!ParmCheckUtil.checkListNull(facilityOptions)) {
-                for (ServiceTypeOption option : facilityOptions) {
+                for (ServiceFacilityOption  option : facilityOptions) {
                     CertificatesDO certificatesDO = new CertificatesDO();
                     certificatesDO.setId(Integer.valueOf(option.getCode()));
                     certificatesDO.setType(type);

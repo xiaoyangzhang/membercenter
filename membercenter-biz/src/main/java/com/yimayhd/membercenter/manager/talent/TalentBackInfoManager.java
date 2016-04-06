@@ -43,7 +43,9 @@ import com.yimayhd.user.client.domain.MerchantDO;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.dto.MerchantDTO;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
+import com.yimayhd.user.client.enums.CertificateOption;
 import com.yimayhd.user.client.enums.MerchantOption;
+import com.yimayhd.user.client.enums.ServiceFacilityOption;
 import com.yimayhd.user.client.enums.UserOptions;
 
 /**
@@ -138,6 +140,7 @@ public class TalentBackInfoManager {
                 // 未查询到店铺信息 新入住
                 logger.info("saveTalentBackInfo userId:{} queryMerchantDO return null", talentInfoDO.getId());
                 merchantDO.setSellerId(talentInfoDO.getId());
+                merchantDO.setCertificate(CertificateOption.ID_CARD.getOption());
                 // insert 店铺信息
                 MemResult<MerchantDO> merchantSaveResult = merchantRepo.saveMerchant(merchantDO);
                 if (merchantSaveResult.isSuccess()) {

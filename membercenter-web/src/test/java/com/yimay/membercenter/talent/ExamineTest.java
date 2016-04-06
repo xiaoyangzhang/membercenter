@@ -66,7 +66,7 @@ public class ExamineTest extends BaseTest {
     public void queryExamineDealResult() {
         InfoQueryDTO examineQueryDTO = new InfoQueryDTO();
         examineQueryDTO.setDomainId(domainId);
-        examineQueryDTO.setSellerId(userId);
+        examineQueryDTO.setSellerId(51);
         // examineQueryDTO.setType(ExamineType.TALENT.getId());
         MemResult<ExamineResultDTO> result = examineDealService.queryExamineDealResult(examineQueryDTO);
         System.out.println("----->");
@@ -92,7 +92,7 @@ public class ExamineTest extends BaseTest {
     public void dealExamineInfo() {
         ExamineDealDTO examineDealDTO = new ExamineDealDTO();
         examineDealDTO.setDomainId(domainId);
-        examineDealDTO.setSellerId(userId);
+        examineDealDTO.setSellerId(51);
         examineDealDTO.setType(ExamineType.TALENT.getType());
         examineDealDTO.setCheckIsOk(true);
         examineDealDTO.setExamineMes("审核通过");
@@ -114,7 +114,6 @@ public class ExamineTest extends BaseTest {
         examinDTO.setSellerId(userId + 41);
         examinDTO.setSellerName("审核信息SellerName");
         examinDTO.setLegralName("审核信息LegralName");
-        examinDTO.setPrincipleName("审核信息principleName");
         examinDTO.setAddress("审核信息testFristPage");
         examinDTO.setSaleScope("审核信息testFristPage");
         examinDTO.setLegralCardUp(pictureUrl);
@@ -152,7 +151,7 @@ public class ExamineTest extends BaseTest {
         String pictureUrl = "NextPage.jpg";
         examinDTO.setDomainId(domainId);
         examinDTO.setType(ExamineType.TALENT.getType());
-        examinDTO.setSellerId(userId + 4);
+        examinDTO.setSellerId(userId + 41);
         examinDTO.setPrincipleName("审核信息testNextPage");
         examinDTO.setPrincipleCard(pictureUrl);
         examinDTO.setPrincipleCardId("审核信息testNextPage");

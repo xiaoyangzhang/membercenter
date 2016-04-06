@@ -38,7 +38,15 @@ public enum ExamineType {
     public int getType() {
         return type;
     }
-    
+
+    public static ExamineType getByType(int type){
+    	for(ExamineType examineType : ExamineType.values() ){
+    		if( examineType.getId() == type ){
+    			return examineType ;
+    		}
+    	}
+    	return null ;
+    }
     public static boolean has(int id) {
         for (ExamineType eXType : values()) {
             if (eXType.getType() == id) {

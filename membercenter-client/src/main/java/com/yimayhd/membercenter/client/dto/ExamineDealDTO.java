@@ -32,6 +32,8 @@ public class ExamineDealDTO extends InfoQueryDTO implements Serializable {
     private boolean checkIsOk;
     // 审核意见
     private String examineMes;
+    //审批者ID
+    private long reviewerId;
 
     public boolean isCheckIsOk() {
         return checkIsOk;
@@ -49,4 +51,12 @@ public class ExamineDealDTO extends InfoQueryDTO implements Serializable {
         this.examineMes = examineMes;
     }
 
+    public long getReviewerId() {
+        return reviewerId;
+    }
+
+    public void setReviewerId(long reviewerId) {
+        this.reviewerId = reviewerId;
+    }
+    
 }

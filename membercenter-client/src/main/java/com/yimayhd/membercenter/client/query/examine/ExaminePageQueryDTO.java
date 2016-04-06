@@ -37,6 +37,8 @@ public class ExaminePageQueryDTO extends PageQuery {
     private String principleName;
     // 店铺负责人联系方式
     private long principleTel;
+    //审核状态
+    private int status;
 
     public int getDomainId() {
         return domainId;
@@ -86,4 +88,12 @@ public class ExaminePageQueryDTO extends PageQuery {
         this.principleTel = principleTel;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    
 }

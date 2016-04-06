@@ -88,17 +88,14 @@ public class TalentInfoManager {
         if (StringUtils.isNotBlank(talentQueryDTO.getSearchWord())) {
             merchantPageQuery.setTitle(talentQueryDTO.getSearchWord().toUpperCase());
         } else {
-            //达人类型是否为空
+            // 达人类型是否为空
             if (StringUtils.isNotBlank(talentQueryDTO.getTagId())) {
                 merchantPageQuery.setServiceType(ServiceTypeOption.valueOfCode(talentQueryDTO.getTagId()).getOption());
             }
         }
-
         MemPageResult<MerchantUserDTO> result = merchantRepo.getMerchantUserList(merchantPageQuery);
         pageResult = TalentConverter.merchantListToTalentList(pageResult, result);
-
-        logger.info("queryTalentList param:{} return:{}", JSONObject.toJSONString(talentQueryDTO),
-                JSONObject.toJSONString(result.getReturnCode()));
+        logger.info("queryTalentList param:{} return:{}", JSONObject.toJSONString(talentQueryDTO), result.isSuccess());
         return pageResult;
     }
 

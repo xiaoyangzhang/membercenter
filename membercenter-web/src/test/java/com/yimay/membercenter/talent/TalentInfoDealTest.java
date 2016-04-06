@@ -129,7 +129,7 @@ public class TalentInfoDealTest extends BaseTest {
         InfoQueryDTO infoQueryDTO = new InfoQueryDTO();
         infoQueryDTO.setDomainId(domainId);
         infoQueryDTO.setSellerId(19000);
-        infoQueryDTO.setType(ExamineType.TALENT.getId());
+        infoQueryDTO.setType(ExamineType.TALENT.getType());
         MemResult<AccountDTO> result = talentInfoDealService.queryMerchantAccountInfoById(infoQueryDTO);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
@@ -141,7 +141,7 @@ public class TalentInfoDealTest extends BaseTest {
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setDomainId(domainId);
         accountDTO.setSellerId(userId);
-        accountDTO.setType(ExamineType.TALENT.getId());
+        accountDTO.setType(ExamineType.TALENT.getType());
         accountDTO.setProducterName("testName");
         accountDTO.setProducterTel("18651664499");
         accountDTO.setProducterMail("test@yimayholiday.com");

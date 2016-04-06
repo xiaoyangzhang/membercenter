@@ -28,12 +28,12 @@
         <constructor-arg name="allocCount" value="20"/>
     </bean>
     
-    <!--  <bean id="examineDoneIdPool" class="com.yimayhd.membercenter.idgen.IdPoolImpl">
+    <bean id="examineIdPool" class="com.yimayhd.membercenter.idgen.IdPoolImpl">
         <constructor-arg name="generator" ref="globalIdGenerator"/>
         <constructor-arg name="configDomain" value="examine"/>
         <constructor-arg name="configKey" value="examine_done"/>
         <constructor-arg name="allocCount" value="20"/>
-    </bean> -->
+    </bean>
     
      <bean id="examineDetailIdPool" class="com.yimayhd.membercenter.idgen.IdPoolImpl">
         <constructor-arg name="generator" ref="globalIdGenerator"/>

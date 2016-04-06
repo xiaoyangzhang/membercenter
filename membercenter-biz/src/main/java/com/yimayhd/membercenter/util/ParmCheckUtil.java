@@ -17,10 +17,12 @@ import com.yimayhd.membercenter.client.domain.talent.TalentInfoDO;
 import com.yimayhd.membercenter.client.dto.AccountDTO;
 import com.yimayhd.membercenter.client.dto.ExamineDealDTO;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
+import com.yimayhd.membercenter.client.dto.ExamineSubmitDTO;
 import com.yimayhd.membercenter.client.dto.PictureTextDTO;
 import com.yimayhd.membercenter.client.dto.TalentInfoDTO;
 import com.yimayhd.membercenter.client.query.InfoQueryDTO;
 import com.yimayhd.membercenter.entity.talent.TalentQuery;
+import com.yimayhd.membercenter.enums.ExaminePageNo;
 import com.yimayhd.membercenter.enums.ExamineType;
 import com.yimayhd.user.client.enums.ServiceTypeOption;
 
@@ -129,9 +131,10 @@ public class ParmCheckUtil {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public static boolean checkExamineDTO(ExamineInfoDTO examinDTO) {
-        if (MIN_CODE >= examinDTO.getSellerId() || !ExamineType.has(examinDTO.getType())
-                || MIN_CODE >= examinDTO.getDomainId()) {
+    public static boolean checkExamineDTO(ExamineSubmitDTO examineSubmitDTO) {
+        ExamineInfoDTO examineDTO = examineSubmitDTO.getExamineInfoDTO();
+        if (null == examineDTO || MIN_CODE >= examineDTO.getSellerId() || !ExamineType.has(examineDTO.getType())
+                || MIN_CODE >= examineDTO.getDomainId() || !ExaminePageNo.has(examineSubmitDTO.getPageNo())) {
             return true;
         }
         return false;
@@ -149,7 +152,7 @@ public class ParmCheckUtil {
      */
     public static boolean checkExamineDealDTO(ExamineDealDTO examineDealDTO) {
         if (MIN_CODE >= examineDealDTO.getSellerId() || !ExamineType.has(examineDealDTO.getType())
-                || MIN_CODE >= examineDealDTO.getDomainId() || MIN_CODE >= examineDealDTO.getDomainId()
+                || MIN_CODE >= examineDealDTO.getDomainId() || MIN_CODE >= examineDealDTO.getReviewerId()
                 || StringUtils.isBlank(examineDealDTO.getExamineMes())) {
             return true;
         }

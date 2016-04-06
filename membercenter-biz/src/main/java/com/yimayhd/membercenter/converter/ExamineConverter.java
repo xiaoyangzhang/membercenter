@@ -185,7 +185,7 @@ public class ExamineConverter {
         examineDO.setDomainId(examinDTO.getDomainId());
         examineDO.setType(examinDTO.getType());
         // 默认审核中
-        examineDO.setStatues(ExamineStatus.EXAMIN_ING.getId());
+        examineDO.setStatues(ExamineStatus.EXAMIN_ING.getStatus());
         examineDO.setGmtCreated(new Date());
         examineDO.setGmtModified(new Date());
         return examineDO;
@@ -269,12 +269,13 @@ public class ExamineConverter {
         examineDO.setType(examineDealDTO.getType());
         // 判断审核是否通过
         if (examineDealDTO.isCheckIsOk()) {
-            examineDO.setStatues(ExamineStatus.EXAMIN_OK.getId());
+            examineDO.setStatues(ExamineStatus.EXAMIN_OK.getStatus());
         } else {
-            examineDO.setStatues(ExamineStatus.EXAMIN_ERROR.getId());
+            examineDO.setStatues(ExamineStatus.EXAMIN_ERROR.getStatus());
         }
         examineDO.setExamineMes(examineDealDTO.getExamineMes());
         examineDO.setGmtModified(new Date());
+        examineDO.setReviewerId(examineDealDTO.getReviewerId());
         return examineDO;
     }
 
@@ -316,7 +317,7 @@ public class ExamineConverter {
         //店铺名称
         merchantDO.setName(featureMap.get(ExamineDetail.MERCHANT_NAME.getId()));
         //达人
-        if(ExamineType.TALENT.getId() == examineDO.getType()){
+        if(ExamineType.TALENT.getType() == examineDO.getType()){
             merchantDO.setOption(MerchantOption.TALENT.getOption());
             List<CertificateOption> options = new ArrayList<CertificateOption>();
             //身份证

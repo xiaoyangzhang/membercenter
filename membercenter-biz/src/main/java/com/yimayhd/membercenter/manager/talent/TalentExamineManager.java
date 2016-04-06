@@ -24,14 +24,18 @@ import com.yimayhd.fhtd.utils.PicFeatureUtil;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
 import com.yimayhd.membercenter.client.dto.AccountDTO;
+import com.yimayhd.membercenter.client.enums.topic.MemberTopic;
 import com.yimayhd.membercenter.client.query.examine.ExaminePageQueryDTO;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.converter.ExamineConverter;
+import com.yimayhd.membercenter.enums.ExaminePageNo;
 import com.yimayhd.membercenter.enums.ExamineStatus;
 import com.yimayhd.membercenter.enums.ExamineType;
 import com.yimayhd.membercenter.idgen.IDPool;
 import com.yimayhd.membercenter.mapper.ExamineDOMapper;
+import com.yimayhd.membercenter.mapper.ExamineDetailDOMapper;
+import com.yimayhd.membercenter.mq.MsgSender;
 import com.yimayhd.membercenter.repo.MerchantRepo;
 import com.yimayhd.membercenter.repo.UserOptionRepo;
 import com.yimayhd.membercenter.util.ParmCheckUtil;
@@ -52,12 +56,15 @@ public class TalentExamineManager {
 
     @Autowired
     ExamineDOMapper examineDOMapper;
+    
+    @Autowired
+    ExamineDetailDOMapper examineDetailDOMapper;
 
     @Autowired
     MerchantRepo merchantRepo;
 
-    // @Autowired
-    // IDPool examineDoneIdPool;
+    @Autowired
+    IDPool examineIdPool;
 
     @Autowired
     IDPool examineDetailIdPool;
@@ -65,8 +72,8 @@ public class TalentExamineManager {
     @Autowired
     UserOptionRepo userOptionRepo;
 
-    // @Autowired
-    // MsgSender msgSender;
+    @Autowired
+    MsgSender msgSender;
 
     /**
      * 
@@ -74,11 +81,12 @@ public class TalentExamineManager {
      * 〈保存审核信息〉
      *
      * @param examinDO
+     * @param pageNo
      * @return
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> submitMerchantExamineInfo(ExamineDO examineDO) {
+    public MemResult<Boolean> submitMerchantExamineInfo(ExamineDO examineDO, int pageNo) {
         MemResult<Boolean> result = new MemResult<Boolean>();
         try {
             result = checkSellerNameIsExist(examineDO.getSellerName(), examineDO.getDomainId());
@@ -91,15 +99,19 @@ public class TalentExamineManager {
             ExamineDO examine = examineDOMapper.selectBySellerId(examineDO);
             if (null != examine) {
                 // 判断是否已经审核通过
-                if (examine.getStatues() == ExamineStatus.EXAMIN_OK.getId()) {
+                if (examine.getStatues() == ExamineStatus.EXAMIN_OK.getStatus()) {
                     result.setReturnCode(MemberReturnCode.DB_EXAMINE_FAILED);
                     logger.info("submitMerchantExaminInfo par:{} has already checked",
                             JSONObject.toJSONString(examineDO));
                     return result;
                 }
+                //防止修改第二页提交时将审批失败状态更改为审批进行中
+                if(pageNo == ExaminePageNo.PAGE_TWO.getPageNO()){
+                    examineDO.setStatues(examine.getStatues());
+                }
                 examineDOMapper.updateByPrimaryKey(unionAll(examineDO, examine));
             } else {
-                examineDO.setId(examineDetailIdPool.getNewId());
+                examineDO.setId(examineIdPool.getNewId());
                 examineDOMapper.insert(examineDO);
             }
         } catch (Exception e) {
@@ -231,6 +243,7 @@ public class TalentExamineManager {
             baseResult.setList(examinList);
             baseResult.setTotalCount(count);
             baseResult.setPageNo(examinQueryDTO.getPageNo());
+            baseResult.setHasNext(count > examinQueryDTO.getPageNo() * examinQueryDTO.getPageSize());
             logger.debug("queryMerchantExaminByPage param:{} return success", JSONObject.toJSONString(examinQueryDTO));
             return baseResult;
         } catch (Exception e) {
@@ -269,19 +282,14 @@ public class TalentExamineManager {
                 return baseResult;
             }
             // 判断是否已经审核通过
-            if (examine.getStatues() == ExamineStatus.EXAMIN_OK.getId()) {
+            if (examine.getStatues() == ExamineStatus.EXAMIN_OK.getStatus()) {
                 baseResult.setReturnCode(MemberReturnCode.DB_EXAMINE_FAILED);
                 return baseResult;
             }
             examineDO.setId(examine.getId());
             examineDOMapper.updateByPrimaryKey(examineDO);
             // 审核通过保存基本信息
-            if (examineDO.getStatues() == ExamineStatus.EXAMIN_OK.getId()) {
-                // examine.setId(examineDoneIdPool.getNewId());
-                // examine.setGmtCreated(new Date());
-                // examine.setGmtModified(new Date());
-                // //保存至审核通过表
-                // examineDoneDOMapper.insert(examine);
+            if (examineDO.getStatues() == ExamineStatus.EXAMIN_OK.getStatus()) {
                 MerchantDO merchantDO = ExamineConverter.examineToMerchant(examineDO);
                 // 初始化店铺信息
                 MemResult<MerchantDO> memResult = merchantRepo.saveMerchant(merchantDO);
@@ -291,11 +299,19 @@ public class TalentExamineManager {
                 addUserOption(examineDO.getSellerId(), examineDO.getType());
                 examineDO.setTelNum(examine.getTelNum());
                 // 发送审核状态到mq消息
-                // msgSender.sendMessage(examineDO,MemberTopic.EXAMINE_RESULT.getTopic(),MemberTopic.EXAMINE_RESULT.getTags());
+                msgSender.sendMessage(examineDO,MemberTopic.EXAMINE_RESULT.getTopic(),MemberTopic.EXAMINE_RESULT.getTags());
 
             }
             logger.info("updateMerchantExaminById param:{} update success", JSONObject.toJSONString(examineDO));
             // baseResult.setReturnCode(MemberReturnCode.DB_UPDATE_FAILED);
+            examine.setId(examineDetailIdPool.getNewId());
+            examine.setReviewerId(examineDO.getReviewerId());
+            examine.setExamineMes(examineDO.getExamineMes());
+            examine.setGmtCreated(new Date());
+            examine.setGmtModified(new Date());
+            //保存审核明细表
+            examineDetailDOMapper.insert(examine);
+            logger.info("updateMerchantExaminById param:{} insertDetail success", JSONObject.toJSONString(examine));
             return baseResult;
         } catch (Exception e) {
             logger.error("updateMerchantExaminById param:{} error, mes is:{}", JSONObject.toJSONString(examineDO), e);
@@ -318,7 +334,7 @@ public class TalentExamineManager {
     public MemResult<Boolean> addUserOption(long userId, int type) {
         List<UserOptions> userOptionsList = new ArrayList<UserOptions>();
         // 达人
-        if (ExamineType.TALENT.getId() == type) {
+        if (ExamineType.TALENT.getType() == type) {
             userOptionsList.add(UserOptions.TRAVEL_KA);
             // 达人默认大V
             userOptionsList.add(UserOptions.CERTIFICATED);
@@ -350,7 +366,7 @@ public class TalentExamineManager {
             examineDO.setType(accountDTO.getType());
             ExamineDO examine = examineDOMapper.selectBySellerId(examineDO);
             // 无审核记录
-            if (null == examine || examine.getStatues() != ExamineStatus.EXAMIN_OK.getId()) {
+            if (null == examine || examine.getStatues() != ExamineStatus.EXAMIN_OK.getStatus()) {
                 logger.info("updateMerchantAccountInfoById param:{} is null, update fail",
                         JSONObject.toJSONString(examineDO));
                 baseResult.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);

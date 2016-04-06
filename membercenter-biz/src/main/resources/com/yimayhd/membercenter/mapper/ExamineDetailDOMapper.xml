@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yimayhd.membercenter.mapper.ExamineDoneDOMapper" >
+<mapper namespace="com.yimayhd.membercenter.mapper.ExamineDetailDOMapper" >
  <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.examine.ExamineDO" >
   <id column="id" property="id" jdbcType="BIGINT" />
     <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
@@ -12,41 +12,38 @@
     <result column="pictures_url" property="picturesUrl" jdbcType="VARCHAR" />
     <result column="certificate" property="certificate" jdbcType="VARCHAR" />
     <result column="feature" property="feature" jdbcType="VARCHAR" />
+    <result column="examine_mes" property="examineMes" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="statues" property="statues" jdbcType="INTEGER" />
+    <result column="reviewer_id" property="reviewerId" jdbcType="BIGINT" />
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, seller_id, seller_name, domain_id, principal_name, sale_scope, tel_num, pictures_url, 
-    certificate, feature, type, gmt_created, gmt_modified
+    certificate, feature, examine_mes, type, statues, reviewer_id, gmt_created, gmt_modified
   </sql>
   <select id="selectBySellerId" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.client.domain.examine.ExamineDO" >
     select 
     <include refid="Base_Column_List" />
-    from examine_done
+    from examine_detail
     where 
     seller_id = #{sellerId,jdbcType=BIGINT} and domain_id = #{domainId,jdbcType=INTEGER} and type = #{type,jdbcType=INTEGER}
   </select>
   
   <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.examine.ExamineDO" >
-    insert into examine_done (id, seller_id, seller_name, 
+    insert into examine_detail (id, seller_id, seller_name, 
       domain_id, principal_name, sale_scope, 
       tel_num, pictures_url, certificate, 
-      feature, type, 
-      gmt_created, gmt_modified
+      feature, examine_mes, type, 
+      statues, reviewer_id, gmt_created, gmt_modified
       )
     values (#{id,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT}, #{sellerName,jdbcType=VARCHAR}, 
       #{domainId,jdbcType=INTEGER}, #{principalName,jdbcType=VARCHAR}, #{saleScope,jdbcType=VARCHAR}, 
       #{telNum,jdbcType=BIGINT}, #{picturesUrl,jdbcType=VARCHAR}, #{certificate,jdbcType=VARCHAR}, 
-      #{feature,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
-      #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      #{feature,jdbcType=VARCHAR}, #{examineMes,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{statues,jdbcType=INTEGER}, #{reviewerId,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}
       )
   </insert>
-
-  <update id="updateByPrimaryKey" parameterType="com.yimayhd.membercenter.client.domain.examine.ExamineDO" >
-     update examine_done set
-        feature = #{feature,jdbcType=VARCHAR},
-        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
 </mapper>

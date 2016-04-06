@@ -46,8 +46,10 @@ public class ExamineDO implements Serializable {
     //更新时间
     private Date gmtModified;
     
-    //
+    //审核信息
     private String examineMes;
+    //审批者ID
+    private long reviewerId;
 
     public long getId() {
         return id;
@@ -167,6 +169,14 @@ public class ExamineDO implements Serializable {
 
     public void setExamineMes(String examineMes) {
         this.examineMes = examineMes;
+    }
+
+    public long getReviewerId() {
+        return reviewerId;
+    }
+
+    public void setReviewerId(long reviewerId) {
+        this.reviewerId = reviewerId;
     }
     
 }

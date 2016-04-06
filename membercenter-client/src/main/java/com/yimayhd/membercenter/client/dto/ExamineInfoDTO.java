@@ -534,5 +534,4 @@ public class ExamineInfoDTO implements Serializable {
     public void setSellerName(String sellerName) {
         this.sellerName = sellerName;
     }
-    
 }

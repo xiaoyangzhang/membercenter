@@ -21,28 +21,28 @@ public enum ExamineStatus {
     
     EXAMIN_OK("审核通过", 1),
     EXAMIN_ING("未审核", 2),
-    EXAMIN_ERROR("审核失败", 3)
+    EXAMIN_ERROR("审核未通过", 3)
     ;
     
     private String name;
-    private int id;
+    private int status;
 
-    ExamineStatus(String name, int id) {
+    ExamineStatus(String name, int status) {
         this.name = name;
-        this.id = id;
+        this.status = status;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getId() {
-        return id;
+    public int getStatus() {
+        return status;
     }
 
     public static ExamineStatus getByStatus(int status) {
         for (ExamineStatus examineStatus : values()) {
-            if (examineStatus.getId() == status) {
+            if (examineStatus.getStatus() == status) {
                 return examineStatus;
             }
         }

@@ -15,17 +15,18 @@
     <result column="examine_mes" property="examineMes" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="statues" property="statues" jdbcType="INTEGER" />
+    <result column="reviewer_id" property="reviewerId" jdbcType="BIGINT" />
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, seller_id, seller_name, domain_id, principal_name, sale_scope, tel_num, pictures_url, 
-    certificate, feature, examine_mes, type, statues, gmt_created, gmt_modified
+    certificate, feature, examine_mes, type, statues, reviewer_id, gmt_created, gmt_modified
   </sql>
   <select id="selectBySellerId" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.client.domain.examine.ExamineDO" >
     select 
     <include refid="Base_Column_List" />
-    from examine_detail
+    from examine
     where 
     seller_id = #{sellerId,jdbcType=BIGINT} and domain_id = #{domainId,jdbcType=INTEGER} 
      <if test="type > 0" >
@@ -35,22 +36,23 @@
   </select>
   
   <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.examine.ExamineDO" >
-    insert into examine_detail (id, seller_id, seller_name, 
+    insert into examine (id, seller_id, seller_name, 
       domain_id, principal_name, sale_scope, 
       tel_num, pictures_url, certificate, 
       feature, examine_mes, type, 
-      statues, gmt_created, gmt_modified
+      statues, reviewer_id, gmt_created, gmt_modified
       )
     values (#{id,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT}, #{sellerName,jdbcType=VARCHAR}, 
       #{domainId,jdbcType=INTEGER}, #{principalName,jdbcType=VARCHAR}, #{saleScope,jdbcType=VARCHAR}, 
       #{telNum,jdbcType=BIGINT}, #{picturesUrl,jdbcType=VARCHAR}, #{certificate,jdbcType=VARCHAR}, 
       #{feature,jdbcType=VARCHAR}, #{examineMes,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
-      #{statues,jdbcType=INTEGER}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      #{statues,jdbcType=INTEGER}, #{reviewerId,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}
       )
   </insert>
 
   <update id="updateByPrimaryKey" parameterType="com.yimayhd.membercenter.client.domain.examine.ExamineDO" >
-     update examine_detail
+     update examine
     <set >
       <if test="sellerName != null" >
         seller_name = #{sellerName,jdbcType=VARCHAR},
@@ -79,6 +81,9 @@
       <if test="statues > 0" >
         statues = #{statues,jdbcType=INTEGER},
       </if>
+      <if test="reviewerId > 0" >
+        reviewer_id = #{reviewerId,jdbcType=BIGINT},
+      </if>
       <if test="gmtModified != null" >
         gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
@@ -90,24 +95,9 @@
 		parameterType="com.yimayhd.membercenter.client.query.examine.ExaminePageQueryDTO">
 		select
 		<include refid="Base_Column_List" />
-		from examine_detail
-		where  domain_id = #{domainId,jdbcType=INTEGER}
-		<if test="sellerId > 0">
-			and seller_id = #{sellerId,jdbcType=BIGINT}
-		</if>
-		<if test="merchantName != null">
-			and seller_name = #{merchantName,jdbcType=VARCHAR}
-		</if>
-		<if test="type > 0">
-			and type = #{type,jdbcType=INTEGER}
-		</if>
-		<if test="principleName != null">
-			and principal_name = #{principleName,jdbcType=VARCHAR}
-		</if>
-		<if test="principleTel > 0">
-			and telNum = #{principleName,jdbcType=VARCHAR}
-		</if>
-		order by id desc
+		from examine
+		<include refid="queryExamineSql"/>
+		order by gmt_created desc
 		limit #{startRow}, #{pageSize}
 	</select>
 	
@@ -115,23 +105,33 @@
 	<select id="queryMerchantExaminCount" resultType="int" parameterType="com.yimayhd.membercenter.client.query.examine.ExaminePageQueryDTO">
 		select
 		count(1)
-		from examine_detail
-		where  domain_id = #{domainId,jdbcType=INTEGER}
+		from examine
+		<include refid="queryExamineSql"/>
+		order by gmt_created desc
+	</select>
+	
+	<sql id="queryExamineSql">
+    <where>
+      domain_id = #{domainId,jdbcType=INTEGER}
 		<if test="sellerId > 0">
 			and seller_id = #{sellerId,jdbcType=BIGINT}
 		</if>
 		<if test="merchantName != null">
-			and seller_name = #{merchantName,jdbcType=VARCHAR}
+			and seller_name like CONCAT('%', #{merchantName,jdbcType=VARCHAR}, '%')
 		</if>
 		<if test="type > 0">
 			and type = #{type,jdbcType=INTEGER}
 		</if>
 		<if test="principleName != null">
-			and principal_name = #{principleName,jdbcType=VARCHAR}
+			and principal_name  like CONCAT('%', #{principleName,jdbcType=VARCHAR}, '%')
 		</if>
 		<if test="principleTel > 0">
 			and telNum = #{principleName,jdbcType=VARCHAR}
 		</if>
-	</select>
+		<if test="status > 0">
+			and  statues = #{status,jdbcType=INTEGER}
+		</if>
+    </where>
+  </sql>
   
 </mapper>

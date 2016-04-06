@@ -41,7 +41,7 @@ public enum ExamineType {
 
     public static ExamineType getByType(int type){
     	for(ExamineType examineType : ExamineType.values() ){
-    		if( examineType.getId() == type ){
+    		if( examineType.getType() == type ){
     			return examineType ;
     		}
     	}

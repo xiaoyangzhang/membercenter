@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yimayhd.commentcenter.client.domain.ComentDO;
-import com.yimayhd.commentcenter.client.dto.ComentDEditTO;
 import com.yimayhd.commentcenter.client.dto.ComentDTO;
+import com.yimayhd.commentcenter.client.dto.ComentEditDTO;
 import com.yimayhd.commentcenter.client.dto.ComentQueryDTO;
 import com.yimayhd.commentcenter.client.result.BaseResult;
 import com.yimayhd.commentcenter.client.result.PicTextResult;
@@ -112,10 +112,10 @@ public class CommentRepo {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> updatePictureText(ComentDEditTO comentDEditTO){
+    public MemResult<Boolean> updatePictureText(ComentEditDTO comentEditDTO){
         MemResult<Boolean> baseResult = new MemResult<Boolean>();
         try {
-            BaseResult<ComentDO> result = comPictureTextService.updatePictureText(comentDEditTO);
+            BaseResult<ComentDO> result = comPictureTextService.updatePictureText(comentEditDTO);
             if (result.isSuccess()) {
                 baseResult.setValue(Boolean.TRUE);
                 return baseResult;
@@ -123,11 +123,11 @@ public class CommentRepo {
             baseResult.setErrorCode(result.getErrorCode());
             baseResult.setErrorMsg(result.getResultMsg());
             baseResult.setSuccess(false);
-            logger.debug("updatePictureText par:{} return error:{}", JSONObject.toJSONString(comentDEditTO),
+            logger.debug("updatePictureText par:{} return error:{}", JSONObject.toJSONString(comentEditDTO),
                     JSONObject.toJSONString(result));
         } catch (Exception e) {
             baseResult.setReturnCode(MemberReturnCode.DUBBO_ERROR);
-            logger.error("updatePictureText par:{} return error:{}", JSONObject.toJSONString(comentDEditTO),
+            logger.error("updatePictureText par:{} return error:{}", JSONObject.toJSONString(comentEditDTO),
                     e);
         }
         return baseResult;

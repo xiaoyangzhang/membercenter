@@ -30,6 +30,18 @@ public interface ExamineDOMapper {
      * @since [产品/模块版本](可选)
      */
     ExamineDO selectBySellerId(ExamineDO record);
+    
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈根据ID查询〉
+     *
+     * @param id
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    ExamineDO selectById(ExamineDO record);
 
     /**
      * 

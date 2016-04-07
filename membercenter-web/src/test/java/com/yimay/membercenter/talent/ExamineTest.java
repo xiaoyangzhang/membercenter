@@ -54,9 +54,9 @@ public class ExamineTest extends BaseTest {
     public void queryMerchantExamineInfoById() {
         InfoQueryDTO examineQueryDTO = new InfoQueryDTO();
         examineQueryDTO.setDomainId(domainId);
-        examineQueryDTO.setSellerId(userId);
+        examineQueryDTO.setSellerId(userId + 100);
         examineQueryDTO.setType(ExamineType.TALENT.getType());
-        MemResult<ExamineInfoDTO> result = examineDealService.queryMerchantExamineInfoById(examineQueryDTO);
+        MemResult<ExamineInfoDTO> result = examineDealService.queryMerchantExamineInfoBySellerId(examineQueryDTO);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
         System.out.println("----->");
@@ -66,7 +66,7 @@ public class ExamineTest extends BaseTest {
     public void queryExamineDealResult() {
         InfoQueryDTO examineQueryDTO = new InfoQueryDTO();
         examineQueryDTO.setDomainId(domainId);
-        examineQueryDTO.setSellerId(51);
+        examineQueryDTO.setSellerId(5100);
         // examineQueryDTO.setType(ExamineType.TALENT.getId());
         MemResult<ExamineResultDTO> result = examineDealService.queryExamineDealResult(examineQueryDTO);
         System.out.println("----->");
@@ -77,7 +77,7 @@ public class ExamineTest extends BaseTest {
     @Test
     public void queryMerchantExaminByPage() {
         ExaminePageQueryDTO examinQueryDTO = new ExaminePageQueryDTO();
-        examinQueryDTO.setDomainId(domainId);
+        examinQueryDTO.setDomainId(domainId + 100);
         examinQueryDTO.setPageNo(1);
         examinQueryDTO.setPageSize(1);
         // examinQueryDTO.setPrincipleName("审核信息");
@@ -92,8 +92,9 @@ public class ExamineTest extends BaseTest {
     public void dealExamineInfo() {
         ExamineDealDTO examineDealDTO = new ExamineDealDTO();
         examineDealDTO.setDomainId(domainId);
-        examineDealDTO.setSellerId(51);
-        examineDealDTO.setType(ExamineType.TALENT.getType());
+        examineDealDTO.setSellerId(17508);
+        examineDealDTO.setType(ExamineType.MERCHANT.getType());
+//        examineDealDTO.setId(1220l);
         examineDealDTO.setCheckIsOk(true);
         examineDealDTO.setExamineMes("审核通过");
         examineDealDTO.setReviewerId(122222);

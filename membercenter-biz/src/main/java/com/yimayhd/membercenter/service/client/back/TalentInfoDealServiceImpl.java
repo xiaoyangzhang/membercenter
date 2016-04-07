@@ -138,6 +138,10 @@ public class TalentInfoDealServiceImpl implements TalentInfoDealService {
         return baseResult;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.yimayhd.membercenter.client.service.talent.TalentInfoDealService#queryMerchantAccountInfoById()
+     */
     @Override
     public MemResult<AccountDTO> queryMerchantAccountInfoById(InfoQueryDTO infoQueryDTO) {
         MemResult<AccountDTO> result = new MemResult<AccountDTO>();
@@ -160,7 +164,6 @@ public class TalentInfoDealServiceImpl implements TalentInfoDealService {
                 logger.info("queryMerchantCountInfoById par:{} return error:{}", JSONObject.toJSONString(infoQueryDTO),
                         queryResult.getErrorMsg());
             }
-            return result;
         } catch (Exception e) {
             logger.error("queryMerchantAccountInfoById par:{} error:{}", JSONObject.toJSONString(infoQueryDTO), e);
             result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
@@ -168,6 +171,10 @@ public class TalentInfoDealServiceImpl implements TalentInfoDealService {
         return result;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.yimayhd.membercenter.client.service.talent.TalentInfoDealService#updateMerchantAccountInfo()
+     */
     @Override
     public MemResult<Boolean> updateMerchantAccountInfo(AccountDTO accountDTO) {
         MemResult<Boolean> result = new MemResult<Boolean>();
@@ -186,21 +193,27 @@ public class TalentInfoDealServiceImpl implements TalentInfoDealService {
         return result;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.yimayhd.membercenter.client.service.talent.TalentInfoDealService#queryBankList()
+     */
     @Override
     public MemResult<List<BankInfoDTO>> queryBankList() {
         MemResult<List<BankInfoDTO>> result = new MemResult<List<BankInfoDTO>>();
         MemResult<List<BankDO>> bankResult = talentBackInfoManager.queryBankInfo();
-        if(bankResult.isSuccess()){
-            List<BankInfoDTO> bankList = new ArrayList<BankInfoDTO>();
-            for (BankDO bankDO : bankResult.getValue()) {
-                BankInfoDTO bankInfoDTO = new BankInfoDTO();
-                bankInfoDTO.setBankId(bankDO.getBankId());
-                bankInfoDTO.setBankName(bankDO.getBankName());
-                bankList.add(bankInfoDTO);
+        if (bankResult.isSuccess()) {
+            if (!ParmCheckUtil.checkListNull(bankResult.getValue())) {
+                List<BankInfoDTO> bankList = new ArrayList<BankInfoDTO>();
+                for (BankDO bankDO : bankResult.getValue()) {
+                    BankInfoDTO bankInfoDTO = new BankInfoDTO();
+                    bankInfoDTO.setBankId(bankDO.getBankId());
+                    bankInfoDTO.setBankName(bankDO.getBankName());
+                    bankList.add(bankInfoDTO);
+                }
+                result.setValue(bankList);
             }
-            result.setValue(bankList);
-        }else{
-            result.setReturnCode(bankResult.getReturnCode()); 
+        } else {
+            result.setReturnCode(bankResult.getReturnCode());
         }
         return result;
     }

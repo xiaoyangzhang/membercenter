@@ -50,6 +50,9 @@ public class ExamineConverter {
      * @since [产品/模块版本](可选)
      */
     public static ExamineInfoDTO examineDOToDTO(ExamineDO examineDO) {
+        if(null == examineDO){
+            return null;
+        }
         ExamineInfoDTO examinDTO = new ExamineInfoDTO();
         // 图片
         Map<String, String> pictureMap = PicFeatureUtil.fromString(examineDO.getPicturesUrl());
@@ -204,6 +207,9 @@ public class ExamineConverter {
      * @since [产品/模块版本](可选)
      */
     public static AccountDTO examineToAccount(ExamineDO examineDO){
+        if(null == examineDO){
+            return null;
+        }
         AccountDTO accountDTO = new AccountDTO();
         // 信息明细
         Map<String, String> featureMap = PicFeatureUtil.fromString(examineDO.getFeature());
@@ -267,6 +273,7 @@ public class ExamineConverter {
         examineDO.setDomainId(examineDealDTO.getDomainId());
         examineDO.setSellerId(examineDealDTO.getSellerId());
         examineDO.setType(examineDealDTO.getType());
+        examineDO.setId(examineDealDTO.getId());
         // 判断审核是否通过
         if (examineDealDTO.isCheckIsOk()) {
             examineDO.setStatues(ExamineStatus.EXAMIN_OK.getStatus());
@@ -326,7 +333,7 @@ public class ExamineConverter {
             Map<String, String> certificateMap = PicFeatureUtil.fromString(examineDO.getCertificate());
             if(null != certificateMap && 0 != certificateMap.size()){
                 for (Map.Entry<String, String> entry : certificateMap.entrySet()) {
-                    CertificateOption option = CertificateOption.valueOf(entry.getKey());
+                    CertificateOption option = CertificateOption.valueOfCode(entry.getKey());
                     if(null != option){
                         options.add(option);
                     }

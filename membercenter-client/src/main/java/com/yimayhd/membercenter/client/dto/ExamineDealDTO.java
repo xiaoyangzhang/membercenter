@@ -27,7 +27,8 @@ public class ExamineDealDTO extends InfoQueryDTO implements Serializable {
      */
     private static final long serialVersionUID = 8936935883885138415L;
 
-
+    //记录ID
+    private long id;
     // 是否审核通过
     private boolean checkIsOk;
     // 审核意见
@@ -57,6 +58,14 @@ public class ExamineDealDTO extends InfoQueryDTO implements Serializable {
 
     public void setReviewerId(long reviewerId) {
         this.reviewerId = reviewerId;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
     
 }

@@ -151,8 +151,8 @@ public class ParmCheckUtil {
      * @since [产品/模块版本](可选)
      */
     public static boolean checkExamineDealDTO(ExamineDealDTO examineDealDTO) {
-        if (MIN_CODE >= examineDealDTO.getSellerId() || !ExamineType.has(examineDealDTO.getType())
-                || MIN_CODE >= examineDealDTO.getDomainId() || MIN_CODE >= examineDealDTO.getReviewerId()
+        if ((MIN_CODE >= examineDealDTO.getId() && (MIN_CODE >= examineDealDTO.getSellerId() || !ExamineType.has(examineDealDTO.getType())
+                || MIN_CODE >= examineDealDTO.getDomainId())) || MIN_CODE >= examineDealDTO.getReviewerId()
                 || StringUtils.isBlank(examineDealDTO.getExamineMes())) {
             return true;
         }

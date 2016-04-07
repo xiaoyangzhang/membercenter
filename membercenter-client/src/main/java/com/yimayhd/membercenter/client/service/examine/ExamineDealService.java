@@ -50,7 +50,19 @@ public interface ExamineDealService {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    MemResult<ExamineInfoDTO> queryMerchantExamineInfoById(InfoQueryDTO examineQueryDTO);
+    MemResult<ExamineInfoDTO> queryMerchantExamineInfoBySellerId(InfoQueryDTO examineQueryDTO);
+    
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈根据Id获取未审核通过申请信息〉
+     *
+     * @param id
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    MemResult<ExamineInfoDTO> queryMerchantExamineInfoById(long id);
     
     /**
      * 

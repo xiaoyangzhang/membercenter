@@ -18,8 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yimayhd.commentcenter.client.domain.PicTextDO;
-import com.yimayhd.commentcenter.client.dto.ComentDEditTO;
 import com.yimayhd.commentcenter.client.dto.ComentDTO;
+import com.yimayhd.commentcenter.client.dto.ComentEditDTO;
 import com.yimayhd.commentcenter.client.dto.ComentQueryDTO;
 import com.yimayhd.commentcenter.client.enums.IconType;
 import com.yimayhd.commentcenter.client.enums.PictureText;
@@ -38,14 +38,12 @@ import com.yimayhd.membercenter.mapper.BankDOMapper;
 import com.yimayhd.membercenter.repo.CommentRepo;
 import com.yimayhd.membercenter.repo.MerchantRepo;
 import com.yimayhd.membercenter.repo.UserRepo;
-import com.yimayhd.membercenter.util.ParmCheckUtil;
 import com.yimayhd.user.client.domain.MerchantDO;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.dto.MerchantDTO;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
 import com.yimayhd.user.client.enums.CertificateOption;
 import com.yimayhd.user.client.enums.MerchantOption;
-import com.yimayhd.user.client.enums.ServiceFacilityOption;
 import com.yimayhd.user.client.enums.UserOptions;
 
 /**
@@ -219,7 +217,7 @@ public class TalentBackInfoManager {
      * @since [产品/模块版本](可选)
      */
     public MemResult<Boolean> updatePictureText(PictureTextDTO pictureTextDTO) {
-        ComentDEditTO comentDEditTO = new ComentDEditTO();
+        ComentEditDTO comentDEditTO = new ComentEditDTO();
         comentDEditTO.setId(pictureTextDTO.getId());
         comentDEditTO.setPicTextDOList(picTextConverter(pictureTextDTO.getPicTexts()));
         MemResult<Boolean> picTextResult = commentRepo.updatePictureText(comentDEditTO);
@@ -399,11 +397,11 @@ public class TalentBackInfoManager {
         try {
             List<BankDO> bankList = bankDOMapper.selectBankNameAndId();
             // logger.info("queryBankInfo bankList size is:{} ", e);
-            if (ParmCheckUtil.checkListNull(bankList)) {
-                baseResult.setReturnCode(MemberReturnCode.DB_BANK_FAILED);
-            } else {
-                baseResult.setValue(bankList);
-            }
+            // if (ParmCheckUtil.checkListNull(bankList)) {
+            // baseResult.setReturnCode(MemberReturnCode.DB_BANK_FAILED);
+            // } else {
+            baseResult.setValue(bankList);
+            // }
             return baseResult;
         } catch (Exception e) {
             baseResult.setReturnCode(MemberReturnCode.SYSTEM_ERROR);

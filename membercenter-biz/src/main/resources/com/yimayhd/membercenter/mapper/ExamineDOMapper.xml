@@ -35,6 +35,14 @@
   	limit 0,1
   </select>
   
+   <select id="selectById" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.client.domain.examine.ExamineDO" >
+    select 
+    <include refid="Base_Column_List" />
+    from examine
+    where 
+    id = #{id,jdbcType=BIGINT}
+  </select>
+  
   <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.examine.ExamineDO" >
     insert into examine (id, seller_id, seller_name, 
       domain_id, principal_name, sale_scope, 

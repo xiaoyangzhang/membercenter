@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yimayhd.commentcenter.client.enums.IconType;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.api.MerchantApi;
@@ -50,6 +51,7 @@ public class MerchantApiImpl implements MerchantApi {
                 logger.info("getTalentDetail merchantId is null");
                 return null;
             }
+            long start = System.currentTimeMillis();
             MemResult<MerchantUserDTO> result = talentInfoManager.queryTalentInfo(merchantId, domainId);
             Merchant merchant = new Merchant();
             if (result.isSuccess()) {
@@ -73,6 +75,8 @@ public class MerchantApiImpl implements MerchantApi {
                 // return merchant;
             }
             // DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
+            logger.info("queryMerchantInfo par:{} return success, costs:{}ms", merchantId,
+                    (System.currentTimeMillis() - start));
             return merchant;
         } catch (Exception e) {
             logger.error("queryMerchantInfo par:{} error:{}", merchantId, e);
@@ -95,6 +99,7 @@ public class MerchantApiImpl implements MerchantApi {
                 logger.info("queryMerchantList mechantQuery is null");
                 return null;
             }
+            long start = System.currentTimeMillis();
             MerchantQueryDTO merchantQueryDTO = MerchantConverter.merchantQuery(mechantQuery, domainId);
             MemPageResult<MerchantInfoDO> pageResult = talentInfoManager.queryMerchantList(merchantQueryDTO);
             MerchantList merchantList = new MerchantList();
@@ -116,6 +121,8 @@ public class MerchantApiImpl implements MerchantApi {
                 // return merchantList;
             }
             // DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
+            logger.info("queryMerchantList par:{} return success, costs:{}ms", JSONObject.toJSONString(mechantQuery),
+                    (System.currentTimeMillis() - start));
             return merchantList;
         } catch (Exception e) {
             logger.error("queryMerchantList par:{} error:{}", mechantQuery, e);

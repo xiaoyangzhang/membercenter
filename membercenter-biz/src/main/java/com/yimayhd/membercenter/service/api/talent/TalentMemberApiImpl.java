@@ -59,6 +59,7 @@ public class TalentMemberApiImpl implements TalentMemberApi {
                 logger.info("getTalentDetail talentId is null");
                 return null;
             }
+            long start = System.currentTimeMillis();
             MemResult<MerchantUserDTO> result = talentInfoManager.queryTalentInfo(merchantId, domainId);
             TalentInfo talentInfo = new TalentInfo();
             if (result.isSuccess()) {
@@ -81,6 +82,8 @@ public class TalentMemberApiImpl implements TalentMemberApi {
                 talentInfo.certificateType = IconType.EXPERT.getType();
                 // return talentInfo;
             }
+            logger.info("getTalentDetail par:{} return success, costs:{}ms", merchantId,
+                    (System.currentTimeMillis() - start));
             // DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
             return talentInfo;
         } catch (Exception e) {
@@ -100,6 +103,7 @@ public class TalentMemberApiImpl implements TalentMemberApi {
                 logger.info("queryTalentList talentQuery is null");
                 return null;
             }
+            long start = System.currentTimeMillis();
             TalentQueryDTO talentQueryDTO = TalentConverter.talentQuery(talentQuery, domainId);
             MemPageResult<TalentInfoDO> pageResult = talentInfoManager.queryTalentList(talentQueryDTO);
             TalentInfoList talentInfoList = new TalentInfoList();
@@ -124,6 +128,8 @@ public class TalentMemberApiImpl implements TalentMemberApi {
                 // return talentInfoList;
             }
             // DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
+            logger.info("queryTalentList par:{} return success, costs:{}ms", JSONObject.toJSONString(talentQuery),
+                    (System.currentTimeMillis() - start));
             return talentInfoList;
 
         } catch (Exception e) {

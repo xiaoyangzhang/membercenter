@@ -211,6 +211,7 @@ public class TalentExamineManager {
             // logger.error("queryMerchantExaminInfo parm:{} return null", JSONObject.toJSONString(examineQueryDO));
             // } else {
             result.setValue(examineDO);
+            logger.info("queryMerchantExaminInfo parm:{} return success", JSONObject.toJSONString(examineQueryDO));
             // }
         } catch (Exception e) {
             result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
@@ -246,7 +247,7 @@ public class TalentExamineManager {
             baseResult.setTotalCount(count);
             baseResult.setPageNo(examinQueryDTO.getPageNo());
             baseResult.setHasNext(count > examinQueryDTO.getPageNo() * examinQueryDTO.getPageSize());
-            logger.debug("queryMerchantExaminByPage param:{} return success", JSONObject.toJSONString(examinQueryDTO));
+            logger.info("queryMerchantExaminByPage param:{} return success", JSONObject.toJSONString(examinQueryDTO));
             // return baseResult;
         } catch (Exception e) {
             logger.error("queryMerchantExaminByPage param:{} error, mes is:{}", JSONObject.toJSONString(examinQueryDTO),

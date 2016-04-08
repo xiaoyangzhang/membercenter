@@ -74,7 +74,7 @@ public class ExamineInfoDTO implements Serializable {
     // 负责人证件号码
     private String principleCardId;
     // 负责人手机号码
-    private long principleTel;
+    private String principleTel;
     // 负责人邮箱
     private String principleMail;
     // 负责人身份证正面
@@ -263,11 +263,11 @@ public class ExamineInfoDTO implements Serializable {
         this.principleCardId = principleCardId;
     }
 
-    public long getPrincipleTel() {
+    public String getPrincipleTel() {
         return principleTel;
     }
 
-    public void setPrincipleTel(long principleTel) {
+    public void setPrincipleTel(String principleTel) {
         this.principleTel = principleTel;
     }
 

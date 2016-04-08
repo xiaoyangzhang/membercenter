@@ -8,7 +8,7 @@
     <result column="domain_id" property="domainId" jdbcType="INTEGER" />
     <result column="principal_name" property="principalName" jdbcType="VARCHAR" />
     <result column="sale_scope" property="saleScope" jdbcType="VARCHAR" />
-    <result column="tel_num" property="telNum" jdbcType="BIGINT" />
+    <result column="tel_num" property="telNum" jdbcType="VARCHAR" />
     <result column="pictures_url" property="picturesUrl" jdbcType="VARCHAR" />
     <result column="certificate" property="certificate" jdbcType="VARCHAR" />
     <result column="feature" property="feature" jdbcType="VARCHAR" />
@@ -40,7 +40,7 @@
       )
     values (#{id,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT}, #{sellerName,jdbcType=VARCHAR}, 
       #{domainId,jdbcType=INTEGER}, #{principalName,jdbcType=VARCHAR}, #{saleScope,jdbcType=VARCHAR}, 
-      #{telNum,jdbcType=BIGINT}, #{picturesUrl,jdbcType=VARCHAR}, #{certificate,jdbcType=VARCHAR}, 
+      #{telNum,jdbcType=VARCHAR}, #{picturesUrl,jdbcType=VARCHAR}, #{certificate,jdbcType=VARCHAR}, 
       #{feature,jdbcType=VARCHAR}, #{examineMes,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
       #{statues,jdbcType=INTEGER}, #{reviewerId,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, 
       #{gmtModified,jdbcType=TIMESTAMP}

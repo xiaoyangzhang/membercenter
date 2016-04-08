@@ -30,7 +30,7 @@ public class ExamineDO implements Serializable {
     //销售范围
     private String saleScope;
     //负责人手机号码
-    private long telNum;
+    private String telNum;
     //图片地址
     private String picturesUrl;
     //技能
@@ -91,11 +91,11 @@ public class ExamineDO implements Serializable {
         this.saleScope = saleScope;
     }
 
-    public long getTelNum() {
+    public String getTelNum() {
         return telNum;
     }
 
-    public void setTelNum(long telNum) {
+    public void setTelNum(String telNum) {
         this.telNum = telNum;
     }
 

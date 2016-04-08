@@ -73,7 +73,7 @@ public class PictureTextManager extends BaseTest{
         picTextList.add(pictureTextDO);
         pictureTextDTO.setPicTexts(picTextList);
         pictureTextDTO.setId(6);
-        MemResult<Boolean> result = talentBackInfoManager.updatePictureText(pictureTextDTO);
+        MemResult<Boolean> result = talentBackInfoManager.updatePictureText(10,1200,pictureTextDTO);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
         System.out.println("----->");

@@ -26,7 +26,6 @@ import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.examine.ExamineDealService;
 import com.yimayhd.membercenter.enums.ExaminePageNo;
-import com.yimayhd.membercenter.enums.ExamineStatus;
 import com.yimayhd.membercenter.enums.ExamineType;
 import com.yimayhd.membercenter.mq.MsgSender;
 
@@ -77,11 +76,12 @@ public class ExamineTest extends BaseTest {
     @Test
     public void queryMerchantExaminByPage() {
         ExaminePageQueryDTO examinQueryDTO = new ExaminePageQueryDTO();
-        examinQueryDTO.setDomainId(domainId + 100);
+        examinQueryDTO.setDomainId(domainId);
         examinQueryDTO.setPageNo(1);
         examinQueryDTO.setPageSize(1);
         // examinQueryDTO.setPrincipleName("审核信息");
-        examinQueryDTO.setStatus(ExamineStatus.EXAMIN_OK.getStatus());
+//        examinQueryDTO.setStatus(ExamineStatus.EXAMIN_OK.getStatus());
+        examinQueryDTO.setPrincipleTel("186");
         MemPageResult<ExamineInfoDTO> result = examineDealService.queryMerchantExamineByPage(examinQueryDTO);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
@@ -112,7 +112,7 @@ public class ExamineTest extends BaseTest {
         examinDTO.setId(1);
         examinDTO.setDomainId(domainId);
         examinDTO.setType(ExamineType.TALENT.getType());
-        examinDTO.setSellerId(userId + 41);
+        examinDTO.setSellerId(userId + 433);
         examinDTO.setSellerName("审核信息SellerName");
         examinDTO.setLegralName("审核信息LegralName");
         examinDTO.setAddress("审核信息testFristPage");
@@ -152,11 +152,11 @@ public class ExamineTest extends BaseTest {
         String pictureUrl = "NextPage.jpg";
         examinDTO.setDomainId(domainId);
         examinDTO.setType(ExamineType.TALENT.getType());
-        examinDTO.setSellerId(userId + 41);
+        examinDTO.setSellerId(userId + 433);
         examinDTO.setPrincipleName("审核信息testNextPage");
         examinDTO.setPrincipleCard(pictureUrl);
         examinDTO.setPrincipleCardId("审核信息testNextPage");
-        examinDTO.setPrincipleTel(18651664499L);
+        examinDTO.setPrincipleTel("18651664499");
         examinDTO.setPrincipleMail("审核信息testNextPage");
         examinDTO.setPrincipleCardUp(pictureUrl);
         examinDTO.setPrincipleCardDown(pictureUrl);
@@ -188,7 +188,7 @@ public class ExamineTest extends BaseTest {
         ExamineDO examineDO = new ExamineDO();
         examineDO.setDomainId(1200);
         examineDO.setSellerId(1900);
-        examineDO.setTelNum(18651664499L);
+        examineDO.setTelNum("18651664499");
         SendResult sendResult = msgSender.sendMessage(examineDO, MemberTopic.EXAMINE_RESULT.getTopic(),
                 MemberTopic.EXAMINE_RESULT.getTags());
         System.out.println("----->");

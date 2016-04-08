@@ -108,9 +108,13 @@ public class TalentExamineManager {
                             JSONObject.toJSONString(examineDO));
                     return result;
                 }
-                // 防止修改提交时将审批失败状态更改为审批进行中
-                // if (pageNo == ExaminePageNo.PAGE_TWO.getPageNO()) {
-                // }
+                if (pageNo == ExaminePageNo.PAGE_ONE.getPageNO()) {
+                    examineDO.setStatues(examine.getStatues());
+                } else {
+                    // 防止修改提交时将审批失败状态更改为审批进行中
+                    // 第二页更新默认审核进行中
+                    examineDO.setStatues(ExamineStatus.EXAMIN_ING.getStatus());
+                }
                 examineDOMapper.updateByPrimaryKey(unionAll(examineDO, examine));
             } else {
                 examineDO.setId(examineIdPool.getNewId());
@@ -155,7 +159,6 @@ public class TalentExamineManager {
      */
     private static ExamineDO unionAll(ExamineDO examineMater, ExamineDO examineSlave) {
         examineMater.setId(examineSlave.getId());
-        examineMater.setStatues(examineSlave.getStatues());
         // 图片
         Map<String, String> pictureMasterMap = PicFeatureUtil.fromString(examineMater.getPicturesUrl());
         // 图片

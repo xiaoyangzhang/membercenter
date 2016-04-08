@@ -20,8 +20,9 @@ package com.yimayhd.membercenter.enums;
 public enum ExamineStatus {
     
     EXAMIN_OK("审核通过", 1),
-    EXAMIN_ING("未审核", 2),
-    EXAMIN_ERROR("审核未通过", 3)
+    EXAMIN_ING("审核进行中", 2),
+    EXAMIN_ERROR("审核未通过", 3),
+    EXAMIN_NOT_ABLE("未提交审核", 4)
     ;
     
     private String name;

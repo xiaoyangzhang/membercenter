@@ -22,7 +22,6 @@ import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
 import com.yimayhd.membercenter.client.dto.ExamineDealDTO;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
 import com.yimayhd.membercenter.client.dto.ExamineResultDTO;
-import com.yimayhd.membercenter.client.dto.ExamineSubmitDTO;
 import com.yimayhd.membercenter.client.query.InfoQueryDTO;
 import com.yimayhd.membercenter.client.query.examine.ExaminePageQueryDTO;
 import com.yimayhd.membercenter.client.result.MemPageResult;
@@ -54,23 +53,23 @@ public class ExamineDealServiceImpl implements ExamineDealService {
      * membercenter.client.dto.ExaminDTO)
      */
     @Override
-    public MemResult<Boolean> submitMerchantExamineInfo(ExamineSubmitDTO examineSubmitDTO) {
+    public MemResult<Boolean> submitMerchantExamineInfo(ExamineInfoDTO examineInfoDTO) {
         MemResult<Boolean> result = new MemResult<Boolean>();
         long start = System.currentTimeMillis();
         try {
-            if (ParmCheckUtil.checkExamineDTO(examineSubmitDTO)) {
+            if (ParmCheckUtil.checkExamineDTO(examineInfoDTO)) {
                 result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
-                logger.info("submitMerchantExaminInfo par:{} is error", JSONObject.toJSONString(examineSubmitDTO));
+                logger.info("submitMerchantExaminInfo par:{} is error", JSONObject.toJSONString(examineInfoDTO));
                 return result;
             }
             // 数据转换
-            ExamineDO examinDO = ExamineConverter.examinDTOToDO(examineSubmitDTO.getExamineInfoDTO());
-            result = talentExamineManager.submitMerchantExamineInfo(examinDO, examineSubmitDTO.getPageNo());
+            ExamineDO examinDO = ExamineConverter.examinDTOToDO(examineInfoDTO);
+            result = talentExamineManager.submitMerchantExamineInfo(examinDO);
             logger.info("submitMerchantExaminInfo par:{} submit return:{}, cost:{}ms",
-                    JSONObject.toJSONString(examineSubmitDTO), JSONObject.toJSONString(result),
+                    JSONObject.toJSONString(examineInfoDTO), JSONObject.toJSONString(result),
                     (System.currentTimeMillis() - start));
         } catch (Exception e) {
-            logger.error("submitMerchantExaminInfo par:{} error:{}", JSONObject.toJSONString(examineSubmitDTO), e);
+            logger.error("submitMerchantExaminInfo par:{} error:{}", JSONObject.toJSONString(examineInfoDTO), e);
             result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
         }
         return result;
@@ -207,7 +206,8 @@ public class ExamineDealServiceImpl implements ExamineDealService {
                     examineResultDTO.setStatus(ExamineStatus.getByStatus(queryResult.getValue().getStatues()));
                     result.setValue(examineResultDTO);
                 }
-                logger.info("queryExamineDealResult par:{} return success, costs:{}ms", JSONObject.toJSONString(examineQueryDTO), (System.currentTimeMillis() - start));
+                logger.info("queryExamineDealResult par:{} return success, costs:{}ms",
+                        JSONObject.toJSONString(examineQueryDTO), (System.currentTimeMillis() - start));
             } else {
                 result.setReturnCode(queryResult.getReturnCode());
                 logger.info("queryExamineDealResult par:{} return error:{}", JSONObject.toJSONString(examineQueryDTO),
@@ -240,13 +240,36 @@ public class ExamineDealServiceImpl implements ExamineDealService {
             if (queryResult.isSuccess()) {
                 ExamineInfoDTO examinDTO = ExamineConverter.examineDOToDTO(queryResult.getValue());
                 result.setValue(examinDTO);
-                logger.info("queryMerchantExamineInfoById par:{} return success, costs:{}ms", id, (System.currentTimeMillis() - start));
+                logger.info("queryMerchantExamineInfoById par:{} return success, costs:{}ms", id,
+                        (System.currentTimeMillis() - start));
             } else {
                 result.setReturnCode(queryResult.getReturnCode());
                 logger.info("queryMerchantExamineInfoById par:{} return error:{}", id, queryResult.getErrorMsg());
             }
         } catch (Exception e) {
             logger.error("queryMerchantExamineInfoBySellerId par:{} error:{}", id, e);
+            result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+        }
+        return result;
+    }
+
+    @Override
+    public MemResult<Boolean> changeExamineStatusIntoIng(InfoQueryDTO examineQueryDTO) {
+        MemResult<Boolean> result = new MemResult<Boolean>();
+        long start = System.currentTimeMillis();
+        try {
+            if (ParmCheckUtil.checkQueryDTO(examineQueryDTO)) {
+                result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+                logger.info("queryMerchantExaminInfo par:{} is error", JSONObject.toJSONString(examineQueryDTO));
+                return result;
+            }
+            // 数据转换
+            ExamineDO examineDO = ExamineConverter.examineQueryToDO(examineQueryDTO);
+            result = talentExamineManager.changeExamineStatus(examineDO);
+            logger.info("queryMerchantExamineInfoById par:{} return success, costs:{}ms",
+                    JSONObject.toJSONString(examineQueryDTO), (System.currentTimeMillis() - start));
+        } catch (Exception e) {
+            logger.error("queryExamineDealResult par:{} error:{}", JSONObject.toJSONString(examineQueryDTO), e);
             result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
         }
         return result;

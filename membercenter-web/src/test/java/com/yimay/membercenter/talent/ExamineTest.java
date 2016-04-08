@@ -18,14 +18,12 @@ import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
 import com.yimayhd.membercenter.client.dto.ExamineDealDTO;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
 import com.yimayhd.membercenter.client.dto.ExamineResultDTO;
-import com.yimayhd.membercenter.client.dto.ExamineSubmitDTO;
 import com.yimayhd.membercenter.client.enums.topic.MemberTopic;
 import com.yimayhd.membercenter.client.query.InfoQueryDTO;
 import com.yimayhd.membercenter.client.query.examine.ExaminePageQueryDTO;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.examine.ExamineDealService;
-import com.yimayhd.membercenter.enums.ExaminePageNo;
 import com.yimayhd.membercenter.enums.ExamineType;
 import com.yimayhd.membercenter.mq.MsgSender;
 
@@ -80,7 +78,7 @@ public class ExamineTest extends BaseTest {
         examinQueryDTO.setPageNo(1);
         examinQueryDTO.setPageSize(1);
         // examinQueryDTO.setPrincipleName("审核信息");
-//        examinQueryDTO.setStatus(ExamineStatus.EXAMIN_OK.getStatus());
+        // examinQueryDTO.setStatus(ExamineStatus.EXAMIN_OK.getStatus());
         examinQueryDTO.setPrincipleTel("186");
         MemPageResult<ExamineInfoDTO> result = examineDealService.queryMerchantExamineByPage(examinQueryDTO);
         System.out.println("----->");
@@ -94,7 +92,7 @@ public class ExamineTest extends BaseTest {
         examineDealDTO.setDomainId(domainId);
         examineDealDTO.setSellerId(17508);
         examineDealDTO.setType(ExamineType.MERCHANT.getType());
-//        examineDealDTO.setId(1220l);
+        // examineDealDTO.setId(1220l);
         examineDealDTO.setCheckIsOk(true);
         examineDealDTO.setExamineMes("审核通过");
         examineDealDTO.setReviewerId(122222);
@@ -106,13 +104,13 @@ public class ExamineTest extends BaseTest {
 
     @Test
     public void submitMerchantExamineInfoFristPage() {
-        ExamineSubmitDTO examineSubmitDTO = new ExamineSubmitDTO();
+        // ExamineSubmitDTO examineSubmitDTO = new ExamineSubmitDTO();
         ExamineInfoDTO examinDTO = new ExamineInfoDTO();
         String pictureUrl = "FristPage.jpg";
         examinDTO.setId(1);
         examinDTO.setDomainId(domainId);
         examinDTO.setType(ExamineType.TALENT.getType());
-        examinDTO.setSellerId(userId + 433);
+        examinDTO.setSellerId(userId + 434);
         examinDTO.setSellerName("审核信息SellerName");
         examinDTO.setLegralName("审核信息LegralName");
         examinDTO.setAddress("审核信息testFristPage");
@@ -137,9 +135,9 @@ public class ExamineTest extends BaseTest {
         examinDTO.setTeacherCertificate(pictureUrl);
         examinDTO.setArtCertificate(pictureUrl);
 
-        examineSubmitDTO.setExamineInfoDTO(examinDTO);
-        examineSubmitDTO.setPageNo(ExaminePageNo.PAGE_ONE.getPageNO());
-        MemResult<Boolean> result = examineDealService.submitMerchantExamineInfo(examineSubmitDTO);
+        // examineSubmitDTO.setExamineInfoDTO(examinDTO);
+        // examineSubmitDTO.setPageNo(ExaminePageNo.PAGE_ONE.getPageNO());
+        MemResult<Boolean> result = examineDealService.submitMerchantExamineInfo(examinDTO);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
         System.out.println("----->");
@@ -147,12 +145,12 @@ public class ExamineTest extends BaseTest {
 
     @Test
     public void submitMerchantExamineInfoNextPage() {
-        ExamineSubmitDTO examineSubmitDTO = new ExamineSubmitDTO();
+        // ExamineSubmitDTO examineSubmitDTO = new ExamineSubmitDTO();
         ExamineInfoDTO examinDTO = new ExamineInfoDTO();
         String pictureUrl = "NextPage.jpg";
         examinDTO.setDomainId(domainId);
         examinDTO.setType(ExamineType.TALENT.getType());
-        examinDTO.setSellerId(userId + 433);
+        examinDTO.setSellerId(userId + 434);
         examinDTO.setPrincipleName("审核信息testNextPage");
         examinDTO.setPrincipleCard(pictureUrl);
         examinDTO.setPrincipleCardId("审核信息testNextPage");
@@ -174,10 +172,10 @@ public class ExamineTest extends BaseTest {
         examinDTO.setCooperation3(pictureUrl);
         examinDTO.setCooperation4(pictureUrl);
         examinDTO.setCooperation5(pictureUrl);
-        
-        examineSubmitDTO.setExamineInfoDTO(examinDTO);
-        examineSubmitDTO.setPageNo(ExaminePageNo.PAGE_TWO.getPageNO());
-        MemResult<Boolean> result = examineDealService.submitMerchantExamineInfo(examineSubmitDTO);
+
+        // examineSubmitDTO.setExamineInfoDTO(examinDTO);
+        // examineSubmitDTO.setPageNo(ExaminePageNo.PAGE_TWO.getPageNO());
+        MemResult<Boolean> result = examineDealService.submitMerchantExamineInfo(examinDTO);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
         System.out.println("----->");
@@ -196,4 +194,15 @@ public class ExamineTest extends BaseTest {
         System.out.println("----->");
     }
 
+    @Test
+    public void changeExamineStatusIntoIng(){
+        InfoQueryDTO examineQueryDTO = new InfoQueryDTO();
+        examineQueryDTO.setDomainId(domainId);
+        examineQueryDTO.setSellerId(444);
+        examineQueryDTO.setType(ExamineType.TALENT.getType());
+        MemResult<Boolean> result = examineDealService.changeExamineStatusIntoIng(examineQueryDTO);
+        System.out.println("----->");
+        System.out.println("*****  " + JSONObject.toJSONString(result));
+        System.out.println("----->");
+    }
 }

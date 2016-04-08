@@ -12,7 +12,6 @@ package com.yimayhd.membercenter.client.service.examine;
 import com.yimayhd.membercenter.client.dto.ExamineDealDTO;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
 import com.yimayhd.membercenter.client.dto.ExamineResultDTO;
-import com.yimayhd.membercenter.client.dto.ExamineSubmitDTO;
 import com.yimayhd.membercenter.client.query.InfoQueryDTO;
 import com.yimayhd.membercenter.client.query.examine.ExaminePageQueryDTO;
 import com.yimayhd.membercenter.client.result.MemPageResult;
@@ -33,12 +32,25 @@ public interface ExamineDealService {
      * 功能描述: <br>
      * 〈提交审核基本信息〉
      *
-     * @param examineSubmitDTO
+     * @param examineInfoDTO
      * @return 
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    MemResult<Boolean> submitMerchantExamineInfo(ExamineSubmitDTO examineSubmitDTO);
+    MemResult<Boolean> submitMerchantExamineInfo(ExamineInfoDTO examineInfoDTO);
+    
+    
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈修改审核信息状态为审核中〉
+     *
+     * @param examineQueryDTO
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    MemResult<Boolean> changeExamineStatusIntoIng(InfoQueryDTO examineQueryDTO);
     
     /**
      * 

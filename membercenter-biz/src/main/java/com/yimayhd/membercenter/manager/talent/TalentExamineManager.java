@@ -30,7 +30,6 @@ import com.yimayhd.membercenter.client.query.examine.ExaminePageQueryDTO;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.converter.ExamineConverter;
-import com.yimayhd.membercenter.enums.ExaminePageNo;
 import com.yimayhd.membercenter.enums.ExamineStatus;
 import com.yimayhd.membercenter.enums.ExamineType;
 import com.yimayhd.membercenter.idgen.IDPool;
@@ -86,17 +85,14 @@ public class TalentExamineManager {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> submitMerchantExamineInfo(ExamineDO examineDO, int pageNo) {
+    public MemResult<Boolean> submitMerchantExamineInfo(ExamineDO examineDO) {
         MemResult<Boolean> result = new MemResult<Boolean>();
         try {
-            if (pageNo == ExaminePageNo.PAGE_ONE.getPageNO()) {
-                result = checkSellerNameIsExist(examineDO.getSellerName(), examineDO.getDomainId());
-                // 判断sellerName是否已经存在
-                if (!result.isSuccess()) {
-                    logger.info("submitMerchantExaminInfo par:{} sellerName exists",
-                            JSONObject.toJSONString(examineDO));
-                    return result;
-                }
+            result = checkSellerNameIsExist(examineDO.getSellerName(), examineDO.getDomainId());
+            // 判断sellerName是否已经存在
+            if (!result.isSuccess()) {
+                logger.info("submitMerchantExaminInfo par:{} sellerName exists", JSONObject.toJSONString(examineDO));
+                return result;
             }
             // do 判断是否已经存在
             ExamineDO examine = examineDOMapper.selectBySellerId(examineDO);
@@ -108,13 +104,6 @@ public class TalentExamineManager {
                             JSONObject.toJSONString(examineDO));
                     return result;
                 }
-                if (pageNo == ExaminePageNo.PAGE_ONE.getPageNO()) {
-                    examineDO.setStatues(examine.getStatues());
-                } else {
-                    // 防止修改提交时将审批失败状态更改为审批进行中
-                    // 第二页更新默认审核进行中
-                    examineDO.setStatues(ExamineStatus.EXAMIN_ING.getStatus());
-                }
                 examineDOMapper.updateByPrimaryKey(unionAll(examineDO, examine));
             } else {
                 examineDO.setId(examineIdPool.getNewId());
@@ -122,6 +111,38 @@ public class TalentExamineManager {
             }
         } catch (Exception e) {
             logger.error("submitMerchantExaminInfo par:{} insert error:{}", JSONObject.toJSONString(examineDO), e);
+            result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+        }
+        return result;
+    }
+
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈更新状态为审核中〉
+     *
+     * @param examineDO
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public MemResult<Boolean> changeExamineStatus(ExamineDO examineDO) {
+        MemResult<Boolean> result = new MemResult<Boolean>();
+        try {
+            // do 判断是否已经存在
+            ExamineDO examine = examineDOMapper.selectBySellerId(examineDO);
+            if (null != examine) {
+                examineDO.setId(examine.getId());
+                examineDO.setStatues(ExamineStatus.EXAMIN_ING.getStatus());
+                examineDO.setGmtModified(new Date());
+                examineDOMapper.updateByPrimaryKey(examineDO);
+                logger.info("changeExamineStatus par:{} success", JSONObject.toJSONString(examineDO));
+            } else {
+                result.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
+                logger.info("changeExamineStatus par:{} has not data, update fail", JSONObject.toJSONString(examineDO));
+            }
+        } catch (Exception e) {
+            logger.error("changeExamineStatus par:{} error:{}", JSONObject.toJSONString(examineDO), e);
             result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
         }
         return result;

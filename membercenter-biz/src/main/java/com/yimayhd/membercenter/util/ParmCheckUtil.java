@@ -17,12 +17,10 @@ import com.yimayhd.membercenter.client.domain.talent.TalentInfoDO;
 import com.yimayhd.membercenter.client.dto.AccountDTO;
 import com.yimayhd.membercenter.client.dto.ExamineDealDTO;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
-import com.yimayhd.membercenter.client.dto.ExamineSubmitDTO;
 import com.yimayhd.membercenter.client.dto.PictureTextDTO;
 import com.yimayhd.membercenter.client.dto.TalentInfoDTO;
 import com.yimayhd.membercenter.client.query.InfoQueryDTO;
 import com.yimayhd.membercenter.entity.talent.TalentQuery;
-import com.yimayhd.membercenter.enums.ExaminePageNo;
 import com.yimayhd.membercenter.enums.ExamineType;
 import com.yimayhd.user.client.enums.ServiceTypeOption;
 
@@ -131,10 +129,9 @@ public class ParmCheckUtil {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public static boolean checkExamineDTO(ExamineSubmitDTO examineSubmitDTO) {
-        ExamineInfoDTO examineDTO = examineSubmitDTO.getExamineInfoDTO();
-        if (null == examineDTO || MIN_CODE >= examineDTO.getSellerId() || !ExamineType.has(examineDTO.getType())
-                || MIN_CODE >= examineDTO.getDomainId() || !ExaminePageNo.has(examineSubmitDTO.getPageNo())) {
+    public static boolean checkExamineDTO(ExamineInfoDTO examineInfoDTO) {
+        if (MIN_CODE >= examineInfoDTO.getSellerId() || !ExamineType.has(examineInfoDTO.getType())
+                || MIN_CODE >= examineInfoDTO.getDomainId()) {
             return true;
         }
         return false;

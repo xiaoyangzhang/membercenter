@@ -188,7 +188,7 @@ public class ExamineConverter {
         examineDO.setDomainId(examinDTO.getDomainId());
         examineDO.setType(examinDTO.getType());
         // 默认审核中
-        examineDO.setStatues(ExamineStatus.EXAMIN_ING.getStatus());
+        examineDO.setStatues(ExamineStatus.EXAMIN_NOT_ABLE.getStatus());
         examineDO.setGmtCreated(new Date());
         examineDO.setGmtModified(new Date());
         return examineDO;

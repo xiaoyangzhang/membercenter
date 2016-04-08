@@ -108,10 +108,9 @@ public class TalentExamineManager {
                             JSONObject.toJSONString(examineDO));
                     return result;
                 }
-                // 防止修改第二页提交时将审批失败状态更改为审批进行中
-                if (pageNo == ExaminePageNo.PAGE_TWO.getPageNO()) {
-                    examineDO.setStatues(examine.getStatues());
-                }
+                // 防止修改提交时将审批失败状态更改为审批进行中
+                // if (pageNo == ExaminePageNo.PAGE_TWO.getPageNO()) {
+                // }
                 examineDOMapper.updateByPrimaryKey(unionAll(examineDO, examine));
             } else {
                 examineDO.setId(examineIdPool.getNewId());
@@ -156,6 +155,7 @@ public class TalentExamineManager {
      */
     private static ExamineDO unionAll(ExamineDO examineMater, ExamineDO examineSlave) {
         examineMater.setId(examineSlave.getId());
+        examineMater.setStatues(examineSlave.getStatues());
         // 图片
         Map<String, String> pictureMasterMap = PicFeatureUtil.fromString(examineMater.getPicturesUrl());
         // 图片
@@ -269,9 +269,9 @@ public class TalentExamineManager {
      */
     public MemResult<Boolean> updateMerchantExamineById(ExamineDO examineDO) {
         MemResult<Boolean> baseResult = new MemResult<Boolean>();
+        // 查询是否已经存在审核记录
+        MemResult<ExamineDO> examineResult = queryMerchantExamineInfoById(examineDO);
         try {
-            // 查询是否已经存在审核记录
-            MemResult<ExamineDO> examineResult = queryMerchantExamineInfoById(examineDO);
             // 无审核记录
             if (!examineResult.isSuccess()) {
                 logger.info("updateMerchantExaminById param:{} is null, update fail",
@@ -307,13 +307,13 @@ public class TalentExamineManager {
             examineDetailDOMapper.insert(examineResult.getValue());
             logger.info("updateMerchantExaminById param:{} insertDetail success",
                     JSONObject.toJSONString(examineResult.getValue()));
-            examineDO.setTelNum(examineResult.getValue().getTelNum());
             // return baseResult;
         } catch (Exception e) {
             logger.error("updateMerchantExaminById param:{} error, mes is:{}", JSONObject.toJSONString(examineDO), e);
             baseResult.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
         } finally {
             if (baseResult.isSuccess()) {
+                examineDO.setTelNum(examineResult.getValue().getTelNum());
                 // 发送审核状态到mq消息
                 SendResult sendResult = msgSender.sendMessage(examineDO, MemberTopic.EXAMINE_RESULT.getTopic(),
                         MemberTopic.EXAMINE_RESULT.getTags());

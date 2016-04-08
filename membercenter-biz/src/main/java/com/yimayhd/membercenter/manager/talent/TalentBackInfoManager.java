@@ -122,9 +122,8 @@ public class TalentBackInfoManager {
                     logger.info("saveTalentBackInfo userId:{} updateMerchantInfo success", talentInfoDO.getId());
                     MemResult<PicTextResult> pictureText = queryPictureText(domainId, talentInfoDO.getId());
                     if (pictureText.isSuccess()) {
-                        pictureTextDTO.setId(pictureText.getValue().getId());
                         // 更新图文信息
-                        return updatePictureText(pictureTextDTO);
+                        return updatePictureText(domainId, talentInfoDO.getId(), pictureTextDTO);
                     } else {
                         // 保存图文信息
                         return savePictureText(domainId, talentInfoDO.getId(), pictureTextDTO);
@@ -212,16 +211,19 @@ public class TalentBackInfoManager {
      * 〈更新图文信息〉
      *
      * @param pictureTextDTO
+     * @param domainId
      * @return
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> updatePictureText(PictureTextDTO pictureTextDTO) {
+    public MemResult<Boolean> updatePictureText(int domainId, long outId, PictureTextDTO pictureTextDTO) {
         ComentEditDTO comentDEditTO = new ComentEditDTO();
-        comentDEditTO.setId(pictureTextDTO.getId());
+        comentDEditTO.setOutId(outId);
+        comentDEditTO.setOutType(PictureText.EXPERT.name());
+        comentDEditTO.setDomain(domainId);
         comentDEditTO.setPicTextDOList(picTextConverter(pictureTextDTO.getPicTexts()));
         MemResult<Boolean> picTextResult = commentRepo.updatePictureText(comentDEditTO);
-        logger.info("updatePictureText picTextId:{} return:{}", pictureTextDTO.getId(),
+        logger.info("updatePictureText picTextId:{}, id:{} return:{}", pictureTextDTO.getId(), outId,
                 JSONObject.toJSONString(picTextResult));
         return picTextResult;
     }

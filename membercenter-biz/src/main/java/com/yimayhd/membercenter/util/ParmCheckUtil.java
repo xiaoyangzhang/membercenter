@@ -34,7 +34,7 @@ import com.yimayhd.user.client.enums.ServiceTypeOption;
  */
 public class ParmCheckUtil {
 
-    private static final int MIN_CODE = 0;
+    public static final int MIN_CODE = 0;
 
     /**
      * 

@@ -38,6 +38,7 @@ import com.yimayhd.membercenter.mapper.ExamineDetailDOMapper;
 import com.yimayhd.membercenter.mq.MsgSender;
 import com.yimayhd.membercenter.repo.MerchantRepo;
 import com.yimayhd.membercenter.repo.UserOptionRepo;
+import com.yimayhd.membercenter.util.ParmCheckUtil;
 import com.yimayhd.user.client.domain.MerchantDO;
 import com.yimayhd.user.client.enums.UserOptions;
 
@@ -91,6 +92,7 @@ public class TalentExamineManager {
             result = checkSellerNameIsExist(examineDO.getSellerName(), examineDO.getDomainId());
             // 判断sellerName是否已经存在
             if (!result.isSuccess()) {
+                result.setReturnCode(MemberReturnCode.DB_SELLERNAME_FAILED);
                 logger.info("submitMerchantExaminInfo par:{} sellerName exists", JSONObject.toJSONString(examineDO));
                 return result;
             }
@@ -109,6 +111,7 @@ public class TalentExamineManager {
                 examineDO.setId(examineIdPool.getNewId());
                 examineDOMapper.insert(examineDO);
             }
+            result.setValue(Boolean.TRUE);
         } catch (Exception e) {
             logger.error("submitMerchantExaminInfo par:{} insert error:{}", JSONObject.toJSONString(examineDO), e);
             result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
@@ -132,6 +135,12 @@ public class TalentExamineManager {
             // do 判断是否已经存在
             ExamineDO examine = examineDOMapper.selectBySellerId(examineDO);
             if (null != examine) {
+                if (examine.getStatues() == ExamineStatus.EXAMIN_OK.getStatus()) {
+                    // result.setReturnCode(MemberReturnCode.DB_EXAMINE_FAILED);
+                    logger.info("changeExamineStatus par:{} has already checked", JSONObject.toJSONString(examineDO));
+                    result.setValue(Boolean.TRUE);
+                    return result;
+                }
                 examineDO.setId(examine.getId());
                 examineDO.setStatues(ExamineStatus.EXAMIN_ING.getStatus());
                 examineDO.setGmtModified(new Date());
@@ -141,6 +150,7 @@ public class TalentExamineManager {
                 result.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
                 logger.info("changeExamineStatus par:{} has not data, update fail", JSONObject.toJSONString(examineDO));
             }
+            result.setValue(Boolean.TRUE);
         } catch (Exception e) {
             logger.error("changeExamineStatus par:{} error:{}", JSONObject.toJSONString(examineDO), e);
             result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
@@ -220,7 +230,7 @@ public class TalentExamineManager {
         try {
             ExamineDO examineDO = null;
             // do 需要修改
-            if (0 < examineQueryDO.getId()) {
+            if (ParmCheckUtil.MIN_CODE < examineQueryDO.getId()) {
                 examineDO = examineDOMapper.selectById(examineQueryDO);
             } else {
                 examineDO = examineDOMapper.selectBySellerId(examineQueryDO);
@@ -259,8 +269,8 @@ public class TalentExamineManager {
         try {
             // 查询总数
             int count = examineDOMapper.queryMerchantExaminCount(examinQueryDTO);
-            if (0 >= count) {
-                // baseResult.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
+            if (ParmCheckUtil.MIN_CODE >= count) {
+                baseResult.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
                 logger.info("queryMerchantExaminByPage param:{}  queryMerchantExaminCount is zero",
                         JSONObject.toJSONString(examinQueryDTO));
                 return baseResult;
@@ -291,21 +301,22 @@ public class TalentExamineManager {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> updateMerchantExamineById(ExamineDO examineDO) {
+    public MemResult<Boolean> dealExamineInfo(ExamineDO examineDO) {
         MemResult<Boolean> baseResult = new MemResult<Boolean>();
         // 查询是否已经存在审核记录
         MemResult<ExamineDO> examineResult = queryMerchantExamineInfoById(examineDO);
         try {
             // 无审核记录
             if (!examineResult.isSuccess()) {
-                logger.info("updateMerchantExaminById param:{} is null, update fail",
-                        JSONObject.toJSONString(examineDO));
+                logger.info("dealExamineInfo param:{} is null, update fail", JSONObject.toJSONString(examineDO));
                 baseResult.setReturnCode(MemberReturnCode.DB_UPDATE_FAILED);
                 return baseResult;
             }
             // 判断是否已经审核通过
             if (examineResult.getValue().getStatues() == ExamineStatus.EXAMIN_OK.getStatus()) {
-                baseResult.setReturnCode(MemberReturnCode.DB_EXAMINE_FAILED);
+                // baseResult.setReturnCode(MemberReturnCode.DB_EXAMINE_FAILED);
+                baseResult.setValue(Boolean.TRUE);
+                logger.info("dealExamineInfo param:{} has already examine ok", JSONObject.toJSONString(examineDO));
                 return baseResult;
             }
             // 审核通过保存基本信息
@@ -313,14 +324,14 @@ public class TalentExamineManager {
                 MerchantDO merchantDO = ExamineConverter.examineToMerchant(examineResult.getValue());
                 // 初始化店铺信息
                 MemResult<MerchantDO> memResult = merchantRepo.saveMerchant(merchantDO);
-                logger.info("updateMerchantExaminById param:{} saveMerchant return:{}",
-                        JSONObject.toJSONString(merchantDO), JSONObject.toJSONString(memResult.getReturnCode()));
+                logger.info("dealExamineInfo param:{} saveMerchant return:{}", JSONObject.toJSONString(merchantDO),
+                        JSONObject.toJSONString(memResult.getReturnCode()));
                 // 更新user option
                 addUserOption(examineResult.getValue().getSellerId(), examineResult.getValue().getType());
             }
             examineDO.setId(examineResult.getValue().getId());
             examineDOMapper.updateByPrimaryKey(examineDO);
-            logger.info("updateMerchantExaminById param:{} update success", JSONObject.toJSONString(examineDO));
+            logger.info("dealExamineInfo param:{} update success", JSONObject.toJSONString(examineDO));
             // baseResult.setReturnCode(MemberReturnCode.DB_UPDATE_FAILED);
             examineResult.getValue().setId(examineDetailIdPool.getNewId());
             examineResult.getValue().setReviewerId(examineDO.getReviewerId());
@@ -329,11 +340,11 @@ public class TalentExamineManager {
             examineResult.getValue().setGmtModified(new Date());
             // 保存审核明细表
             examineDetailDOMapper.insert(examineResult.getValue());
-            logger.info("updateMerchantExaminById param:{} insertDetail success",
+            logger.info("dealExamineInfo param:{} insertDetail success",
                     JSONObject.toJSONString(examineResult.getValue()));
-            // return baseResult;
+            baseResult.setValue(Boolean.TRUE);
         } catch (Exception e) {
-            logger.error("updateMerchantExaminById param:{} error, mes is:{}", JSONObject.toJSONString(examineDO), e);
+            logger.error("dealExamineInfo param:{} error, mes is:{}", JSONObject.toJSONString(examineDO), e);
             baseResult.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
         } finally {
             if (baseResult.isSuccess()) {
@@ -341,7 +352,7 @@ public class TalentExamineManager {
                 // 发送审核状态到mq消息
                 SendResult sendResult = msgSender.sendMessage(examineDO, MemberTopic.EXAMINE_RESULT.getTopic(),
                         MemberTopic.EXAMINE_RESULT.getTags());
-                logger.info("updateMerchantExamineById par:{} sendMes return:{}", JSONObject.toJSONString(examineDO),
+                logger.info("dealExamineInfo par:{} sendMes return:{}", JSONObject.toJSONString(examineDO),
                         JSONObject.toJSONString(sendResult));
             }
         }

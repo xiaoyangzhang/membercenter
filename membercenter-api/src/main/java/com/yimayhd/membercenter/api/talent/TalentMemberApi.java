@@ -55,7 +55,7 @@ public interface TalentMemberApi {
             @ApiAutowired(CommonParameter.deviceId) long deviceId,
             @ApiAutowired(CommonParameter.userId) long userId,
             @ApiAutowired(CommonParameter.versionCode) int versionCode,
-            @ApiParameter(required = true, name = "merchantId", desc = "店铺Id") long merchantId);
+            @ApiParameter(required = true, name = "merchantId", desc = "达人Id") long merchantId);
 
     
     /**

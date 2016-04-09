@@ -78,8 +78,14 @@ public class ExamineTest extends BaseTest {
         examinQueryDTO.setPageNo(1);
         examinQueryDTO.setPageSize(1);
         // examinQueryDTO.setPrincipleName("审核信息");
-        // examinQueryDTO.setStatus(ExamineStatus.EXAMIN_OK.getStatus());
-        examinQueryDTO.setPrincipleTel("186");
+        // examinQueryDTO.setStatus(ExamineStatus.EXAMIN_NOT_ABLE.getStatus());
+        // examinQueryDTO.setPrincipleTel("186");
+        int[] statusArray = new int[4];
+        statusArray[0] = 1;
+        statusArray[2] = 2;
+        statusArray[3] = 3;
+        statusArray[1] = 4;
+        examinQueryDTO.setStatusArray(statusArray);
         MemPageResult<ExamineInfoDTO> result = examineDealService.queryMerchantExamineByPage(examinQueryDTO);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
@@ -93,7 +99,7 @@ public class ExamineTest extends BaseTest {
         examineDealDTO.setSellerId(17508);
         examineDealDTO.setType(ExamineType.MERCHANT.getType());
         // examineDealDTO.setId(1220l);
-        examineDealDTO.setCheckIsOk(true);
+        examineDealDTO.setCheckIsOk(false);
         examineDealDTO.setExamineMes("审核通过");
         examineDealDTO.setReviewerId(122222);
         MemResult<Boolean> result = examineDealService.dealExamineInfo(examineDealDTO);
@@ -195,7 +201,7 @@ public class ExamineTest extends BaseTest {
     }
 
     @Test
-    public void changeExamineStatusIntoIng(){
+    public void changeExamineStatusIntoIng() {
         InfoQueryDTO examineQueryDTO = new InfoQueryDTO();
         examineQueryDTO.setDomainId(domainId);
         examineQueryDTO.setSellerId(444);

@@ -121,7 +121,7 @@ public class ExamineDealServiceImpl implements ExamineDealService {
         MemPageResult<ExamineInfoDTO> result = new MemPageResult<ExamineInfoDTO>();
         long start = System.currentTimeMillis();
         try {
-            if (0 >= examinQueryDTO.getDomainId()) {
+            if (ParmCheckUtil.MIN_CODE >= examinQueryDTO.getDomainId()) {
                 result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
                 logger.info("queryMerchantExamineByPage domainId:{} is error", examinQueryDTO.getDomainId());
                 return result;
@@ -171,7 +171,7 @@ public class ExamineDealServiceImpl implements ExamineDealService {
             }
             // 数据转化
             ExamineDO examineDO = ExamineConverter.examineDealToDO(examineDealDTO);
-            result = talentExamineManager.updateMerchantExamineById(examineDO);
+            result = talentExamineManager.dealExamineInfo(examineDO);
             logger.info("examinInfoIsOk par:{} return:{}, costs:{}ms", JSONObject.toJSONString(examineDealDTO),
                     JSONObject.toJSONString(result), (System.currentTimeMillis() - start));
         } catch (Exception e) {
@@ -229,7 +229,7 @@ public class ExamineDealServiceImpl implements ExamineDealService {
         MemResult<ExamineInfoDTO> result = new MemResult<ExamineInfoDTO>();
         long start = System.currentTimeMillis();
         try {
-            if (0 >= id) {
+            if (ParmCheckUtil.MIN_CODE >= id) {
                 result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
                 logger.info("queryMerchantExamineInfoById par:{} is error", id);
                 return result;

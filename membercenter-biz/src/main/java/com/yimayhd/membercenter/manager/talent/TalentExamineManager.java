@@ -342,6 +342,9 @@ public class TalentExamineManager {
                 logger.info("dealExamineInfo param:{} saveMerchant return:{}", JSONObject.toJSONString(merchantDO),
                         JSONObject.toJSONString(memResult.getReturnCode()));
                 // 更新user option
+                
+                //FIXME 刘彬彬  这是一个跨系统调用，需要保证一定成功的，现在的代码如果调用user失败，数据就会错乱了。
+                //FIXME 刘彬彬 如果之前审批通过，以后因为某些原因重新申请一次，如果第二次审批被拒绝的时候，用户的标记不会改变，
                 addUserOption(examineResult.getValue().getSellerId(), examineResult.getValue().getType());
             }
             examineDO.setId(examineResult.getValue().getId());

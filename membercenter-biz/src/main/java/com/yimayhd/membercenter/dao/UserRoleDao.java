@@ -1,5 +1,7 @@
 package com.yimayhd.membercenter.dao;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.client.domain.HaUserRoleDO;
@@ -18,6 +20,8 @@ public class UserRoleDao {
     	if( record == null ){
     		return null;
     	}
+    	record.setGmtCreated(new Date());
+    	record.setGmtModified(new Date());
     	int count = haUserRoleMapper.add(record) ;
     	if( count == 1){
     		return record ;
@@ -29,6 +33,7 @@ public class UserRoleDao {
     	if( record == null ){
     		return null;
     	}
+    	record.setGmtModified(new Date());
     	int count = haUserRoleMapper.updateStatus(record);
     	if( count == 1){
     		return record ;

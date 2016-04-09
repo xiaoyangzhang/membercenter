@@ -66,4 +66,5 @@ public class HaUserRoleDO implements Serializable {
     public void setHaRoleId(long haRoleId) {
         this.haRoleId = haRoleId;
     }
+
 }

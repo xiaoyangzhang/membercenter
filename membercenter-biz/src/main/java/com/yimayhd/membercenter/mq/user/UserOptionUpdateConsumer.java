@@ -20,13 +20,12 @@ import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.enums.UserOptions;
 import com.yimayhd.user.client.topic.UserTopic;
 
-public class UserOptionUpdateConsumer extends BaseConsumer {
+public class UserOptionUpdateConsumer extends UserRoleConsumer {
 	private static final Logger logger = LoggerFactory.getLogger("UserOptionUpdateConsumer") ;
 	private static final UserTopic topic = UserTopic.USER_OPTION_UPDATED ;
 	@Autowired
 	private UserRepo userRepo ;
-	@Autowired
-	private UserPermissionManager userPermissionManager ;
+	
 	@Autowired
 	private RoleDao roleDao;
 	
@@ -42,6 +41,7 @@ public class UserOptionUpdateConsumer extends BaseConsumer {
 
 	@Override
 	public boolean doConsumeMessage(Serializable message) {
+		System.err.println();
 		String log ="UUID+"+ UUID.randomUUID()+"  topic="+topic+"  msg={}"+JSON.toJSONString(message);
 		logger.info(log);
 		if( !(message instanceof UserDO) ){
@@ -74,31 +74,5 @@ public class UserOptionUpdateConsumer extends BaseConsumer {
 		return true ;
 	}
 	
-	/**
-	 * 
-	 * @param own 是否拥有权限
-	 * @param roles
-	 * @return
-	 */
-	private boolean updateUserRole(long userId, boolean own, List<HaRoleDO> roles){
-		if( !CollectionUtils.isEmpty(roles) ){
-			for( HaRoleDO role : roles ){
-				long roleId = role.getId() ;
-				if( own ){
-					boolean addRoleResult = userPermissionManager.addRole4User(userId, roleId);
-					if( !addRoleResult ){
-						return false;
-					}
-				}else{
-					boolean removeResult = userPermissionManager.disactiveUserRole(userId, roleId);
-					if( !removeResult ){
-						return false;
-					}
-				}
-			}
-			
-		}
-		return true; 
-	}
-
+	
 }

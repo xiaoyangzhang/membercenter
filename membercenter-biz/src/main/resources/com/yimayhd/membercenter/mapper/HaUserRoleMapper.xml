@@ -2,20 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yimayhd.membercenter.mapper.HaUserRoleMapper">
     <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.HaUserRoleDO">
-
         <id column="id" property="id" jdbcType="BIGINT"/>
-    
         <result column="ha_user_id" property="haUserId" jdbcType="BIGINT"/>
-
         <result column="ha_role_id" property="haRoleId" jdbcType="BIGINT"/>
-
         <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
-
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
-
         <result column="status" property="status" jdbcType="INTEGER"/>
-
-</resultMap>
+	</resultMap>
 
     <sql id="Base_Column_List">
         id,ha_user_id,ha_role_id,gmt_created,gmt_modified,status
@@ -25,19 +18,12 @@
     <insert id="add" parameterType="com.yimayhd.membercenter.client.domain.HaUserRoleDO"  useGeneratedKeys="true" keyProperty="id">
         insert into ha_user_role  (id,ha_user_id,ha_role_id,gmt_created,gmt_modified,status)
         values (
-        
           #{id,jdbcType=BIGINT},
-        
           #{haUserId,jdbcType=BIGINT},
-        
           #{haRoleId,jdbcType=BIGINT},
-        
           #{gmtCreated,jdbcType=TIMESTAMP},
-        
           #{gmtModified,jdbcType=TIMESTAMP},
-        
           #{status,jdbcType=INTEGER}
-        
         )
     </insert>
 
@@ -48,70 +34,16 @@
         t.id = #{id}
     </select>
 
-    <sql id="search_clause">
-        <where>
-            <if test="entity != null">
-                <if test="entity.status == null">
-                    and t.status = 1
-                </if>
-                <if test="entity.status != null">
-                    and t.status = #{entity.status}
-                </if>
-            </if>
-            <if test="entity == null">
-                and t.status = 1
-            </if>
-        </where>
-    </sql>
-
-    <!--<select id="getList" resultMap="BaseResultMap" parameterType="com.yimayhd.palace.base.PageQuery">
-        select
-        <include refid="Base_Column_List"/>
-        from ha_user_role t
-        <include refid="search_clause"/>
-        order by t.created_on desc
-        <if test="isPaging != 0">
-            limit #{from},#{pageSize}
-        </if>
-    </select>
--->
-    <select id="getCount" resultType="long" parameterType="com.yimayhd.membercenter.client.domain.HaUserRoleDO">
-        select count(1) from ha_user_role t
-        <include refid="search_clause"/>
-    </select>
-
-    <update id="modify" parameterType="com.yimayhd.membercenter.client.domain.HaUserRoleDO">
-        update ha_user_role t
-        <set>
-        
-            <if test="haUserId != null">
-                t.ha_user_id = #{haUserId,jdbcType=BIGINT},
-            </if>
-        
-            <if test="haRoleId != null">
-                t.ha_role_id = #{haRoleId,jdbcType=BIGINT},
-            </if>
-        
-            <if test="gmtCreated != null">
-                t.gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
-            </if>
-        
-            <if test="gmtModified != null">
-                t.gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-            </if>
-        
-            <if test="status != null">
-                t.status = #{status,jdbcType=INTEGER}
-            </if>
-        
-        </set>
+    <update id="updateStatus" parameterType="com.yimayhd.membercenter.client.domain.HaUserRoleDO">
+        update 
+        	ha_user_role
+        set 
+        	gmt_modified = ${gmtModified},
+        	status = #{status}
         where
         t.id = #{id}
     </update>
 
-    <update id="delete" parameterType="long">
-      update ha_user_role t set t.status = 0 where t.id = #{value}
-    </update>
 
     <select id="getHaRoleList" parameterType="com.yimayhd.membercenter.client.query.UserMenuQuery" resultType="java.lang.Long">
         SELECT
@@ -121,4 +53,15 @@
         WHERE
             ha_user_id = #{userId,jdbcType=BIGINT}
     </select>
+    
+    <select id="getUserRole"  resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List"/>
+        from ha_user_role
+        WHERE
+            ha_user_id = #{userId} and ha_role_id = ${roleId}
+        limit 0, 1
+    </select>
+    
+    
 </mapper>

@@ -12,104 +12,14 @@
 		<result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
 
 		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="type" property="type" jdbcType="INTEGER" />
 
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id,name,gmt_created,gmt_modified,status
+		id,name,gmt_created,gmt_modified,status, type
 	</sql>
 
-	<!--<select id="totalCount" resultType="java.lang.Long"
-		parameterType="com.yimayhd.membercenter.client.domain.query.RoleListQuery">
-		select count(1)
-		from ha_role
-		<where>
-			1 = 1
-			<if test="roleId != null">
-				and id = #{roleId}
-			</if>
-			<if test="roleName != null and roleName != ''">
-				and name like CONCAT('%', #{roleName}, '%')
-			</if>
-			<if test="status != null">
-				and status = #{status}
-			</if>
-			<if test="createBeginTime != null and createBeginTime !=''">
-				and gmt_created > #{createBeginTime}
-			</if>
-			<if test="createEndTime != null and createEndTime != ''">
-				and #{createEndTime} > gmt_created
-			</if>
-		</where>
-	</select>-->
-
-	<!--<select id="getListNew" resultMap="BaseResultMap"
-		parameterType="com.yimayhd.membercenter.client.domain.query.RoleListQuery">
-		select
-		<include refid="Base_Column_List" />
-		from ha_role
-		<where>
-			1 = 1
-			<if test="roleId != null">
-				and id = #{roleId}
-			</if>
-			<if test="roleName != null and roleName != ''">
-				and name like CONCAT('%', #{roleName}, '%')
-			</if>
-			<if test="status != null">
-				and status = #{status}
-			</if>
-			<if test="createBeginTime != null and createBeginTime !=''">
-				and gmt_created > #{createBeginTime}
-			</if>
-			<if test="createEndTime != null and createEndTime != ''">
-				and #{createEndTime} > gmt_created
-			</if>
-			order by id asc
-			limit #{pageBegin}, #{pageSize}
-		</where>
-	</select>-->
-
-	<!--<select id="roleDetailById" parameterType="com.yimayhd.membercenter.client.domain.query.RoleListQuery"
-		resultMap="roleDetail">
- 		<![CDATA[select a.id as id,
-                           a.name as name,
-                           a.url as url,
-                           b.ha_role_id as ha_role_id,
-                           b.id as ha_role_menu_id,           
-                           case when b.ha_role_id = ${roleId}
-                                   then 1
-                                else 0 end as is_own
-                  from ha_menu a
-                  left join (
-                        select d.id as id ,
-                               d.ha_menu_id as ha_menu_id ,
-                               count(distinct d.ha_menu_id) as count,
-                                    c.ha_role_id as ha_role_id,
-                                    c.gmt_created as gmt_created,
-                                    c.gmt_modified as gmt_modified,
-                                    c.status as status
-                         from  ha_role_menu d
-                         left join                    
-                          (select id,
-                                   ha_menu_id,
-                                   ha_role_id,
-                                   gmt_created,
-                                   gmt_modified,
-                                   status
-                        from ha_role_menu 
-                        where ha_role_id = ${roleId}
-                        and status = 1) c
-                        on d.id = c.id
-                        group by d.ha_menu_id
-                        order by d.id
-                  ) b
-                    on a.id = b.ha_menu_id
-                    where a.parent_id <> 0
-                    order by a.id asc 
-                    limit ${pageBegin}, ${pageSize} 
- 		]]>
-	</select>-->
 
 	<select id="roleDetailCount" resultType="java.lang.Long">
 		<![CDATA[select count(1)
@@ -125,19 +35,9 @@
 	<insert id="add" parameterType="com.yimayhd.membercenter.client.domain.HaRoleDO"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into ha_role
-		(id,name,gmt_created,gmt_modified,status)
+			(id,name,gmt_created,gmt_modified,status, type)
 		values (
-
-		#{id,jdbcType=BIGINT},
-
-		#{name,jdbcType=VARCHAR},
-
-		#{gmtCreated,jdbcType=TIMESTAMP},
-
-		#{gmtModified,jdbcType=TIMESTAMP},
-
-		#{status,jdbcType=INTEGER}
-
+			#{id},#{name},#{gmtCreated},#{gmtModified},#{status},#{type},
 		)
 	</insert>
 
@@ -147,6 +47,14 @@
 		from ha_role t
 		where
 		t.id = #{id}
+	</select>
+	<select id="getRolesByType" resultMap="BaseResultMap" parameterType="int">
+		select
+		<include refid="Base_Column_List" />
+		from 
+			ha_role
+		where
+			type = #{type}
 	</select>
 
 	<sql id="search_clause">
@@ -165,17 +73,6 @@
 		</where>
 	</sql>
 
-	<!--<select id="getList" resultMap="BaseResultMap"
-		parameterType="com.yimayhd.palace.base.PageQuery">
-		select
-		<include refid="Base_Column_List" />
-		from ha_role t
-		<include refid="search_clause" />
-		order by t.created_on desc
-		<if test="isPaging != 0">
-			limit #{from},#{pageSize}
-		</if>
-	</select>-->
 
 	<select id="getCount" resultType="long"
 		parameterType="com.yimayhd.membercenter.client.domain.HaRoleDO">
@@ -185,24 +82,9 @@
 
 	<update id="updateRoleStatus" parameterType="com.yimayhd.membercenter.client.domain.HaRoleDO">
 		update ha_role t
-		<set>
-			<if test="name != null">
-				t.name = #{name,jdbcType=VARCHAR},
-			</if>
-
-			<if test="gmtCreated != null">
-				t.gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
-			</if>
-
-			<if test="gmtModified != null">
-				t.gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-			</if>
-
-			<if test="status != null">
-				t.status = #{status,jdbcType=INTEGER}
-			</if>
-
-		</set>
+		set 
+			t.gmt_modified = #{gmtModified},
+			t.status = #{status}
 		where
 		t.id = #{id}
 	</update>

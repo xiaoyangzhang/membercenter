@@ -3,11 +3,14 @@ package com.yimayhd.membercenter.manager;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.HaMenuDO;
 import com.yimayhd.membercenter.client.domain.HaRoleDO;
+import com.yimayhd.membercenter.client.domain.HaUserRoleDO;
 import com.yimayhd.membercenter.client.dto.UserMenuOptionDTO;
 import com.yimayhd.membercenter.client.enums.HaMenuType;
+import com.yimayhd.membercenter.client.enums.UserRoleStatus;
 import com.yimayhd.membercenter.client.query.MenuQuery;
 import com.yimayhd.membercenter.client.query.UserMenuQuery;
 import com.yimayhd.membercenter.client.result.MemPageResult;
+import com.yimayhd.membercenter.dao.UserRoleDao;
 import com.yimayhd.membercenter.mapper.HaMenuMapper;
 import com.yimayhd.membercenter.mapper.HaRoleMenuMapper;
 import com.yimayhd.membercenter.mapper.HaUserRoleMapper;
@@ -24,6 +27,8 @@ import java.util.List;
  */
 public class UserPermissionManager {
 
+	@Autowired
+	private UserRoleDao userRoleDao ;
     @Autowired
     private HaUserRoleMapper haUserRoleMapper;
     @Autowired
@@ -80,4 +85,49 @@ public class UserPermissionManager {
         haMenuQuery.setTypeList(typeList);
         return haMenuQuery;
     }
+    
+    public boolean addRole4User(long userId, long roleId){
+    	HaUserRoleDO userRoleDO = userRoleDao.getUserRole(userId, roleId);
+    	if( userRoleDO != null  ){
+    		//已存在，更新
+    		if( UserRoleStatus.ACTIVE.getStatus() == userRoleDO.getStatus() ){
+    			return true;
+    		}
+			userRoleDO.setStatus(UserRoleStatus.ACTIVE.getStatus());
+			HaUserRoleDO updateResult = userRoleDao.updateStatus(userRoleDO);
+			if( updateResult == null ){
+				return false;
+			}
+			return true;
+    	}
+    	//不存在，新建
+    	userRoleDO = new HaUserRoleDO() ;
+    	userRoleDO.setHaRoleId(roleId);
+    	userRoleDO.setHaUserId(userId);
+    	userRoleDO.setStatus(UserRoleStatus.ACTIVE.getStatus());
+    	HaUserRoleDO insertResult =userRoleDao.insert(userRoleDO);
+    	if( insertResult == null ){
+			return false;
+		}
+		return true;
+    }
+    
+    public boolean disactiveUserRole(long userId, long roleId){
+    	HaUserRoleDO userRoleDO = userRoleDao.getUserRole(userId, roleId);
+    	if( userRoleDO != null  ){
+    		//已存在，更新
+    		if( UserRoleStatus.DISACTIVE.getStatus() == userRoleDO.getStatus() ){
+    			return true;
+    		}
+    		userRoleDO.setStatus(UserRoleStatus.DISACTIVE.getStatus());
+    		HaUserRoleDO updateResult = userRoleDao.updateStatus(userRoleDO);
+    		if( updateResult == null ){
+    			return false;
+    		}
+    		return true;
+    	}
+    	return true;
+    }
+    
+    
 }

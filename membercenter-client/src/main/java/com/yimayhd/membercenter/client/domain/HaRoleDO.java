@@ -18,6 +18,7 @@ public class HaRoleDO implements Serializable {
     protected Date gmtModified;//更新时间
     protected int status;//1-正常0-删除
     private String name; // 角色名称
+    private int type;
 
     public long getId() {
         return id;
@@ -66,4 +67,12 @@ public class HaRoleDO implements Serializable {
     public void setDomain(long domain) {
         this.domain = domain;
     }
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
 }

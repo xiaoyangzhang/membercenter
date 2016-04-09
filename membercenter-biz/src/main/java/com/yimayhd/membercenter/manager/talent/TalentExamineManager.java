@@ -270,7 +270,7 @@ public class TalentExamineManager {
             // 查询总数
             int count = examineDOMapper.queryMerchantExaminCount(examinQueryDTO);
             if (ParmCheckUtil.MIN_CODE >= count) {
-                baseResult.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
+                // baseResult.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
                 logger.info("queryMerchantExaminByPage param:{}  queryMerchantExaminCount is zero",
                         JSONObject.toJSONString(examinQueryDTO));
                 return baseResult;
@@ -312,11 +312,26 @@ public class TalentExamineManager {
                 baseResult.setReturnCode(MemberReturnCode.DB_UPDATE_FAILED);
                 return baseResult;
             }
-            // 判断是否已经审核通过
-            if (examineResult.getValue().getStatues() == ExamineStatus.EXAMIN_OK.getStatus()) {
-                // baseResult.setReturnCode(MemberReturnCode.DB_EXAMINE_FAILED);
-                baseResult.setValue(Boolean.TRUE);
-                logger.info("dealExamineInfo param:{} has already examine ok", JSONObject.toJSONString(examineDO));
+            // 判断是否处于审核进行中
+            if (examineResult.getValue().getStatues() != ExamineStatus.EXAMIN_ING.getStatus()) {
+                // 判断是否已经审核通过
+                // if (examineResult.getValue().getStatues() == ExamineStatus.EXAMIN_OK.getStatus()) {
+                // if (examineDO.getStatues() == ExamineStatus.EXAMIN_OK.getStatus()) {
+                // baseResult.setValue(Boolean.TRUE);
+                // logger.info("dealExamineInfo param:{} has already examine ok",
+                // JSONObject.toJSONString(examineDO));
+                // } else {
+                // 审核通过后无法再次修改状态
+                // baseResult.setReturnCode(MemberReturnCode.DB_EXAMINE_REFUSE);
+                // logger.info("dealExamineInfo param:{} has already examine ok, couldn't change status",
+                // JSONObject.toJSONString(examineDO));
+                // }
+                // return baseResult;
+                // }
+                // 非审核进行中状态无法进行审核
+                baseResult.setReturnCode(MemberReturnCode.DB_EXAMINE_NOT_ING);
+                logger.info("dealExamineInfo param:{} error, isn't ing", JSONObject.toJSONString(examineDO),
+                        MemberReturnCode.DB_EXAMINE_NOT_ING.getDesc());
                 return baseResult;
             }
             // 审核通过保存基本信息

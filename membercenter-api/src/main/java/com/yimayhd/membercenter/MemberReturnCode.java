@@ -41,11 +41,17 @@ public class MemberReturnCode extends AbstractReturnCode {
     public static final int DB_SELLERNAME_FAILED_C = 16000008;
     public static final MemberReturnCode DB_SELLERNAME_FAILED = new MemberReturnCode(DB_SELLERNAME_FAILED_C, "商户名称已存在");
     
-    public static final int DB_TALENT_FAILED_C = 16000008;
+    public static final int DB_TALENT_FAILED_C = 16000009;
     public static final MemberReturnCode DB_TALENT_FAILED = new MemberReturnCode(DB_TALENT_FAILED_C, "用户非达人");
 
-    public static final int DB_BANK_FAILED_C = 16000009;
+    public static final int DB_BANK_FAILED_C = 16000010;
     public static final MemberReturnCode DB_BANK_FAILED = new MemberReturnCode(DB_BANK_FAILED_C, "未获取到银行列表");
+    
+    public static final int DB_EXAMINE_REFUSE_C = 16000011;
+    public static final MemberReturnCode DB_EXAMINE_REFUSE = new MemberReturnCode(DB_EXAMINE_REFUSE_C, "已经审核通过拒绝再次审核");
+    
+    public static final int DB_EXAMINE_NOT_ING_C = 16000012;
+    public static final MemberReturnCode DB_EXAMINE_NOT_ING = new MemberReturnCode(DB_EXAMINE_NOT_ING_C, "非审核进行中状态无法进行审核");
     /************************************** ORDER ********************************************/
     public static final int BIZ_ORDER_NOT_FOUND_C = 16001000;
     public static final MemberReturnCode BIZ_ORDER_NOT_FOUND = new MemberReturnCode(BIZ_ORDER_NOT_FOUND_C, "订单未找到");

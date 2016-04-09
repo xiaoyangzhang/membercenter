@@ -99,7 +99,7 @@ public class ExamineTest extends BaseTest {
         examineDealDTO.setSellerId(17508);
         examineDealDTO.setType(ExamineType.MERCHANT.getType());
         // examineDealDTO.setId(1220l);
-        examineDealDTO.setCheckIsOk(true);
+        examineDealDTO.setCheckIsOk(false);
         examineDealDTO.setExamineMes("审核通过");
         examineDealDTO.setReviewerId(122222);
         MemResult<Boolean> result = examineDealService.dealExamineInfo(examineDealDTO);

@@ -55,6 +55,8 @@ public class TalentInfoDO implements Serializable {
     
     private List<CertificatesDO> certificates;//认证信息
     
+    private List<CertificatesDO> serviceTypes;//服务类型
+    
     private boolean type;//是否是大V
     
     private String telNum;// 手机号码
@@ -188,5 +190,12 @@ public class TalentInfoDO implements Serializable {
     public void setProvinceCode(int provinceCode) {
         this.provinceCode = provinceCode;
     }
-    
+
+    public List<CertificatesDO> getServiceTypes() {
+        return serviceTypes;
+    }
+
+    public void setServiceTypes(List<CertificatesDO> serviceTypes) {
+        this.serviceTypes = serviceTypes;
+    }
 }

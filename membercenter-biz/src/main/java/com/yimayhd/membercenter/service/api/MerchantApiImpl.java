@@ -56,7 +56,7 @@ public class MerchantApiImpl implements MerchantApi {
             Merchant merchant = new Merchant();
             if (result.isSuccess()) {
                 MerchantInfoDO merchantInfoDO = MerchantConverter.merchantToDO(result.getValue().getMerchantDO(),
-                        IconType.MUSTSHOP.getType());
+                        IconType.CATE.getType());
                 merchant.sellerId = merchantInfoDO.getSellerId();
                 merchant.name = merchantInfoDO.getName();
                 merchant.avgprice = merchantInfoDO.getAvgprice();
@@ -71,7 +71,7 @@ public class MerchantApiImpl implements MerchantApi {
                 merchant.backPic = merchantInfoDO.getMerchantBackPic();
                 // 技能数据转换
                 merchant.certificates = TalentConverter.certificateConvert(merchantInfoDO.getCertificates());
-                merchant.certificateType = IconType.MUSTSHOP.getType();
+                merchant.certificateType = IconType.CATE.getType();
                 // return merchant;
             }
             // DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);

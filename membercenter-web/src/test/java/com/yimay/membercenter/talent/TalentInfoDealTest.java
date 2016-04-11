@@ -118,7 +118,7 @@ public class TalentInfoDealTest extends BaseTest {
 
     @Test
     public void queryTalentInfoByUserId() {
-        MemResult<TalentInfoDTO> result = talentInfoDealService.queryTalentInfoByUserId(19000, domainId);
+        MemResult<TalentInfoDTO> result = talentInfoDealService.queryTalentInfoByUserId(17509, domainId);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
         System.out.println("----->");

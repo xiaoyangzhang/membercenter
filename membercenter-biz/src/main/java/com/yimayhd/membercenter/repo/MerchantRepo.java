@@ -62,7 +62,8 @@ public class MerchantRepo {
             if (result.isSuccess() && null != result.getValue() && null != result.getValue().getMerchantDO()
                     && null != result.getValue().getUserDO()) {
                 baseResult.setValue(result.getValue());
-                logger.debug("getMerchantBySellerId sellerId:{} domainId:{} query seller info success", sellerId, domainId);
+                logger.debug("getMerchantBySellerId sellerId:{} domainId:{} query seller info success", sellerId,
+                        domainId);
                 return baseResult;
             }
             baseResult.setReturnCode(MemberReturnCode.MEMBER_NOT_FOUND);
@@ -71,7 +72,8 @@ public class MerchantRepo {
             return baseResult;
         } catch (Exception e) {
             baseResult.setReturnCode(MemberReturnCode.DUBBO_ERROR);
-            logger.error("getMerchantBySellerId sellerId:{} domainId:{} query seller info dubbo error, mes is {}", sellerId, domainId, e);
+            logger.error("getMerchantBySellerId sellerId:{} domainId:{} query seller info dubbo error, mes is {}",
+                    sellerId, domainId, e);
         }
         return baseResult;
     }
@@ -102,11 +104,12 @@ public class MerchantRepo {
                     JSONObject.toJSONString(result));
         } catch (Exception e) {
             baseResult.setReturnCode(MemberReturnCode.DUBBO_ERROR);
-            logger.error("getMerchantUserList:{} info dubbo error, mes is {}", JSONObject.toJSONString(merchantPageQuery), e);
+            logger.error("getMerchantUserList:{} info dubbo error, mes is {}",
+                    JSONObject.toJSONString(merchantPageQuery), e);
         }
         return baseResult;
     }
-    
+
     /**
      * 
      * 功能描述: <br>
@@ -117,7 +120,7 @@ public class MerchantRepo {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<MerchantDO> saveMerchant(MerchantDO merchantDO){
+    public MemResult<MerchantDO> saveMerchant(MerchantDO merchantDO) {
         MemResult<MerchantDO> baseResult = new MemResult<MerchantDO>();
         try {
             BaseResult<MerchantDO> result = merchantService.saveMerchant(merchantDO);
@@ -132,12 +135,11 @@ public class MerchantRepo {
                     JSONObject.toJSONString(result));
         } catch (Exception e) {
             baseResult.setReturnCode(MemberReturnCode.DUBBO_ERROR);
-            logger.error("saveMerchant par:{} return error:{}", JSONObject.toJSONString(merchantDO),
-                    e);
+            logger.error("saveMerchant par:{} return error:{}", JSONObject.toJSONString(merchantDO), e);
         }
         return baseResult;
     }
-    
+
     /**
      * 
      * 功能描述: <br>
@@ -148,7 +150,7 @@ public class MerchantRepo {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> updateMerchantInfo(MerchantDTO merchantDTO){
+    public MemResult<Boolean> updateMerchantInfo(MerchantDTO merchantDTO) {
         MemResult<Boolean> baseResult = new MemResult<Boolean>();
         try {
             BaseResult<Boolean> result = merchantService.updateMerchantInfo(merchantDTO);
@@ -163,12 +165,11 @@ public class MerchantRepo {
                     JSONObject.toJSONString(result));
         } catch (Exception e) {
             baseResult.setReturnCode(MemberReturnCode.DUBBO_ERROR);
-            logger.error("updateMerchantInfo par:{} return error:{}", JSONObject.toJSONString(merchantDTO),
-                    e);
+            logger.error("updateMerchantInfo par:{} return error:{}", JSONObject.toJSONString(merchantDTO), e);
         }
         return baseResult;
     }
-    
+
     /**
      * 
      * 功能描述: <br>
@@ -180,24 +181,51 @@ public class MerchantRepo {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> getMerchantList(String sellerName, int domainId){
+    public MemResult<Boolean> getMerchantList(String sellerName, int domainId) {
         MemResult<Boolean> baseResult = new MemResult<Boolean>();
-        try{
+        try {
             MerchantQuery merchantQuery = new MerchantQuery();
             merchantQuery.setDomainId(domainId);
             merchantQuery.setName(sellerName);
             BaseResult<List<MerchantDO>> merchantResult = merchantService.getMerchantList(merchantQuery);
-            //返回列表为空   不存在sellerName
-            if(merchantResult.isSuccess() && ParmCheckUtil.checkListNull(merchantResult.getValue())){
+            // 返回列表为空 不存在sellerName
+            if (merchantResult.isSuccess() && ParmCheckUtil.checkListNull(merchantResult.getValue())) {
                 return baseResult;
             }
             baseResult.setReturnCode(MemberReturnCode.DB_SELLERNAME_FAILED);
             logger.debug("getMerchantList par:{} return error:{}", JSONObject.toJSONString(merchantQuery),
                     JSONObject.toJSONString(merchantResult));
-        }catch(Exception e){
+        } catch (Exception e) {
             baseResult.setReturnCode(MemberReturnCode.DUBBO_ERROR);
-            logger.error("getMerchantList par:{} return error:{}", sellerName,
-                    e);
+            logger.error("getMerchantList par:{} return error:{}", sellerName, e);
+        }
+        return baseResult;
+    }
+    
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈查询店铺信息〉
+     *
+     * @param id
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public MemResult<MerchantDO> getMerchantById(long id) {
+        MemResult<MerchantDO> baseResult = new MemResult<MerchantDO>();
+        try {
+            BaseResult<MerchantDO> result = merchantService.getMerchantById(id);
+            // 返回列表为空 不存在sellerName
+            if (result.isSuccess()) {
+                baseResult.setValue(result.getValue());
+                return baseResult;
+            }
+            baseResult.setReturnCode(MemberReturnCode.USER_NOT_FOUND);
+            logger.debug("getMerchantById par:{} return error:{}", id, JSONObject.toJSONString(result));
+        } catch (Exception e) {
+            baseResult.setReturnCode(MemberReturnCode.DUBBO_ERROR);
+            logger.error("getMerchantById par:{} return error:{}", id, e);
         }
         return baseResult;
     }

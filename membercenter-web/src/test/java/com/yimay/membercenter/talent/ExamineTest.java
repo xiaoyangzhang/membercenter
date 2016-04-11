@@ -116,8 +116,8 @@ public class ExamineTest extends BaseTest {
         examinDTO.setId(1);
         examinDTO.setDomainId(domainId);
         examinDTO.setType(ExamineType.TALENT.getType());
-        examinDTO.setSellerId(userId + 434);
-        examinDTO.setSellerName("审核信息SellerName");
+        examinDTO.setSellerId(20100);
+        examinDTO.setSellerName("审核信息SellerName11" + 20100);
         examinDTO.setLegralName("审核信息LegralName");
         examinDTO.setAddress("审核信息testFristPage");
         examinDTO.setSaleScope("审核信息testFristPage");
@@ -156,7 +156,7 @@ public class ExamineTest extends BaseTest {
         String pictureUrl = "NextPage.jpg";
         examinDTO.setDomainId(domainId);
         examinDTO.setType(ExamineType.TALENT.getType());
-        examinDTO.setSellerId(userId + 434);
+        examinDTO.setSellerId(20100);
         examinDTO.setPrincipleName("审核信息testNextPage");
         examinDTO.setPrincipleCard(pictureUrl);
         examinDTO.setPrincipleCardId("审核信息testNextPage");

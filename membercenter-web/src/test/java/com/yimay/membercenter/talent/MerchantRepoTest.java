@@ -47,13 +47,12 @@ public class MerchantRepoTest extends BaseTest{
         MemResult<MerchantDO> saveMerchant = null;
         if(memResult.isSuccess()){
             List<UserOptions> userOptionsList = new ArrayList<UserOptions>();
-            userOptionsList.add(UserOptions.CERTIFICATED);
-            userOptionsList.add(UserOptions.USER_TALENT);
+            userOptionsList.add(UserOptions.COMMERCIAL_TENANT);
             MerchantDO merchantDO = memResult.getValue().getMerchantDO();
             for (int i = 61; i < 100; i++) {
                 merchantDO.setSellerId(i);
                 merchantDO.setName(merchantDO.getName() + i);
-                merchantDO.setOption(MerchantOption.TALENT.getOption());
+                merchantDO.setOption(MerchantOption.EAT.getOption());
                 merchantDO.setGmtCreated(new Date());
                 merchantDO.setGmtModified(new Date());
                 merchantDO.setSalesQuantity(i);
@@ -65,4 +64,5 @@ public class MerchantRepoTest extends BaseTest{
             }
         }
     }
+    
 }

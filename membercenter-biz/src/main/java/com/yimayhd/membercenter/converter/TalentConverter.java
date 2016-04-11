@@ -28,6 +28,7 @@ import com.yimayhd.user.client.dto.MerchantUserDTO;
 import com.yimayhd.user.client.enums.CertificateOption;
 import com.yimayhd.user.client.enums.SequenceEnum;
 import com.yimayhd.user.client.enums.ServiceFacilityOption;
+import com.yimayhd.user.client.enums.ServiceTypeOption;
 import com.yimayhd.user.client.enums.UserOptions;
 
 /**
@@ -74,6 +75,8 @@ public class TalentConverter {
         List<CertificatesDO> certificates = new ArrayList<CertificatesDO>();
         // 需要根据达人与店铺区分具体技能
         if (IconType.EXPERT.getType() == type) {
+            //服务类型
+            talentInfoDO = serviceTypeDeal(talentInfoDO, merchantDO, type);
             // 达人技能
             List<CertificateOption> certificateOptions = CertificateOption
                     .getContainedOptions(merchantDO.getCertificate());
@@ -87,7 +90,7 @@ public class TalentConverter {
                     certificates.add(certificatesDO);
                 }
             }
-        } else if (IconType.MUSTSHOP.getType() == type) {
+        } else {
             // 店铺服务类型
             List<ServiceFacilityOption > facilityOptions = ServiceFacilityOption 
                     .getContainedOptions(merchantDO.getServiceType());
@@ -107,6 +110,35 @@ public class TalentConverter {
         return talentInfoDO;
     }
 
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈达人服务类型〉
+     *
+     * @param talentInfoDO
+     * @param merchantDO
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public static TalentInfoDO serviceTypeDeal(TalentInfoDO talentInfoDO, MerchantDO merchantDO, int type){
+        List<CertificatesDO> certificates = new ArrayList<CertificatesDO>();
+        // 达人服务类型
+        List<ServiceTypeOption> serviceTypeOptions = ServiceTypeOption
+                .getContainedOptions(merchantDO.getServiceType());
+        // type > 0 获取详情信息
+        if (!ParmCheckUtil.checkListNull(serviceTypeOptions)) {
+            for (ServiceTypeOption option : serviceTypeOptions) {
+                CertificatesDO certificatesDO = new CertificatesDO();
+                certificatesDO.setId(Integer.valueOf(option.getCode()));
+                certificatesDO.setName(option.getDesc());
+                certificatesDO.setType(type);
+                certificates.add(certificatesDO);
+            }
+        }
+        talentInfoDO.setServiceTypes(certificates);
+        return talentInfoDO;
+    }
     /**
      * 
      * 功能描述: <br>

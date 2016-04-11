@@ -158,9 +158,9 @@ public class MerchantConverter {
         // 标注为达人
         merchantDO.setOption(MerchantOption.TALENT.getOption());
         // 达人技能转换 默认全选
-        if (!ParmCheckUtil.checkListNull(talentInfoDO.getCertificates())) {
+        if (!ParmCheckUtil.checkListNull(talentInfoDO.getServiceTypes())) {
             List<ServiceTypeOption> options = new ArrayList<ServiceTypeOption>();
-            for (CertificatesDO certificatesDO : talentInfoDO.getCertificates()) {
+            for (CertificatesDO certificatesDO : talentInfoDO.getServiceTypes()) {
                 ServiceTypeOption typeOption = ServiceTypeOption.valueOfCode(String.valueOf(certificatesDO.getId()));
                 // 预防 null Exception
                 if (null != typeOption) {

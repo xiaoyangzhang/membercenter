@@ -1,4 +1,4 @@
-package com.yimay.membercenter.talent;
+package com.yimay.membercenter.talent.option;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,14 +7,11 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.yimayhd.membercenter.client.domain.HaRoleDO;
 import com.yimayhd.membercenter.dao.RoleDao;
 import com.yimayhd.membercenter.enums.RoleType;
-import com.yimayhd.membercenter.manager.UserPermissionManager;
-import com.yimayhd.membercenter.mq.BaseConsumer;
 import com.yimayhd.membercenter.repo.UserRepo;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.enums.UserOptions;

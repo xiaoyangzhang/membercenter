@@ -38,13 +38,23 @@
         <property name="nameServer" value="${rocketmq.server.name}"/>
         <property name="group" value="${member.consume.user.group}"/>
     </bean>
-    <bean id="userRegisterConsumer" class="com.yimayhd.membercenter.mq.user.UserRegisterConsumer"
+	
+	<bean id="userRegisterConsumer" class="com.yimayhd.membercenter.mq.user.UserRegisterConsumer"
+		init-method="init" destroy-method="destroy">
+		<property name="nameServer" value="${rocketmq.server.name}" />
+		<property name="group" value="${member.consume.user.group}" />
+	</bean>
+
+  	<bean id="userOptionAddConsumer" class="com.yimayhd.membercenter.mq.user.UserOptionAddConsumer"
           init-method="init" destroy-method="destroy">
         <property name="nameServer" value="${rocketmq.server.name}"/>
         <property name="group" value="${member.consume.user.group}"/>
     </bean>
 
-
-
-
+  	<bean id="examineConsumer" class="com.yimayhd.membercenter.mq.examine.ExamineConsumer"
+          init-method="init" destroy-method="destroy">
+        <property name="nameServer" value="${rocketmq.server.name}"/>
+        <property name="group" value="${member.consume.examine.group}"/>
+    </bean>
+    
 </beans>

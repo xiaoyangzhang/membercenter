@@ -317,7 +317,7 @@ public class ExamineConverter {
         MerchantDO merchantDO = new MerchantDO();
         merchantDO.setSellerId(examineDO.getSellerId());
         merchantDO.setDomainId(examineDO.getDomainId());
-        merchantDO.setMerchantPrincipalTel(String.valueOf(examineDO.getTelNum()));
+        merchantDO.setMerchantPrincipalTel(examineDO.getTelNum());
         //信息明细
         Map<String, String> featureMap = PicFeatureUtil.fromString(examineDO.getFeature());
         merchantDO.setAddress(featureMap.get(ExamineDetail.ADDRESS.getId()));

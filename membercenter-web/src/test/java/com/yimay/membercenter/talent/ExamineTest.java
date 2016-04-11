@@ -46,7 +46,7 @@ public class ExamineTest extends BaseTest {
 
     @Autowired
     MsgSender msgSender;
-
+    
     @Test
     public void queryMerchantExamineInfoById() {
         InfoQueryDTO examineQueryDTO = new InfoQueryDTO();
@@ -193,13 +193,14 @@ public class ExamineTest extends BaseTest {
         examineDO.setDomainId(1200);
         examineDO.setSellerId(1900);
         examineDO.setTelNum("18651664499");
+        examineDO.setType(ExamineType.TALENT.getType());
         SendResult sendResult = msgSender.sendMessage(examineDO, MemberTopic.EXAMINE_RESULT.getTopic(),
                 MemberTopic.EXAMINE_RESULT.getTags());
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(sendResult));
         System.out.println("----->");
     }
-
+    
     @Test
     public void changeExamineStatusIntoIng() {
         InfoQueryDTO examineQueryDTO = new InfoQueryDTO();
@@ -211,4 +212,5 @@ public class ExamineTest extends BaseTest {
         System.out.println("*****  " + JSONObject.toJSONString(result));
         System.out.println("----->");
     }
+
 }

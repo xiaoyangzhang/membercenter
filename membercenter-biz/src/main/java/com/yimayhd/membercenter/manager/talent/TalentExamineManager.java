@@ -9,7 +9,6 @@
  */
 package com.yimayhd.membercenter.manager.talent;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,16 +30,12 @@ import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.converter.ExamineConverter;
 import com.yimayhd.membercenter.enums.ExamineStatus;
-import com.yimayhd.membercenter.enums.ExamineType;
 import com.yimayhd.membercenter.idgen.IDPool;
 import com.yimayhd.membercenter.mapper.ExamineDOMapper;
 import com.yimayhd.membercenter.mapper.ExamineDetailDOMapper;
 import com.yimayhd.membercenter.mq.MsgSender;
 import com.yimayhd.membercenter.repo.MerchantRepo;
-import com.yimayhd.membercenter.repo.UserOptionRepo;
 import com.yimayhd.membercenter.util.ParmCheckUtil;
-import com.yimayhd.user.client.domain.MerchantDO;
-import com.yimayhd.user.client.enums.UserOptions;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -68,9 +63,6 @@ public class TalentExamineManager {
 
     @Autowired
     IDPool examineDetailIdPool;
-
-    @Autowired
-    UserOptionRepo userOptionRepo;
 
     @Autowired
     MsgSender msgSender;
@@ -235,18 +227,8 @@ public class TalentExamineManager {
             } else {
                 examineDO = examineDOMapper.selectBySellerId(examineQueryDO);
             }
-            // if (isOk) {
-            // examineDO = examineDoneDOMapper.selectBySellerId(examineQueryDO);
-            // } else {
-            // examineDO = examineDOMapper.selectBySellerId(examineQueryDO);
-            // }
-            // if (null == examineDO) {
-            // result.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
-            // logger.error("queryMerchantExaminInfo parm:{} return null", JSONObject.toJSONString(examineQueryDO));
-            // } else {
             result.setValue(examineDO);
             logger.info("queryMerchantExaminInfo parm:{} return success", JSONObject.toJSONString(examineQueryDO));
-            // }
         } catch (Exception e) {
             result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
             logger.error("queryMerchantExaminInfo  parm:{} error:{}", JSONObject.toJSONString(examineQueryDO), e);
@@ -282,7 +264,6 @@ public class TalentExamineManager {
             baseResult.setPageNo(examinQueryDTO.getPageNo());
             baseResult.setHasNext(count > examinQueryDTO.getPageNo() * examinQueryDTO.getPageSize());
             logger.info("queryMerchantExaminByPage param:{} return success", JSONObject.toJSONString(examinQueryDTO));
-            // return baseResult;
         } catch (Exception e) {
             logger.error("queryMerchantExaminByPage param:{} error, mes is:{}", JSONObject.toJSONString(examinQueryDTO),
                     e);
@@ -307,9 +288,9 @@ public class TalentExamineManager {
         MemResult<ExamineDO> examineResult = queryMerchantExamineInfoById(examineDO);
         try {
             // 无审核记录
-            if (!examineResult.isSuccess()) {
+            if (!examineResult.isSuccess() || (examineResult.isSuccess() && null == examineResult.getValue())) {
                 logger.info("dealExamineInfo param:{} is null, update fail", JSONObject.toJSONString(examineDO));
-                baseResult.setReturnCode(MemberReturnCode.DB_UPDATE_FAILED);
+                baseResult.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
                 return baseResult;
             }
             // 判断是否处于审核进行中
@@ -334,28 +315,14 @@ public class TalentExamineManager {
                         MemberReturnCode.DB_EXAMINE_NOT_ING.getDesc());
                 return baseResult;
             }
-            // 审核通过保存基本信息
-            if (examineDO.getStatues() == ExamineStatus.EXAMIN_OK.getStatus()) {
-                MerchantDO merchantDO = ExamineConverter.examineToMerchant(examineResult.getValue());
-                // 初始化店铺信息
-                MemResult<MerchantDO> memResult = merchantRepo.saveMerchant(merchantDO);
-                logger.info("dealExamineInfo param:{} saveMerchant return:{}", JSONObject.toJSONString(merchantDO),
-                        JSONObject.toJSONString(memResult.getReturnCode()));
-                // 更新user option
-                
-                //FIXME 刘彬彬  这是一个跨系统调用，需要保证一定成功的，现在的代码如果调用user失败，数据就会错乱了。
-                //FIXME 刘彬彬 如果之前审批通过，以后因为某些原因重新申请一次，如果第二次审批被拒绝的时候，用户的标记不会改变，
-                addUserOption(examineResult.getValue().getSellerId(), examineResult.getValue().getType());
-            }
             examineDO.setId(examineResult.getValue().getId());
             examineDOMapper.updateByPrimaryKey(examineDO);
             logger.info("dealExamineInfo param:{} update success", JSONObject.toJSONString(examineDO));
-            // baseResult.setReturnCode(MemberReturnCode.DB_UPDATE_FAILED);
             examineResult.getValue().setId(examineDetailIdPool.getNewId());
             examineResult.getValue().setReviewerId(examineDO.getReviewerId());
             examineResult.getValue().setExamineMes(examineDO.getExamineMes());
-            examineResult.getValue().setGmtCreated(new Date());
-            examineResult.getValue().setGmtModified(new Date());
+            examineResult.getValue().setStatues(examineDO.getStatues());
+            examineResult.getValue().setGmtModified(examineDO.getGmtCreated());
             // 保存审核明细表
             examineDetailDOMapper.insert(examineResult.getValue());
             logger.info("dealExamineInfo param:{} insertDetail success",
@@ -366,42 +333,14 @@ public class TalentExamineManager {
             baseResult.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
         } finally {
             if (baseResult.isSuccess()) {
-                examineDO.setTelNum(examineResult.getValue().getTelNum());
                 // 发送审核状态到mq消息
-                SendResult sendResult = msgSender.sendMessage(examineDO, MemberTopic.EXAMINE_RESULT.getTopic(),
-                        MemberTopic.EXAMINE_RESULT.getTags());
+                SendResult sendResult = msgSender.sendMessage(examineResult.getValue(),
+                        MemberTopic.EXAMINE_RESULT.getTopic(), MemberTopic.EXAMINE_RESULT.getTags());
                 logger.info("dealExamineInfo par:{} sendMes return:{}", JSONObject.toJSONString(examineDO),
                         JSONObject.toJSONString(sendResult));
             }
         }
         return baseResult;
-    }
-
-    /**
-     * 
-     * 功能描述: <br>
-     * 〈更新达人或者商铺状态〉
-     *
-     * @param userId
-     * @param type
-     * @return
-     * @see [相关类/方法](可选)
-     * @since [产品/模块版本](可选)
-     */
-    public MemResult<Boolean> addUserOption(long userId, int type) {
-        List<UserOptions> userOptionsList = new ArrayList<UserOptions>();
-        // 达人
-        if (ExamineType.TALENT.getType() == type) {
-            userOptionsList.add(UserOptions.TRAVEL_KA);
-            // 达人默认大V
-            userOptionsList.add(UserOptions.CERTIFICATED);
-        } else {
-            userOptionsList.add(UserOptions.COMMERCIAL_TENANT);
-        }
-        MemResult<Boolean> optionsResult = userOptionRepo.addUserOption(userId, userOptionsList);
-        logger.info("addUserOption userId:{}, list.size:{} add return:{}", userId, userOptionsList.size(),
-                JSONObject.toJSONString(optionsResult));
-        return optionsResult;
     }
 
     /**

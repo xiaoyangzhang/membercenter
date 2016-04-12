@@ -212,20 +212,20 @@ public class MerchantRepo {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<MerchantDO> getMerchantById(long id) {
+    public MemResult<MerchantDO> getMerchantBySellerId(long sellerId, int domainId) {
         MemResult<MerchantDO> baseResult = new MemResult<MerchantDO>();
         try {
-            BaseResult<MerchantDO> result = merchantService.getMerchantById(id);
+            BaseResult<MerchantDO> result = merchantService.getMerchantBySellerId(sellerId,domainId);
             // 返回列表为空 不存在sellerName
             if (result.isSuccess()) {
                 baseResult.setValue(result.getValue());
                 return baseResult;
             }
             baseResult.setReturnCode(MemberReturnCode.USER_NOT_FOUND);
-            logger.debug("getMerchantById par:{} return error:{}", id, JSONObject.toJSONString(result));
+            logger.debug("getMerchantById par:{} return error:{}", sellerId, JSONObject.toJSONString(result));
         } catch (Exception e) {
             baseResult.setReturnCode(MemberReturnCode.DUBBO_ERROR);
-            logger.error("getMerchantById par:{} return error:{}", id, e);
+            logger.error("getMerchantById par:{} return error:{}", sellerId, e);
         }
         return baseResult;
     }

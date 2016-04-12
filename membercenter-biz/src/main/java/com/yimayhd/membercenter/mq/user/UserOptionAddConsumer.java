@@ -24,14 +24,12 @@ import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
 import com.yimayhd.membercenter.client.enums.topic.MemberTopic;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.converter.ExamineConverter;
-import com.yimayhd.membercenter.converter.MerchantConverter;
 import com.yimayhd.membercenter.enums.ExamineStatus;
 import com.yimayhd.membercenter.enums.ExamineType;
 import com.yimayhd.membercenter.mq.BaseConsumer;
 import com.yimayhd.membercenter.repo.MerchantRepo;
 import com.yimayhd.membercenter.repo.UserOptionRepo;
 import com.yimayhd.user.client.domain.MerchantDO;
-import com.yimayhd.user.client.dto.MerchantDTO;
 import com.yimayhd.user.client.enums.UserOptions;
 
 /**
@@ -73,18 +71,22 @@ public class UserOptionAddConsumer extends BaseConsumer {
         ExamineDO examineDO = (ExamineDO) message;
         // 审核通过保存基本信息
         if (examineDO.getStatues() == ExamineStatus.EXAMIN_OK.getStatus()) {
-            MemResult<MerchantDO> merchantResult = merchantRepo.getMerchantById(examineDO.getSellerId());
+            MemResult<MerchantDO> merchantResult = merchantRepo.getMerchantBySellerId(examineDO.getSellerId(), examineDO.getDomainId());
             if (merchantResult.isSuccess() && null == merchantResult.getValue()) {
                 MerchantDO merchantDO = ExamineConverter.examineToMerchant(examineDO);
+                merchantDO.setName(null);
                 // 初始化店铺信息
                 MemResult<MerchantDO> memResult = merchantRepo.saveMerchant(merchantDO);
                 logger.info("dealExamineInfo param:{} saveMerchant return:{}", JSONObject.toJSONString(merchantDO),
                         JSONObject.toJSONString(memResult.getReturnCode()));
+                if (!memResult.isSuccess()) {
+                    return false;
+                }
+                // 更新user option
+                // FIXME 刘彬彬 这是一个跨系统调用，需要保证一定成功的，现在的代码如果调用user失败，数据就会错乱了。
+                MemResult<Boolean> result = addUserOption(examineDO.getSellerId(), examineDO.getType());
+                return result.isSuccess();
             }
-            // 更新user option
-            // FIXME 刘彬彬 这是一个跨系统调用，需要保证一定成功的，现在的代码如果调用user失败，数据就会错乱了。
-            MemResult<Boolean> result = addUserOption(examineDO.getSellerId(), examineDO.getType());
-            return result.isSuccess();
         }
         return true;
     }

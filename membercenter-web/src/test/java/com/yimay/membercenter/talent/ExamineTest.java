@@ -24,6 +24,7 @@ import com.yimayhd.membercenter.client.query.examine.ExaminePageQueryDTO;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.examine.ExamineDealService;
+import com.yimayhd.membercenter.enums.ExamineStatus;
 import com.yimayhd.membercenter.enums.ExamineType;
 import com.yimayhd.membercenter.mq.MsgSender;
 
@@ -63,7 +64,7 @@ public class ExamineTest extends BaseTest {
     public void queryExamineDealResult() {
         InfoQueryDTO examineQueryDTO = new InfoQueryDTO();
         examineQueryDTO.setDomainId(domainId);
-        examineQueryDTO.setSellerId(5100);
+        examineQueryDTO.setSellerId(17304);
         // examineQueryDTO.setType(ExamineType.TALENT.getId());
         MemResult<ExamineResultDTO> result = examineDealService.queryExamineDealResult(examineQueryDTO);
         System.out.println("----->");
@@ -96,11 +97,11 @@ public class ExamineTest extends BaseTest {
     public void dealExamineInfo() {
         ExamineDealDTO examineDealDTO = new ExamineDealDTO();
         examineDealDTO.setDomainId(domainId);
-        examineDealDTO.setSellerId(17508);
-        examineDealDTO.setType(ExamineType.MERCHANT.getType());
+        examineDealDTO.setSellerId(17304);
+        examineDealDTO.setType(ExamineType.TALENT.getType());
         // examineDealDTO.setId(1220l);
-        examineDealDTO.setCheckIsOk(false);
-        examineDealDTO.setExamineMes("审核通过");
+        examineDealDTO.setCheckIsOk(true);
+//        examineDealDTO.setExamineMes("审核通过");
         examineDealDTO.setReviewerId(122222);
         MemResult<Boolean> result = examineDealService.dealExamineInfo(examineDealDTO);
         System.out.println("----->");
@@ -192,8 +193,11 @@ public class ExamineTest extends BaseTest {
         ExamineDO examineDO = new ExamineDO();
         examineDO.setDomainId(1200);
         examineDO.setSellerId(1900);
-        examineDO.setTelNum("18651664499");
+        examineDO.setTelNum("18761640297");
         examineDO.setType(ExamineType.TALENT.getType());
+        examineDO.setStatues(ExamineStatus.EXAMIN_OK.getStatus());
+        examineDO.setExamineMes("test");
+        examineDO.setId(11110);
         SendResult sendResult = msgSender.sendMessage(examineDO, MemberTopic.EXAMINE_RESULT.getTopic(),
                 MemberTopic.EXAMINE_RESULT.getTags());
         System.out.println("----->");

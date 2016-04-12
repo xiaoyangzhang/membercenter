@@ -322,7 +322,7 @@ public class TalentExamineManager {
             examineResult.getValue().setReviewerId(examineDO.getReviewerId());
             examineResult.getValue().setExamineMes(examineDO.getExamineMes());
             examineResult.getValue().setStatues(examineDO.getStatues());
-            examineResult.getValue().setGmtModified(examineDO.getGmtCreated());
+            examineResult.getValue().setGmtModified(new Date());
             // 保存审核明细表
             examineDetailDOMapper.insert(examineResult.getValue());
             logger.info("dealExamineInfo param:{} insertDetail success",

@@ -20,32 +20,36 @@ import com.alibaba.fastjson.JSONObject;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.repo.MerchantRepo;
 import com.yimayhd.membercenter.repo.UserOptionRepo;
+import com.yimayhd.membercenter.repo.UserRepo;
 import com.yimayhd.user.client.domain.MerchantDO;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
 import com.yimayhd.user.client.enums.MerchantOption;
 import com.yimayhd.user.client.enums.UserOptions;
 
 /**
- * 〈一句话功能简述〉<br> 
+ * 〈一句话功能简述〉<br>
  * 〈功能详细描述〉
  *
  * @author liubb
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
-public class MerchantRepoTest extends BaseTest{
+public class MerchantRepoTest extends BaseTest {
 
     @Autowired
     MerchantRepo merchantRepo;
-    
+
+    @Autowired
+    UserRepo userRepo;
+
     @Autowired
     UserOptionRepo userOptionRepo;
-    
+
     @Test
-    public void batchInsertMerchantInfo(){
+    public void batchInsertMerchantInfo() {
         MemResult<MerchantUserDTO> memResult = merchantRepo.queryMerchantBySellerId(13, 1200);
         MemResult<MerchantDO> saveMerchant = null;
-        if(memResult.isSuccess()){
+        if (memResult.isSuccess()) {
             List<UserOptions> userOptionsList = new ArrayList<UserOptions>();
             userOptionsList.add(UserOptions.COMMERCIAL_TENANT);
             MerchantDO merchantDO = memResult.getValue().getMerchantDO();
@@ -56,7 +60,7 @@ public class MerchantRepoTest extends BaseTest{
                 merchantDO.setGmtCreated(new Date());
                 merchantDO.setGmtModified(new Date());
                 merchantDO.setSalesQuantity(i);
-                saveMerchant =  merchantRepo.saveMerchant(merchantDO);
+                saveMerchant = merchantRepo.saveMerchant(merchantDO);
                 userOptionRepo.addUserOption(i, userOptionsList);
                 System.out.println("----->");
                 System.out.println("*****  " + JSONObject.toJSONString(saveMerchant));
@@ -64,5 +68,12 @@ public class MerchantRepoTest extends BaseTest{
             }
         }
     }
-    
+
+    @Test
+    public void queryUserDO() {
+        MemResult<String> result = userRepo.queryUserMobile(20008);
+        System.out.println("----->");
+        System.out.println("*****  " + JSONObject.toJSONString(result));
+        System.out.println("----->");
+    }
 }

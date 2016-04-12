@@ -97,7 +97,7 @@ public class ExamineTest extends BaseTest {
     public void dealExamineInfo() {
         ExamineDealDTO examineDealDTO = new ExamineDealDTO();
         examineDealDTO.setDomainId(domainId);
-        examineDealDTO.setSellerId(17304);
+        examineDealDTO.setSellerId(21201);
         examineDealDTO.setType(ExamineType.TALENT.getType());
         // examineDealDTO.setId(1220l);
         examineDealDTO.setCheckIsOk(true);
@@ -195,9 +195,9 @@ public class ExamineTest extends BaseTest {
         examineDO.setSellerId(1900);
         examineDO.setTelNum("18761640297");
         examineDO.setType(ExamineType.TALENT.getType());
-        examineDO.setStatues(ExamineStatus.EXAMIN_OK.getStatus());
+        examineDO.setStatues(ExamineStatus.EXAMIN_ERROR.getStatus());
         examineDO.setExamineMes("test");
-        examineDO.setId(11110);
+        examineDO.setId(11111);
         SendResult sendResult = msgSender.sendMessage(examineDO, MemberTopic.EXAMINE_RESULT.getTopic(),
                 MemberTopic.EXAMINE_RESULT.getTags());
         System.out.println("----->");

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
 import com.yimayhd.membercenter.client.enums.topic.MemberTopic;
+import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.enums.ExamineStatus;
 import com.yimayhd.membercenter.mq.BaseConsumer;
 import com.yimayhd.membercenter.repo.MsgRepo;
+import com.yimayhd.membercenter.repo.UserRepo;
 import com.yimayhd.msgcenter.client.param.SendSmsOption;
+import com.yimayhd.user.client.domain.UserDO;
 
 /**
  * Created with IntelliJ IDEA. User: zhaoyue Date: 2016/3/31 Time: 17:39 审批结果消息消费者
@@ -33,6 +37,9 @@ public class ExamineMesConsumer extends BaseConsumer {
     
     @Autowired
     MsgRepo msgRepo;
+    
+    @Autowired
+    UserRepo userRepo;
         
     @Override
     public String getTopic() {
@@ -53,10 +60,15 @@ public class ExamineMesConsumer extends BaseConsumer {
             return true;
         }
         ExamineDO examineDO = (ExamineDO) message;
+        MemResult<String> moblieResult = userRepo.queryUserMobile(examineDO.getSellerId());
+        if(!moblieResult.isSuccess()){
+            logger.info("ExamineMesConsumer par:{}  query mobileNO return null, sendMes fail", JSONObject.toJSONString(examineDO.getSellerId()));
+            return true;
+        }
         SendSmsOption sendSmsOption = new SendSmsOption();
         sendSmsOption.setOutId(examineDO.getId());
         List<String> mobiles = new ArrayList<String>();
-        mobiles.add(examineDO.getTelNum());
+        mobiles.add(moblieResult.getValue());
         sendSmsOption.setMobileNums(mobiles);
         sendSmsOption.setBizType(BIZTYPE);
         //判断发送审核通过短信or审核未通过短信

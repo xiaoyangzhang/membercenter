@@ -57,9 +57,10 @@
 			description="member center消费member消息的group名称"></property>
 		<property name="member.consume.user.group" defaultValue="member_consumer_user_group"
 			description="member center消费user消息的group名称"></property>
-		<property name="member.consume.examine.group" defaultValue="member_consumer_examine_group"
+		<property name="member.consume.examine.mes.group" defaultValue="member_consumer_examine_mes_group"
 			description="member center消费member examine消息的group名称"></property>
-
+		<property name="member.consume.examine.push.group" defaultValue="member_consumer_examine_push_group"
+			description="member center消费member examine消息的group名称"></property>
 	</group>
 	<group name="idgen">
 		<property name="memcenter.meber.idgen.key" defaultValue="member"

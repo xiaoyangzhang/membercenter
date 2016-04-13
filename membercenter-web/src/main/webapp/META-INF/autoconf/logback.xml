@@ -1,13 +1,13 @@
 <configuration debug="true">
     <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    	<file>${log.home}/debug.log</file>
+        <file>/home/admin/logs/membercenter/debug.log</file>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>DEBUG</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${log.home}/debug-%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+            <FileNamePattern>/home/admin/logs/membercenter/debug-%d{yyyy-MM-dd}-%i.log</FileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>60MB</maxFileSize>
@@ -21,14 +21,35 @@
         </encoder>
     </appender>
     <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    	<file>${log.home}/info.log</file>
+        <file>/home/admin/logs/membercenter/info.log</file>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${log.home}/info-%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+            <FileNamePattern>/home/admin/logs/membercenter/info-%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>60MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <MaxHistory>10</MaxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread]: %class %L %M - %X %msg%xEx%n
+            </pattern>
+        </encoder>
+    </appender>
+    <appender name="MQ" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/home/admin/logs/membercenter/mq/mq.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>/home/admin/logs/membercenter/mq/mq-%d{yyyy-MM-dd}-%i.log</FileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>60MB</maxFileSize>
@@ -42,14 +63,14 @@
         </encoder>
     </appender>
     <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    	<file>${log.home}/error.log</file>
+        <file>/home/admin/logs/membercenter/error.log</file>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${log.home}/error-%d{yyyy-MM-dd}-%i.log</FileNamePattern>
+            <FileNamePattern>/home/admin/logs/membercenter/error-%d{yyyy-MM-dd}-%i.log</FileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>60MB</maxFileSize>
@@ -69,21 +90,16 @@
         </filter>
         <encoding>UTF-8</encoding>
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern><![CDATA[%date %level [%thread] %logger{10} [%file:%line] %msg%n]]></pattern>
+            <pattern><![CDATA[%date %level [%thread] %logger [%file:%line] %msg%n]]></pattern>
         </layout>
     </appender>
 
-<!-- 
-    <appender name="MONITOR" class="com.yimayhd.troy.client.metrics.log.MonitorLogbackAppender">
-        <noneStackEnable>true</noneStackEnable>
-    </appender>
-  -->   
+
     <!--myibatis log configure -->
-    <logger name="org.mybatis" level="DEBUG"/>
+    <logger name="org.mybatis" level="TRACE"/>
     <logger name="java.sql.Connection" level="DEBUG"/>
     <logger name="java.sql.Statement" level="DEBUG"/>
     <logger name="java.sql.PreparedStatement" level="DEBUG"/>
-    <logger name=" com.yimayhd.membercenter.manager" level="DEBUG"/>
 
     <!--<logger name="com.pajk.sims"/>-->
     <root level="INFO">
@@ -93,8 +109,6 @@
          -->
         <appender-ref ref="INFO"/>
         <appender-ref ref="ERROR"/>
-        <!-- 
-        <appender-ref ref="MONITOR" />
-         -->
+        <appender-ref ref="MQ"/>
     </root>
 </configuration>

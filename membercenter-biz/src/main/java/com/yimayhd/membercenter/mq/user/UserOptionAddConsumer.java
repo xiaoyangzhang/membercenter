@@ -42,7 +42,7 @@ import com.yimayhd.user.client.enums.UserOptions;
  */
 public class UserOptionAddConsumer extends BaseConsumer {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserOptionAddConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger("MQ");
 
     @Autowired
     MerchantRepo merchantRepo;

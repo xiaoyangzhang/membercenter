@@ -13,13 +13,12 @@ import com.yimayhd.membercenter.client.domain.HaRoleDO;
 import com.yimayhd.membercenter.dao.RoleDao;
 import com.yimayhd.membercenter.enums.RoleType;
 import com.yimayhd.membercenter.manager.UserPermissionManager;
-import com.yimayhd.membercenter.mq.BaseConsumer;
 import com.yimayhd.membercenter.repo.UserRepo;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.enums.TopicEnum;
 
 public class UserRegisterConsumer extends UserRoleConsumer {
-	private static final Logger logger = LoggerFactory.getLogger("UserRegisterConsumer") ;
+	private static final Logger logger = LoggerFactory.getLogger("MQ") ;
 	private static final TopicEnum topic = TopicEnum.USER_REGISTER ;
 	@Autowired
 	private UserRepo userRepo ;

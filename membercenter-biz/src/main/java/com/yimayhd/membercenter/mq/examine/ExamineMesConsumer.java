@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +20,12 @@ import com.yimayhd.membercenter.mq.BaseConsumer;
 import com.yimayhd.membercenter.repo.MsgRepo;
 import com.yimayhd.membercenter.repo.UserRepo;
 import com.yimayhd.msgcenter.client.param.SendSmsOption;
-import com.yimayhd.user.client.domain.UserDO;
 
 /**
  * Created with IntelliJ IDEA. User: zhaoyue Date: 2016/3/31 Time: 17:39 审批结果消息消费者
  */
 public class ExamineMesConsumer extends BaseConsumer {
-    private static final Logger logger = LoggerFactory.getLogger(ExamineMesConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger("MQ");
 
     private static final int BIZTYPE = 5;
     

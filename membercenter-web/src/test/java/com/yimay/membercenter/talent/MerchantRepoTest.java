@@ -71,7 +71,7 @@ public class MerchantRepoTest extends BaseTest {
 
     @Test
     public void queryUserDO() {
-        MemResult<String> result = userRepo.queryUserMobile(20008);
+        MemResult<String> result = userRepo.queryUserMobile(21302);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
         System.out.println("----->");

@@ -41,7 +41,7 @@ public class TalentApiTest extends BaseTest{
     
     @Test
     public void getTalentDetail(){
-        TalentInfo talentDetail = talentMemberApi.getTalentDetail(21, 1200, 0, 0, 0, 25);
+        TalentInfo talentDetail = talentMemberApi.getTalentDetail(21, 1200, 0, 0, 0, 10707);
         System.out.println("-------->");
         System.out.println("---->" + JSONObject.toJSONString(talentDetail));
         System.out.println("-------->");

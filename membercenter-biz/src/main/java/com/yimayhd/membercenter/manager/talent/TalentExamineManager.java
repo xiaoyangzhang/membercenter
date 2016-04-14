@@ -11,7 +11,6 @@ package com.yimayhd.membercenter.manager.talent;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.rocketmq.client.producer.SendResult;
-import com.yimayhd.fhtd.utils.PicFeatureUtil;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
 import com.yimayhd.membercenter.client.dto.AccountDTO;
@@ -35,6 +33,7 @@ import com.yimayhd.membercenter.mapper.ExamineDOMapper;
 import com.yimayhd.membercenter.mapper.ExamineDetailDOMapper;
 import com.yimayhd.membercenter.mq.MsgSender;
 import com.yimayhd.membercenter.repo.MerchantRepo;
+import com.yimayhd.membercenter.util.MapUnionUtil;
 import com.yimayhd.membercenter.util.ParmCheckUtil;
 
 /**
@@ -98,7 +97,7 @@ public class TalentExamineManager {
                             JSONObject.toJSONString(examineDO));
                     return result;
                 }
-                examineDOMapper.updateByPrimaryKey(unionAll(examineDO, examine));
+                examineDOMapper.updateByPrimaryKey(MapUnionUtil.unionAll(examineDO, examine));
             } else {
                 examineDO.setId(examineIdPool.getNewId());
                 examineDOMapper.insert(examineDO);
@@ -167,43 +166,6 @@ public class TalentExamineManager {
             merchantListResult = merchantRepo.getMerchantList(sellerName, domainId);
         }
         return merchantListResult;
-    }
-
-    /**
-     *
-     * 功能描述: <br>
-     * 〈对象取并集〉 分页提交新增 还好代码灵活
-     * 
-     * @param examineMater
-     * @param examineSlave
-     * @return
-     * @see [相关类/方法](可选)
-     * @since [产品/模块版本](可选)
-     */
-    private static ExamineDO unionAll(ExamineDO examineMater, ExamineDO examineSlave) {
-        examineMater.setId(examineSlave.getId());
-        // 图片
-        Map<String, String> pictureMasterMap = PicFeatureUtil.fromString(examineMater.getPicturesUrl());
-        // 图片
-        Map<String, String> pictureSlaveMap = PicFeatureUtil.fromString(examineSlave.getPicturesUrl());
-        // 新覆盖旧
-        pictureSlaveMap.putAll(pictureMasterMap);
-        examineMater.setPicturesUrl(PicFeatureUtil.toString(pictureSlaveMap));
-        // 信息明细
-        Map<String, String> featureMasterMap = PicFeatureUtil.fromString(examineMater.getFeature());
-        // 信息明细
-        Map<String, String> featureSlaveMap = PicFeatureUtil.fromString(examineSlave.getFeature());
-        featureSlaveMap.putAll(featureMasterMap);
-        examineMater.setFeature(PicFeatureUtil.toString(featureSlaveMap));
-        // 达人技能
-        Map<String, String> certificateMasterMap = PicFeatureUtil.fromString(examineMater.getCertificate());
-        // 达人技能
-        Map<String, String> certificateSlaveMap = PicFeatureUtil.fromString(examineSlave.getCertificate());
-        certificateSlaveMap.putAll(certificateMasterMap);
-        examineMater.setCertificate(PicFeatureUtil.toString(certificateSlaveMap));
-
-        examineMater.setGmtModified(new Date());
-        return examineMater;
     }
 
     /**

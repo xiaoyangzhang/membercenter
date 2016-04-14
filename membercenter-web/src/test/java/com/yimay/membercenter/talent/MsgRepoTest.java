@@ -42,12 +42,13 @@ public class MsgRepoTest extends BaseTest {
     public void sendPush() {
         PushRecordDO pushRecordDO = new PushRecordDO();
         pushRecordDO.setSendType(PushSendType.REGISTRATION_ID.getType());
-        pushRecordDO.setUserId(17100);
+        pushRecordDO.setUserId(17101);
         pushRecordDO.setPushTitle(PUSH_TITLE);
-        pushRecordDO.setOutId(111);
+        pushRecordDO.setOutId(115);
         pushRecordDO.setBizType(BIZ_TYPE);
-        pushRecordDO.setBizSubtype(BIZ_SUB_TYPE);
+//        pushRecordDO.setBizSubtype(BIZ_SUB_TYPE);
         pushRecordDO.setPushContent(SUCCESS_PUSH);
+        pushRecordDO.setPushContent("审核失败了，爸妈知道么~~~");
         // pushRecordDO.setPushContent(FAIL_PUSH.replace(PARTTEN, examineMesFormat(examineDO.getExamineMes())));
         pushRecordDO.setApplicationId(21);
         boolean sendPush = msgRepo.sendPush(pushRecordDO);

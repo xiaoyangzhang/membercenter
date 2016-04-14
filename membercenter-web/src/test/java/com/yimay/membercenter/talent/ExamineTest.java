@@ -52,8 +52,8 @@ public class ExamineTest extends BaseTest {
     public void queryMerchantExamineInfoById() {
         InfoQueryDTO examineQueryDTO = new InfoQueryDTO();
         examineQueryDTO.setDomainId(domainId);
-        examineQueryDTO.setSellerId(userId + 100);
-        examineQueryDTO.setType(ExamineType.TALENT.getType());
+        examineQueryDTO.setSellerId(40100);
+        examineQueryDTO.setType(ExamineType.MERCHANT.getType());
         MemResult<ExamineInfoDTO> result = examineDealService.queryMerchantExamineInfoBySellerId(examineQueryDTO);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
@@ -64,8 +64,8 @@ public class ExamineTest extends BaseTest {
     public void queryExamineDealResult() {
         InfoQueryDTO examineQueryDTO = new InfoQueryDTO();
         examineQueryDTO.setDomainId(domainId);
-        examineQueryDTO.setSellerId(17304);
-        // examineQueryDTO.setType(ExamineType.TALENT.getId());
+        examineQueryDTO.setSellerId(40100);
+        examineQueryDTO.setType(ExamineType.TALENT.getType());
         MemResult<ExamineResultDTO> result = examineDealService.queryExamineDealResult(examineQueryDTO);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
@@ -116,13 +116,13 @@ public class ExamineTest extends BaseTest {
         String pictureUrl = "FristPage.jpg";
         examinDTO.setId(1);
         examinDTO.setDomainId(domainId);
-        examinDTO.setType(ExamineType.TALENT.getType());
-        examinDTO.setSellerId(20100);
-        examinDTO.setSellerName("审核信息SellerName11" + 20100);
+        examinDTO.setType(ExamineType.MERCHANT.getType());
+        examinDTO.setSellerId(40100);
+        examinDTO.setSellerName("审核信息SellerName11" + 40100);
         examinDTO.setLegralName("审核信息LegralName");
         examinDTO.setAddress("审核信息testFristPage");
         examinDTO.setSaleScope("审核信息testFristPage");
-        examinDTO.setLegralCardUp(pictureUrl);
+//        examinDTO.setLegralCardUp(pictureUrl);
         examinDTO.setLegralCardDown(pictureUrl);
         examinDTO.setBusinessLicense(pictureUrl);
         examinDTO.setOrgCard(pictureUrl);
@@ -156,14 +156,14 @@ public class ExamineTest extends BaseTest {
         ExamineInfoDTO examinDTO = new ExamineInfoDTO();
         String pictureUrl = "NextPage.jpg";
         examinDTO.setDomainId(domainId);
-        examinDTO.setType(ExamineType.TALENT.getType());
-        examinDTO.setSellerId(20100);
+        examinDTO.setType(ExamineType.MERCHANT.getType());
+        examinDTO.setSellerId(40100);
         examinDTO.setPrincipleName("审核信息testNextPage");
-        examinDTO.setPrincipleCard(pictureUrl);
+        examinDTO.setPrincipleCard("审核信息testNextPage");
         examinDTO.setPrincipleCardId("审核信息testNextPage");
         examinDTO.setPrincipleTel("18651664499");
         examinDTO.setPrincipleMail("审核信息testNextPage");
-        examinDTO.setPrincipleCardUp(pictureUrl);
+//        examinDTO.setPrincipleCardUp(pictureUrl);
         examinDTO.setPrincipleCardDown(pictureUrl);
         examinDTO.setFinanceOpenBankId("审核信息testNextPage");
         examinDTO.setFinanceOpenBankName("审核信息testNextPage");
@@ -174,11 +174,11 @@ public class ExamineTest extends BaseTest {
         examinDTO.setAccountBankCity("审核信息testNextPage");
         examinDTO.setAccountBankCityCode("审核信息testNextPage");
         examinDTO.setAccountBankName("审核信息testNextPage");
-        examinDTO.setCooperation1(pictureUrl);
-        examinDTO.setCooperation2(pictureUrl);
-        examinDTO.setCooperation3(pictureUrl);
-        examinDTO.setCooperation4(pictureUrl);
-        examinDTO.setCooperation5(pictureUrl);
+//        examinDTO.setCooperation1(pictureUrl);
+//        examinDTO.setCooperation2(pictureUrl);
+//        examinDTO.setCooperation3(pictureUrl);
+//        examinDTO.setCooperation4(pictureUrl);
+//        examinDTO.setCooperation5(pictureUrl);
 
         // examineSubmitDTO.setExamineInfoDTO(examinDTO);
         // examineSubmitDTO.setPageNo(ExaminePageNo.PAGE_TWO.getPageNO());
@@ -194,7 +194,7 @@ public class ExamineTest extends BaseTest {
         examineDO.setDomainId(1200);
         examineDO.setSellerId(1900);
         examineDO.setTelNum("18761640297");
-        examineDO.setType(ExamineType.TALENT.getType());
+        examineDO.setType(ExamineType.MERCHANT.getType());
         examineDO.setStatues(ExamineStatus.EXAMIN_ERROR.getStatus());
         examineDO.setExamineMes("test");
         examineDO.setId(11111);

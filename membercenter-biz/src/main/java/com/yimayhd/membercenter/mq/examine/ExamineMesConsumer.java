@@ -22,7 +22,7 @@ import com.yimayhd.membercenter.repo.UserRepo;
 import com.yimayhd.msgcenter.client.param.SendSmsOption;
 
 /**
- * Created with IntelliJ IDEA. User: zhaoyue Date: 2016/3/31 Time: 17:39 审批结果消息消费者
+ * Created with IntelliJ IDEA. User: lbb Date: 2016/3/31 Time: 17:39 审批结果消息消费者
  */
 public class ExamineMesConsumer extends BaseConsumer {
     private static final Logger logger = LoggerFactory.getLogger("MQ");

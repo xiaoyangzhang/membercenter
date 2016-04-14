@@ -21,7 +21,7 @@ import com.yimayhd.msgcenter.client.domain.PushRecordDO;
 import com.yimayhd.msgcenter.client.enums.PushSendType;
 
 /**
- * Created with IntelliJ IDEA. User: zhaoyue Date: 2016/3/31 Time: 17:39 审批结果消息消费者
+ * Created with IntelliJ IDEA. User: lbb Date: 2016/3/31 Time: 17:39 审批结果消息消费者
  */
 public class ExaminePushConsumer extends BaseConsumer {
     private static final Logger logger = LoggerFactory.getLogger("MQ");
@@ -33,7 +33,7 @@ public class ExaminePushConsumer extends BaseConsumer {
     private static final String FAIL_PUSH = "很抱歉的通知您，您在九休商家中心申请的入驻因以下问题未审核通过，请尽快登陆九休商家中心，修改相关信息后可再次提交申请。" + PARTTEN
             + "如您有任何疑问，请直接联系：4000-696-888。";
 
-    private static final String PUSH_TITLE = " 商户信息审核";
+    private static final String PUSH_TITLE = "商户信息审核";
 
     private static final String SPLIT = ";";
     

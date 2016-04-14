@@ -163,21 +163,22 @@ public class ExamineConverter {
         pictureMap.put(PictureUrl.COOPERATION3.getId(), examinDTO.getCooperation3());
         pictureMap.put(PictureUrl.COOPERATION4.getId(), examinDTO.getCooperation4());
         pictureMap.put(PictureUrl.COOPERATION5.getId(), examinDTO.getCooperation5());
-        certificateMap.put(CertificateOption.TOURIST_CARD.getCode(), examinDTO.getTouristCard());
-        certificateMap.put(CertificateOption.DRIVING_LICENCE.getCode(), examinDTO.getDrivingLinence());
-        certificateMap.put(CertificateOption.DIVING_LICENCE.getCode(), examinDTO.getDivingLinence());
-        certificateMap.put(CertificateOption.PHOTOGRAPHY_CERTIFICATE.getCode(), examinDTO.getPhotographyCertificate());
-        certificateMap.put(CertificateOption.CLIMBING_CERTIFICATE.getCode(), examinDTO.getClimbingCertificate());
-        certificateMap.put(CertificateOption.TRAINING_CERTIFICATE.getCode(), examinDTO.getTrainingCertificate());
-        certificateMap.put(CertificateOption.TEACHER_CERTIFICATE.getCode(), examinDTO.getTeacherCertificate());
-        certificateMap.put(CertificateOption.ART_CERTIFICATE.getCode(), examinDTO.getArtCertificate());
-
+        if(examinDTO.getType() == ExamineType.TALENT.getType()){
+            certificateMap.put(CertificateOption.TOURIST_CARD.getCode(), examinDTO.getTouristCard());
+            certificateMap.put(CertificateOption.DRIVING_LICENCE.getCode(), examinDTO.getDrivingLinence());
+            certificateMap.put(CertificateOption.DIVING_LICENCE.getCode(), examinDTO.getDivingLinence());
+            certificateMap.put(CertificateOption.PHOTOGRAPHY_CERTIFICATE.getCode(), examinDTO.getPhotographyCertificate());
+            certificateMap.put(CertificateOption.CLIMBING_CERTIFICATE.getCode(), examinDTO.getClimbingCertificate());
+            certificateMap.put(CertificateOption.TRAINING_CERTIFICATE.getCode(), examinDTO.getTrainingCertificate());
+            certificateMap.put(CertificateOption.TEACHER_CERTIFICATE.getCode(), examinDTO.getTeacherCertificate());
+            certificateMap.put(CertificateOption.ART_CERTIFICATE.getCode(), examinDTO.getArtCertificate());
+            // 技能
+            examineDO.setCertificate(PicFeatureUtil.toString(certificateMap));  
+        }
         // 附属属性
         examineDO.setFeature(PicFeatureUtil.toString(featureMap));
         // 图片
         examineDO.setPicturesUrl(PicFeatureUtil.toString(pictureMap));
-        // 技能
-        examineDO.setCertificate(PicFeatureUtil.toString(certificateMap));
 
         examineDO.setId(examinDTO.getId());
         examineDO.setPrincipalName(examinDTO.getPrincipleName());

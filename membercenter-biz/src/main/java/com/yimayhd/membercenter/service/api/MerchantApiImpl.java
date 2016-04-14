@@ -55,15 +55,14 @@ public class MerchantApiImpl implements MerchantApi {
             MemResult<MerchantUserDTO> result = talentInfoManager.queryTalentInfo(merchantId, domainId);
             Merchant merchant = new Merchant();
             if (result.isSuccess()) {
-                MerchantInfoDO merchantInfoDO = MerchantConverter.merchantToDO(result.getValue().getMerchantDO(),
-                        IconType.CATE.getType());
+                MerchantInfoDO merchantInfoDO = MerchantConverter.merchantToDO(result.getValue().getMerchantDO(),IconType.CATE.getType());
                 merchant.sellerId = merchantInfoDO.getSellerId();
                 merchant.name = merchantInfoDO.getName();
                 merchant.avgprice = merchantInfoDO.getAvgprice();
                 merchant.address = merchantInfoDO.getMerchantAddress();
                 merchant.serviceTel = merchantInfoDO.getServiceTel();
                 merchant.serviceTime = merchantInfoDO.getServiceTime();
-                merchant.cityCode = String.valueOf(merchantInfoDO.getCityCode());
+                merchant.cityCode = merchantInfoDO.getCityCode();
                 merchant.city = merchantInfoDO.getCityName();
                 merchant.latitude = merchantInfoDO.getLatitude();
                 merchant.longitude = merchantInfoDO.getLongitude();

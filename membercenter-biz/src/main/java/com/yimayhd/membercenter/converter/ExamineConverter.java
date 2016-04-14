@@ -25,6 +25,7 @@ import com.yimayhd.membercenter.enums.ExamineDetail;
 import com.yimayhd.membercenter.enums.ExamineStatus;
 import com.yimayhd.membercenter.enums.ExamineType;
 import com.yimayhd.membercenter.enums.PictureUrl;
+import com.yimayhd.membercenter.util.ParmCheckUtil;
 import com.yimayhd.user.client.domain.MerchantDO;
 import com.yimayhd.user.client.enums.CertificateOption;
 import com.yimayhd.user.client.enums.MerchantOption;
@@ -65,12 +66,12 @@ public class ExamineConverter {
         examinDTO.setType(examineDO.getType());
         examinDTO.setExaminStatus(examineDO.getStatues());
         examinDTO.setSellerId(examineDO.getSellerId());
-        examinDTO.setSellerName(examineDO.getSellerName());
+        examinDTO.setSellerName(ParmCheckUtil.checkString(examineDO.getSellerName()));
         //店铺名称
         examinDTO.setMerchantName(featureMap.get(ExamineDetail.MERCHANT_NAME.getId()));
         examinDTO.setLegralName(featureMap.get(ExamineDetail.LEGRAL_NAME.getId()));
         examinDTO.setAddress(featureMap.get(ExamineDetail.ADDRESS.getId()));
-        examinDTO.setSaleScope(examineDO.getSaleScope());
+        examinDTO.setSaleScope(ParmCheckUtil.checkString(examineDO.getSaleScope()));
         examinDTO.setLegralCardUp(pictureMap.get(PictureUrl.LEGRAL_CARD_UP.getId()));
         examinDTO.setLegralCardDown(pictureMap.get(PictureUrl.LEGRAL_CARD_DOWN.getId()));
         examinDTO.setBusinessLicense(pictureMap.get(PictureUrl.BUSINESS_LICENSE.getId()));
@@ -181,11 +182,11 @@ public class ExamineConverter {
         examineDO.setPicturesUrl(PicFeatureUtil.toString(pictureMap));
 
         examineDO.setId(examinDTO.getId());
-        examineDO.setPrincipalName(examinDTO.getPrincipleName());
-        examineDO.setTelNum(examinDTO.getPrincipleTel());
-        examineDO.setSaleScope(examinDTO.getSaleScope());
+        examineDO.setPrincipalName(ParmCheckUtil.checkString(examinDTO.getPrincipleName()));
+        examineDO.setTelNum(ParmCheckUtil.checkString(examinDTO.getPrincipleTel()));
+        examineDO.setSaleScope(ParmCheckUtil.checkString(examinDTO.getSaleScope()));
         examineDO.setSellerId(examinDTO.getSellerId());
-        examineDO.setSellerName(examinDTO.getSellerName());
+        examineDO.setSellerName(ParmCheckUtil.checkString(examinDTO.getSellerName()));
         examineDO.setDomainId(examinDTO.getDomainId());
         examineDO.setType(examinDTO.getType());
         // 默认审核中

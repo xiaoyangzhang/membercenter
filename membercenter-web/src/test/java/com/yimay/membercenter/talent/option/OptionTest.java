@@ -95,6 +95,7 @@ public enum OptionTest {
 
 	
 	public static void main(String[] args) {
-	    System.out.println(ServiceTypeOption.addOption(ServiceTypeOption.values()));
+//	    System.out.println(ServiceTypeOption.addOption(ServiceTypeOption.values()));
+	    System.out.println(OptionTest.TRAVEL.has(2));
 	}
 }

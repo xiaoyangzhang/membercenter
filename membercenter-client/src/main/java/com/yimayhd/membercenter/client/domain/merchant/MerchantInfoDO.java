@@ -36,7 +36,7 @@ public class MerchantInfoDO implements Serializable {
     private String name;
 
     //城市code
-    private int cityCode;
+    private String cityCode;
     
     //城市名称
     private String cityName;
@@ -87,11 +87,11 @@ public class MerchantInfoDO implements Serializable {
         this.name = name;
     }
 
-    public int getCityCode() {
+    public String getCityCode() {
         return cityCode;
     }
 
-    public void setCityCode(int cityCode) {
+    public void setCityCode(String cityCode) {
         this.cityCode = cityCode;
     }
 

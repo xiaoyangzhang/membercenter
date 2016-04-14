@@ -59,7 +59,7 @@ public class ParmCheckUtil {
                 || StringUtils.isBlank(talentInfoDO.getCity()) || null == talentInfoDO.getBirthday()
                 || ParmCheckUtil.checkListNull(pictureTextDTO.getPicTexts())
                 || ParmCheckUtil.checkListNull(talentInfoDO.getPictures())
-                || StringUtils.isBlank(talentInfoDO.getServeDesc())) {
+                || StringUtils.isBlank(talentInfoDO.getServeDesc()) || MIN_CODE >= talentInfoDO.getCityCode()) {
             return true;
         }
         return false;
@@ -197,4 +197,33 @@ public class ParmCheckUtil {
         }
         return false;
     }
+
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈检查字符串是否为空〉
+     *
+     * @param str
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public static String checkString(String str) {
+        return StringUtils.isBlank(str) ? "" : str;
+    }
+
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈功能详细描述〉
+     *
+     * @param str
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public static String checkInt(int str) {
+        return 0 == str ? "" : String.valueOf(str);
+    }
+
 }

@@ -55,21 +55,21 @@ public class TalentConverter {
     public static TalentInfoDO merchantToTalent(MerchantDO merchantDO, UserDO userDO, int type) {
         TalentInfoDO talentInfoDO = new TalentInfoDO();
         talentInfoDO.setId(userDO.getId());
-        talentInfoDO.setAvatar(userDO.getAvatar());
+        talentInfoDO.setAvatar(ParmCheckUtil.checkString(userDO.getAvatar()));
         talentInfoDO.setGender(userDO.getGender());
-        talentInfoDO.setNickName(userDO.getNickname());
-        talentInfoDO.setReallyName(userDO.getName());
+        talentInfoDO.setNickName(ParmCheckUtil.checkString(userDO.getNickname()));
+        talentInfoDO.setReallyName(ParmCheckUtil.checkString(userDO.getName()));
         // 图片数据处理 轮播图
         talentInfoDO.setPictures(merchantDO.getLoopImages());
-        talentInfoDO.setServeDesc(merchantDO.getTitle());
+        talentInfoDO.setServeDesc(ParmCheckUtil.checkString(merchantDO.getTitle()));
         talentInfoDO.setServeCount(merchantDO.getSalesQuantity());
-        talentInfoDO.setCity(userDO.getCity());
+        talentInfoDO.setCity(ParmCheckUtil.checkString(userDO.getCity()));
         talentInfoDO.setCityCode(userDO.getCityCode());
-        talentInfoDO.setProvince(userDO.getProvince());
+        talentInfoDO.setProvince(ParmCheckUtil.checkString(userDO.getProvince()));
         talentInfoDO.setProvinceCode(userDO.getProvinceCode());
-        talentInfoDO.setBirthday(userDO.getBirthday());
+        talentInfoDO.setBirthday(null == userDO.getBirthday() ? null : userDO.getBirthday());
         
-        talentInfoDO.setTelNum(merchantDO.getMerchantPrincipalTel());
+        talentInfoDO.setTelNum(ParmCheckUtil.checkString(merchantDO.getMerchantPrincipalTel()));
         // 是否是认证用户
         talentInfoDO.setType(UserOptions.CERTIFICATED.has(userDO.getOptions()));
         List<CertificatesDO> certificates = new ArrayList<CertificatesDO>();

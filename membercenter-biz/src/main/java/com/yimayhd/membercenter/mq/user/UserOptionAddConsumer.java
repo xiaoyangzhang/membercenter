@@ -71,10 +71,11 @@ public class UserOptionAddConsumer extends BaseConsumer {
         ExamineDO examineDO = (ExamineDO) message;
         // 审核通过保存基本信息
         if (examineDO.getStatues() == ExamineStatus.EXAMIN_OK.getStatus()) {
-            MemResult<MerchantDO> merchantResult = merchantRepo.getMerchantBySellerId(examineDO.getSellerId(), examineDO.getDomainId());
+            MemResult<MerchantDO> merchantResult = merchantRepo.getMerchantBySellerId(examineDO.getSellerId(),
+                    examineDO.getDomainId());
             if (merchantResult.isSuccess() && null == merchantResult.getValue()) {
                 MerchantDO merchantDO = ExamineConverter.examineToMerchant(examineDO);
-                merchantDO.setName(null);
+                // merchantDO.setName(null);
                 // 初始化店铺信息
                 MemResult<MerchantDO> memResult = merchantRepo.saveMerchant(merchantDO);
                 logger.info("dealExamineInfo param:{} saveMerchant return:{}", JSONObject.toJSONString(merchantDO),

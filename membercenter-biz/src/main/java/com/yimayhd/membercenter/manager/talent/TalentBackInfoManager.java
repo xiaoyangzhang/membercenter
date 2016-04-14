@@ -99,7 +99,7 @@ public class TalentBackInfoManager {
         UserDO userDO = UserConverter.talentInfoConverterToUserDO(talentInfoDO);
         // 保存user信息
         MemResult<Boolean> userResult = userRepo.updateUserDO(userDO);
-        // 判断是否成功
+        // 判断是否成功 
         if (userResult.isSuccess()) {
             logger.info("saveTalentBackInfo userId:{} updateUserDO success", talentInfoDO.getId());
             // merchantDO转换

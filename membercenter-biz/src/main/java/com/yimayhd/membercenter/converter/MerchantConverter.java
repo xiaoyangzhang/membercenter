@@ -36,19 +36,19 @@ public class MerchantConverter {
     public static MerchantInfoDO merchantToDO(MerchantDO merchantDO, int type) {
         MerchantInfoDO merchantInfoDO = new MerchantInfoDO();
         merchantInfoDO.setSellerId(merchantDO.getSellerId());
-        merchantInfoDO.setName(merchantDO.getName());
+        merchantInfoDO.setName(ParmCheckUtil.checkString(merchantDO.getName()));
         merchantInfoDO.setServiceTime(merchantDO.getServiceTime());
         merchantInfoDO.setAvgprice(merchantDO.getAvgprice());
-        merchantInfoDO.setCityCode(merchantDO.getCityCode());
-        merchantInfoDO.setCityName(merchantDO.getCityName());
-        merchantInfoDO.setIcon(merchantDO.getLogo());
+        merchantInfoDO.setCityCode(ParmCheckUtil.checkInt(merchantDO.getCityCode()));
+        merchantInfoDO.setCityName(ParmCheckUtil.checkString(merchantDO.getCityName()));
+        merchantInfoDO.setIcon(ParmCheckUtil.checkString(merchantDO.getLogo()));
         // 经度 纬度
         merchantInfoDO.setLatitude(merchantDO.getLat());
         merchantInfoDO.setLongitude(merchantDO.getLon());
-        merchantInfoDO.setMerchantAddress(merchantDO.getAddress());
-        merchantInfoDO.setMerchantBackPic(merchantDO.getBackgroudImage());
-        merchantInfoDO.setMerchantTel(merchantDO.getMerchantPrincipalTel());
-        merchantInfoDO.setServiceTel(merchantDO.getServiceTel());
+        merchantInfoDO.setMerchantAddress(ParmCheckUtil.checkString(merchantDO.getAddress()));
+        merchantInfoDO.setMerchantBackPic(ParmCheckUtil.checkString(merchantDO.getBackgroudImage()));
+        merchantInfoDO.setMerchantTel(ParmCheckUtil.checkString(merchantDO.getMerchantPrincipalTel()));
+        merchantInfoDO.setServiceTel(ParmCheckUtil.checkString(merchantDO.getServiceTel()));
         // 店铺服务类型
         List<ServiceFacilityOption> facilityOptions = ServiceFacilityOption
                 .getContainedOptions(merchantDO.getServiceType());
@@ -149,7 +149,7 @@ public class MerchantConverter {
         merchantDO.setSellerId(talentInfoDO.getId());
         merchantDO.setDomainId(domainId);
         merchantDO.setCityCode(talentInfoDO.getCityCode());
-        merchantDO.setCityName(talentInfoDO.getCity());
+        // merchantDO.setCityName(talentInfoDO.getCity());
         merchantDO.setTitle(talentInfoDO.getServeDesc().toUpperCase());
         merchantDO.setName(talentInfoDO.getNickName());
         merchantDO.setMerchantPrincipalTel(talentInfoDO.getTelNum());

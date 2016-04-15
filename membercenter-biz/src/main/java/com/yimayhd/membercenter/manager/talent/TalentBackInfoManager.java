@@ -97,9 +97,15 @@ public class TalentBackInfoManager {
         // }
         // userDO转换
         UserDO userDO = UserConverter.talentInfoConverterToUserDO(talentInfoDO);
+        //判断昵称是否已经存在
+        MemResult<Boolean> memResult = userRepo.getUserByNickname(userDO);
+        if(!memResult.isSuccess()){
+            baseResult.setReturnCode(memResult.getReturnCode());
+            return baseResult;
+        }
         // 保存user信息
         MemResult<Boolean> userResult = userRepo.updateUserDO(userDO);
-        // 判断是否成功 
+        // 判断是否成功
         if (userResult.isSuccess()) {
             logger.info("saveTalentBackInfo userId:{} updateUserDO success", talentInfoDO.getId());
             // merchantDO转换

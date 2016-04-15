@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.fastjson.JSONObject;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.result.MemResult;
+import com.yimayhd.membercenter.util.ParmCheckUtil;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
@@ -20,7 +21,7 @@ import com.yimayhd.user.client.service.UserService;
 public class UserRepo {
 
     private static final Logger logger = LoggerFactory.getLogger(UserRepo.class);
-    
+
     private static final String MOBILE = "+86";
 
     @Autowired
@@ -85,7 +86,7 @@ public class UserRepo {
             BaseResult<String> result = userService.findMobileByUserId(userId);
             if (result.isSuccess() && StringUtils.isNoneBlank(result.getValue())) {
                 String mobileNo = result.getValue();
-                if(mobileNo.startsWith(MOBILE)){
+                if (mobileNo.startsWith(MOBILE)) {
                     mobileNo = mobileNo.replace(MOBILE, "");
                 }
                 baseResult.setValue(mobileNo);
@@ -98,6 +99,35 @@ public class UserRepo {
         } catch (Exception e) {
             baseResult.setReturnCode(MemberReturnCode.DUBBO_ERROR);
             logger.error("queryUserMobile par:{} return error:{}", userId, e);
+        }
+        return baseResult;
+    }
+
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈判断昵称是否重复〉
+     *
+     * @param nickname
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public MemResult<Boolean> getUserByNickname(UserDO userDO) {
+        MemResult<Boolean> baseResult = new MemResult<Boolean>();
+        try {
+            BaseResult<List<UserDO>> result = userService.getUserByNickname(userDO.getNickname());
+            if(result.isSuccess()){
+                if(ParmCheckUtil.checkListNull(result.getValue())){
+                    return baseResult;
+                }else if(1 == result.getValue().size() && userDO.getId() == result.getValue().get(0).getId()){
+                    return baseResult;
+                }
+            }
+            baseResult.setReturnCode(MemberReturnCode.DB_NICKNAME_FAILED);
+        } catch (Exception e) {
+            baseResult.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+            logger.error("getUserByNickname par:{} return error:{}", JSONObject.toJSONString(userDO), e);
         }
         return baseResult;
     }

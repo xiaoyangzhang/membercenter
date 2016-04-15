@@ -64,7 +64,7 @@ public class TalentInfoDealTest extends BaseTest {
             TalentInfoDO talentInfoDO = new TalentInfoDO();
             talentInfoDO.setId(userId + 4);
             talentInfoDO.setAvatar(pictureUrl);
-            talentInfoDO.setNickName("pztyz"  + i);
+            talentInfoDO.setNickName("pztyz15");
             talentInfoDO.setReallyName("刘二斌121"  + i);
             talentInfoDO.setGender(1);
             talentInfoDO.setServeDesc("大家好才是真的好  test" + i);

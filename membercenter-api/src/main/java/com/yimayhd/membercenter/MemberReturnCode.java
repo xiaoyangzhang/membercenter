@@ -52,6 +52,9 @@ public class MemberReturnCode extends AbstractReturnCode {
     
     public static final int DB_EXAMINE_NOT_ING_C = 16000012;
     public static final MemberReturnCode DB_EXAMINE_NOT_ING = new MemberReturnCode(DB_EXAMINE_NOT_ING_C, "非审核进行中状态无法进行审核");
+    
+    public static final int DB_NICKNAME_FAILED_C = 16000013;
+    public static final MemberReturnCode DB_NICKNAME_FAILED = new MemberReturnCode(DB_NICKNAME_FAILED_C, "用户昵称已存在");
     /************************************** ORDER ********************************************/
     public static final int BIZ_ORDER_NOT_FOUND_C = 16001000;
     public static final MemberReturnCode BIZ_ORDER_NOT_FOUND = new MemberReturnCode(BIZ_ORDER_NOT_FOUND_C, "订单未找到");

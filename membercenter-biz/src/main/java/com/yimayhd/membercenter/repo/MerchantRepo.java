@@ -94,9 +94,9 @@ public class MerchantRepo {
             BasePageResult<MerchantUserDTO> result = merchantService.getMerchantUserList(merchantPageQuery);
             if (result.isSuccess() && null != result.getList()) {
                 baseResult.setList(result.getList());
-                baseResult.setPageNo(result.getPageNo());
+                baseResult.setPageNo(merchantPageQuery.getPageNo());
                 baseResult.setTotalCount(result.getTotalCount());
-                baseResult.setPageSize(result.getPageSize());
+                baseResult.setPageSize(merchantPageQuery.getPageSize());
                 return baseResult;
             }
             baseResult.setReturnCode(MemberReturnCode.MEMBER_NOT_FOUND);

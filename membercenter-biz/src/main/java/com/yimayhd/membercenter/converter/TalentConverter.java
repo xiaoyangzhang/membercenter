@@ -174,10 +174,14 @@ public class TalentConverter {
                 // 判断是否为空
                 if (null != merchantUser.getMerchantDO() && null != merchantUser.getUserDO()) {
                     talentList.add(merchantToTalent(merchantUser.getMerchantDO(), merchantUser.getUserDO()));
+                }else{
+                    System.out.println(1211);
                 }
             }
             pageResult.setList(talentList);
             pageResult.setPageNo(result.getPageNo());
+            pageResult.setPageSize(result.getPageSize());
+            pageResult.setTotalCount(result.getTotalCount());
             pageResult.setHasNext(result.getTotalCount() > result.getPageNo() * result.getPageSize());
         } else {
             pageResult.setReturnCode(result.getReturnCode());

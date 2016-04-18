@@ -13,7 +13,7 @@ public class MemberProfileManagerTest extends BaseTest {
 
 	@Test
 	public void getTravelKaDetailTest() {
-		System.out.println(JSONObject.toJSONString(memberProfileManager.getTravelKaDetail(10)));
+		System.out.println(JSONObject.toJSONString(memberProfileManager.getTravelKaDetail(10,1000)));
 		System.out.println("-------------------------------------------------");
 	}
 }

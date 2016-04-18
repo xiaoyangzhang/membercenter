@@ -53,7 +53,7 @@ public class TravelKaApiImpl implements TravelKaApi {
                 return null;
             }
             logger.info("TravelKaApiImpl method getTravelKaDetail userId:"+ theUserId);
-            travelKa = memberProfileManager.getTravelKaDetail(theUserId);
+            travelKa = memberProfileManager.getTravelKaDetail(theUserId,domainId);
         }catch (Exception e){
             DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
             logger.error("TravelKaApiImpl method getTravelKaDetail error",e);

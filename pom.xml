@@ -41,6 +41,7 @@
 		<fhtd.version>0.1.0-SNAPSHOT</fhtd.version>
 		<stone.version>0.0.1-SNAPSHOT</stone.version>
 		<msg.version>0.0.6-SNAPSHOT</msg.version>
+		<sns.version>1.0.3-SNAPSHOT</sns.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -454,7 +455,7 @@
 			<dependency>
 				<groupId>com.yimayhd.snscenter</groupId>
 				<artifactId>snscenter-client</artifactId>
-				<version>0.0.6-SNAPSHOT</version>
+				<version>${sns.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.yimayhd.stone</groupId>

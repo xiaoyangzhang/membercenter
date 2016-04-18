@@ -23,7 +23,6 @@ import com.yimayhd.membercenter.entity.talent.TalentInfo;
 import com.yimayhd.membercenter.entity.talent.TalentInfoList;
 import com.yimayhd.membercenter.entity.talent.TalentQuery;
 import com.yimayhd.user.client.enums.MerchantOption;
-import com.yimayhd.user.client.enums.ServiceTypeOption;
 
 /**
  * 〈一句话功能简述〉<br> 

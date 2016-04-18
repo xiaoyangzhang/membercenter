@@ -44,6 +44,7 @@ import com.yimayhd.user.client.dto.MerchantDTO;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
 import com.yimayhd.user.client.enums.CertificateOption;
 import com.yimayhd.user.client.enums.MerchantOption;
+import com.yimayhd.user.client.enums.MerchantStatus;
 import com.yimayhd.user.client.enums.UserOptions;
 
 /**
@@ -144,6 +145,7 @@ public class TalentBackInfoManager {
                 logger.info("saveTalentBackInfo userId:{} queryMerchantDO return null", talentInfoDO.getId());
                 merchantDO.setSellerId(talentInfoDO.getId());
                 merchantDO.setCertificate(CertificateOption.ID_CARD.getOption());
+                merchantDO.setStatus(MerchantStatus.OFFLINE.getCode());
                 // insert 店铺信息
                 MemResult<MerchantDO> merchantSaveResult = merchantRepo.saveMerchant(merchantDO);
                 if (merchantSaveResult.isSuccess()) {

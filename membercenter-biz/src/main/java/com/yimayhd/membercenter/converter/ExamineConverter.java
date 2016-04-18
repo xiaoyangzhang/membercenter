@@ -29,6 +29,7 @@ import com.yimayhd.membercenter.util.ParmCheckUtil;
 import com.yimayhd.user.client.domain.MerchantDO;
 import com.yimayhd.user.client.enums.CertificateOption;
 import com.yimayhd.user.client.enums.MerchantOption;
+import com.yimayhd.user.client.enums.MerchantStatus;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -346,6 +347,7 @@ public class ExamineConverter {
         }else{
             merchantDO.setOption(MerchantOption.MERCHANT.getOption());
         }
+        merchantDO.setStatus(MerchantStatus.OFFLINE.getCode());
         return merchantDO;
     }
 }

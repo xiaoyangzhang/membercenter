@@ -52,7 +52,7 @@ public class ExamineTest extends BaseTest {
     public void queryMerchantExamineInfoById() {
         InfoQueryDTO examineQueryDTO = new InfoQueryDTO();
         examineQueryDTO.setDomainId(domainId);
-        examineQueryDTO.setSellerId(40100);
+        examineQueryDTO.setSellerId(17508);
         examineQueryDTO.setType(ExamineType.MERCHANT.getType());
         MemResult<ExamineInfoDTO> result = examineDealService.queryMerchantExamineInfoBySellerId(examineQueryDTO);
         System.out.println("----->");
@@ -78,6 +78,7 @@ public class ExamineTest extends BaseTest {
         examinQueryDTO.setDomainId(domainId);
         examinQueryDTO.setPageNo(1);
         examinQueryDTO.setPageSize(1);
+        examinQueryDTO.setSellerId(21824);
         // examinQueryDTO.setPrincipleName("审核信息");
         // examinQueryDTO.setStatus(ExamineStatus.EXAMIN_NOT_ABLE.getStatus());
         // examinQueryDTO.setPrincipleTel("186");
@@ -117,8 +118,8 @@ public class ExamineTest extends BaseTest {
         examinDTO.setId(1);
         examinDTO.setDomainId(domainId);
         examinDTO.setType(ExamineType.MERCHANT.getType());
-        examinDTO.setSellerId(40100);
-        examinDTO.setSellerName("审核信息SellerName11" + 40100);
+        examinDTO.setSellerId(70100);
+        examinDTO.setSellerName("审核信息SellerName11" + 70100);
         examinDTO.setLegralName("审核信息LegralName");
         examinDTO.setAddress("审核信息testFristPage");
         examinDTO.setSaleScope("审核信息testFristPage");
@@ -157,7 +158,7 @@ public class ExamineTest extends BaseTest {
         String pictureUrl = "NextPage.jpg";
         examinDTO.setDomainId(domainId);
         examinDTO.setType(ExamineType.MERCHANT.getType());
-        examinDTO.setSellerId(40100);
+        examinDTO.setSellerId(70100);
         examinDTO.setPrincipleName("审核信息testNextPage");
         examinDTO.setPrincipleCard("审核信息testNextPage");
         examinDTO.setPrincipleCardId("审核信息testNextPage");

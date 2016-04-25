@@ -29,7 +29,6 @@ import com.yimayhd.membercenter.util.ParmCheckUtil;
 import com.yimayhd.user.client.domain.MerchantDO;
 import com.yimayhd.user.client.enums.CertificateOption;
 import com.yimayhd.user.client.enums.MerchantOption;
-import com.yimayhd.user.client.enums.MerchantStatus;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -183,11 +182,11 @@ public class ExamineConverter {
         examineDO.setPicturesUrl(PicFeatureUtil.toString(pictureMap));
 
         examineDO.setId(examinDTO.getId());
-        examineDO.setPrincipalName(ParmCheckUtil.checkString(examinDTO.getPrincipleName()));
-        examineDO.setTelNum(ParmCheckUtil.checkString(examinDTO.getPrincipleTel()));
-        examineDO.setSaleScope(ParmCheckUtil.checkString(examinDTO.getSaleScope()));
+        examineDO.setPrincipalName(examinDTO.getPrincipleName());
+        examineDO.setTelNum(examinDTO.getPrincipleTel());
+        examineDO.setSaleScope(examinDTO.getSaleScope());
         examineDO.setSellerId(examinDTO.getSellerId());
-        examineDO.setSellerName(ParmCheckUtil.checkString(examinDTO.getSellerName()));
+        examineDO.setSellerName(examinDTO.getSellerName());
         examineDO.setDomainId(examinDTO.getDomainId());
         examineDO.setType(examinDTO.getType());
         // 默认审核中
@@ -321,6 +320,7 @@ public class ExamineConverter {
         merchantDO.setSellerId(examineDO.getSellerId());
         merchantDO.setDomainId(examineDO.getDomainId());
         merchantDO.setMerchantPrincipalTel(examineDO.getTelNum());
+        merchantDO.setMerchantPrincipal(ParmCheckUtil.checkString(examineDO.getPrincipalName()));
         //信息明细
         Map<String, String> featureMap = PicFeatureUtil.fromString(examineDO.getFeature());
         merchantDO.setAddress(featureMap.get(ExamineDetail.ADDRESS.getId()));
@@ -347,7 +347,6 @@ public class ExamineConverter {
         }else{
             merchantDO.setOption(MerchantOption.MERCHANT.getOption());
         }
-        merchantDO.setStatus(MerchantStatus.OFFLINE.getCode());
         return merchantDO;
     }
 }

@@ -23,6 +23,7 @@ import com.yimayhd.membercenter.util.ParmCheckUtil;
 import com.yimayhd.user.client.domain.MerchantDO;
 import com.yimayhd.user.client.dto.MerchantDTO;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
+import com.yimayhd.user.client.enums.MerchantStatus;
 import com.yimayhd.user.client.query.MerchantPageQuery;
 import com.yimayhd.user.client.query.MerchantQuery;
 import com.yimayhd.user.client.result.BasePageResult;
@@ -91,6 +92,7 @@ public class MerchantRepo {
     public MemPageResult<MerchantUserDTO> getMerchantUserList(MerchantPageQuery merchantPageQuery) {
         MemPageResult<MerchantUserDTO> baseResult = new MemPageResult<MerchantUserDTO>();
         try {
+            merchantPageQuery.setStatus(MerchantStatus.ONLINE.getCode());
             BasePageResult<MerchantUserDTO> result = merchantService.getMerchantUserList(merchantPageQuery);
             if (result.isSuccess() && null != result.getList()) {
                 baseResult.setList(result.getList());
@@ -123,6 +125,7 @@ public class MerchantRepo {
     public MemResult<MerchantDO> saveMerchant(MerchantDO merchantDO) {
         MemResult<MerchantDO> baseResult = new MemResult<MerchantDO>();
         try {
+            merchantDO.setStatus(MerchantStatus.ONLINE.getCode());
             BaseResult<MerchantDO> result = merchantService.saveMerchant(merchantDO);
             if (result.isSuccess() && null != result.getValue()) {
                 baseResult.setValue(result.getValue());

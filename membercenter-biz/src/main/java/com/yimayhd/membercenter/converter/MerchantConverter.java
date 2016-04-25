@@ -51,7 +51,7 @@ public class MerchantConverter {
         merchantInfoDO.setServiceTel(ParmCheckUtil.checkString(merchantDO.getServiceTel()));
         // 店铺服务类型
         List<ServiceFacilityOption> facilityOptions = ServiceFacilityOption
-                .getContainedOptions(merchantDO.getServiceType());
+                .getContainedOptions(merchantDO.getServiceFacility());
         if (!ParmCheckUtil.checkListNull(facilityOptions) && type > 0) {
             List<CertificatesDO> certificates = new ArrayList<CertificatesDO>();
             for (ServiceFacilityOption option : facilityOptions) {
@@ -153,6 +153,7 @@ public class MerchantConverter {
         merchantDO.setTitle(talentInfoDO.getServeDesc().toUpperCase());
         merchantDO.setName(talentInfoDO.getNickName());
         merchantDO.setMerchantPrincipalTel(talentInfoDO.getTelNum());
+        merchantDO.setMerchantPrincipal(ParmCheckUtil.checkString(talentInfoDO.getReallyName()));
         // 达人轮播图
         merchantDO.setLoopImages(talentInfoDO.getPictures());
         // 标注为达人

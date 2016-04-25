@@ -12,6 +12,7 @@ import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.util.ParmCheckUtil;
 import com.yimayhd.user.client.domain.UserDO;
+import com.yimayhd.user.client.dto.UserDTO;
 import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
 
@@ -50,10 +51,10 @@ public class UserRepo {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> updateUserDO(UserDO userDO) {
+    public MemResult<Boolean> updateUserDO(UserDTO userDTO) {
         MemResult<Boolean> baseResult = new MemResult<Boolean>();
         try {
-            BaseResult<Boolean> result = userService.updateUserDO(userDO);
+            BaseResult<UserDO> result = userService.updateUser(userDTO);
             if (result.isSuccess()) {
                 baseResult.setValue(Boolean.TRUE);
                 return baseResult;
@@ -61,11 +62,11 @@ public class UserRepo {
             baseResult.setErrorCode(result.getErrorCode());
             baseResult.setErrorMsg(result.getResultMsg());
             baseResult.setSuccess(false);
-            logger.info("updateUserDO par:{} return error:{}", JSONObject.toJSONString(userDO),
+            logger.info("updateUserDO par:{} return error:{}", JSONObject.toJSONString(userDTO),
                     JSONObject.toJSONString(result));
         } catch (Exception e) {
             baseResult.setReturnCode(MemberReturnCode.DUBBO_ERROR);
-            logger.error("updateUserDO par:{} return error:{}", JSONObject.toJSONString(userDO), e);
+            logger.error("updateUserDO par:{} return error:{}", JSONObject.toJSONString(userDTO), e);
         }
         return baseResult;
     }
@@ -113,21 +114,21 @@ public class UserRepo {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> getUserByNickname(UserDO userDO) {
+    public MemResult<Boolean> getUserByNickname(String nickName, long userId) {
         MemResult<Boolean> baseResult = new MemResult<Boolean>();
         try {
-            BaseResult<List<UserDO>> result = userService.getUserByNickname(userDO.getNickname());
+            BaseResult<List<UserDO>> result = userService.getUserByNickname(nickName);
             if(result.isSuccess()){
                 if(ParmCheckUtil.checkListNull(result.getValue())){
                     return baseResult;
-                }else if(1 == result.getValue().size() && userDO.getId() == result.getValue().get(0).getId()){
+                }else if(1 == result.getValue().size() && userId == result.getValue().get(0).getId()){
                     return baseResult;
                 }
             }
             baseResult.setReturnCode(MemberReturnCode.DB_NICKNAME_FAILED);
         } catch (Exception e) {
             baseResult.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
-            logger.error("getUserByNickname par:{} return error:{}", JSONObject.toJSONString(userDO), e);
+            logger.error("getUserByNickname nickName:{}, userId:{} return error:{}",nickName, userId, e);
         }
         return baseResult;
     }

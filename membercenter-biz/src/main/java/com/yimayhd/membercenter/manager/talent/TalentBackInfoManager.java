@@ -42,9 +42,9 @@ import com.yimayhd.user.client.domain.MerchantDO;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.dto.MerchantDTO;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
+import com.yimayhd.user.client.dto.UserDTO;
 import com.yimayhd.user.client.enums.CertificateOption;
 import com.yimayhd.user.client.enums.MerchantOption;
-import com.yimayhd.user.client.enums.MerchantStatus;
 import com.yimayhd.user.client.enums.UserOptions;
 
 /**
@@ -97,15 +97,16 @@ public class TalentBackInfoManager {
         // return baseResult;
         // }
         // userDO转换
-        UserDO userDO = UserConverter.talentInfoConverterToUserDO(talentInfoDO);
+//        UserDO userDO = UserConverter.talentInfoConverterToUserDO(talentInfoDO);
+        UserDTO userDTO = UserConverter.talentInfoConverterToUserDTO(talentInfoDO);
         //判断昵称是否已经存在
-        MemResult<Boolean> memResult = userRepo.getUserByNickname(userDO);
+        MemResult<Boolean> memResult = userRepo.getUserByNickname(userDTO.getNickname(), userDTO.getId());
         if(!memResult.isSuccess()){
             baseResult.setReturnCode(memResult.getReturnCode());
             return baseResult;
         }
         // 保存user信息
-        MemResult<Boolean> userResult = userRepo.updateUserDO(userDO);
+        MemResult<Boolean> userResult = userRepo.updateUserDO(userDTO);
         // 判断是否成功
         if (userResult.isSuccess()) {
             logger.info("saveTalentBackInfo userId:{} updateUserDO success", talentInfoDO.getId());
@@ -145,7 +146,6 @@ public class TalentBackInfoManager {
                 logger.info("saveTalentBackInfo userId:{} queryMerchantDO return null", talentInfoDO.getId());
                 merchantDO.setSellerId(talentInfoDO.getId());
                 merchantDO.setCertificate(CertificateOption.ID_CARD.getOption());
-                merchantDO.setStatus(MerchantStatus.OFFLINE.getCode());
                 // insert 店铺信息
                 MemResult<MerchantDO> merchantSaveResult = merchantRepo.saveMerchant(merchantDO);
                 if (merchantSaveResult.isSuccess()) {

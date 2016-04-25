@@ -11,6 +11,8 @@ package com.yimayhd.membercenter.converter;
 
 import com.yimayhd.membercenter.client.domain.talent.TalentInfoDO;
 import com.yimayhd.user.client.domain.UserDO;
+import com.yimayhd.user.client.dto.UserDTO;
+import com.yimayhd.user.client.enums.Gender;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -45,6 +47,29 @@ public class UserConverter {
         userDO.setProvince(talentDO.getProvince());
         userDO.setProvinceCode(talentDO.getProvinceCode());
         return userDO;
+    }
+    
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈USERDTO〉
+     *
+     * @param talentDO
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public static UserDTO talentInfoConverterToUserDTO(TalentInfoDO talentDO){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(talentDO.getId());
+        userDTO.setAvatar(talentDO.getAvatar());
+        userDTO.setName(talentDO.getReallyName());
+        userDTO.setGender(Gender.getGenderByValue(talentDO.getGender()));
+        userDTO.setBirthday(talentDO.getBirthday());
+        userDTO.setNickname(talentDO.getNickName());
+        userDTO.setCityCode(talentDO.getCityCode());
+        userDTO.setProvinceCode(talentDO.getProvinceCode());
+        return userDTO;
     }
     
     /**

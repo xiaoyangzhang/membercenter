@@ -68,7 +68,7 @@ public class TalentApiTest extends BaseTest{
     
     @Test
     public void queryMerchantInfo(){
-        Merchant talentDetail = merchantApi.queryMerchantInfo(21, 1200, 0, 0, 0, 22403);
+        Merchant talentDetail = merchantApi.queryMerchantInfo(21, 1200, 0, 0, 0, 17508);
         System.out.println("-------->");
         System.out.println("---->" + JSONObject.toJSONString(talentDetail));
         System.out.println("-------->");

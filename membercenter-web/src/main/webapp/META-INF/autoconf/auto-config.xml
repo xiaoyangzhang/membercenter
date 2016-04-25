@@ -112,6 +112,10 @@
 	<script>
 		<generate template="config.properties" destfile="WEB-INF/config.properties"
 			charset="UTF-8" />
+		<generate template="config.properties" destfile="WEB-INF/class/config.properties"
+			charset="UTF-8" />
+		<generate template="logback.xml" destfile="WEB-INF/class/logback.xml"
+		charset="UTF-8" />
 		<generate template="logback.xml" destfile="WEB-INF/logback.xml"
 			charset="UTF-8" />
 		<!--<generate template="redis.properties" destfile="WEB-INF/redis.properties" 

@@ -36,6 +36,9 @@ public class UserConverter {
      */
     public static UserDO talentInfoConverterToUserDO(TalentInfoDO talentDO){
         UserDO userDO = new UserDO();
+        if(null == talentDO){
+            return userDO;
+        }
         userDO.setId(talentDO.getId());
         userDO.setAvatar(talentDO.getAvatar());
         userDO.setName(talentDO.getReallyName());
@@ -59,8 +62,14 @@ public class UserConverter {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public static UserDTO talentInfoConverterToUserDTO(TalentInfoDO talentDO){
+    public static UserDTO talentInfoConverterToUserDTO(TalentInfoDO talentDO, UserDO userDO){
         UserDTO userDTO = new UserDTO();
+        if(null == talentDO){
+            return userDTO;
+        }
+        if(null == userDO){
+            userDO = new UserDO();
+        }
         userDTO.setId(talentDO.getId());
         userDTO.setAvatar(talentDO.getAvatar());
         userDTO.setName(talentDO.getReallyName());
@@ -69,6 +78,7 @@ public class UserConverter {
         userDTO.setNickname(talentDO.getNickName());
         userDTO.setCityCode(talentDO.getCityCode());
         userDTO.setProvinceCode(talentDO.getProvinceCode());
+        userDTO.setSignature(userDO.getSignature());
         return userDTO;
     }
     
@@ -84,6 +94,9 @@ public class UserConverter {
      */
     public static TalentInfoDO userDOConverterToTalentInfo(UserDO userDO){
         TalentInfoDO talentInfoDO = new TalentInfoDO();
+        if(null == userDO){
+            return talentInfoDO;
+        }
         talentInfoDO.setId(userDO.getId());
         talentInfoDO.setAvatar(userDO.getAvatar());
         talentInfoDO.setReallyName(userDO.getName());

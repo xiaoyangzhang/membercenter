@@ -174,8 +174,6 @@ public class TalentConverter {
                 // 判断是否为空
                 if (null != merchantUser.getMerchantDO() && null != merchantUser.getUserDO()) {
                     talentList.add(merchantToTalent(merchantUser.getMerchantDO(), merchantUser.getUserDO()));
-                }else{
-                    System.out.println(1211);
                 }
             }
             pageResult.setList(talentList);
@@ -202,6 +200,9 @@ public class TalentConverter {
      */
     public static TalentQueryDTO talentQuery(TalentQuery talentQuery, long domainId) {
         TalentQueryDTO talentQueryDTO = new TalentQueryDTO();
+        if(null == talentQuery){
+            return talentQueryDTO;
+        }
         talentQueryDTO.setDomainId(domainId);
         talentQueryDTO.setSearchWord(talentQuery.searchWord);
         if (StringUtils.isBlank(talentQuery.sort)

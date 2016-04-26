@@ -96,15 +96,16 @@ public class TalentBackInfoManager {
         // baseResult.setReturnCode(MemberReturnCode.DB_TALENT_FAILED);
         // return baseResult;
         // }
-        // userDO转换
-//        UserDO userDO = UserConverter.talentInfoConverterToUserDO(talentInfoDO);
-        UserDTO userDTO = UserConverter.talentInfoConverterToUserDTO(talentInfoDO);
-        //判断昵称是否已经存在
-        MemResult<Boolean> memResult = userRepo.getUserByNickname(userDTO.getNickname(), userDTO.getId());
-        if(!memResult.isSuccess()){
+        // 判断昵称是否已经存在
+        MemResult<Boolean> memResult = userRepo.getUserByNickname(talentInfoDO.getNickName(), talentInfoDO.getId());
+        if (!memResult.isSuccess()) {
             baseResult.setReturnCode(memResult.getReturnCode());
             return baseResult;
         }
+        UserDO userDO = userRepo.getUserDOById(talentInfoDO.getId());
+        // userDO转换
+        // UserDO userDO = UserConverter.talentInfoConverterToUserDO(talentInfoDO);
+        UserDTO userDTO = UserConverter.talentInfoConverterToUserDTO(talentInfoDO, userDO);
         // 保存user信息
         MemResult<Boolean> userResult = userRepo.updateUserDO(userDTO);
         // 判断是否成功

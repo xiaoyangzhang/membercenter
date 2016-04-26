@@ -206,10 +206,10 @@ public class TalentConverter {
         talentQueryDTO.setDomainId(domainId);
         talentQueryDTO.setSearchWord(talentQuery.searchWord);
         if (StringUtils.isBlank(talentQuery.sort)
-                || talentQuery.sort.equals(String.valueOf(SequenceEnum.ASC.getType()))) {
-            talentQueryDTO.setSortType(false);
-        } else {
+                || talentQuery.sort.equals(String.valueOf(SequenceEnum.DESC.getType()))) {
             talentQueryDTO.setSortType(true);
+        } else {
+            talentQueryDTO.setSortType(false);
         }
         talentQueryDTO.setTagId(talentQuery.tagId);
         talentQueryDTO.setPageNo(talentQuery.pageInfo.pageNo);

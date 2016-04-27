@@ -12,6 +12,7 @@ package com.yimay.membercenter.talent.option;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yimayhd.user.client.enums.UserOptions;
 
 /**
@@ -92,5 +93,7 @@ public enum UserOptionsTest {
         System.out.println(UserOptionsTest.USER_TALENT.has(40));
         System.out.println(UserOptionsTest.USER_TALENT.getLong());
         System.out.println(UserOptionsTest.CERTIFICATED.getLong());
+        
+        System.out.println(JSONObject.toJSONString(getContainedOptions(35)));
     }
 }

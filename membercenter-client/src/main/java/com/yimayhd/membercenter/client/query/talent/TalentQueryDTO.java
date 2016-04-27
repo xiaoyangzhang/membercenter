@@ -29,7 +29,7 @@ public class TalentQueryDTO extends PageQuery {
     private String tagId;
     
     //true-升序 false-降序  默认降序
-    public boolean sortType;
+    public Boolean sortType;
     
     //1-服务次数   默认服务次数
     private String sortPam;
@@ -47,11 +47,11 @@ public class TalentQueryDTO extends PageQuery {
         this.tagId = tagId;
     }
 
-    public boolean isSortType() {
+    public Boolean isSortType() {
         return sortType;
     }
 
-    public void setSortType(boolean sortType) {
+    public void setSortType(Boolean sortType) {
         this.sortType = sortType;
     }
 

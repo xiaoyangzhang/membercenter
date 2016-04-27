@@ -107,7 +107,7 @@ public class UserOptionAddConsumer extends BaseConsumer {
         List<UserOptions> userOptionsList = new ArrayList<UserOptions>();
         // 达人
         if (ExamineType.TALENT.getType() == type) {
-            userOptionsList.add(UserOptions.TRAVEL_KA);
+            userOptionsList.add(UserOptions.USER_TALENT);
             // 达人默认大V
             userOptionsList.add(UserOptions.CERTIFICATED);
         } else {

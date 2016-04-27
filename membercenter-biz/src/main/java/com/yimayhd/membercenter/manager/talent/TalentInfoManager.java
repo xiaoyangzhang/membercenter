@@ -82,8 +82,10 @@ public class TalentInfoManager {
         merchantPageQuery.setDomainId(talentQueryDTO.getDomainId());
         merchantPageQuery.setPageNo(talentQueryDTO.getPageNo());
         merchantPageQuery.setPageSize(talentQueryDTO.getPageSize());
-        merchantPageQuery
-                .setServiceSort(talentQueryDTO.sortType ? SequenceEnum.DESC.getType() : SequenceEnum.ASC.getType());
+        if (null != talentQueryDTO.isSortType()) {
+            merchantPageQuery.setServiceSort(
+                    talentQueryDTO.isSortType() ? SequenceEnum.DESC.getType() : SequenceEnum.ASC.getType());
+        }
         // 根据参数选择查询实现
         if (StringUtils.isNotBlank(talentQueryDTO.getSearchWord())) {
             merchantPageQuery.setTitle(talentQueryDTO.getSearchWord().toUpperCase());

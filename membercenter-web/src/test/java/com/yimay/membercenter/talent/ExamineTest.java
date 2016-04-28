@@ -47,13 +47,13 @@ public class ExamineTest extends BaseTest {
 
     @Autowired
     MsgSender msgSender;
-    
+
     @Test
     public void queryMerchantExamineInfoById() {
         InfoQueryDTO examineQueryDTO = new InfoQueryDTO();
         examineQueryDTO.setDomainId(domainId);
-        examineQueryDTO.setSellerId(17508);
-        examineQueryDTO.setType(ExamineType.MERCHANT.getType());
+        examineQueryDTO.setSellerId(10000000);
+        examineQueryDTO.setType(ExamineType.TALENT.getType());
         MemResult<ExamineInfoDTO> result = examineDealService.queryMerchantExamineInfoBySellerId(examineQueryDTO);
         System.out.println("----->");
         System.out.println("*****  " + JSONObject.toJSONString(result));
@@ -102,7 +102,7 @@ public class ExamineTest extends BaseTest {
         examineDealDTO.setType(ExamineType.TALENT.getType());
         // examineDealDTO.setId(1220l);
         examineDealDTO.setCheckIsOk(true);
-//        examineDealDTO.setExamineMes("审核通过");
+        // examineDealDTO.setExamineMes("审核通过");
         examineDealDTO.setReviewerId(19202);
         MemResult<Boolean> result = examineDealService.dealExamineInfo(examineDealDTO);
         System.out.println("----->");
@@ -115,33 +115,33 @@ public class ExamineTest extends BaseTest {
         // ExamineSubmitDTO examineSubmitDTO = new ExamineSubmitDTO();
         ExamineInfoDTO examinDTO = new ExamineInfoDTO();
         String pictureUrl = "FristPage.jpg";
-        examinDTO.setId(1);
-        examinDTO.setDomainId(domainId);
-        examinDTO.setType(ExamineType.MERCHANT.getType());
-        examinDTO.setSellerId(70100);
-        examinDTO.setSellerName("审核信息SellerName11" + 70100);
-        examinDTO.setLegralName("审核信息LegralName");
-        examinDTO.setAddress("审核信息testFristPage");
-        examinDTO.setSaleScope("审核信息testFristPage");
-//        examinDTO.setLegralCardUp(pictureUrl);
-        examinDTO.setLegralCardDown(pictureUrl);
-        examinDTO.setBusinessLicense(pictureUrl);
-        examinDTO.setOrgCard(pictureUrl);
-        examinDTO.setAffairsCard(pictureUrl);
-        examinDTO.setOpenCard(pictureUrl);
-        examinDTO.setTravingCard(pictureUrl);
-        examinDTO.setTouchProve(pictureUrl);
-        examinDTO.setTravelAgencyAuthorization(pictureUrl);
-        examinDTO.setTravelAgencyInsurance(pictureUrl);
+        // examinDTO.setId(1);
+         examinDTO.setDomainId(domainId);
+         examinDTO.setType(ExamineType.TALENT.getType());
+         examinDTO.setSellerId(10000000);
+        // examinDTO.setSellerName("审核信息SellerName11" + 70100);
+        // examinDTO.setLegralName("审核信息LegralName");
+        // examinDTO.setAddress("审核信息testFristPage");
+        // examinDTO.setSaleScope("审核信息testFristPage");
+        //// examinDTO.setLegralCardUp(pictureUrl);
+         examinDTO.setLegralCardDown(pictureUrl);
+        // examinDTO.setBusinessLicense(pictureUrl);
+        // examinDTO.setOrgCard(pictureUrl);
+        // examinDTO.setAffairsCard(pictureUrl);
+        // examinDTO.setOpenCard(pictureUrl);
+        // examinDTO.setTravingCard(pictureUrl);
+        // examinDTO.setTouchProve(pictureUrl);
+        // examinDTO.setTravelAgencyAuthorization(pictureUrl);
+        // examinDTO.setTravelAgencyInsurance(pictureUrl);
         // type
         examinDTO.setTouristCard(pictureUrl);
         examinDTO.setDrivingLinence(pictureUrl);
-        examinDTO.setDivingLinence(pictureUrl);
-        examinDTO.setPhotographyCertificate(pictureUrl);
-        examinDTO.setClimbingCertificate(pictureUrl);
-        examinDTO.setTrainingCertificate(pictureUrl);
-        examinDTO.setTeacherCertificate(pictureUrl);
-        examinDTO.setArtCertificate(pictureUrl);
+//        examinDTO.setDivingLinence(pictureUrl);
+//        examinDTO.setPhotographyCertificate(pictureUrl);
+//        examinDTO.setClimbingCertificate(pictureUrl);
+//        examinDTO.setTrainingCertificate(pictureUrl);
+//        examinDTO.setTeacherCertificate(pictureUrl);
+//        examinDTO.setArtCertificate(pictureUrl);
 
         // examineSubmitDTO.setExamineInfoDTO(examinDTO);
         // examineSubmitDTO.setPageNo(ExaminePageNo.PAGE_ONE.getPageNO());
@@ -157,14 +157,14 @@ public class ExamineTest extends BaseTest {
         ExamineInfoDTO examinDTO = new ExamineInfoDTO();
         String pictureUrl = "NextPage.jpg";
         examinDTO.setDomainId(domainId);
-        examinDTO.setType(ExamineType.MERCHANT.getType());
-        examinDTO.setSellerId(70100);
+        examinDTO.setType(ExamineType.TALENT.getType());
+        examinDTO.setSellerId(10000000);
         examinDTO.setPrincipleName("审核信息testNextPage");
         examinDTO.setPrincipleCard("审核信息testNextPage");
         examinDTO.setPrincipleCardId("审核信息testNextPage");
         examinDTO.setPrincipleTel("18651664499");
         examinDTO.setPrincipleMail("审核信息testNextPage");
-//        examinDTO.setPrincipleCardUp(pictureUrl);
+        // examinDTO.setPrincipleCardUp(pictureUrl);
         examinDTO.setPrincipleCardDown(pictureUrl);
         examinDTO.setFinanceOpenBankId("19");
         examinDTO.setFinanceOpenBankName("审核信息testNextPage");
@@ -175,11 +175,11 @@ public class ExamineTest extends BaseTest {
         examinDTO.setAccountBankCity("审核信息testNextPage");
         examinDTO.setAccountBankCityCode("审核信息testNextPage");
         examinDTO.setAccountBankName("审核信息testNextPage");
-//        examinDTO.setCooperation1(pictureUrl);
-//        examinDTO.setCooperation2(pictureUrl);
-//        examinDTO.setCooperation3(pictureUrl);
-//        examinDTO.setCooperation4(pictureUrl);
-//        examinDTO.setCooperation5(pictureUrl);
+        // examinDTO.setCooperation1(pictureUrl);
+        // examinDTO.setCooperation2(pictureUrl);
+        // examinDTO.setCooperation3(pictureUrl);
+        // examinDTO.setCooperation4(pictureUrl);
+        // examinDTO.setCooperation5(pictureUrl);
 
         // examineSubmitDTO.setExamineInfoDTO(examinDTO);
         // examineSubmitDTO.setPageNo(ExaminePageNo.PAGE_TWO.getPageNO());
@@ -205,7 +205,7 @@ public class ExamineTest extends BaseTest {
         System.out.println("*****  " + JSONObject.toJSONString(sendResult));
         System.out.println("----->");
     }
-    
+
     @Test
     public void changeExamineStatusIntoIng() {
         InfoQueryDTO examineQueryDTO = new InfoQueryDTO();

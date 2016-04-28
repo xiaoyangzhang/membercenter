@@ -61,9 +61,13 @@ public class MapUnionUtil {
         Map<String, String> certificateMasterMap = PicFeatureUtil.fromString(examineMater.getCertificate());
         // 达人技能
         Map<String, String> certificateSlaveMap = PicFeatureUtil.fromString(examineSlave.getCertificate());
-        certificateSlaveMap.putAll(certificateMasterMap);
-        examineMater.setCertificate(PicFeatureUtil.toString(certificateSlaveMap));
-
+        int number = PictureUrl.queryNumber(pictureMasterMap);
+        if (1 == number) {
+            examineMater.setCertificate(PicFeatureUtil.toString(certificateMasterMap));
+        } else {
+            examineMater.setCertificate(PicFeatureUtil.toString(certificateSlaveMap));
+        }
+        // certificateSlaveMap.putAll(certificateMasterMap);
         examineMater.setGmtModified(new Date());
         return examineMater;
     }

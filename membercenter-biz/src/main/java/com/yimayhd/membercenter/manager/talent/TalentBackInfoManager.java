@@ -12,6 +12,7 @@ package com.yimayhd.membercenter.manager.talent;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -414,6 +415,31 @@ public class TalentBackInfoManager {
             baseResult.setValue(bankList);
             // }
             return baseResult;
+        } catch (Exception e) {
+            baseResult.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+            logger.error("queryBankInfo error:{} ", e);
+        }
+        return baseResult;
+    }
+    
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈查询银行名称〉
+     *
+     * @param bankId
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public MemResult<String> queryBankNameById(String bankId) {
+        MemResult<String> baseResult = new MemResult<String>();
+        try {
+            BankDO bankDO = bankDOMapper.selectBankNameById(bankId);
+            if(null != bankDO && StringUtils.isNoneBlank(bankDO.getBankName())){
+                baseResult.setValue(bankDO.getBankName());
+                return baseResult; 
+            }
         } catch (Exception e) {
             baseResult.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
             logger.error("queryBankInfo error:{} ", e);

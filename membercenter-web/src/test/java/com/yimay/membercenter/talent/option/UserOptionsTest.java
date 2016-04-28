@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yimayhd.user.client.enums.UserOptions;
 
 /**
  * 〈一句话功能简述〉<br> 
@@ -90,10 +89,10 @@ public enum UserOptionsTest {
     }
     
     public static void main(String [] args){
-        System.out.println(UserOptionsTest.USER_TALENT.has(40));
+        System.out.println(UserOptionsTest.CERTIFICATED.has(34));
         System.out.println(UserOptionsTest.USER_TALENT.getLong());
         System.out.println(UserOptionsTest.CERTIFICATED.getLong());
         
-        System.out.println(JSONObject.toJSONString(getContainedOptions(35)));
+        System.out.println(JSONObject.toJSONString(getContainedOptions(34)));
     }
 }

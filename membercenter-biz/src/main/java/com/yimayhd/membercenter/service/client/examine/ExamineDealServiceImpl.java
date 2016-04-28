@@ -12,6 +12,7 @@ package com.yimayhd.membercenter.service.client.examine;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.examine.ExamineDealService;
 import com.yimayhd.membercenter.converter.ExamineConverter;
 import com.yimayhd.membercenter.enums.ExamineStatus;
+import com.yimayhd.membercenter.manager.talent.TalentBackInfoManager;
 import com.yimayhd.membercenter.manager.talent.TalentExamineManager;
 import com.yimayhd.membercenter.util.ParmCheckUtil;
 
@@ -47,6 +49,9 @@ public class ExamineDealServiceImpl implements ExamineDealService {
     @Autowired
     TalentExamineManager talentExamineManager;
 
+    @Autowired
+    TalentBackInfoManager talentBackInfoManager;
+
     /*
      * (non-Javadoc)
      * @see com.yimayhd.membercenter.client.service.examin.ExaminDealService#submitMerchantExaminInfo(com.yimayhd.
@@ -61,6 +66,16 @@ public class ExamineDealServiceImpl implements ExamineDealService {
                 result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
                 logger.info("submitMerchantExaminInfo par:{} is error", JSONObject.toJSONString(examineInfoDTO));
                 return result;
+            }
+            // 根据银行ID查询银行name
+            if (StringUtils.isNotBlank(examineInfoDTO.getFinanceOpenBankId())) {
+                MemResult<String> memResult = talentBackInfoManager
+                        .queryBankNameById(examineInfoDTO.getFinanceOpenBankId());
+                logger.info("queryBankNameById par:{} return: {}", examineInfoDTO.getFinanceOpenBankId(),
+                        JSONObject.toJSONString(memResult));
+                if (memResult.isSuccess()) {
+                    examineInfoDTO.setFinanceOpenBankName(memResult.getValue());
+                }
             }
             // 数据转换
             ExamineDO examinDO = ExamineConverter.examinDTOToDO(examineInfoDTO);

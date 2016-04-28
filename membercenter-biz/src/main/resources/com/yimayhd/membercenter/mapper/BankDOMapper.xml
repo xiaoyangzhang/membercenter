@@ -23,6 +23,11 @@
    select  distinct bank_name, bank_id from bank order by bank_id asc
   </select>
   
+  <select id="selectBankNameById" resultMap="BaseResultMap" parameterType="string" >
+   select  <include refid="Base_Column_List" />
+   from bank where  bank_id = #{bankId} limit 0, 1
+  </select>
+  
   <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.BankDO" >
     insert into bank (id, bank_name, province_name, 
       city_name, bank_id, branch_code, 

@@ -12,4 +12,5 @@ public interface BankDOMapper {
     
     List<BankDO> selectBankNameAndId();
 
+    BankDO selectBankNameById(String bankId);
 }

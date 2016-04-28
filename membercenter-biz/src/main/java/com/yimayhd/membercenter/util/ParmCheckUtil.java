@@ -48,7 +48,7 @@ public class ParmCheckUtil {
      */
     public static boolean checkUpdateTalentInfoNull(TalentInfoDTO talentInfoDTO) {
         // 参数校验
-        if (MIN_CODE >= talentInfoDTO.getDomainId() || null == talentInfoDTO.getTalentInfoDO()
+        if (null == talentInfoDTO || MIN_CODE >= talentInfoDTO.getDomainId() || null == talentInfoDTO.getTalentInfoDO()
                 || null == talentInfoDTO.getPictureTextDTO()) {
             return true;
         }
@@ -130,7 +130,7 @@ public class ParmCheckUtil {
      * @since [产品/模块版本](可选)
      */
     public static boolean checkExamineDTO(ExamineInfoDTO examineInfoDTO) {
-        if (MIN_CODE >= examineInfoDTO.getSellerId() || !ExamineType.has(examineInfoDTO.getType())
+        if (null == examineInfoDTO || MIN_CODE >= examineInfoDTO.getSellerId() || !ExamineType.has(examineInfoDTO.getType())
                 || MIN_CODE >= examineInfoDTO.getDomainId()) {
             return true;
         }
@@ -148,7 +148,7 @@ public class ParmCheckUtil {
      * @since [产品/模块版本](可选)
      */
     public static boolean checkExamineDealDTO(ExamineDealDTO examineDealDTO) {
-        if ((MIN_CODE >= examineDealDTO.getId() && (MIN_CODE >= examineDealDTO.getSellerId()
+        if (null == examineDealDTO || (MIN_CODE >= examineDealDTO.getId() && (MIN_CODE >= examineDealDTO.getSellerId()
                 || !ExamineType.has(examineDealDTO.getType()) || MIN_CODE >= examineDealDTO.getDomainId()))
                 || MIN_CODE >= examineDealDTO.getReviewerId()
                 || (!examineDealDTO.isCheckIsOk() && StringUtils.isBlank(examineDealDTO.getExamineMes()))) {
@@ -168,7 +168,7 @@ public class ParmCheckUtil {
      * @since [产品/模块版本](可选)
      */
     public static boolean checkQueryDTO(InfoQueryDTO examineQueryDTO) {
-        if (MIN_CODE >= examineQueryDTO.getSellerId()
+        if (null == examineQueryDTO || MIN_CODE >= examineQueryDTO.getSellerId()
                 || (examineQueryDTO.getType() > 0 && !ExamineType.has(examineQueryDTO.getType()))
                 || MIN_CODE >= examineQueryDTO.getDomainId()) {
             return true;
@@ -187,7 +187,7 @@ public class ParmCheckUtil {
      * @since [产品/模块版本](可选)
      */
     public static boolean checkAccountInfoDTO(AccountDTO accountDTO) {
-        if (MIN_CODE >= accountDTO.getSellerId() || !ExamineType.has(accountDTO.getType())
+        if (null == accountDTO || MIN_CODE >= accountDTO.getSellerId() || !ExamineType.has(accountDTO.getType())
                 || MIN_CODE >= accountDTO.getDomainId() || StringUtils.isBlank(accountDTO.getProducterName())
                 || StringUtils.isBlank(accountDTO.getProducterTel())
                 || StringUtils.isBlank(accountDTO.getProducterMail())

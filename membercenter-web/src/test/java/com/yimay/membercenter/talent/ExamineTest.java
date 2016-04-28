@@ -98,8 +98,8 @@ public class ExamineTest extends BaseTest {
     public void dealExamineInfo() {
         ExamineDealDTO examineDealDTO = new ExamineDealDTO();
         examineDealDTO.setDomainId(domainId);
-        examineDealDTO.setSellerId(21506);
-        examineDealDTO.setType(ExamineType.MERCHANT.getType());
+        examineDealDTO.setSellerId(24116);
+        examineDealDTO.setType(ExamineType.TALENT.getType());
         // examineDealDTO.setId(1220l);
         examineDealDTO.setCheckIsOk(true);
 //        examineDealDTO.setExamineMes("审核通过");
@@ -166,7 +166,7 @@ public class ExamineTest extends BaseTest {
         examinDTO.setPrincipleMail("审核信息testNextPage");
 //        examinDTO.setPrincipleCardUp(pictureUrl);
         examinDTO.setPrincipleCardDown(pictureUrl);
-        examinDTO.setFinanceOpenBankId("审核信息testNextPage");
+        examinDTO.setFinanceOpenBankId("19");
         examinDTO.setFinanceOpenBankName("审核信息testNextPage");
         examinDTO.setFinanceOpenName("审核信息testNextPage");
         examinDTO.setAccountNum("审核信息testNextPage");

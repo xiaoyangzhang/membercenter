@@ -12,13 +12,13 @@
 	<context:property-placeholder ignore-unresolvable="true" location="classpath:config.properties" />
 
 
-    <import resource="application-persistance.xml" />
     <import resource="application-manager.xml" />
     <import resource="application-service.xml" />
     <import resource="application-mq.xml" />
     <import resource="application-repo.xml" />
     <import resource="application-common.xml" />
     <import resource="application-consumer.xml" />
+     <import resource="application-persistance.xml" />
     <import resource="application-annot.xml" />
    	 
 </beans>

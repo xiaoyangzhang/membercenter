@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yimayhd.membercenter.mapper.HaUserRoleMapper">
+    <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.HaUserRoleDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="ha_user_id" property="haUserId" jdbcType="BIGINT"/>
+        <result column="ha_role_id" property="haRoleId" jdbcType="BIGINT"/>
+        <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+	</resultMap>
+
+    <sql id="Base_Column_List">
+        id,ha_user_id,ha_role_id,gmt_created,gmt_modified,status
+    </sql>
+
+    <!--insert的时候要去掉ID，创建时间，更新时间和状态-->
+    <insert id="add" parameterType="com.yimayhd.membercenter.client.domain.HaUserRoleDO"  useGeneratedKeys="true" keyProperty="id">
+        insert into ha_user_role  (id,ha_user_id,ha_role_id,gmt_created,gmt_modified,status)
+        values (
+          #{id,jdbcType=BIGINT},
+          #{haUserId,jdbcType=BIGINT},
+          #{haRoleId,jdbcType=BIGINT},
+          #{gmtCreated,jdbcType=TIMESTAMP},
+          #{gmtModified,jdbcType=TIMESTAMP},
+          #{status,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <select id="getById" resultMap="BaseResultMap" parameterType="long">
+        select <include refid="Base_Column_List"/>
+        from ha_user_role t
+        where
+        t.id = #{id}
+    </select>
+
+    <update id="updateStatus" parameterType="com.yimayhd.membercenter.client.domain.HaUserRoleDO">
+        update 
+        	ha_user_role
+        set 
+        	gmt_modified = ${gmtModified},
+        	status = #{status}
+        where
+        t.id = #{id}
+    </update>
+
+
+    <select id="getHaRoleList" parameterType="com.yimayhd.membercenter.client.query.UserMenuQuery" resultType="java.lang.Long">
+        SELECT
+            ha_role_id
+        FROM
+            ha_user_role
+        WHERE
+            ha_user_id = #{userId,jdbcType=BIGINT}
+    </select>
+    
+    <select id="getUserRole"  resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List"/>
+        from ha_user_role
+        WHERE
+            ha_user_id = #{userId} and ha_role_id = ${roleId}
+        limit 0, 1
+    </select>
+    
+    
+</mapper>

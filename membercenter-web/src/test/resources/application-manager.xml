@@ -7,13 +7,16 @@
 	<context:annotation-config />
 
 	<bean id="merchantServiceManager" class="com.yimayhd.membercenter.manager.MerchantServiceManager"></bean>
-
+	
 	<bean id="memberProfileManager" class="com.yimayhd.membercenter.manager.MemberProfileManager"/>
 	
 	<bean id="memberPrivilegeManager" class="com.yimayhd.membercenter.manager.MemberPrivilegeManager"></bean>
 	<bean id="memberManager" class="com.yimayhd.membercenter.manager.MemberManager"></bean>
     <bean id="baseMerchantManager" class="com.yimayhd.membercenter.manager.BaseMerchantManager"/>
-	
+    <bean id="userPermissionManager" class="com.yimayhd.membercenter.manager.UserPermissionManager"/>
+    
+    <bean id="talentInfoManager" class="com.yimayhd.membercenter.manager.talent.TalentInfoManager"/>
+	<bean id="talentBackInfoManager" class="com.yimayhd.membercenter.manager.talent.TalentBackInfoManager"/>
 	
 	
 	
@@ -24,4 +27,5 @@
         <constructor-arg name="allocCount" value="20"/>
     </bean>
 	
+	<bean id="sessionManager" class="com.yimayhd.user.session.manager.SessionManager" />
 </beans>

@@ -7,8 +7,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.yimayhd.membercenter.api.MemberApi;
+import com.yimayhd.membercenter.api.MerchantApi;
 import com.yimayhd.membercenter.api.PrivilegeApi;
 import com.yimayhd.membercenter.api.TravelKaApi;
+import com.yimayhd.membercenter.api.talent.TalentMemberApi;
 
 import net.pocrd.core.ApiDocumentationHelper;
 import net.pocrd.core.ApiManager;
@@ -33,6 +35,16 @@ public class ApiDefinitionTest {
             System.out.println(apis.size());
             
             apis = ApiManager.parseApi(PrivilegeApi.class, new Object());
+            apiDoc.getDocument(apis.toArray(new ApiMethodInfo[apis.size()]));
+            manager.register(apis, ApiOpenState.OPEN_TO_CLIENT);
+            System.out.println(apis.size());
+            
+            
+            apis = ApiManager.parseApi(TalentMemberApi.class, new Object());
+            apiDoc.getDocument(apis.toArray(new ApiMethodInfo[apis.size()]));
+            manager.register(apis, ApiOpenState.OPEN_TO_CLIENT);
+            System.out.println(apis.size());
+            apis = ApiManager.parseApi(MerchantApi.class, new Object());
             apiDoc.getDocument(apis.toArray(new ApiMethodInfo[apis.size()]));
             manager.register(apis, ApiOpenState.OPEN_TO_CLIENT);
             System.out.println(apis.size());

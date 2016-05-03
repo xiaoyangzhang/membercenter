@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yimayhd.membercenter.mapper.BankDOMapper" >
+  <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.BankDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="bank_id" property="bankId" jdbcType="INTEGER" />
+    <result column="branch_code" property="branchCode" jdbcType="VARCHAR" />
+    <result column="branch_name" property="branchName" jdbcType="VARCHAR" />
+    <result column="branch_address" property="branchAddress" jdbcType="VARCHAR" />
+    <result column="branch_tel" property="branchTel" jdbcType="VARCHAR" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, bank_name, province_name, city_name, bank_id, branch_code, branch_name, branch_address, 
+    branch_tel, gmt_modified, gmt_created
+  </sql>
+  
+   <select id="selectBankNameAndId" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.client.domain.BankDO" >
+   select  distinct bank_name, bank_id from bank order by bank_id asc
+  </select>
+  
+  <select id="selectBankNameById" resultMap="BaseResultMap" parameterType="string" >
+   select  <include refid="Base_Column_List" />
+   from bank where  bank_id = #{bankId} limit 0, 1
+  </select>
+  
+  <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.BankDO" >
+    insert into bank (id, bank_name, province_name, 
+      city_name, bank_id, branch_code, 
+      branch_name, branch_address, branch_tel, 
+      gmt_modified, gmt_created)
+    values (#{id,jdbcType=BIGINT}, #{bankName,jdbcType=VARCHAR}, #{provinceName,jdbcType=VARCHAR}, 
+      #{cityName,jdbcType=VARCHAR}, #{bankId,jdbcType=INTEGER}, #{branchCode,jdbcType=VARCHAR}, 
+      #{branchName,jdbcType=VARCHAR}, #{branchAddress,jdbcType=VARCHAR}, #{branchTel,jdbcType=VARCHAR}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{gmtCreated,jdbcType=TIMESTAMP})
+  </insert>
+  
+   <insert id="insertBatch" parameterType="list" >
+    insert into bank (id, bank_name, province_name, 
+      city_name, bank_id, branch_code, 
+      branch_name, branch_address, branch_tel, 
+      gmt_modified, gmt_created)
+    values 
+    <foreach collection ="list" item ="item" index ="index" separator =",">
+    (#{item.id,jdbcType=BIGINT}, #{item.bankName,jdbcType=VARCHAR}, #{item.provinceName,jdbcType=VARCHAR}, 
+      #{item.cityName,jdbcType=VARCHAR}, #{item.bankId,jdbcType=INTEGER}, #{item.branchCode,jdbcType=VARCHAR}, 
+      #{item.branchName,jdbcType=VARCHAR}, #{item.branchAddress,jdbcType=VARCHAR}, #{item.branchTel,jdbcType=VARCHAR}, 
+      #{item.gmtModified,jdbcType=TIMESTAMP}, #{item.gmtCreated,jdbcType=TIMESTAMP})
+     </foreach>
+  </insert>
+  
+</mapper>

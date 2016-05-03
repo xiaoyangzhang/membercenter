@@ -1,2 +1,2 @@
-Api-Export: com.yimayhd.membercenter.api.TravelKaApi com.yimayhd.membercenter.api.MemberApi com.yimayhd.membercenter.api.PrivilegeApi
+Api-Export: com.yimayhd.membercenter.api.TravelKaApi com.yimayhd.membercenter.api.MemberApi com.yimayhd.membercenter.api.PrivilegeApi com.yimayhd.membercenter.api.talent.TalentMemberApi com.yimayhd.membercenter.api.MerchantApi
 Api-Dependency-Type: dubbo

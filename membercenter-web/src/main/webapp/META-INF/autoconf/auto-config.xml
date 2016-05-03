@@ -1,74 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <group name="dubbo">
-        <property name="zk.address" defaultValue="192.168.1.202:2181" description="dubbo注册的zookeeper地址"/>
-        <property name="zk.port" defaultValue="-1" description="dubbo服务使用的端口号"/>
-        <property name="export.dubbo.timeout" defaultValue="5000" description="activity提供dubbo服务的默认超时时间"/>
-        <property name="export.dubbo.version" defaultValue="1.0.0.test" description="activity暴露dubbo的版本号"/>
-        <property name="dubbo.retries" defaultValue="0" description="dubbo调用不重试"/>
-    	<property name="consumer.dubbo.timeout" defaultValue="5000" description="activity使用其他dubbo服务的超市时间"/>
-        <property name="consumer.dubbo.check" defaultValue="false" description="activity启东时是否强依赖其他服务，如果true那么依赖的服务必须先启动；如果false,其他服务可以不存在，但是调用的时候，如果服务依然不存在，则报错"/>
-        <property name="consumer.idgen.dubbo.version" defaultValue="1.0.0.test" description="版本号"/>
-        <property name="consumer.user.dubbo.version" defaultValue="1.0.0.test" description="版本号"/>
-        <property name="consumer.order.dubbo.version" defaultValue="1.0.0.test" description="版本号"/>
-        <property name="consumer.item.dubbo.version" defaultValue="1.0.0.test" description="版本号"/>
-        <property name="consumer.resourcecenter.dubbo.version" defaultValue="1.0.0.test" description="版本号"/>
-        <property name="consumer.snscenter.dubbo.version" defaultValue="1.0.0.test" description="版本号"/>
-    </group>
-    <group name="">
-    	<property name="app.name" defaultValue="membercenter" description="应用名称"/>
-        <property name="log.home" defaultValue="/home/admin/logs/membercenter" description="activity日志输出目录"/>
-        <property name="db.url"
-                  defaultValue="jdbc:mysql://192.168.1.202:3306/membercenter?useUnicode=true&amp;amp;characterset=utf-8"
-                  description="activity数据库链接url"/>
-        <property name="db.username" defaultValue="root" description="数据库用户名"/>
-        <property name="db.password" defaultValue="123456" description="数据库密码"/>
-        <property name="db.pool.minIdle" defaultValue="5" description="db最小空闲连接数"/>
-        <property name="db.pool.maxIdle" defaultValue="30" description="db最大空闲连接数"/>
-        <property name="db.pool.maxActive" defaultValue="100" description="db最大活跃连接数"/>
+	<group name="dubbo">
+		<property name="zk.address" defaultValue="192.168.1.202:2181"
+			description="dubbo注册的zookeeper地址" />
+		<property name="zk.port" defaultValue="-1" description="dubbo服务使用的端口号" />
+		<property name="export.dubbo.timeout" defaultValue="5000"
+			description="activity提供dubbo服务的默认超时时间" />
+		<property name="export.dubbo.version" defaultValue="1.0.0.test"
+			description="activity暴露dubbo的版本号" />
+		<property name="dubbo.retries" defaultValue="0" description="dubbo调用不重试" />
+		<property name="consumer.dubbo.timeout" defaultValue="5000"
+			description="activity使用其他dubbo服务的超市时间" />
+		<property name="consumer.dubbo.check" defaultValue="false"
+			description="activity启东时是否强依赖其他服务，如果true那么依赖的服务必须先启动；如果false,其他服务可以不存在，但是调用的时候，如果服务依然不存在，则报错" />
+		<property name="consumer.idgen.dubbo.version" defaultValue="1.0.0.test"
+			description="版本号" />
+		<property name="consumer.user.dubbo.version" defaultValue="1.0.0.test"
+			description="版本号" />
+		<property name="consumer.order.dubbo.version" defaultValue="1.0.0.test"
+			description="版本号" />
+		<property name="consumer.item.dubbo.version" defaultValue="1.0.0.test"
+			description="版本号" />
+		<property name="consumer.resourcecenter.dubbo.version"
+			defaultValue="1.0.0.test" description="版本号" />
+		<property name="consumer.snscenter.dubbo.version"
+			defaultValue="1.0.0.test" description="版本号" />
+	</group>
+	<group name="">
+		<property name="app.name" defaultValue="membercenter"
+			description="应用名称" />
+		<property name="log.home" defaultValue="/home/admin/logs/membercenter"
+			description="activity日志输出目录" />
+		<property name="db.url"
+			defaultValue="jdbc:mysql://192.168.1.202:3306/membercenter?useUnicode=true&amp;amp;characterset=utf-8"
+			description="activity数据库链接url" />
+		<property name="db.username" defaultValue="root" description="数据库用户名" />
+		<property name="db.password" defaultValue="123456"
+			description="数据库密码" />
+		<property name="db.pool.minIdle" defaultValue="5"
+			description="db最小空闲连接数" />
+		<property name="db.pool.maxIdle" defaultValue="30"
+			description="db最大空闲连接数" />
+		<property name="db.pool.maxActive" defaultValue="100"
+			description="db最大活跃连接数" />
 
-        <property name="memcenter.ability.isproduction" defaultValue="true" description="大咖个人能力图片是否是线上环境"/>
-        
-    </group>
-    <group name="mq">
-        <property name="rocketmq.server.name" defaultValue="192.168.1.206:9876" description="rocketmq的注册中心地址"/>
-        <property name="member.consume.member.group" defaultValue="member_consumer_member_group" description="member center消费member消息的group名称"></property>
-        <property name="member.consume.order.group" defaultValue="member_consumer_order_group" description="member center消费member消息的group名称"></property>
-    </group>
-    <group name="idgen">
-    	<property name="memcenter.meber.idgen.key" defaultValue="member" description="member表使用idgen的key"></property>
-    </group>
-    
-    <group name="tair">
-        <property name="session.tair.namespace" defaultValue="40" description="session tair命名空间"/>
-        <property name="tair.namespace" defaultValue="17" description="user tair命名空间"/>
-        <property name="tair.groupName.per" defaultValue="group_1" description="user 持久化tair的namespace"/>
-        <property name="tair.groupName.temp" defaultValue="group_1" description="user 非持久化tair的namespace"/>
-        <property name="tair.timeout" defaultValue="5000" description="user tair超时"/>
-        <property name="tair.configServer.main" defaultValue="192.168.1.209:5198" description="user tair服务器的地址"/>
-        <property name="tair.configServer.slave" defaultValue="192.168.1.209:5198" description="user tair服务器的地址"/>
-    </group>
-    
-    <group name="session">
-    	<!-- 
-    	<property name="jedis.host" defaultValue="192.168.1.207" description="redis的ip"></property>
-    	<property name="jedis.port" defaultValue="6380" description="redis端口"></property>
-    	<property name="jedis.password" defaultValue="yimay2015" description="redis密码"></property>
-    	<property name="jedis.timeout" defaultValue="2000" description="jedis超时时间，单位s"></property>
-    	<property name="jedis.pool.maxIdle" defaultValue="8" description=""></property>
-    	<property name="jedis.pool.maxTotal" defaultValue="20" description="redis 最大连接数"/>
-    	<property name="jedis.sentinel" defaultValue="192.168.1.207:26379" description="哨兵地址"></property>
-    	<property name="jedis.usePool" defaultValue="true" description="是否使用jedis连接池"></property>
-    	<property name="jedis.master" defaultValue="mymaster" description=""></property>
-    	 -->
-    	<property name="verify.code.expire" defaultValue="120" description=""></property>
-    	<property name="session.time.out" defaultValue="180" description="会话有效期，单位秒"></property>
-  
-    </group>
-    <script>
-        <generate template="config.properties" destfile="WEB-INF/config.properties" charset="UTF-8"/>
-        <generate template="logback.xml" destfile="WEB-INF/logback.xml" charset="UTF-8"/>
-        <!--<generate template="redis.properties" destfile="WEB-INF/redis.properties" charset="UTF-8"/>-->
-    </script>
+		<property name="memcenter.ability.isproduction" defaultValue="true"
+			description="大咖个人能力图片是否是线上环境" />
+
+	</group>
+	<group name="mq">
+		<property name="rocketmq.server.name" defaultValue="192.168.1.206:9876"
+			description="rocketmq的注册中心地址" />
+		<property name="member.consume.member.group" defaultValue="member_consumer_member_group"
+			description="member center消费member消息的group名称"></property>
+		<property name="member.consume.order.group" defaultValue="member_consumer_order_group"
+			description="member center消费member消息的group名称"></property>
+		<property name="member.consume.user.group" defaultValue="member_consumer_user_group"
+			description="member center消费user消息的group名称"></property>
+		<property name="member.consume.examine.mes.group" defaultValue="member_consumer_examine_mes_group"
+			description="member center消费member examine消息的group名称"></property>
+		<property name="member.consume.examine.push.group" defaultValue="member_consumer_examine_push_group"
+			description="member center消费member examine消息的group名称"></property>
+	</group>
+	<group name="idgen">
+		<property name="memcenter.meber.idgen.key" defaultValue="member"
+			description="member表使用idgen的key"></property>
+		<property name="examine.done.domain" defaultValue="examine"
+			description="examine表使用idgen的domain"></property>
+		<property name="examine.done.key" defaultValue="examine_done"
+			description="examine表使用idgen的key"></property>
+		<property name="examine.detail.domain" defaultValue="examine"
+			description="examine表使用idgen的domain"></property>
+		<property name="examine.detail.key" defaultValue="examine_detail"
+			description="examine表使用idgen的key"></property>
+	</group>
+
+	<group name="tair">
+		<property name="session.tair.namespace" defaultValue="40"
+			description="session tair命名空间" />
+		<property name="tair.namespace" defaultValue="17"
+			description="user tair命名空间" />
+		<property name="tair.groupName.per" defaultValue="group_1"
+			description="user 持久化tair的namespace" />
+		<property name="tair.groupName.temp" defaultValue="group_1"
+			description="user 非持久化tair的namespace" />
+		<property name="tair.timeout" defaultValue="5000"
+			description="user tair超时" />
+		<property name="tair.configServer.main" defaultValue="192.168.1.209:5198"
+			description="user tair服务器的地址" />
+		<property name="tair.configServer.slave" defaultValue="192.168.1.209:5198"
+			description="user tair服务器的地址" />
+	</group>
+
+	<group name="session">
+		<!-- <property name="jedis.host" defaultValue="192.168.1.207" description="redis的ip"></property> 
+			<property name="jedis.port" defaultValue="6380" description="redis端口"></property> 
+			<property name="jedis.password" defaultValue="yimay2015" description="redis密码"></property> 
+			<property name="jedis.timeout" defaultValue="2000" description="jedis超时时间，单位s"></property> 
+			<property name="jedis.pool.maxIdle" defaultValue="8" description=""></property> 
+			<property name="jedis.pool.maxTotal" defaultValue="20" description="redis 
+			最大连接数"/> <property name="jedis.sentinel" defaultValue="192.168.1.207:26379" 
+			description="哨兵地址"></property> <property name="jedis.usePool" defaultValue="true" 
+			description="是否使用jedis连接池"></property> <property name="jedis.master" defaultValue="mymaster" 
+			description=""></property> -->
+		<property name="verify.code.expire" defaultValue="120"
+			description=""></property>
+		<property name="session.time.out" defaultValue="180"
+			description="会话有效期，单位秒"></property>
+
+	</group>
+	<script>
+		<generate template="config.properties" destfile="WEB-INF/config.properties"
+			charset="UTF-8" />
+		<generate template="config.properties" destfile="WEB-INF/classes/config.properties"
+			charset="UTF-8" />
+		<generate template="logback.xml" destfile="WEB-INF/classes/logback.xml"
+		charset="UTF-8" />
+		<generate template="logback.xml" destfile="WEB-INF/logback.xml"
+			charset="UTF-8" />
+		<!--<generate template="redis.properties" destfile="WEB-INF/redis.properties" 
+			charset="UTF-8"/> -->
+	</script>
 </config>
 

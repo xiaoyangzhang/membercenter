@@ -27,7 +27,6 @@ import com.yimayhd.membercenter.client.domain.AbilityDO;
 import com.yimayhd.membercenter.client.domain.MemberProfileDO;
 import com.yimayhd.membercenter.client.domain.TerminalDeviceDO;
 import com.yimayhd.membercenter.client.domain.UserAbilityRelationDO;
-import com.yimayhd.membercenter.client.enums.AbilityEnum;
 import com.yimayhd.membercenter.client.query.TravelkaPageQuery;
 import com.yimayhd.membercenter.client.result.BasePageResult;
 import com.yimayhd.membercenter.mapper.AbilityMapper;
@@ -124,11 +123,11 @@ public class MemberProfileManager {
         return terminalDeviceDO;
     }
 
-    public TravelKaClub getTravelKaClub(long userId) {
-        return  snsRepo.getTravelKaClub(userId);
+    public TravelKaClub getTravelKaClub(long userId,int domainId) {
+        return  snsRepo.getTravelKaClub(userId,domainId);
     }
 
-    public TravelKa getTravelKaDetail(long userId){
+    public TravelKa getTravelKaDetail(long userId,int domainId){
         if(userId<=0){
             return null;
         }
@@ -136,7 +135,7 @@ public class MemberProfileManager {
         try{
             MemberProfileDO memberProfileDO = getMemberProfileByUserId(userId);
             UserDO userDO = getUserDOById(userId);
-            TravelKaClub travelKaClub = getTravelKaClub(userId);
+            TravelKaClub travelKaClub = getTravelKaClub(userId,domainId);
             if(memberProfileDO != null){
                 List<UserAbilityRelationDO> userAbilityRelationDOs = getUserAbilityRelationByUserId(userId);
                 List<AbilityDO> abilities = abilityMapper.getAll();

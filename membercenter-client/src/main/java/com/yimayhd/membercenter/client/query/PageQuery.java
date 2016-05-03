@@ -17,6 +17,8 @@ public class PageQuery implements Serializable {
     protected boolean hasNextMod = false;
 
     protected boolean needCount = false;
+    
+    protected int startRow;
 
     public int getPageNo() {
         return pageNo;
@@ -67,6 +69,10 @@ public class PageQuery implements Serializable {
         return (pageNo - 1) * pageSize;
     }
 
+    public void setStartRow(int startRow) {
+        this.startRow = (pageNo - 1) * pageSize;
+    }
+    
     @Override
     public String toString() {
         return "PageQuery{" +

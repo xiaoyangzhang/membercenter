@@ -89,4 +89,35 @@
         <property name="retries" value="${dubbo.retries}"/>
     </bean>
     
+    
+     <bean id="comPictureTextService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+        <property name="interface" value="com.yimayhd.commentcenter.client.service.ComPictureTextService"/>
+        <property name="application" ref="dubboApplicationConfig"/>
+        <property name="registry" ref="dubboRegistryConfig"/>
+        <property name="timeout" value="${consumer.dubbo.timeout}"/>
+        <property name="check" value="${consumer.dubbo.check}"/>
+        <property name="version" value="${consumer.commentcenter.dubbo.version}"/>
+        <property name="retries" value="${dubbo.retries}"/>
+    </bean>
+    
+    <bean id="merchantCusumerService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+        <property name="interface" value="com.yimayhd.user.client.service.MerchantService"/>
+        <property name="application" ref="dubboApplicationConfig"/>
+        <property name="registry" ref="dubboRegistryConfig"/>
+        <property name="timeout" value="${consumer.dubbo.timeout}"/>
+        <property name="check" value="${consumer.dubbo.check}"/>
+        <property name="version" value="${consumer.user.dubbo.version}"/>
+        <property name="retries" value="${dubbo.retries}"/>
+    </bean>
+
+    <!--消息推送-->
+    <bean id="msgCenterService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
+        <property name="interface" value="com.yimayhd.msgcenter.client.service.MsgCenterService" />
+        <property name="application" ref="dubboApplicationConfig" />
+        <property name="registry" ref="dubboRegistryConfig" />
+        <property name="timeout" value="${consumer.dubbo.timeout}"/>
+        <property name="check" value="${consumer.dubbo.check}"/>
+        <property name="version" value="${consumer.user.dubbo.version}"/>
+        <property name="retries" value="${dubbo.retries}"/>
+    </bean>
 </beans>

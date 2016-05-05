@@ -103,7 +103,7 @@ public class UserOptionAddConsumer extends BaseConsumer {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> addUserOption(long userId, int type) {
+    private MemResult<Boolean> addUserOption(long userId, int type) {
         List<UserOptions> userOptionsList = new ArrayList<UserOptions>();
         // 达人
         if (ExamineType.TALENT.getType() == type) {

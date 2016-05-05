@@ -38,10 +38,10 @@
   </filter-mapping>
   -->
    
-  <filter>
+  <!-- <filter>
     <filter-name>sessionFilter</filter-name>
     <filter-class>com.yimayhd.user.session.manager.SessionFilter</filter-class>
-    <init-param>
+   <init-param>
       <param-name>excludePaths</param-name>
       <param-value>/test/longinV2,/test/view,/static,/main,/user/checkMsgCode,/user/sendMsgCode,/user/toAuthCodeView,/user/toDimensionCode</param-value>
     </init-param>
@@ -57,7 +57,7 @@
   <filter-mapping>
     <filter-name>sessionFilter</filter-name>
     <url-pattern>/*</url-pattern>
-  </filter-mapping>
+  </filter-mapping> -->
 
   <!-- 
   <filter>

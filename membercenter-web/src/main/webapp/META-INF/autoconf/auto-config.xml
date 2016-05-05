@@ -25,6 +25,8 @@
 			defaultValue="1.0.0.test" description="版本号" />
 		<property name="consumer.snscenter.dubbo.version"
 			defaultValue="1.0.0.test" description="版本号" />
+		<property name="consumer.commentcenter.dubbo.version"
+			defaultValue="1.0.0.test" description="版本号" />
 	</group>
 	<group name="">
 		<property name="app.name" defaultValue="membercenter"

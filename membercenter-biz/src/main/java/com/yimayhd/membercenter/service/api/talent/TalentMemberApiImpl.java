@@ -75,7 +75,8 @@ public class TalentMemberApiImpl implements TalentMemberApi {
                 talentInfo.serveCount = talentInfoDO.getServeCount();
                 talentInfo.serveDesc = talentInfoDO.getServeDesc();
                 talentInfo.telNum = talentInfoDO.getTelNum();
-                talentInfo.type = talentInfoDO.isType();
+                // talentInfo.type = talentInfoDO.isType();
+                talentInfo.type = false;
                 talentInfo.pictures = talentInfoDO.getPictures();
                 // 技能数据转换
                 talentInfo.certificates = TalentConverter.certificateConvert(talentInfoDO.getCertificates());
@@ -120,7 +121,8 @@ public class TalentMemberApiImpl implements TalentMemberApi {
                     talentUserInfo.gender = String.valueOf(talentInfoDO.getGender());
                     talentUserInfo.nickName = talentInfoDO.getNickName();
                     talentUserInfo.serveCount = talentInfoDO.getServeCount();
-                    talentUserInfo.type = talentInfoDO.isType();
+                    // talentUserInfo.type = talentInfoDO.isType();
+                    talentUserInfo.type = false;
                     talentUserInfo.serveDesc = talentInfoDO.getServeDesc();
                     list.add(talentUserInfo);
                 }

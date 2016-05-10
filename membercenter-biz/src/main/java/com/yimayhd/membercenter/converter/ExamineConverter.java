@@ -323,9 +323,9 @@ public class ExamineConverter {
         merchantDO.setMerchantPrincipal(ParmCheckUtil.checkString(examineDO.getPrincipalName()));
         //信息明细
         Map<String, String> featureMap = PicFeatureUtil.fromString(examineDO.getFeature());
-        merchantDO.setAddress(featureMap.get(ExamineDetail.ADDRESS.getId()));
+        merchantDO.setAddress(ParmCheckUtil.checkString(featureMap.get(ExamineDetail.ADDRESS.getId())));
         //店铺名称
-        merchantDO.setName(featureMap.get(ExamineDetail.MERCHANT_NAME.getId()));
+        merchantDO.setName(ParmCheckUtil.checkString(featureMap.get(ExamineDetail.MERCHANT_NAME.getId())));
         //达人
         if(ExamineType.TALENT.getType() == examineDO.getType()){
             merchantDO.setOption(MerchantOption.TALENT.getOption());

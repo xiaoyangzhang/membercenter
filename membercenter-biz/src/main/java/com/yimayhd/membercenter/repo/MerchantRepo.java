@@ -184,23 +184,23 @@ public class MerchantRepo {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> getMerchantList(String sellerName, int domainId) {
+    public MemResult<Boolean> getMerchantList(String merchantName, int domainId) {
         MemResult<Boolean> baseResult = new MemResult<Boolean>();
         try {
             MerchantQuery merchantQuery = new MerchantQuery();
             merchantQuery.setDomainId(domainId);
-            merchantQuery.setName(sellerName);
+            merchantQuery.setName(merchantName);
             BaseResult<List<MerchantDO>> merchantResult = merchantService.getMerchantList(merchantQuery);
             // 返回列表为空 不存在sellerName
             if (merchantResult.isSuccess() && ParmCheckUtil.checkListNull(merchantResult.getValue())) {
                 return baseResult;
             }
-            baseResult.setReturnCode(MemberReturnCode.DB_SELLERNAME_FAILED);
+            baseResult.setReturnCode(MemberReturnCode.DB_MERCHANTNAME_FAILED);
             logger.debug("getMerchantList par:{} return error:{}", JSONObject.toJSONString(merchantQuery),
                     JSONObject.toJSONString(merchantResult));
         } catch (Exception e) {
             baseResult.setReturnCode(MemberReturnCode.DUBBO_ERROR);
-            logger.error("getMerchantList par:{} return error:{}", sellerName, e);
+            logger.error("getMerchantList par:{} return error:{}", merchantName, e);
         }
         return baseResult;
     }

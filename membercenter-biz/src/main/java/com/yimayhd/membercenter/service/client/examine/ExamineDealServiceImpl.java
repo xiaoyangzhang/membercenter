@@ -79,7 +79,7 @@ public class ExamineDealServiceImpl implements ExamineDealService {
             }
             // 数据转换
             ExamineDO examinDO = ExamineConverter.examinDTOToDO(examineInfoDTO);
-            result = talentExamineManager.submitMerchantExamineInfo(examinDO);
+            result = talentExamineManager.submitMerchantExamineInfo(examinDO, examineInfoDTO.getMerchantName());
             logger.info("submitMerchantExaminInfo par:{} submit return:{}, cost:{}ms",
                     JSONObject.toJSONString(examineInfoDTO), JSONObject.toJSONString(result),
                     (System.currentTimeMillis() - start));

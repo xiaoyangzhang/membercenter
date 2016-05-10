@@ -77,13 +77,13 @@ public class TalentExamineManager {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> submitMerchantExamineInfo(ExamineDO examineDO) {
+    public MemResult<Boolean> submitMerchantExamineInfo(ExamineDO examineDO, String merchantName) {
         MemResult<Boolean> result = new MemResult<Boolean>();
         try {
-            result = checkSellerNameIsExist(examineDO.getSellerName(), examineDO.getDomainId());
+            result = checkMerchantNameIsExist(merchantName, examineDO.getDomainId());
             // 判断sellerName是否已经存在
             if (!result.isSuccess()) {
-                result.setReturnCode(MemberReturnCode.DB_SELLERNAME_FAILED);
+                result.setReturnCode(MemberReturnCode.DB_MERCHANTNAME_FAILED);
                 logger.info("submitMerchantExaminInfo par:{} sellerName exists", JSONObject.toJSONString(examineDO));
                 return result;
             }
@@ -160,10 +160,10 @@ public class TalentExamineManager {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> checkSellerNameIsExist(String sellerName, int domainId) {
+    public MemResult<Boolean> checkMerchantNameIsExist(String merchantName, int domainId) {
         MemResult<Boolean> merchantListResult = new MemResult<Boolean>();
-        if (StringUtils.isNotBlank(sellerName)) {
-            merchantListResult = merchantRepo.getMerchantList(sellerName, domainId);
+        if (StringUtils.isNotBlank(merchantName)) {
+            merchantListResult = merchantRepo.getMerchantList(merchantName, domainId);
         }
         return merchantListResult;
     }

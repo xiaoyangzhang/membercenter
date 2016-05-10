@@ -38,8 +38,8 @@ public class MemberReturnCode extends AbstractReturnCode {
     public static final int DB_EXAMINE_FAILED_C = 16000007;
     public static final MemberReturnCode DB_EXAMINE_FAILED = new MemberReturnCode(DB_EXAMINE_FAILED_C, "已通过审核");
     
-    public static final int DB_SELLERNAME_FAILED_C = 16000008;
-    public static final MemberReturnCode DB_SELLERNAME_FAILED = new MemberReturnCode(DB_SELLERNAME_FAILED_C, "商户名称已存在");
+    public static final int DB_MERCHANTNAME_FAILED_C = 16000008;
+    public static final MemberReturnCode DB_MERCHANTNAME_FAILED = new MemberReturnCode(DB_MERCHANTNAME_FAILED_C, "店铺名称已存在");
     
     public static final int DB_TALENT_FAILED_C = 16000009;
     public static final MemberReturnCode DB_TALENT_FAILED = new MemberReturnCode(DB_TALENT_FAILED_C, "用户非达人");

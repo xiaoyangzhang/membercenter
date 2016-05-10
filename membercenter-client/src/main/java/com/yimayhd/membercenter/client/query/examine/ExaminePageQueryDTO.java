@@ -27,7 +27,7 @@ public class ExaminePageQueryDTO extends PageQuery {
 
     //
     private int domainId;
-    // 店铺名称
+    // 商户名称
     private String merchantName;
     // 店铺ID
     private long sellerId;

@@ -18,8 +18,8 @@
         <property name="protocol" value="zookeeper" />
     </bean>
     <bean id="dubboProtocolConfig" class="com.alibaba.dubbo.config.ProtocolConfig">
-        <property name="port" value="-1"/>
-    </bean>
+        <property name="port" value="-1"/>  
+    </bean>  
     <!--<bean id="silverService" class="com.alibaba.dubbo.config.spring.ReferenceBean">-->
         <!--<property name="interface" value="com.smart.silver.service.SilverService"/>-->
         <!--<property name="application" ref="dubboApplicationConfig"/>-->
@@ -36,8 +36,8 @@
      <dubbo:reference
             id="userPermissionService"
             interface="com.yimayhd.membercenter.client.service.UserPermissionService"
-            url="dubbo://127.0.0.1:20880"
-            version="2.0.0.test" />
+            url="dubbo://127.0.0.1:20880"   
+            version="2.0.0.test" />  
     <!-- 
     <bean id="userService" class="com.alibaba.dubbo.config.spring.ReferenceBean">
         <property name="interface" value="com.pajk.user.api.UserService"/>

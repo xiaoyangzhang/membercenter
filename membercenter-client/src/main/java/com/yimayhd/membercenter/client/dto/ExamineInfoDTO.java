@@ -134,6 +134,8 @@ public class ExamineInfoDTO implements Serializable {
     private String artCertificate;
     //申请时间
     private Date createDate;
+    //手持身份证
+    private String cardInHand;
 
     public long getId() {
         return id;
@@ -534,4 +536,13 @@ public class ExamineInfoDTO implements Serializable {
     public void setSellerName(String sellerName) {
         this.sellerName = sellerName;
     }
+
+    public String getCardInHand() {
+        return cardInHand;
+    }
+
+    public void setCardInHand(String cardInHand) {
+        this.cardInHand = cardInHand;
+    }
+    
 }

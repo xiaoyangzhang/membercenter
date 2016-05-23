@@ -1,5 +1,7 @@
 package com.yimayhd.membercenter.mapper;
 
+import java.util.List;
+
 import com.yimayhd.membercenter.client.domain.merchant.QualificationDO;
 
 public interface QualificationDOMapper {
@@ -14,4 +16,5 @@ public interface QualificationDOMapper {
     int updateByPrimaryKeySelective(QualificationDO record);
 
     int updateByPrimaryKey(QualificationDO record);
+    List<QualificationDO> selectAllQualifications();
 }

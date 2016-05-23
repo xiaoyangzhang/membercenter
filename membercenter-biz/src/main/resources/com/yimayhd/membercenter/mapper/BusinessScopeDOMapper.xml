@@ -9,9 +9,10 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="domain_id" property="domainId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, parent_id, description, status, gmt_created, gmt_modified
+    id, name, parent_id, description, status, gmt_created, gmt_modified,domain_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="long" >
     select 
@@ -25,10 +26,10 @@
   </delete>
   <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO" useGeneratedKeys="true" keyProperty="id" >
     insert into business_scope (name, parent_id, description, 
-      status, gmt_created, gmt_modified
+      status, gmt_created, gmt_modified,domain_id
       )
     values (#{name,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, #{description,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      #{status,jdbcType=INTEGER}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},#{domainId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO" useGeneratedKeys="true" keyProperty="id" >
@@ -50,6 +51,9 @@
       <if test="gmtModified != null" >
         gmt_modified,
       </if>
+      <if test="domainId != null" >
+        domain_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="name != null" >
@@ -67,6 +71,9 @@
       </if>
       <if test="gmtModified != null" >
         #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="domainId != null" >
+        #{domainId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -91,6 +98,9 @@
       <if test="gmtModified != null" >
         gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
+      <if test="domainId != null" >
+        domain_id = #{domainId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -101,7 +111,8 @@
       description = #{description,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      domain_id = #{domainId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

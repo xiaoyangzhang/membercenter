@@ -19,11 +19,19 @@ public class QualificationDO implements Serializable {
     private Date gmtModified;
 
     private static final long serialVersionUID = 1L;
+    private int domainId;
+    
+    public int getDomainId() {
+		return domainId;
+	}
 
+	public void setDomainId(int domainId) {
+		this.domainId = domainId;
+	}
     public long getId() {
         return id;
     }
-
+    
     public void setId(long id) {
         this.id = id;
     }

@@ -8,9 +8,10 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="domain_id" property="domainId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, item_category_id, seller_id, status, gmt_created, gmt_modified
+    id, item_category_id, seller_id, status, gmt_created, gmt_modified,domain_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="long" >
     select 
@@ -26,7 +27,7 @@
     insert into merchant_item_category (item_category_id, seller_id, status, 
       gmt_created, gmt_modified)
     values (#{itemCategoryId,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
-      #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+      #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},#{domainId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantItemCategoryDO" useGeneratedKeys="true" keyProperty="id" >
     insert into merchant_item_category
@@ -40,6 +41,9 @@
       <if test="gmtModified != null" >
         gmt_modified,
       </if>
+      <if test="domainId != null" >
+        domain_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       #{itemCategoryId,jdbcType=BIGINT},
@@ -50,6 +54,9 @@
       </if>
       <if test="gmtModified != null" >
         #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="domainId != null" >
+        #{domainId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -71,6 +78,9 @@
       <if test="gmtModified != null" >
         gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
+      <if test="domainId != null" >
+        domain_id = #{domainId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -80,7 +90,8 @@
       seller_id = #{sellerId,jdbcType=BIGINT},
       status = #{status,jdbcType=INTEGER},
       gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      domain_id = #{domainId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -62,6 +62,8 @@
 
 	<bean id="memberPrivilegeDao" class="com.yimayhd.membercenter.dao.MemberPrivilegeDao"></bean>
 	<bean id="memberDao" class="com.yimayhd.membercenter.dao.MemberDao"></bean>
+	<!-- 申请入驻 -->
+	<bean id="applyDao" class="com.yimayhd.membercenter.dao.ApplyDao"></bean>
 	<bean id="memberRecordDao" class="com.yimayhd.membercenter.dao.MemberRecordDao"></bean>
 
 	<bean id="baseMerchartDao" class="com.yimayhd.membercenter.dao.BaseMerchartDao"/>

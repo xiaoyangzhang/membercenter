@@ -15,7 +15,15 @@ public class MerchantItemCategoryDO implements Serializable {
     private Date gmtCreated;
 
     private Date gmtModified;
+    private int domainId;
+    
+    public int getDomainId() {
+		return domainId;
+	}
 
+	public void setDomainId(int domainId) {
+		this.domainId = domainId;
+	}
     private static final long serialVersionUID = 1L;
 
     public long getId() {

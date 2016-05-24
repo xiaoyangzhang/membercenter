@@ -15,8 +15,8 @@ public class BusinessScopeDao {
 	@Autowired
 	private BusinessScopeDOMapper businessScopeDOMapper;
 	
-	public List<BusinessScopeDO> getBusinessScopesByScope(long[] scopeIds) {
-		return businessScopeDOMapper.getBusinessScopesByScope(scopeIds);
+	public List<BusinessScopeDO> getBusinessScopesByScope(int domainId, long[] scopeIds) {
+		return businessScopeDOMapper.getBusinessScopesByScope(domainId, scopeIds);
 	}
 
 }

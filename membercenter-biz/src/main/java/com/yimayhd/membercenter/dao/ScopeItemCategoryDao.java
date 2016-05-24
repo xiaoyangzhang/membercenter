@@ -10,10 +10,10 @@ import java.util.List;
  * Created by Administrator on 2016/5/23.
  */
 public class ScopeItemCategoryDao {
-    @Autowired
-    private ScopeItemCategoryDOMapper scopeItemCategoryDOMapper;
+	@Autowired
+	private ScopeItemCategoryDOMapper scopeItemCategoryDOMapper;
 
-    public List<ScopeItemCategoryDO> getScopeItemCategoriesByMerchantScope(long[] scopeIds) {
-        return scopeItemCategoryDOMapper.selectByMerchantScope(scopeIds);
-    }
+	public List<ScopeItemCategoryDO> getScopeItemCategoriesByMerchantScope(int domainId, long[] scopeIds) {
+		return scopeItemCategoryDOMapper.selectByMerchantScope(domainId, scopeIds);
+	}
 }

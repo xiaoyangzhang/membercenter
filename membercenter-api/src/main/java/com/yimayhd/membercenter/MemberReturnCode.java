@@ -115,4 +115,8 @@ public class MemberReturnCode extends AbstractReturnCode {
     public static final MemberReturnCode PAGE_QUERY_ALL_MENU_FAILED = new MemberReturnCode(PAGE_QUERY_ALL_MENU_FAILED_C,
             "获取全部菜单权限失败");
 
+    /************************************** scopeItemCategory ********************************************/
+    public static final int SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR_C = 16008001;
+    public static final MemberReturnCode SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR = new MemberReturnCode(SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR_C,
+            "商家经营类目不存在");
 }

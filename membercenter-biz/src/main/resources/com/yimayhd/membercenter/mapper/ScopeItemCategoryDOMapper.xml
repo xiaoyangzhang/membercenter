@@ -26,7 +26,7 @@
     <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.merchant.ScopeItemCategoryDO"
             useGeneratedKeys="true" keyProperty="id">
     insert into scope_item_category (business_scope_id, item_category_id, status, 
-      gmt_created, gmt_modified)
+      gmt_created, gmt_modified,domain_id)
     values (#{businessScopeId,jdbcType=BIGINT}, #{itemCategoryId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
       #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},#{domainId,jdbcType=INTEGER})
   </insert>

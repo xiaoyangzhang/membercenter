@@ -26,7 +26,7 @@
   </delete>
   <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.merchant.QualificationDO" useGeneratedKeys="true" keyProperty="id" >
     insert into qualification (title, type, tip, 
-      status, gmt_created, gmt_modified
+      status, gmt_created, gmt_modified,domain_id
       )
     values (#{title,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{tip,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},#{domainId,jdbcType=INTEGER}
@@ -115,4 +115,9 @@
       domain_id = #{domainId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectAllQualifications" resultMap="BaseResultMap"  >
+  	select id,title,type,tip from qualification
+  	where domain_id=#{domainId}
+  	
+  </select>
 </mapper>

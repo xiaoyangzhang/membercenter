@@ -115,4 +115,8 @@
       domain_id = #{domainId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getAllBusinessScope" resultMap="BaseResultMap">
+  	select name,id,parent_id from business_scope
+  	where domain_id=#{domainId}
+  </select>
 </mapper>

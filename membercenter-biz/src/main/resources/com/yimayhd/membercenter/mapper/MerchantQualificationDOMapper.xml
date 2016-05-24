@@ -27,7 +27,7 @@
   <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO" useGeneratedKeys="true" keyProperty="id" >
     insert into merchant_qualification (merchant_category_id, qulification_id, 
       seller_id, value, gmt_created, 
-      gmt_modified)
+      gmt_modified,domain_id)
     values (#{merchantCategoryId,jdbcType=BIGINT}, #{qulificationId,jdbcType=BIGINT}, 
       #{sellerId,jdbcType=BIGINT}, #{value,jdbcType=VARCHAR}, #{gmtCreated,jdbcType=TIMESTAMP}, 
       #{gmtModified,jdbcType=TIMESTAMP},#{domainId,jdbcType=INTEGER})

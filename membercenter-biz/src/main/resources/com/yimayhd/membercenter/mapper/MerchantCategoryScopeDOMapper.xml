@@ -25,7 +25,7 @@
   </delete>
   <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryScopeDO" useGeneratedKeys="true" keyProperty="id" >
     insert into merchant_category_scope (merchant_category_id, business_scope_id, 
-      status, gmt_created, gmt_modified
+      status, gmt_created, gmt_modified,domain_id
       )
     values (#{merchantCategoryId,jdbcType=BIGINT}, #{businessScopeId,jdbcType=BIGINT}, 
       #{status,jdbcType=INTEGER}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},#{domainId,jdbcType=INTEGER}

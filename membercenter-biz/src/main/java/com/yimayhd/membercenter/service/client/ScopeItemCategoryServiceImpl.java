@@ -17,25 +17,26 @@ import com.yimayhd.membercenter.manager.ScopeItemCategoryManager;
  */
 public class ScopeItemCategoryServiceImpl implements ScopeItemCategoryService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ScopeItemCategoryServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ScopeItemCategoryServiceImpl.class);
 
-    @Autowired
-    private ScopeItemCategoryManager scopeItemCategoryManager;
+	@Autowired
+	private ScopeItemCategoryManager scopeItemCategoryManager;
 
-    @Override
-    public MemResult<List<ScopeItemCategoryDO>> getScopeItemCategoriesByMerchantScope(long[] scopeIds) {
-        if (null == scopeIds || scopeIds.length <= 0) {
-            LOGGER.info("businessScopeDOs not found by scopeIds={}", scopeIds);
-            return MemResult.buildFailResult(0, "参数为空", null);
-        }
-        MemResult<List<ScopeItemCategoryDO>> result = new MemResult<List<ScopeItemCategoryDO>>();
-        List<ScopeItemCategoryDO> scopeItemCategoryDOs = scopeItemCategoryManager.getScopeItemCategoryByMerchantScope(scopeIds);
-        if (scopeItemCategoryDOs.isEmpty()) {
-            LOGGER.info("scopeItemCategory not found by merchantVO={}", scopeItemCategoryDOs);
-            return MemResult.buildFailResult(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR.getCode(),
-                    MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR.getDesc(), null);
-        }
-        result.setValue(scopeItemCategoryDOs);
-        return result;
-    }
+	@Override
+	public MemResult<List<ScopeItemCategoryDO>> getScopeItemCategoriesByMerchantScope(int domainId, long[] scopeIds) {
+		if (null == scopeIds || scopeIds.length <= 0) {
+			LOGGER.info("businessScopeDOs not found by scopeIds={}", scopeIds);
+			return MemResult.buildFailResult(0, "参数为空", null);
+		}
+		MemResult<List<ScopeItemCategoryDO>> result = new MemResult<List<ScopeItemCategoryDO>>();
+		List<ScopeItemCategoryDO> scopeItemCategoryDOs = scopeItemCategoryManager
+				.getScopeItemCategoryByMerchantScope(domainId, scopeIds);
+		if (scopeItemCategoryDOs.isEmpty()) {
+			LOGGER.info("scopeItemCategory not found by merchantVO={}", scopeItemCategoryDOs);
+			return MemResult.buildFailResult(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR.getCode(),
+					MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR.getDesc(), null);
+		}
+		result.setValue(scopeItemCategoryDOs);
+		return result;
+	}
 }

@@ -25,5 +25,5 @@ public interface BusinessScopeDOMapper {
      */
     public List<BusinessScopeDO> getAllBusinessScope(@Param("domainId") int domainId);
     
-    public List<BusinessScopeDO> getBusinessScopesByScope(long[] scopeIds);
+    public List<BusinessScopeDO> getBusinessScopesByScope(@Param("domainId") int domainId,@Param("scopeIds") long[] scopeIds);
 }

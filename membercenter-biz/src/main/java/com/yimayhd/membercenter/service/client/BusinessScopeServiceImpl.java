@@ -22,12 +22,12 @@ public class BusinessScopeServiceImpl implements BusinessScopeService {
 	private BusinessScopeManager businessScopeManager;
 
 	@Override
-	public MemResult<List<BusinessScopeDO>> getBusinessScopesByScope(long[] scopeIds) {
+	public MemResult<List<BusinessScopeDO>> getBusinessScopesByScope(int domainId, long[] scopeIds) {
         if (null == scopeIds || scopeIds.length <= 0) {
             LOGGER.info("businessScopeDOs not found by scopeIds={}", scopeIds);
             return MemResult.buildFailResult(0, "参数为空", null);
         }
-		List<BusinessScopeDO> businessScopeDOs = businessScopeManager.getBusinessScopesByScope(scopeIds);
+		List<BusinessScopeDO> businessScopeDOs = businessScopeManager.getBusinessScopesByScope(domainId, scopeIds);
 		MemResult<List<BusinessScopeDO>> result = new MemResult<>();
 		result.setValue(businessScopeDOs);
 		return result;

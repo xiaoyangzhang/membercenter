@@ -15,7 +15,7 @@ public class BusinessScopeManager {
 	@Autowired
 	private BusinessScopeDao businessScopeDao;
 
-	public List<BusinessScopeDO> getBusinessScopesByScope(long[] scopeIds) {
-		return businessScopeDao.getBusinessScopesByScope(scopeIds);
+	public List<BusinessScopeDO> getBusinessScopesByScope(int domainId, long[] scopeIds) {
+		return businessScopeDao.getBusinessScopesByScope(domainId, scopeIds);
 	}
 }

@@ -142,9 +142,9 @@
 
 	<select id="getBusinessScopesByScope" resultMap="BaseResultMap">
 		select name,id,parent_id from business_scope
-		where id
-		in
-		<foreach collection="array" index="index" item="item" open="("
+		where domain_id=#{domainId}
+		and id in
+		<foreach collection="scopeIds" index="index" item="item" open="("
 			separator="," close=")">
 			= #{item,jdbcType=BIGINT}
 		</foreach>

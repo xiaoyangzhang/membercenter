@@ -29,7 +29,7 @@
   <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO" useGeneratedKeys="true" keyProperty="id" >
     insert into category_qualification (merchant_category_id, qulification_id, 
       required, serial_no, status, 
-      gmt_created, gmt_modified)
+      gmt_created, gmt_modified,domain_id)
     values (#{merchantCategoryId,jdbcType=BIGINT}, #{qulificationId,jdbcType=BIGINT}, 
       #{required,jdbcType=BIT}, #{serialNo,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},#{domainId,jdbcType=INTEGER})
@@ -111,4 +111,11 @@
       domain_id = #{domainId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <!-- <select id="getQualificationIdsByMerchantCategoryId" resultType="long">
+  	select qulification_id  from category_qualification where 
+  	domain_id=#{domainId}
+  	<if test="categoryId != null">
+  		and merchant_category_id = #{categoryId}
+  	</if>
+  </select> -->
 </mapper>

@@ -29,7 +29,7 @@
   <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryDO" useGeneratedKeys="true" keyProperty="id" >
     insert into merchant_category (name, pic, description, 
       type, parent_id, status, 
-      gmt_created, gmt_modified)
+      gmt_created, gmt_modified,domain_id)
     values (#{name,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{type,jdbcType=INTEGER}, #{parentId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
       #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},#{domainId,jdbcType=INTEGER})
@@ -129,4 +129,9 @@
       domain_id = #{domainId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getAllMerchantCategory" resultMap="BaseResultMap" >
+  	select id,name,parent_id from merchant_category
+  	where domain_id=#{domainId}
+  	
+  </select>
 </mapper>

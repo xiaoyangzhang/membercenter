@@ -146,7 +146,7 @@
 		and id in
 		<foreach collection="scopeIds" index="index" item="item" open="("
 			separator="," close=")">
-			= #{item,jdbcType=BIGINT}
+			#{item,jdbcType=BIGINT}
 		</foreach>
 	</select>
 </mapper>

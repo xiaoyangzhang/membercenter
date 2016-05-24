@@ -2,6 +2,8 @@ package com.yimayhd.membercenter.mapper;
 
 import com.yimayhd.membercenter.client.domain.merchant.ScopeItemCategoryDO;
 
+import java.util.List;
+
 public interface ScopeItemCategoryDOMapper {
     int deleteByPrimaryKey(long id);
 
@@ -14,4 +16,6 @@ public interface ScopeItemCategoryDOMapper {
     int updateByPrimaryKeySelective(ScopeItemCategoryDO record);
 
     int updateByPrimaryKey(ScopeItemCategoryDO record);
+
+    List<ScopeItemCategoryDO> selectByMerchantScope(long[] scopeIds);
 }

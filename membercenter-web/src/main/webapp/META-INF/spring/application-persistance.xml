@@ -66,6 +66,7 @@
 	<bean id="applyDao" class="com.yimayhd.membercenter.dao.ApplyDao"></bean>
 	<bean id="memberRecordDao" class="com.yimayhd.membercenter.dao.MemberRecordDao"></bean>
 	<bean id="scopeItemCategoryDao" class="com.yimayhd.membercenter.dao.ScopeItemCategoryDao"></bean>
+	<bean id="businessScopeDao" class="com.yimayhd.membercenter.dao.BusinessScopeDao"></bean>
 
 	<bean id="baseMerchartDao" class="com.yimayhd.membercenter.dao.BaseMerchartDao"/>
 	<bean id="roleDao" class="com.yimayhd.membercenter.dao.RoleDao"/>

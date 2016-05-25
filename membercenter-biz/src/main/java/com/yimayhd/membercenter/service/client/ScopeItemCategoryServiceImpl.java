@@ -23,7 +23,7 @@ public class ScopeItemCategoryServiceImpl implements ScopeItemCategoryService {
 	private ScopeItemCategoryManager scopeItemCategoryManager;
 
 	@Override
-	public MemResult<List<ScopeItemCategoryDO>> getScopeItemCategoriesByMerchantScope(int domainId, long[] scopeIds) {
+	public MemResult<List<ScopeItemCategoryDO>> findScopeItemCategoriesByMerchantScope(int domainId, long[] scopeIds) {
 		if (null == scopeIds || scopeIds.length <= 0) {
 			LOGGER.info("businessScopeDOs not found by scopeIds={}", scopeIds);
 			return MemResult.buildFailResult(0, "参数为空", null);

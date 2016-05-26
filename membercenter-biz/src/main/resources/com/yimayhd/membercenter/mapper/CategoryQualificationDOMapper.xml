@@ -111,11 +111,11 @@
       domain_id = #{domainId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <!-- <select id="getQualificationIdsByMerchantCategoryId" resultType="long">
+   <select id="getQualificationIdsByMerchantCategoryId" resultMap="BaseResultMap">
   	select qulification_id  from category_qualification where 
   	domain_id=#{domainId}
   	<if test="categoryId != null">
   		and merchant_category_id = #{categoryId}
   	</if>
-  </select> -->
+  </select>
 </mapper>

@@ -50,8 +50,26 @@ public class ExamineDO implements Serializable {
     private String examineMes;
     //审批者ID
     private long reviewerId;
+    private long merchantCategoryId;//商家类目
+    private byte isDirectSale;//是否直营
+    
+    public byte getIsDirectSale() {
+		return isDirectSale;
+	}
 
-    public long getId() {
+	public void setIsDirectSale(byte isDirectSale) {
+		this.isDirectSale = isDirectSale;
+	}
+
+	public long getMerchantCategoryId() {
+		return merchantCategoryId;
+	}
+
+	public void setMerchantCategoryId(long merchantCategoryId) {
+		this.merchantCategoryId = merchantCategoryId;
+	}
+
+	public long getId() {
         return id;
     }
 

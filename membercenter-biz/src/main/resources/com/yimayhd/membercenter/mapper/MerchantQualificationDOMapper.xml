@@ -108,6 +108,14 @@
       value = #{value,jdbcType=VARCHAR},
       gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      domain_id=#{domainId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getMerchantQualificationBySellerId" resultMap="BaseResultMap">
+  	select qulification_id from merchant_qualification
+  	where domain_id=#{domainId}
+  	<if test="sellerId != null">
+  		and seller_id=#{sellerId}
+  	</if>
+  </select>
 </mapper>

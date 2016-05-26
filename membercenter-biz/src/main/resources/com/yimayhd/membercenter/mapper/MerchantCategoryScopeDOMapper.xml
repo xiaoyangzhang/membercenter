@@ -96,4 +96,11 @@
       domain_id = #{domainId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="getMerchantCategoryScopeByMerchantCategoryId" resultMap="BaseResultMap">
+  	select id,business_scope_id from merchant_category_scope
+  	where domain_id=#{domainId}
+  	<if test="merchantCategoryId != null">
+  		and merchant_category_id = #{merchantCategoryId,jdbcType=BIGINT}
+  	</if>
+  </select>
 </mapper>

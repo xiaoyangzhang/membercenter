@@ -20,6 +20,7 @@
 	<bean id="talentExamineManager" class="com.yimayhd.membercenter.manager.talent.TalentExamineManager"/>
 	<bean id="scopeItemCategoryManager" class="com.yimayhd.membercenter.manager.ScopeItemCategoryManager"/>
 	<bean id="businessScopeManager" class="com.yimayhd.membercenter.manager.BusinessScopeManager"/>
+	<bean id="merchantItemCategoryManager" class="com.yimayhd.membercenter.manager.MerchantItemCategoryManager"/>
 
 	
 	

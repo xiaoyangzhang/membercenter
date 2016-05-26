@@ -27,5 +27,6 @@
 	<bean id="examineDealService" class="com.yimayhd.membercenter.service.client.examine.ExamineDealServiceImpl"></bean>
 	<bean id="scopeItemCategoryService" class="com.yimayhd.membercenter.service.client.ScopeItemCategoryServiceImpl"></bean>
 	<bean id="businessScopeService" class="com.yimayhd.membercenter.service.client.BusinessScopeServiceImpl"></bean>
+	<bean id="merchantItemCategoryService" class="com.yimayhd.membercenter.service.client.MerchantItemCategoryServiceImpl"></bean>
 
 </beans>

@@ -18,10 +18,12 @@
     <result column="reviewer_id" property="reviewerId" jdbcType="BIGINT" />
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+     <result column="merchant_category_id" property="merchantCategoryId" jdbcType="BIGINT" />
+    <result column="is_direct_sale" property="isDirectSale" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, seller_id, seller_name, domain_id, principal_name, sale_scope, tel_num, pictures_url, 
-    certificate, feature, examine_mes, type, statues, reviewer_id, gmt_created, gmt_modified
+    certificate, feature, examine_mes, type, statues, reviewer_id, gmt_created, gmt_modified,merchant_category_id,is_direct_sale
   </sql>
   <select id="selectBySellerId" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.client.domain.examine.ExamineDO" >
     select 
@@ -36,14 +38,14 @@
       domain_id, principal_name, sale_scope, 
       tel_num, pictures_url, certificate, 
       feature, examine_mes, type, 
-      statues, reviewer_id, gmt_created, gmt_modified
+      statues, reviewer_id, gmt_created, gmt_modified,is_direct_sale,merchant_category_id
       )
     values (#{id,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT}, #{sellerName,jdbcType=VARCHAR}, 
       #{domainId,jdbcType=INTEGER}, #{principalName,jdbcType=VARCHAR}, #{saleScope,jdbcType=VARCHAR}, 
       #{telNum,jdbcType=VARCHAR}, #{picturesUrl,jdbcType=VARCHAR}, #{certificate,jdbcType=VARCHAR}, 
       #{feature,jdbcType=VARCHAR}, #{examineMes,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
       #{statues,jdbcType=INTEGER}, #{reviewerId,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, 
-      #{gmtModified,jdbcType=TIMESTAMP}
+      #{gmtModified,jdbcType=TIMESTAMP},#{isDirectSale,jdbcType=TINYINT},#{merchantCategoryId,jdbcType=BIGINT}
       )
   </insert>
 </mapper>

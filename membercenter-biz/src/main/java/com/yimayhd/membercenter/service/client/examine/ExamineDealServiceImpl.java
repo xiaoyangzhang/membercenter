@@ -62,7 +62,7 @@ public class ExamineDealServiceImpl implements ExamineDealService {
         MemResult<Boolean> result = new MemResult<Boolean>();
         long start = System.currentTimeMillis();
         try {
-            if (ParmCheckUtil.checkExamineDTO(examineInfoDTO)) {
+           /* if (ParmCheckUtil.checkExamineDTO(examineInfoDTO)) {
                 result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
                 logger.info("submitMerchantExaminInfo par:{} is error", JSONObject.toJSONString(examineInfoDTO));
                 return result;
@@ -78,8 +78,8 @@ public class ExamineDealServiceImpl implements ExamineDealService {
                 }
             }
             // 数据转换
-            ExamineDO examinDO = ExamineConverter.examinDTOToDO(examineInfoDTO);
-            result = talentExamineManager.submitMerchantExamineInfo(examinDO, examineInfoDTO.getMerchantName());
+            ExamineDO examinDO = ExamineConverter.examinDTOToDO(examineInfoDTO);*/
+            result = talentExamineManager.submitMerchantExamineInfo(examineInfoDTO);
             logger.info("submitMerchantExaminInfo par:{} submit return:{}, cost:{}ms",
                     JSONObject.toJSONString(examineInfoDTO), JSONObject.toJSONString(result),
                     (System.currentTimeMillis() - start));

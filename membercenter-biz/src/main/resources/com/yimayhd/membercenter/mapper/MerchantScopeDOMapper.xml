@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yimayhd.membercenter.mapper.MerchantScopeDOMapper" >
+  <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.MerchantScopeDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="business_scope_id" property="businessScopeId" jdbcType="BIGINT" />
+    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="domain_id" property="domainId" jdbcType="BIGINT" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    id, seller_id, business_scope_id, gmt_created, gmt_modified, status, domain_id
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="long" >
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_scope
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="long" >
+    delete from merchant_scope
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.MerchantScopeDO" useGeneratedKeys="true" keyProperty="id" >
+    insert into merchant_scope (seller_id, business_scope_id, gmt_created, 
+      gmt_modified, status, domain_id
+      )
+    values (#{sellerId,jdbcType=BIGINT}, #{businessScopeId,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{domainId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yimayhd.membercenter.client.domain.MerchantScopeDO" useGeneratedKeys="true" keyProperty="id" >
+    insert into merchant_scope
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      seller_id,
+      business_scope_id,
+      <if test="gmtCreated != null" >
+        gmt_created,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      status,
+      domain_id,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{sellerId,jdbcType=BIGINT},
+      #{businessScopeId,jdbcType=BIGINT},
+      <if test="gmtCreated != null" >
+        #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      #{status,jdbcType=INTEGER},
+      #{domainId,jdbcType=BIGINT},
+    </trim>
+  </insert>
+  
+ 
+  <update id="updateByPrimaryKeySelective" parameterType="com.yimayhd.membercenter.client.domain.MerchantScopeDO" >
+    update merchant_scope
+    <set >
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="businessScopeId != null" >
+        business_scope_id = #{businessScopeId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreated != null" >
+        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="domainId != null" >
+        domain_id = #{domainId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yimayhd.membercenter.client.domain.MerchantScopeDO" >
+    update merchant_scope
+    set seller_id = #{sellerId,jdbcType=BIGINT},
+      business_scope_id = #{businessScopeId,jdbcType=BIGINT},
+      gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      domain_id = #{domainId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getBusinessScopeBySellerId" resultMap="BaseResultMap">
+  	select id,business_scope_id from merchant_scope
+  	where domain_id=#{domainId}
+  	<if test="sellerId != null">
+  		and seller_id=#{sellerId}
+  	</if>
+  </select>
+</mapper>

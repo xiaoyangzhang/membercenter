@@ -22,6 +22,8 @@
 	<bean id="businessScopeManager" class="com.yimayhd.membercenter.manager.BusinessScopeManager"/>
 	<bean id="merchantItemCategoryManager" class="com.yimayhd.membercenter.manager.MerchantItemCategoryManager"/>
 
+	    <bean id="applyManager" class="com.yimayhd.membercenter.manager.ApplyManager"/>
+	
 	
 	
     <bean id="memberIdpool" class="com.yimayhd.membercenter.idgen.IdPoolImpl">

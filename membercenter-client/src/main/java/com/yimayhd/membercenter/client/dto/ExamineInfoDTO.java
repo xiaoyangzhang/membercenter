@@ -136,7 +136,22 @@ public class ExamineInfoDTO implements Serializable {
     private Date createDate;
     //手持身份证
     private String cardInHand;
-
+    private byte isDirectSale;//是否直营
+	private long merchantCategoryId;//商家身份
+	
+	
+	public long getMerchantCategoryId() {
+		return merchantCategoryId;
+	}
+	public void setMerchantCategoryId(long merchantCategoryId) {
+		this.merchantCategoryId = merchantCategoryId;
+	}
+	public byte getIsDirectSale() {
+		return isDirectSale;
+	}
+	public void setIsDirectSale(byte isDirectSale) {
+		this.isDirectSale = isDirectSale;
+	}
     public long getId() {
         return id;
     }

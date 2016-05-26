@@ -1,5 +1,9 @@
 package com.yimayhd.membercenter.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.yimayhd.membercenter.client.domain.merchant.MerchantItemCategoryDO;
 
 public interface MerchantItemCategoryDOMapper {
@@ -14,4 +18,6 @@ public interface MerchantItemCategoryDOMapper {
     int updateByPrimaryKeySelective(MerchantItemCategoryDO record);
 
     int updateByPrimaryKey(MerchantItemCategoryDO record);
+    
+    List<MerchantItemCategoryDO> selectByMerchant(@Param("domainId") int domainId, @Param("sellerId") long sellerId);
 }

@@ -1,21 +1,12 @@
 package com.yimayhd.membercenter.service.client;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import com.yimayhd.membercenter.client.result.MemPageResult;
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.BaseMerchantDO;
 import com.yimayhd.membercenter.client.domain.WxUserMerchantRelationDO;
+import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.MerchantService;
 import com.yimayhd.membercenter.client.vo.MerchantPageQueryVO;
@@ -29,8 +20,14 @@ import com.yimayhd.user.client.result.BasePageResult;
 import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.UserService;
 import com.yimayhd.user.errorcode.UserServiceHttpCode;
-
 import net.pocrd.entity.ApiReturnCode;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by root on 15-11-25.

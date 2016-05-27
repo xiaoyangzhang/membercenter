@@ -107,7 +107,7 @@ public class MemberReturnCode extends AbstractReturnCode {
     public static final int USER_NON_ROLE_C = 16007003;
     public static final MemberReturnCode USER_NON_ROLE_ERROR = new MemberReturnCode(USER_NON_ROLE_C, "没有给用户分配角色");
 
-    public static final int USER_ROLE_NON_URL_C = 16007003;
+    public static final int USER_ROLE_NON_URL_C = 16007000;
     public static final MemberReturnCode USER_ROLE_NON_URL_ERROR = new MemberReturnCode(USER_ROLE_NON_URL_C,
             "用户角色没有任何权限");
 
@@ -119,4 +119,29 @@ public class MemberReturnCode extends AbstractReturnCode {
     public static final int SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR_C = 16008001;
     public static final MemberReturnCode SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR = new MemberReturnCode(SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR_C,
             "商家经营类目不存在");
+
+    public static final int MERCHANT_SCOPE_FAILED_C = 16007005;
+    public static final MemberReturnCode MERCHANT_SCOPE_FAILED = new MemberReturnCode(MERCHANT_SCOPE_FAILED_C,
+    		"未查询到该商户的经营范围");
+   
+    
+    public static final int CATEGORY_BUSINESS_SCOPE_FAILED_C = 16007006;
+    public static final MemberReturnCode CATEGORY_BUSINESS_SCOPE_FAILED = new MemberReturnCode(CATEGORY_BUSINESS_SCOPE_FAILED_C,
+    		"未查询到该商户类目的经营范围");
+    
+    public static final int CATEGORY_QUALIFICATION_FAILED_C = 16007007;
+    public static final MemberReturnCode CATEGORY_QUALIFICATION_FAILED = new MemberReturnCode(CATEGORY_QUALIFICATION_FAILED_C,
+    		"未查询到该商户类目需要的资质");
+    
+    public static final int QUALIFICATION_FAILED_C = 16007008;
+    public static final MemberReturnCode QUALIFICATION_FAILED = new MemberReturnCode(QUALIFICATION_FAILED_C,
+    		"未查询到需要的资质");
+
+    public static final int BUSINESS_SCOPE_FAILED_C = 16007009;
+    public static final MemberReturnCode BUSINESS_SCOPE_FAILED = new MemberReturnCode(BUSINESS_SCOPE_FAILED_C,
+    		"未查询到经营范围");
+   
+    public static final int MERCHANT_QUALIFICATION_FAILED_C = 16007010;
+    public static final MemberReturnCode MERCHANT_QUALIFICATION_FAILED = new MemberReturnCode(MERCHANT_QUALIFICATION_FAILED_C,
+    		"未查询到该商户的资质");
 }

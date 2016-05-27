@@ -22,6 +22,7 @@ import com.alibaba.rocketmq.client.producer.SendResult;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
 import com.yimayhd.membercenter.client.dto.AccountDTO;
+import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
 import com.yimayhd.membercenter.client.enums.topic.MemberTopic;
 import com.yimayhd.membercenter.client.query.examine.ExaminePageQueryDTO;
 import com.yimayhd.membercenter.client.result.MemPageResult;
@@ -65,7 +66,8 @@ public class TalentExamineManager {
 
     @Autowired
     MsgSender msgSender;
-
+    @Autowired
+    TalentBackInfoManager talentBackInfoManager;
     /**
      * 
      * 功能描述: <br>
@@ -77,34 +79,52 @@ public class TalentExamineManager {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public MemResult<Boolean> submitMerchantExamineInfo(ExamineDO examineDO, String merchantName) {
+    public MemResult<Boolean> submitMerchantExamineInfo(ExamineInfoDTO examineInfoDTO) {
         MemResult<Boolean> result = new MemResult<Boolean>();
         try {
-            result = checkMerchantNameIsExist(merchantName, examineDO.getDomainId());
+        	if (ParmCheckUtil.checkExamineDTO(examineInfoDTO)) {
+        		result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+        		logger.info("submitMerchantExaminInfo par:{} is error", JSONObject.toJSONString(examineInfoDTO));
+        		return result;
+        	}
+        	// 根据银行ID查询银行name
+        	if (StringUtils.isNotBlank(examineInfoDTO.getFinanceOpenBankId())) {
+        		MemResult<String> memResult = talentBackInfoManager
+        				.queryBankNameById(examineInfoDTO.getFinanceOpenBankId());
+        		logger.info("queryBankNameById par:{} return: {}", examineInfoDTO.getFinanceOpenBankId(),
+        				JSONObject.toJSONString(memResult));
+        		if (memResult.isSuccess()) {
+        			examineInfoDTO.setFinanceOpenBankName(memResult.getValue());
+        		}
+        	}
+        	// 数据转换
+        	ExamineDO examinDO = ExamineConverter.examinDTOToDO(examineInfoDTO);
+            
+            result = checkMerchantNameIsExist(examineInfoDTO.getMerchantName(), examinDO.getDomainId());
             // 判断sellerName是否已经存在
             if (!result.isSuccess()) {
                 result.setReturnCode(MemberReturnCode.DB_MERCHANTNAME_FAILED);
-                logger.info("submitMerchantExaminInfo par:{} sellerName exists", JSONObject.toJSONString(examineDO));
+                logger.info("submitMerchantExaminInfo par:{} sellerName exists", JSONObject.toJSONString(examinDO));
                 return result;
             }
             // do 判断是否已经存在
-            ExamineDO examine = examineDOMapper.selectBySellerId(examineDO);
+            ExamineDO examine = examineDOMapper.selectBySellerId(examinDO);
             if (null != examine) {
                 // 判断是否已经审核通过
                 if (examine.getStatues() == ExamineStatus.EXAMIN_OK.getStatus()) {
                     result.setReturnCode(MemberReturnCode.DB_EXAMINE_FAILED);
                     logger.info("submitMerchantExaminInfo par:{} has already checked",
-                            JSONObject.toJSONString(examineDO));
+                            JSONObject.toJSONString(examinDO));
                     return result;
                 }
-                examineDOMapper.updateByPrimaryKey(MapUnionUtil.unionAll(examineDO, examine));
+                examineDOMapper.updateByPrimaryKey(MapUnionUtil.unionAll(examinDO, examine));
             } else {
-                examineDO.setId(examineIdPool.getNewId());
-                examineDOMapper.insert(examineDO);
+            	examinDO.setId(examineIdPool.getNewId());
+                examineDOMapper.insert(examinDO);
             }
             result.setValue(Boolean.TRUE);
         } catch (Exception e) {
-            logger.error("submitMerchantExaminInfo par:{} insert error:{}", JSONObject.toJSONString(examineDO), e);
+            logger.error("submitMerchantExaminInfo par:{} insert error:{}", JSONObject.toJSONString(examineInfoDTO), e);
             result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
         }
         return result;

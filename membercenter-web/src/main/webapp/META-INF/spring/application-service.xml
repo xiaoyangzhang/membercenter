@@ -29,4 +29,6 @@
 	<bean id="businessScopeService" class="com.yimayhd.membercenter.service.client.BusinessScopeServiceImpl"></bean>
 	<bean id="merchantItemCategoryService" class="com.yimayhd.membercenter.service.client.MerchantItemCategoryServiceImpl"></bean>
 
+	<bean id="applyService" class="com.yimayhd.membercenter.service.client.examine.ApplyServiceImpl"></bean>
+	
 </beans>

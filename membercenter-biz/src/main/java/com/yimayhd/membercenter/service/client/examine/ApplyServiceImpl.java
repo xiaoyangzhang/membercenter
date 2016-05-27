@@ -2,17 +2,13 @@ package com.yimayhd.membercenter.service.client.examine;
 
 import java.util.List;
 
+import com.yimayhd.membercenter.client.domain.merchant.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
-import com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO;
-import com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO;
-import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryScopeDO;
-import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
-import com.yimayhd.membercenter.client.domain.merchant.QualificationDO;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.ApplyService;
@@ -151,6 +147,26 @@ public class ApplyServiceImpl implements ApplyService {
 			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
 			return result;
 		}
+	}
+
+	@Override
+	public MemResult<List<BusinessScopeDO>> getBusinessScopesByIds(int domainId, long[] ids) {
+		MemResult<List<BusinessScopeDO>> result = new MemResult<>();
+		if (domainId <= 0 || ids == null || ids.length == 0) {
+			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+		}
+		result = applyManager.getBusinessScopesByIds(domainId, ids);
+		return result;
+	}
+
+	@Override
+	public MemResult<List<MerchantCategoryDO>> getMerchantCategoriesByIds(int domainId, long[] ids) {
+		MemResult<List<MerchantCategoryDO>> result = new MemResult<>();
+		if (domainId <= 0 || ids == null || ids.length == 0) {
+			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+		}
+		result = applyManager.getMerchantCategoriesByIds(domainId, ids);
+		return result;
 	}
 
 }

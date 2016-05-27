@@ -17,11 +17,7 @@ import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
-import com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO;
-import com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO;
-import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryScopeDO;
-import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
-import com.yimayhd.membercenter.client.domain.merchant.QualificationDO;
+import com.yimayhd.membercenter.client.domain.merchant.*;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 
@@ -84,4 +80,14 @@ public interface ApplyService {
 	* @throws
 	 */
 	public MemResult<Boolean> submitExamineInfo(ExamineInfoDTO dto,MerchantQualificationDO mqDO,MerchantScopeDO msDO);
+
+	/**
+	 * 根据id集合获取对应的详细信息
+	 * @param domainId
+	 * @param ids
+     * @return
+     */
+	MemResult<List<BusinessScopeDO>> getBusinessScopesByIds(int domainId, long[] ids);
+
+	MemResult<List<MerchantCategoryDO>> getMerchantCategoriesByIds(int domainId, long[] ids);
 }

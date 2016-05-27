@@ -134,4 +134,14 @@
   	where domain_id=#{domainId}
   	
   </select>
+
+  <select id="getMerchantCategoriesByIds" resultMap="BaseResultMap">
+    select name,id,parent_id from merchant_category
+    where domain_id=#{domainId}
+    and id in
+    <foreach collection="ids" index="index" item="item" open="("
+             separator="," close=")">
+      #{item,jdbcType=BIGINT}
+    </foreach>
+  </select>
 </mapper>

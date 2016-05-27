@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.yimayhd.membercenter.enums.ExamineStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class MerchantItemCategoryServiceImpl implements MerchantItemCategoryServ
 			memResultSupport.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
 			return memResultSupport;
 		}
-
+		examineDO.setStatues(ExamineStatus.EXAMIN_OK.getStatus());
 		memResultSupport = merchantItemCategoryManager.saveMerchanItemCategories(examineDO, categoryIds);
 		return memResultSupport;
 	}

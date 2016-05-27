@@ -33,4 +33,8 @@ public class BusinessScopeDao {
 		 return businessScopeList;
 		
 	}
+
+	public List<BusinessScopeDO> getBusinessScopesByIds(int domianId, long[] ids) {
+		return businessScopeDOMapper.getBusinessScopesByScope(domianId,ids);
+	}
 }

@@ -26,10 +26,12 @@ public class MemResult<T> extends MemResultSupport {
 
     }
 
-
+	public MemResult(MemberReturnCode returnCode) {
+		super(returnCode);
+	}
 
 	/**
-     * 废弃，使用构造函数 new MemResultSupport(MemberReturnCode returnCode)
+     * 废弃，使用构造函数 new MemResult(MemberReturnCode returnCode)
      * @param errorCode
      * @param errorMsg
      * @param value

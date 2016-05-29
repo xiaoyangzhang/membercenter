@@ -19,6 +19,14 @@ public class MemResultSupport implements Serializable {
 
 	}
 
+	public MemResultSupport(MemberReturnCode returnCode) {
+		super();
+		this.returnCode = returnCode;
+		this.errorCode = returnCode.getCode();
+		this.errorMsg = returnCode.getDesc();
+		this.success = false;
+	}
+
 	public boolean isSuccess() {
 		return success;
 	}
@@ -53,4 +61,5 @@ public class MemResultSupport implements Serializable {
 		this.errorCode = memberReturnCode.getCode();
 		this.errorMsg = memberReturnCode.getDesc();
 	}
+	
 }

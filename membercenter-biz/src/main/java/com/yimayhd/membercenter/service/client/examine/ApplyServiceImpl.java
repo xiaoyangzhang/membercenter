@@ -165,7 +165,7 @@ public class ApplyServiceImpl implements ApplyService {
 		if (domainId <= 0 || sellerId <= 0) {
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 		}
-		result = applyManager.getMerchantCategoriesByIds(domainId, sellerId);
+		result = applyManager.getMerchantCategoriesBySellerId(sellerId, domainId);
 		return result;
 	}
 

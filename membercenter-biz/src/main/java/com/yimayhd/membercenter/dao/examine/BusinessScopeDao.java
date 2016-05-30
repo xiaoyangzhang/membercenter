@@ -37,4 +37,7 @@ public class BusinessScopeDao {
 	public List<BusinessScopeDO> getBusinessScopesByIds(int domianId, long[] ids) {
 		return businessScopeDOMapper.getBusinessScopesByScope(domianId,ids);
 	}
+	public List<BusinessScopeDO> getBusinessScopesByScope(int domainId, long[] scopeIds) {
+		return businessScopeDOMapper.getBusinessScopesByScope(domainId, scopeIds);
+	}
 }

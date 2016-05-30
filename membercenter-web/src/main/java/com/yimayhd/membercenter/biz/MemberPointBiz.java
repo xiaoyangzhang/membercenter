@@ -12,3 +12,4 @@ public interface MemberPointBiz {
 	
 	public MemResult<DetailResultDTO<PointDetailDTO>> getMemberPointDetailsByPage(int pageNumber,int pageSize);
 }
+ 

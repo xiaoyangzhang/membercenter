@@ -49,30 +49,30 @@ public class MerchantApplyDao {
 //		}
 //		return null;
 //	}
-	public MerchantQualificationDO update(MerchantQualificationDO record) {
-		if (null == record) {
-			return null;
-		}
-		record.setGmtModified(new Date());
-		int result = merchantQualificationDOMapper.updateByPrimaryKey(record);
-		if (result == 1) {
-			return record;
-		}
-		return null;
-	}
-	
-	public MerchantQualificationDO insert(MerchantQualificationDO record) {
-		if (null == record) {
-			return null;
-		}
-		record.setGmtCreated(new Date());
-		record.setGmtModified(new Date());
-		int result = merchantQualificationDOMapper.insert(record);
-		if (result == 1) {
-			return record;
-		}
-		return null;
-	}
+//	public MerchantQualificationDO update(MerchantQualificationDO record) {
+//		if (null == record) {
+//			return null;
+//		}
+//		record.setGmtModified(new Date());
+//		int result = merchantQualificationDOMapper.updateByPrimaryKey(record);
+//		if (result == 1) {
+//			return record;
+//		}
+//		return null;
+//	}
+//	
+//	public MerchantQualificationDO insert(MerchantQualificationDO record) {
+//		if (null == record) {
+//			return null;
+//		}
+//		record.setGmtCreated(new Date());
+//		record.setGmtModified(new Date());
+//		int result = merchantQualificationDOMapper.insert(record);
+//		if (result == 1) {
+//			return record;
+//		}
+//		return null;
+//	}
 //	public CategoryQualificationDO update(CategoryQualificationDO record) {
 //		if (null == record) {
 //			return null;
@@ -97,30 +97,30 @@ public class MerchantApplyDao {
 //		}
 //		return null;
 //	}
-	public MerchantScopeDO update(MerchantScopeDO record) {
-		if (null == record) {
-			return null;
-		}
-		record.setGmtModified(new Date());
-		int result = merchantScopeDOMapper.updateByPrimaryKey(record);
-		if (result == 1) {
-			return record;
-		}
-		return null;
-	}
-	
-	public MerchantScopeDO insert(MerchantScopeDO record) {
-		if (null == record) {
-			return null;
-		}
-		record.setGmtCreated(new Date());
-		record.setGmtModified(new Date());
-		int result = merchantScopeDOMapper.insert(record);
-		if (result == 1) {
-			return record;
-		}
-		return null;
-	}
+//	public MerchantScopeDO update(MerchantScopeDO record) {
+//		if (null == record) {
+//			return null;
+//		}
+//		record.setGmtModified(new Date());
+//		int result = merchantScopeDOMapper.updateByPrimaryKey(record);
+//		if (result == 1) {
+//			return record;
+//		}
+//		return null;
+//	}
+//	
+//	public MerchantScopeDO insert(MerchantScopeDO record) {
+//		if (null == record) {
+//			return null;
+//		}
+//		record.setGmtCreated(new Date());
+//		record.setGmtModified(new Date());
+//		int result = merchantScopeDOMapper.insert(record);
+//		if (result == 1) {
+//			return record;
+//		}
+//		return null;
+//	}
 //	public MerchantScopeDO update(MerchantScopeDO record) {
 //		if (null == record) {
 //			return null;
@@ -188,7 +188,7 @@ public class MerchantApplyDao {
 	
 
 	
-	public List<MerchantScopeDO> getMerchantScopeBySellerId(long sellerId,int domainId) {
+//	public List<MerchantScopeDO> getMerchantScopeBySellerId(long sellerId,int domainId) {
 //		if (sellerId <=0 || domainId <= 0) {
 //			return null;
 //		}
@@ -196,10 +196,10 @@ public class MerchantApplyDao {
 //		if (merchantScopes == null) {
 //			return null;
 //		}
-		return merchantScopeDOMapper.getBusinessScopeBySellerId(sellerId, domainId);
-	}
-	
-	public List<MerchantQualificationDO> getMerchantQualificationBySellerId(long sellerId,int domainId) {
-		return merchantQualificationDOMapper.getMerchantQualificationBySellerId(sellerId, domainId);
-	}
+//		return merchantScopeDOMapper.getBusinessScopeBySellerId(sellerId, domainId);
+//	}
+//	
+//	public List<MerchantQualificationDO> getMerchantQualificationBySellerId(long sellerId,int domainId) {
+//		return merchantQualificationDOMapper.getMerchantQualificationBySellerId(sellerId, domainId);
+//	}
 }

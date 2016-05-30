@@ -35,7 +35,7 @@ public class MemeberPointController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MemeberPointController.class);
 	private static final String TIME_ELAPSE_HEAD=Constants.TIME_ELAPSE_HEAD;
 	
-	@Resource
+	@Resource 
 	private MemberPointBiz memberPointBiz;
 
 	/**

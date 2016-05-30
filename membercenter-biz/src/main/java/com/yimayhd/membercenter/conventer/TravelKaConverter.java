@@ -11,7 +11,7 @@ import com.yimayhd.membercenter.entity.*;
 
 import com.yimayhd.membercenter.entity.Ability;
 import com.yimayhd.membercenter.entity.KaClub;
-import com.yimayhd.membercenter.entity.PageInfo;
+import com.yimayhd.membercenter.entity.PageInfo; 
 import com.yimayhd.membercenter.entity.TravelKa;
 import com.yimayhd.membercenter.entity.TravelKaClub;
 import com.yimayhd.membercenter.entity.TravelKaItem;

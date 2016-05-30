@@ -24,4 +24,17 @@ public interface QualificationDOMapper {
      * @return
      */
     List<QualificationDO> selectAllQualifications(@Param("domainId")int domainId);
+    /**
+     * 
+    * created by zhangxy
+    * @date 2016年5月28日
+    * @Title: getQualificationByIds 
+    * @Description: 根据id集合获取资质
+    * @param @param idList
+    * @param @return    设定文件 
+    * @return List<QualificationDO>    返回类型 
+    * @throws
+     */
+    
+    List<QualificationDO> getQualificationByIds(@Param("list")List<Long> idList,@Param("domainId") int domainId);
 }

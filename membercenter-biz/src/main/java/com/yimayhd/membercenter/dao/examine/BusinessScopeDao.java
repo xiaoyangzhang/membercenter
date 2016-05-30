@@ -34,10 +34,15 @@ public class BusinessScopeDao {
 		
 	}
 
-	public List<BusinessScopeDO> getBusinessScopesByIds(int domianId, long[] ids) {
-		return businessScopeDOMapper.getBusinessScopesByScope(domianId,ids);
-	}
-	public List<BusinessScopeDO> getBusinessScopesByScope(int domainId, long[] scopeIds) {
+//	public List<BusinessScopeDO> getBusinessScopesByIds(int domianId, long[] ids) {
+//		return businessScopeDOMapper.getBusinessScopesByScope(domianId,ids);
+//	}
+//	public List<BusinessScopeDO> getBusinessScopesByScope(int domainId, long[] scopeIds) {
+	
+//	public List<BusinessScopeDO> getBusinessScopesByScope(int domainId, Long[] scopeIds) {
+//		return businessScopeDOMapper.getBusinessScopesByScope(domainId, scopeIds);
+//	}
+	public List<BusinessScopeDO> getBusinessScopesByScope(int domainId, List<Long> scopeIds) {
 		return businessScopeDOMapper.getBusinessScopesByScope(domainId, scopeIds);
 	}
 }

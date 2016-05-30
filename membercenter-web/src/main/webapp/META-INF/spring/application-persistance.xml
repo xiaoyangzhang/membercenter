@@ -65,15 +65,18 @@
 	<!-- 申请入驻 -->
 	<bean id="memberRecordDao" class="com.yimayhd.membercenter.dao.MemberRecordDao"></bean>
 	<bean id="scopeItemCategoryDao" class="com.yimayhd.membercenter.dao.ScopeItemCategoryDao"></bean>
+	<bean id="businessScopeDao" class="com.yimayhd.membercenter.dao.examine.BusinessScopeDao"></bean>
 	<bean id="merchantItemCategoryDao" class="com.yimayhd.membercenter.dao.MerchantItemCategoryDao"></bean>
 
 	<bean id="qualificationDao" class="com.yimayhd.membercenter.dao.examine.QualificationDao"/>
 	<bean id="merchantCategoryScopeDao" class="com.yimayhd.membercenter.dao.examine.MerchantCategoryScopeDao"/>
 	<bean id="merchantCategoryDao" class="com.yimayhd.membercenter.dao.examine.MerchantCategoryDao"/>
-	<bean id="merchantApplyDao" class="com.yimayhd.membercenter.dao.examine.MerchantApplyDao"/>
+	<bean id="merchantApplyDao" class="com.yimayhd.membercenter.dao.examine.MerchantScopeDao"/>
+	<bean id="merchantScopeDao" class="com.yimayhd.membercenter.dao.examine.MerchantQualificationDao"/>
+	<bean id="merchantQualificationDao" class="com.yimayhd.membercenter.dao.examine.MerchantApplyDao"/>
 	<bean id="categoryQualificationDao" class="com.yimayhd.membercenter.dao.examine.CategoryQualificationDao"/>
-	<bean id="businessScopeDao" class="com.yimayhd.membercenter.dao.examine.BusinessScopeDao"/>
 
+	
 	<bean id="baseMerchartDao" class="com.yimayhd.membercenter.dao.BaseMerchartDao"/>
 	<bean id="roleDao" class="com.yimayhd.membercenter.dao.RoleDao"/>
 	<bean id="userRoleDao" class="com.yimayhd.membercenter.dao.UserRoleDao"/>

@@ -75,7 +75,7 @@ public class ExamineDealServiceImpl implements ExamineDealService {
                         JSONObject.toJSONString(memResult));
                 if (memResult.isSuccess()) {
                     examineInfoDTO.setFinanceOpenBankName(memResult.getValue());
-                }
+                } 
             }
             // 数据转换
             ExamineDO examinDO = ExamineConverter.examinDTOToDO(examineInfoDTO);*/

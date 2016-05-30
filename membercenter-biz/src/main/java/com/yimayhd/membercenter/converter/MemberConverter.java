@@ -31,7 +31,7 @@ public class MemberConverter {
 		member.userId = memberDO.getUserId() ;
 		return member ;
 	}
-
+ 
 
 	public static UserDOPageQuery do2UserDOPageQuery(MerchantPageQueryVO merchantPageQueryVO,List<WxUserMerchantRelationDO> wxUserMerchantRelationDOList){
 		Set<Long> userIdSet = new HashSet<Long>();

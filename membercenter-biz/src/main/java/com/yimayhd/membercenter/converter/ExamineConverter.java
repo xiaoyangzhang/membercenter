@@ -115,7 +115,7 @@ public class ExamineConverter {
 
         examinDTO.setCreateDate(examineDO.getGmtCreated());
         return examinDTO;
-    }
+    } 
 
     /**
      * 

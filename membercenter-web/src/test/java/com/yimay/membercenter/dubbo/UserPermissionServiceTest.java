@@ -27,7 +27,7 @@ public class UserPermissionServiceTest{
     @Autowired
     private UserPermissionService userPermissionService;
 
-    @Test
+    @Test 
     public void getMenuListByUserId(){
         long userId = 17508;
         UserMenuQuery userMenuQuery = new UserMenuQuery();

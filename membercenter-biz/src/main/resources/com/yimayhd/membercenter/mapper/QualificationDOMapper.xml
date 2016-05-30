@@ -120,4 +120,14 @@
   	where domain_id=#{domainId}
   	
   </select>
+  <select id="getQualificationByIds" resultMap="BaseResultMap" >
+  	select id,title,tip from qualification
+  	where domain_id=#{domainId}
+  	<if test="list != null">
+  		and id in 
+  		<foreach collection ="list" item ="item" index ="index" open="(" separator="," close=")">
+  			#{item}
+  		</foreach>
+  	</if>
+  </select>
 </mapper>

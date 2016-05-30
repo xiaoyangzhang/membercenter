@@ -36,8 +36,9 @@
               <property name="timeout" value="${export.dubbo.timeout}"/>
               <property name="retries" value="${dubbo.retries}"/>
        </bean>
+       	<!--  -->
 	<bean id="applyServiceExport" class="com.alibaba.dubbo.config.spring.ServiceBean">
-              <property name="interface" value="com.yimayhd.membercenter.client.service.ApplyService"/>
+              <property name="interface" value="com.yimayhd.membercenter.client.service.examine.ApplyService"/>
               <property name="ref" ref="applyService"/>
               <property name="application" ref="dubboApplicationConfig"/>
               <property name="registry" ref="dubboRegistryConfig"/>

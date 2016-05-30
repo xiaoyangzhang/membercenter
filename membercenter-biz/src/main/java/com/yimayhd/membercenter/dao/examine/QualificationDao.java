@@ -10,7 +10,7 @@ import com.yimayhd.membercenter.mapper.QualificationDOMapper;
 /**
  * 
 * @ClassName: QualificationDao
-* @Description: 操作资质
+* @Description: 操作资质 
 * @author zhangxy
 * @date 2016年5月26日 上午11:19:37
 *
@@ -32,6 +32,8 @@ public class QualificationDao {
 		//return MemResult.buildSuccessResult(qualificationList);
 		return qualificationList;
 	}
-	
+	public List<QualificationDO> getQualificationByIds(List<Long> idList,int domainId) {
+		return qualificationDOMapper.getQualificationByIds(idList, domainId);
+	}
 	
 }

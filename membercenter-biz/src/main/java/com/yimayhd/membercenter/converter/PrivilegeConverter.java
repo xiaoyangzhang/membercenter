@@ -24,7 +24,7 @@ public class PrivilegeConverter {
 		
 		pageInfoList.pageNo = pageNo;
 		pageInfoList.hasNext = hasNext;
-		
+		 
 		List<PrivilegeInfo> privilegeInfoList = dos2PrivilegeInfos(privilegeDOs);
 		pageInfoList.privilegeInfoPageList = privilegeInfoList ;
 		

@@ -82,12 +82,18 @@ public interface ApplyService {
 	public MemResult<Boolean> submitExamineInfo(ExamineInfoDTO dto,MerchantQualificationDO mqDO,MerchantScopeDO msDO);
 
 	/**
-	 * 根据id集合获取对应的详细信息
+	 * 根据id集合获取经营范围
 	 * @param domainId
 	 * @param ids
      * @return
      */
 	MemResult<List<BusinessScopeDO>> getBusinessScopesByIds(int domainId, long[] ids);
 
-	MemResult<List<MerchantCategoryDO>> getMerchantCategoriesByIds(int domainId, long[] ids);
+	/**
+	 * 根据id集合获取对应的商家身份
+	 * @param domainId
+	 * @param sellerId
+     * @return
+     */
+	MemResult<List<MerchantCategoryDO>> getMerchantCategoriesBySellerId(int domainId, long sellerId);
 }

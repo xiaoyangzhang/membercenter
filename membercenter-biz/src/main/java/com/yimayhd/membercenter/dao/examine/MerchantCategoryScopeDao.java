@@ -2,6 +2,7 @@ package com.yimayhd.membercenter.dao.examine;
 
 import java.util.List;
 
+import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryDO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryScopeDO;
@@ -28,5 +29,9 @@ public class MerchantCategoryScopeDao {
 //			return null;
 //		}
 		return scopes;
+	}
+
+	public List<MerchantCategoryScopeDO> getMerchantCategoriesByScopeIds(long[] scopeIds, int domainId) {
+		return merchantCategoryScopeDOMapper.getMerchantCatergoryScopesByScopeIds(scopeIds, domainId);
 	}
 }

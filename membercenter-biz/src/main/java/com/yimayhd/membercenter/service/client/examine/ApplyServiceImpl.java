@@ -160,12 +160,12 @@ public class ApplyServiceImpl implements ApplyService {
 	}
 
 	@Override
-	public MemResult<List<MerchantCategoryDO>> getMerchantCategoriesByIds(int domainId, long[] ids) {
+	public MemResult<List<MerchantCategoryDO>> getMerchantCategoriesBySellerId(int domainId, long sellerId) {
 		MemResult<List<MerchantCategoryDO>> result = new MemResult<>();
-		if (domainId <= 0 || ids == null || ids.length == 0) {
+		if (domainId <= 0 || sellerId <= 0) {
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 		}
-		result = applyManager.getMerchantCategoriesByIds(domainId, ids);
+		result = applyManager.getMerchantCategoriesByIds(domainId, sellerId);
 		return result;
 	}
 

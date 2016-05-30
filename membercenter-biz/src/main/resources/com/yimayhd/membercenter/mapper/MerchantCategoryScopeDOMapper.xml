@@ -103,4 +103,13 @@
   		and merchant_category_id = #{merchantCategoryId,jdbcType=BIGINT}
   	</if>
   </select>
+  <select id="getMerchantCatergoryScopesByScopeIds" resultMap="BaseResultMap">
+    select id,merchant_category_id from merchant_category_scope
+    where domain_id=#{domainId}
+    and business_scope_id in
+    <foreach collection="scopeIds" index="index" item="item" open="("
+             separator="," close=")">
+      #{item,jdbcType=BIGINT}
+    </foreach>
+  </select>
 </mapper>

@@ -31,4 +31,12 @@ public interface MerchantCategoryScopeDOMapper {
     * @throws
      */
     public List<MerchantCategoryScopeDO> getMerchantCategoryScopeByMerchantCategoryId(@Param("merchantCategoryId")long merchantCategoryId,@Param("domainId")int domainId);
+
+    /**
+     * 根据scopeIds查询category集合
+     * @param scopeIds
+     * @param domainId
+     * @return
+     */
+    List<MerchantCategoryScopeDO> getMerchantCatergoryScopesByScopeIds(@Param("scopeIds") long[] scopeIds, @Param("domainId") int domainId);
 }

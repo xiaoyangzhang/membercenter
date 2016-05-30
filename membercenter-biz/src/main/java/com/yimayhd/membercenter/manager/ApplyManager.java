@@ -256,9 +256,27 @@ public class ApplyManager {
 		return result;
 	}
 
-    public MemResult<List<MerchantCategoryDO>> getMerchantCategoriesByIds(int domainId, long[] ids) {
+    public MemResult<List<MerchantCategoryDO>> getMerchantCategoriesBySellerId(long sellerId, int domainId) {
         MemResult<List<MerchantCategoryDO>> result = new MemResult<>();
-        List<MerchantCategoryDO> merchantCategoryDOs = merchantCategoryDao.getMerchantCategoriesByIds(domainId,ids);
+		List<MerchantScopeDO> merchantScopeDOs = merchantApplyDao.getMerchantScopeBySellerId(sellerId,domainId);
+		if(merchantScopeDOs.isEmpty()) {
+			result.setReturnCode(MemberReturnCode.BUSINESS_SCOPE_FAILED);
+			return result;
+		}
+		long[] scopeIds = new long[merchantScopeDOs.size()];
+		for(int i = 0;i < merchantScopeDOs.size();i++) {
+			scopeIds[i] = merchantScopeDOs.get(i).getBusinessScopeId();
+		}
+		List<MerchantCategoryScopeDO> merchantCategoryScopeDOs = merchantCategoryScopeDao.getMerchantCategoriesByScopeIds(scopeIds, domainId);
+		if(merchantCategoryScopeDOs.isEmpty()) {
+			result.setReturnCode(MemberReturnCode.CATEGORY_BUSINESS_SCOPE_FAILED);
+			return result;
+		}
+		long[] categoryIds = new long[merchantCategoryScopeDOs.size()];
+		for(int i = 0;i < merchantCategoryScopeDOs.size();i++) {
+			categoryIds[i] = merchantCategoryScopeDOs.get(i).getMerchantCategoryId();
+		}
+        List<MerchantCategoryDO> merchantCategoryDOs = merchantCategoryDao.getMerchantCategoriesByIds(domainId,categoryIds);
         if(merchantCategoryDOs.isEmpty()) {
             result.setReturnCode(MemberReturnCode.BUSINESS_CATEGORY_FAILED);
             return result;

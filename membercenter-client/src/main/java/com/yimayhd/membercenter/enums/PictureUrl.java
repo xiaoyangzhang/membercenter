@@ -40,8 +40,24 @@ public enum PictureUrl {
     COOPERATION4("合作合同4", "14", 2), 
     COOPERATION5("合作合同5", "15", 2), 
     TRAVEL_AGENCY_AUTHORIZATION("旅行社授权书", "16", 1), 
-    TRAVEL_AGENCY_INSURANCE("旅行社责任险证明正面", "17", 1);
-
+    TRAVEL_AGENCY_INSURANCE("旅行社责任险证明正面", "17", 1),
+    INTERMEDIARY_LICENSE("因私出入境中介机构经营许可证正面","18",1),
+    SEA_TRANSPORTATION_LICENSE("水路运输许可证正面","19",1),
+    TRAVEL_AGENCY_BRANCH_AGREEMENT("旅行社分社补充协议","20",1),
+    SCENIC_TICKET_AUTHORIZATION("景点门票授权书或合作协议","21",1),
+    HOTEL_GOODS_AUTHORIZATION("酒店商品授权书","22",1),
+    SPECIAL_SALE_LICENSE("特种经营许可证副本复印件","23",1),
+    SPECIAL_SALE_AUTHORIZATION("旅游局特许经营授权书","24",1),
+    WILDLIFE_SALE("野生动物经营利用许可证","25",1),
+    WATER_WILDLIFE_SALE("水生野生动物经营利用许可证","26",1),
+    AMUSEMENTPARK_REPORT("游乐特种设备（备案）登记证明和游乐设备最新的定期检测报告","27",1),
+    SCENIC_PRICE_REGISTER("景区门票价格在物价局的备案登记证明","28",1),
+    SCENIE_TICKET_UP_SCANNING("景区门票扫描件正面","29",1),
+    SCENIE_TICKET_DOWN_SCANNING("景区门票扫描件反面","30",1),
+    SCENIC_GOODS_AUTHORIZATION("景区商品授权书","31",1),
+    SCENIC_QUALITY_LEVEL("景区质量等级证书","32",1),
+    RELATION_BETWEEN_HOTEL_AND_GROUP("酒店与集团的所属关系说明","33",1);
+     
     private static Map<Integer, List<String>> hashMap = new HashMap<Integer, List<String>>();
 
     static {

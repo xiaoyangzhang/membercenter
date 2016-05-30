@@ -174,7 +174,7 @@ public class TalentExamineManager {
      * 功能描述: <br>
      * 〈根据sellerName检查是否已经存在〉
      *
-     * @param sellerName
+     * @param sellerName 
      * @param domainId
      * @return
      * @see [相关类/方法](可选)

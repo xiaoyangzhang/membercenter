@@ -6,8 +6,8 @@ import com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO;
 import com.yimayhd.membercenter.client.result.MemResult;
 
 /**
- * Created by hanlei on 2016/5/24.
+ * Created by hanlei on 2016/5/24.  
  */
 public interface BusinessScopeService {
-	MemResult<List<BusinessScopeDO>> findBusinessScopesByScope(int domainId, long[] scopeIds);
+	MemResult<List<BusinessScopeDO>> findBusinessScopesByScope(int domainId, List<Long> scopeIds);
 }

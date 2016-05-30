@@ -16,7 +16,7 @@ import com.yimayhd.membercenter.mapper.CategoryQualificationDOMapper;
 *
  */
 public class CategoryQualificationDao {
-
+ 
 	@Autowired
 	private CategoryQualificationDOMapper categoryQualificationDOMapper;
 	public List<CategoryQualificationDO> getCATGQualificationByMerchantCATGId(long merchantCategoryId,int domainId) {

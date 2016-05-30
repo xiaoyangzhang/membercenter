@@ -41,7 +41,7 @@ public class UserInfoController {
 	private MemberUserBiz memberUserBiz;
 	
 
-	/**
+	/** 
 	 * 
 	 * @Title fulfillUserInfo
 	 * @Description 补全会员资料

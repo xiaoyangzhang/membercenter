@@ -17,7 +17,7 @@ import com.yimayhd.membercenter.client.query.examine.ExaminePageQueryDTO;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 
-/**
+/** 
  * 〈一句话功能简述〉<br> 
  * 〈审核信息service〉
  *

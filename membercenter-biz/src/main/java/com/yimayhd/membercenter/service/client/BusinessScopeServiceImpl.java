@@ -22,8 +22,8 @@ public class BusinessScopeServiceImpl implements BusinessScopeService {
 	private BusinessScopeManager businessScopeManager;
 
 	@Override
-	public MemResult<List<BusinessScopeDO>> findBusinessScopesByScope(int domainId, long[] scopeIds) {
-        if (null == scopeIds || scopeIds.length <= 0) {
+	public MemResult<List<BusinessScopeDO>> findBusinessScopesByScope(int domainId, List<Long> scopeIds) {
+        if (null == scopeIds || scopeIds.size() <= 0) {
             LOGGER.info("businessScopeDOs not found by scopeIds={}", scopeIds);
             return MemResult.buildFailResult(0, "参数为空", null);
         }

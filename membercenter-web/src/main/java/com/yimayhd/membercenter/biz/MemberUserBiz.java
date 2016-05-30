@@ -21,7 +21,7 @@ public interface MemberUserBiz {
 	 * @return
 	 */
 	public MemResult<UserDO>   getUser(String openId,Long merchantId);
-	
+	 
 	/**
 	 * 获取用户信息
 	 * @return

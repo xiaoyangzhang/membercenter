@@ -45,7 +45,7 @@ public class TalentConverter {
      * 
      * 功能描述: <br>
      * 〈商家 用户信息组装达人信息〉
-     *
+     * 
      * @param merchantDO
      * @param userDO
      * @return

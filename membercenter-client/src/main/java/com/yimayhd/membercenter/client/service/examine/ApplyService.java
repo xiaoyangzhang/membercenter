@@ -92,13 +92,6 @@ public interface ApplyService {
      */
 	MemResult<List<BusinessScopeDO>> getBusinessScopesByIds(int domainId, List<Long> ids);
 
-	/**
-	 * 根据id集合获取对应的商家身份
-	 * @param domainId
-	 * @param sellerId
-     * @return
-     */
-	MemResult<List<MerchantCategoryDO>> getMerchantCategoriesBySellerId(int domainId, long sellerId);
 	public MemResult<Boolean> submitExamineInfo(ExamineInfoDTO dto,MerchantScopeDO msDO);
 	/**
 	 * 
@@ -136,5 +129,6 @@ public interface ApplyService {
 	* @throws
 	 */
 	public MemResult<List<MerchantCategoryDO>> getAllMerchantCategory(int domainId);
-	//MemResult<List<BusinessScopeDO>> findBusinessScopesByScope(int domainId, List<Long> scopeIds);
+
+	MemResult<MerchantCategoryDO> getMerchantCategory(int domainId, long merchantCategoryId);
 }

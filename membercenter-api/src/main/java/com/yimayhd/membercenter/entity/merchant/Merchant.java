@@ -12,7 +12,7 @@ import net.pocrd.annotation.Description;
  *
  */
 @Description("店铺基本信息")
-public class Merchant implements Serializable {
+public class Merchant<M> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

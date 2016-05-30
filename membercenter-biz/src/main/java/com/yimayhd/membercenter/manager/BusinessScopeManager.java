@@ -1,11 +1,10 @@
 package com.yimayhd.membercenter.manager;
 
-import java.util.List;
-
+import com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO;
+import com.yimayhd.membercenter.dao.examine.BusinessScopeDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO;
-import com.yimayhd.membercenter.dao.BusinessScopeDao;
+import java.util.List;
 
 /**
  * Created by hanlei on 2016/5/24.

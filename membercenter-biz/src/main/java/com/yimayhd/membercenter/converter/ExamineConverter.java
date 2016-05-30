@@ -103,6 +103,23 @@ public class ExamineConverter {
         examinDTO.setCooperation3(pictureMap.get(PictureUrl.COOPERATION3.getId()));
         examinDTO.setCooperation4(pictureMap.get(PictureUrl.COOPERATION4.getId()));
         examinDTO.setCooperation5(pictureMap.get(PictureUrl.COOPERATION5.getId()));
+        //2期
+        examinDTO.setAmusementParkReport(pictureMap.get(PictureUrl.AMUSEMENTPARK_REPORT.getId()));
+        examinDTO.setHotelGoodsAuthorization(pictureMap.get(PictureUrl.HOTEL_GOODS_AUTHORIZATION.getId()));
+        examinDTO.setIsDirectSale(examineDO.getIsDirectSale());
+        examinDTO.setWildlifeSale(pictureMap.get(PictureUrl.WILDLIFE_SALE.getId()));
+        examinDTO.setWaterWildlifeSale(pictureMap.get(PictureUrl.WATER_WILDLIFE_SALE.getId()));
+        examinDTO.setSpecialSaleLicense(pictureMap.get(PictureUrl.SPECIAL_SALE_LICENSE.getId()));
+        examinDTO.setSpecialSaleAuthorization(pictureMap.get(PictureUrl.SPECIAL_SALE_AUTHORIZATION.getId()));
+        examinDTO.setSeaTransportationLicense(pictureMap.get(PictureUrl.SEA_TRANSPORTATION_LICENSE.getId()));
+        examinDTO.setScenicTicketUpScanning(pictureMap.get(PictureUrl.SCENIE_TICKET_UP_SCANNING.getId()));
+        examinDTO.setScenicTicketDownScanning(pictureMap.get(PictureUrl.SCENIE_TICKET_DOWN_SCANNING.getId()));
+        examinDTO.setScenicTicketAuthorization(pictureMap.get(PictureUrl.SCENIC_TICKET_AUTHORIZATION.getId()));
+        examinDTO.setScenicQualityLevel(pictureMap.get(PictureUrl.SCENIC_QUALITY_LEVEL.getId()));
+        examinDTO.setScenicPriceRegister(pictureMap.get(PictureUrl.SCENIC_PRICE_REGISTER.getId()));
+        examinDTO.setScenicGoodsAuthorization(pictureMap.get(PictureUrl.SCENIC_GOODS_AUTHORIZATION.getId()));
+        examinDTO.setRelationBetweenHotelAngGroup(pictureMap.get(PictureUrl.RELATION_BETWEEN_HOTEL_AND_GROUP.getId()));
+        examinDTO.setMerchantCategoryId(examineDO.getMerchantCategoryId());
         // type
         examinDTO.setTouristCard(certificateMap.get(CertificateOption.TOURIST_CARD.getCode()));
         examinDTO.setDrivingLinence(certificateMap.get(CertificateOption.DRIVING_LICENCE.getCode()));
@@ -165,6 +182,9 @@ public class ExamineConverter {
         pictureMap.put(PictureUrl.COOPERATION3.getId(), examinDTO.getCooperation3());
         pictureMap.put(PictureUrl.COOPERATION4.getId(), examinDTO.getCooperation4());
         pictureMap.put(PictureUrl.COOPERATION5.getId(), examinDTO.getCooperation5());
+        //2期
+        examineDO.setIsDirectSale(examinDTO.getIsDirectSale());
+        examineDO.setMerchantCategoryId(examinDTO.getMerchantCategoryId());
         //2期 -资质
         pictureMap.put(PictureUrl.AMUSEMENTPARK_REPORT.getId(), examinDTO.getAmusementParkReport());
         pictureMap.put(PictureUrl.HOTEL_GOODS_AUTHORIZATION.getId(), examinDTO.getHotelGoodsAuthorization());

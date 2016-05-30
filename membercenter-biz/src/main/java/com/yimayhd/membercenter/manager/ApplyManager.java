@@ -371,7 +371,13 @@ public class ApplyManager {
 	}
 
 	public MemResult<MerchantCategoryDO> getMerchantCategory(long id, int domianId) {
-		merchantCategoryDao.getMerchantCategoriesById(domianId, id);
-		return null;
+		MemResult<MerchantCategoryDO> result = new MemResult<>();
+		MerchantCategoryDO merchantCategoryDO = merchantCategoryDao.getMerchantCategoriesById(domianId, id);
+		if(null == merchantCategoryDO) {
+			result.setReturnCode(MemberReturnCode.BUSINESS_CATEGORY_FAILED);
+			return result;
+		}
+		result.setValue(merchantCategoryDao.getMerchantCategoriesById(domianId, id));
+		return result;
 	}
 }

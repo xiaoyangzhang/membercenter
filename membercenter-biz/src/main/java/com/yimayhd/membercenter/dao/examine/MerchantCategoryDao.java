@@ -23,7 +23,7 @@ public class MerchantCategoryDao {
 		return merchantCategoryDOMapper.getAllMerchantCategory(domainId);
 	}
 
-	public List<MerchantCategoryDO> getMerchantCategoriesById(int domainId,long id) {
+	public MerchantCategoryDO getMerchantCategoriesById(int domainId,long id) {
 		return merchantCategoryDOMapper.getMerchantCategoriesById(domainId,id);
 	}
 }

@@ -1,11 +1,8 @@
 package com.yimayhd.membercenter.manager;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import com.yimayhd.membercenter.client.domain.merchant.*;
-import com.yimayhd.membercenter.dao.examine.*;
+import com.yimayhd.membercenter.entity.merchant.Merchant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -290,36 +287,6 @@ public class ApplyManager {
 		result.setValue(businessScopeDOs);
 		return result;
 	}
-
-    public MemResult<List<MerchantCategoryDO>> getMerchantCategoriesBySellerId(long sellerId, int domainId) {
-        MemResult<List<MerchantCategoryDO>> result = new MemResult<>();
-		List<MerchantScopeDO> merchantScopeDOs = merchantScopeDao.getMerchantScopeBySellerId(sellerId,domainId);
-		if(merchantScopeDOs.isEmpty()) {
-			result.setReturnCode(MemberReturnCode.BUSINESS_SCOPE_FAILED);
-			return result;
-		}
-		long[] scopeIds = new long[merchantScopeDOs.size()];
-		for(int i = 0;i < merchantScopeDOs.size();i++) {
-			scopeIds[i] = merchantScopeDOs.get(i).getBusinessScopeId();
-		}
-		List<MerchantCategoryScopeDO> merchantCategoryScopeDOs = merchantCategoryScopeDao.getMerchantCategoriesByScopeIds(scopeIds, domainId);
-		if(merchantCategoryScopeDOs.isEmpty()) {
-			result.setReturnCode(MemberReturnCode.CATEGORY_BUSINESS_SCOPE_FAILED);
-			return result;
-		}
-		long[] categoryIds = new long[merchantCategoryScopeDOs.size()];
-		for(int i = 0;i < merchantCategoryScopeDOs.size();i++) {
-			categoryIds[i] = merchantCategoryScopeDOs.get(i).getMerchantCategoryId();
-		}
-        List<MerchantCategoryDO> merchantCategoryDOs = merchantCategoryDao.getMerchantCategoriesByIds(domainId,categoryIds);
-        if(merchantCategoryDOs.isEmpty()) {
-            result.setReturnCode(MemberReturnCode.BUSINESS_CATEGORY_FAILED);
-            return result;
-        }
-        result.setValue(merchantCategoryDOs);
-        return result;
-
-    }
 	
 	public MemResult<Boolean> updateMerchantQualification(MerchantQualificationDO merchantQualificationDO) {
 		MemResult<Boolean> result = new MemResult<Boolean>();
@@ -401,5 +368,10 @@ public class ApplyManager {
 			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
 			return result;
 		}
+	}
+
+	public MemResult<MerchantCategoryDO> getMerchantCategory(long id, int domianId) {
+		merchantCategoryDao.getMerchantCategoriesById(domianId, id);
+		return null;
 	}
 }

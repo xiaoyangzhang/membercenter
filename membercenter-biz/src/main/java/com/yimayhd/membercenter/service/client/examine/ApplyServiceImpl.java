@@ -2,7 +2,7 @@ package com.yimayhd.membercenter.service.client.examine;
 
 import java.util.List;
 
-import com.yimayhd.membercenter.client.domain.merchant.*;
+import com.yimayhd.membercenter.entity.merchant.Merchant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -227,16 +227,6 @@ public class ApplyServiceImpl implements ApplyService {
 		return result;
 	}
 
-	@Override
-	public MemResult<List<MerchantCategoryDO>> getMerchantCategoriesBySellerId(int domainId, long sellerId) {
-		MemResult<List<MerchantCategoryDO>> result = new MemResult<>();
-		if (domainId <= 0 || sellerId <= 0) {
-			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
-		}
-		result = applyManager.getMerchantCategoriesBySellerId(sellerId, domainId);
-		return result;
-	}
-
 	public MemResult<List<MerchantCategoryDO>> getAllMerchantCategory(
 			int domainId) {
 		MemResult<List<MerchantCategoryDO>> result = new MemResult<List<MerchantCategoryDO>>();
@@ -254,5 +244,10 @@ public class ApplyServiceImpl implements ApplyService {
 			return result;
 		}
 	}
-	
+
+	@Override
+	public MemResult<MerchantCategoryDO> getMerchantCategory(int domainId, long id) {
+		return applyManager.getMerchantCategory(id,domainId);
+	}
+
 }

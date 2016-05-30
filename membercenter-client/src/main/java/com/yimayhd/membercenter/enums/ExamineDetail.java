@@ -39,7 +39,7 @@ public enum ExamineDetail {
     ACCOUNT_BANK_CITY("财务结算开户行城市", "12", 2),
     ACCOUNT_BANK_CITY_CODE("财务结算开户行城市CODE", "13", 2),
     ACCOUNT_BANK_NAME("财务结算开户行名称", "14", 2),
-    
+    SHOP_TYPE("店铺性质","22",2),
     //*******************账户信息*******************//
     PRODUCTER_NAME("产品联系人姓名", "15", 3),
     PRODUCTER_TEL("产品联系人手机", "16", 3),

@@ -124,7 +124,7 @@
   		and merchant_category_id = #{categoryId}
   	</if>
   </select> -->
-  <select id="getCategoryQualification" parameterMap="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO" resultMap="BaseResultMap">
+  <select id="getCategoryQualification" parameterType="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO" resultMap="BaseResultMap">
   	select qualification_id,content,required from category_qualification
   	where domain_id=#{category.domainId}
   	<if test="category.merchantCategoryId != null">

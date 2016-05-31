@@ -148,4 +148,8 @@ public class MemberReturnCode extends AbstractReturnCode {
     public static final int BUSINESS_CATEGORY_FAILED_C = 16007011;
     public static final MemberReturnCode BUSINESS_CATEGORY_FAILED = new MemberReturnCode(BUSINESS_CATEGORY_FAILED_C,
             "未查询到该商户的身份");
+   
+    public static final int SAVE_MERCHANT_FAILED_C = 16007012;
+    public static final MemberReturnCode SAVE_MERCHANT_FAILED = new MemberReturnCode(SAVE_MERCHANT_FAILED_C,
+    		"保存入驻信息失败");
 }

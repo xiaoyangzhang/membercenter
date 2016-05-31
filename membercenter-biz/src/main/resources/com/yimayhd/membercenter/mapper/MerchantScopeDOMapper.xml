@@ -92,17 +92,46 @@
     update merchant_scope
     set seller_id = #{sellerId,jdbcType=BIGINT},
       business_scope_id = #{businessScopeId,jdbcType=BIGINT},
-      gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+      
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
       domain_id = #{domainId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="getBusinessScopeBySellerId" resultMap="BaseResultMap">
+  <!-- <select id="getBusinessScopeBySellerId" resultMap="BaseResultMap">
   	select id,business_scope_id from merchant_scope
   	where domain_id=#{domainId}
   	<if test="sellerId != null">
   		and seller_id=#{sellerId}
   	</if>
   </select>
+  <insert id="insertBatch" parameterType="java.util.List">  
+   
+    insert into merchant_scope (seller_id, business_scope_id, gmt_created, gmt_modified, status, domain_id ) values  
+    <foreach collection="list" item="item" index="index"  
+        separator=",">  
+        ( #{item.sellerId}, #{item.businessScopeId}, #{item.gmtCreated},  
+        #{item.gmtModified}, #{item.status},  
+        #{item.domainId})  
+    </foreach>  
+  </insert>   -->
+  <!-- <update id="batchUpdate"  parameterType="java.util.List">
+     
+       <foreach collection="list" item="item" index="index" open="begin" close="end;" separator=";">
+                update merchant_scope 
+                <set>
+                  seller_id=${item.sellerId},
+                
+                	business_scope_id=#{item.businessScopeId},
+                
+                	gmt_modified=#{item.gmtModified},
+                
+                	status=#{item.status},
+                
+                	domain_id= #{item.domainId}
+                </set>
+                where id = ${item.id}
+       </foreach>
+         
+    </update> -->
 </mapper>

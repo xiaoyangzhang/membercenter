@@ -2,6 +2,7 @@ package com.yimayhd.membercenter.client.domain.merchant;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class MerchantQualificationDO implements Serializable {
     private long id;
@@ -12,14 +13,33 @@ public class MerchantQualificationDO implements Serializable {
 
     private long sellerId;
 
-    private String value;
+    private String content;
 
     private Date gmtCreated;
 
     private Date gmtModified;
+    
     private int domainId;
     
-    public int getDomainId() {
+    private List<Long> idList;
+    
+    public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public List<Long> getIdList() {
+		return idList;
+	}
+
+	public void setIdList(List<Long> idList) {
+		this.idList = idList;
+	}
+
+	public int getDomainId() {
 		return domainId;
 	}
 
@@ -60,13 +80,7 @@ public class MerchantQualificationDO implements Serializable {
         this.sellerId = sellerId;
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
+   
 
     public Date getGmtCreated() {
         return gmtCreated;

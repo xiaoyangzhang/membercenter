@@ -29,7 +29,7 @@ public interface ApplyService {
 	 * @param domainId
 	 * @return
 	 */
-	public MemResult<List<MerchantScopeDO>> getMerchantScopeBySellerId(long sellerId,int domainId);
+	public MemResult<List<BusinessScopeDO>> getMerchantScopeBySellerId(long sellerId,int domainId);
 	/**
 	 * 根据id集合获取商家的资质<br/>
 	 * @author zhangxy 24/05/2016
@@ -53,7 +53,7 @@ public interface ApplyService {
 	 * @param domainId
 	 * @return
 	 */
-	public MemResult<List<MerchantQualificationDO>> getMerchantQualificationBySellerId(long sellerId,int domainId);
+	public MemResult<List<QualificationDO>> getMerchantQualificationBySellerId(long sellerId,int domainId);
 	/**
 	 * 获取所有的经营范围<br/>
 	 * @author zhangxy 24/05/2016
@@ -92,7 +92,7 @@ public interface ApplyService {
      */
 	MemResult<List<BusinessScopeDO>> getBusinessScopesByIds(int domainId, List<Long> ids);
 
-	public MemResult<Boolean> submitExamineInfo(ExamineInfoDTO dto,MerchantScopeDO msDO);
+	public MemResult<Boolean> submitExamineInfo(ExamineInfoDTO dto);
 	/**
 	 * 
 	* created by zhangxy
@@ -104,7 +104,7 @@ public interface ApplyService {
 	* @return MemResult<Boolean>    返回类型 
 	* @throws
 	 */
-	public MemResult<Boolean> updateMerchantQualification(MerchantQualificationDO merchantQualification);
+	public MemResult<Boolean> updateMerchantQualification(ExamineInfoDTO dto);
 	/**
 	 * 
 	* created by zhangxy

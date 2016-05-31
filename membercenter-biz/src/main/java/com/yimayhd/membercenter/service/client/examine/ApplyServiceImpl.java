@@ -1,28 +1,19 @@
 package com.yimayhd.membercenter.service.client.examine;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.yimayhd.membercenter.entity.merchant.Merchant;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.alibaba.fastjson.JSON;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
-import com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO;
-import com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO;
-import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryDO;
-import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryScopeDO;
-import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
-import com.yimayhd.membercenter.client.domain.merchant.QualificationDO;
+import com.yimayhd.membercenter.client.domain.merchant.*;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.examine.ApplyService;
 import com.yimayhd.membercenter.manager.ApplyManager;
-import com.yimayhd.membercenter.manager.BusinessScopeManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ApplyServiceImpl implements ApplyService {
 	
@@ -30,10 +21,8 @@ public class ApplyServiceImpl implements ApplyService {
 
 	@Autowired
 	private ApplyManager applyManager;
-	@Autowired
-	private BusinessScopeManager businessScopeManager;
 	@Override
-	public MemResult<List<BusinessScopeDO>> getMerchantScopeBySellerId(long sellerId,int domainId) {
+	public MemResult<List<BusinessScopeDO>> getBusinessScopeBySellerId(long sellerId,int domainId) {
 		MemResult<List<BusinessScopeDO>> scopes = new MemResult<List<BusinessScopeDO>>();
 		if (sellerId <= 0 || domainId <= 0) {
 			log.error("params error:sellerId={} domainId={}",sellerId,domainId);

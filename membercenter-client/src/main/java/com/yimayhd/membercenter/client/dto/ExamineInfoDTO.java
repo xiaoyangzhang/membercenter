@@ -11,6 +11,10 @@ package com.yimayhd.membercenter.client.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
+import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -156,6 +160,24 @@ public class ExamineInfoDTO implements Serializable {
 	private String scenicQualityLevel;//景区质量等级证书
 	private String relationBetweenHotelAngGroup;//酒店与集团的所属关系说明
 	
+	
+	private List<MerchantQualificationDO> merchantQualifications;//商家与资质关联对象集合
+	private List<MerchantScopeDO> merchantScopes;//商家与经营范围关联对象集合
+	
+	
+	public List<MerchantQualificationDO> getMerchantQualifications() {
+		return merchantQualifications;
+	}
+	public void setMerchantQualifications(
+			List<MerchantQualificationDO> merchantQualifications) {
+		this.merchantQualifications = merchantQualifications;
+	}
+	public List<MerchantScopeDO> getMerchantScopes() {
+		return merchantScopes;
+	}
+	public void setMerchantScopes(List<MerchantScopeDO> merchantScopes) {
+		this.merchantScopes = merchantScopes;
+	}
 	public String getInterMediaryLicense() {
 		return interMediaryLicense;
 	}

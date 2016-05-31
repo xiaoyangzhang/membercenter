@@ -2,6 +2,7 @@ package com.yimayhd.membercenter.client.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class MerchantScopeDO implements Serializable {
     private long id;
@@ -17,8 +18,17 @@ public class MerchantScopeDO implements Serializable {
     private int status;
 
     private int domainId;
+    private List<Long> idList;
+    
+    public List<Long> getIdList() {
+		return idList;
+	}
 
-    private static final long serialVersionUID = 1L;
+	public void setIdList(List<Long> idList) {
+		this.idList = idList;
+	}
+
+	private static final long serialVersionUID = 1L;
 
     public long getId() {
         return id;

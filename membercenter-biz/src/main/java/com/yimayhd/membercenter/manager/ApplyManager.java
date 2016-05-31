@@ -67,14 +67,14 @@ public class ApplyManager {
 	private MerchantQualificationDao merchantQualificationDao;
 	@Autowired
 	private MerchantCategoryDao merchantCategoryDao;
-	public MemResult<List<BusinessScopeDO>> getAllBusinessScope(int domainId) {
+	public MemResult<List<BusinessScopeDO>> getBusinessScope(BusinessScopeDO businessScope) {
 		//List<BusinessScopeDO> businessScopeList = new ArrayList<BusinessScopeDO>();
 //		if (domainId <= 0) {
 //			
 //			return MemResult.buildFailResult(-1, "参数错误", null);
 //		}
 		MemResult<List<BusinessScopeDO>> result = new MemResult<List<BusinessScopeDO>>();
-		List<BusinessScopeDO> businessScopeList = businessScopeDao.getAllBusinessScope(domainId);
+		List<BusinessScopeDO> businessScopeList = businessScopeDao.getBusinessScope(businessScope);
 		 if(businessScopeList == null) {
 			 result.setReturnCode(MemberReturnCode.BUSINESS_SCOPE_FAILED);
 			 return result;
@@ -84,13 +84,13 @@ public class ApplyManager {
 
 	}
 
-	public MemResult<List<QualificationDO>> getAllQualification(int domainId) {
+	public MemResult<List<QualificationDO>> getQualification(QualificationDO qualification) {
 		//List<QualificationDO> qualificationList = new ArrayList<QualificationDO>();
 //		if (domainId <= 0) {
 //			return MemResult.buildFailResult(-1, "参数错误", null);
 //		}
 		MemResult<List<QualificationDO>> result = new MemResult<List<QualificationDO>>();
-		List<QualificationDO> qualificationList = qualificationDao.getAllQualification(domainId);
+		List<QualificationDO> qualificationList = qualificationDao.getQualification(qualification);
 		if (qualificationList == null) {
 			result.setReturnCode(MemberReturnCode.QUALIFICATION_FAILED);
 			return result;
@@ -99,13 +99,13 @@ public class ApplyManager {
 		return result;
 	}
 
-	public MemResult<List<CategoryQualificationDO>> getQualificationByMerchantCategoryId(long merchantCategoryId,int domainId) {
+	public MemResult<List<CategoryQualificationDO>> getCategoryQualification(CategoryQualificationDO categoryQua) {
 //		if (merchantCategoryId <=0 || domainId <= 0) {
 //			return MemResult.buildFailResult(-1, "参数错误", null);
 //		}
 		MemResult<List<CategoryQualificationDO>> result = new MemResult<List<CategoryQualificationDO>>();
 
-		List<CategoryQualificationDO> qualifications = categoryQualificationDao.getCATGQualificationByMerchantCATGId(merchantCategoryId, domainId);
+		List<CategoryQualificationDO> qualifications = categoryQualificationDao.getCategoryQualification(categoryQua);
 		if (qualifications == null) {
 			result.setReturnCode(MemberReturnCode.CATEGORY_QUALIFICATION_FAILED);
 			return result;
@@ -114,12 +114,12 @@ public class ApplyManager {
 		return result;
 
 	}
-	public MemResult<List<MerchantCategoryScopeDO>> getScopeByMerchantCategoryId(long merchantCategoryId,int domainId) {
+	public MemResult<List<MerchantCategoryScopeDO>> getMerchantCategoryScope(MerchantCategoryScopeDO merchantCategoryScope) {
 //		if (merchantCategoryId <=0 || domainId <= 0) {
 //			return MemResult.buildFailResult(-1, "参数错误", null);
 //		}
 		MemResult<List<MerchantCategoryScopeDO>> result = new MemResult<List<MerchantCategoryScopeDO>>();
-		List<MerchantCategoryScopeDO> scopes = merchantCategoryScopeDao.getMerchantCategoryScopeByMerchantCategoryId(merchantCategoryId, domainId);
+		List<MerchantCategoryScopeDO> scopes = merchantCategoryScopeDao.getMerchantCategoryScope(merchantCategoryScope);
 		if (scopes == null) {
 			result.setReturnCode(MemberReturnCode.CATEGORY_BUSINESS_SCOPE_FAILED);
 			return result;
@@ -127,12 +127,12 @@ public class ApplyManager {
 		result.setValue(scopes);
 		return result;
 	}
-	public MemResult<List<MerchantScopeDO>> getBusinessScopeBySellerId(long sellerId,int domainId) {
+	public MemResult<List<MerchantScopeDO>> getMerchantScope(MerchantScopeDO merchantScope) {
 //		if (sellerId <=0 || domainId <= 0) {
 //			return MemResult.buildFailResult(-1, "参数错误", null);
 //		}
 		MemResult<List<MerchantScopeDO>> result = new MemResult<List<MerchantScopeDO>>();
-		List<MerchantScopeDO> merchantScopes = merchantScopeDao.getMerchantScopeBySellerId(sellerId, domainId);
+		List<MerchantScopeDO> merchantScopes = merchantScopeDao.getMerchantScope(merchantScope);
 		if (merchantScopes == null) {
 			result.setReturnCode(MemberReturnCode.MERCHANT_SCOPE_FAILED);
 			return result;
@@ -141,9 +141,9 @@ public class ApplyManager {
 		return result;
 	}
 
-	public MemResult<List<MerchantQualificationDO>> getMerchantQualificationBySellerId(long sellerId,int domainId) {
+	public MemResult<List<MerchantQualificationDO>> getMerchantQualification(MerchantQualificationDO merchantQualification) {
 		MemResult<List<MerchantQualificationDO>> result = new MemResult<List<MerchantQualificationDO>>();
-		List<MerchantQualificationDO> merchantQualifications = merchantQualificationDao.getMerchantQualificationBySellerId(sellerId, domainId);
+		List<MerchantQualificationDO> merchantQualifications = merchantQualificationDao.getMerchantQualification(merchantQualification);
 		if (merchantQualifications == null) {
 			result.setReturnCode(MemberReturnCode.MERCHANT_QUALIFICATION_FAILED);
 			return result;
@@ -207,10 +207,10 @@ public class ApplyManager {
 
 	}
 
-	public MemResult<List<BusinessScopeDO>> getBusinessScopesByIds(int domainId, List<Long> ids) {
+	public MemResult<List<BusinessScopeDO>> getBusinessScopes(BusinessScopeDO businessScope) {
 		MemResult<List<BusinessScopeDO>> result = new MemResult<>();
 
-		List<BusinessScopeDO> businessScopeDOs = businessScopeDao.getBusinessScopesByScope(domainId,ids);
+		List<BusinessScopeDO> businessScopeDOs = businessScopeDao.getBusinessScope(businessScope);
 		if(businessScopeDOs.isEmpty()) {
 			result.setReturnCode(MemberReturnCode.BUSINESS_SCOPE_FAILED);
 			return result;
@@ -267,30 +267,30 @@ public class ApplyManager {
 //		result.setValue(businessScopes);
 //		return result;
 //	}
-	public MemResult<List<MerchantCategoryDO>> getAllMerchantCategory(int domainId) {
-		MemResult<List<MerchantCategoryDO>> result = new MemResult<List<MerchantCategoryDO>>();
-		if (domainId <= 0) {
-			log.error("param :domainId={}",domainId);
-			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
-			return result;
-		}
-		List<MerchantCategoryDO> merchantCategories = merchantCategoryDao.getAllMerchantCategory(domainId);
-		if (merchantCategories == null) {
-			result.setReturnCode(MemberReturnCode.MERCHANT_SCOPE_FAILED);
-			return result;
-		}
-		result.setValue(merchantCategories);
-		return result;
-	}
-	public MemResult<List<QualificationDO>> getQualificationByIds(List<Long> idList,int domainId) {
+//	public MemResult<List<MerchantCategoryDO>> getAllMerchantCategory(int domainId) {
+//		MemResult<List<MerchantCategoryDO>> result = new MemResult<List<MerchantCategoryDO>>();
+//		if (domainId <= 0) {
+//			log.error("param :domainId={}",domainId);
+//			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+//			return result;
+//		}
+//		List<MerchantCategoryDO> merchantCategories = merchantCategoryDao.getAllMerchantCategory(domainId);
+//		if (merchantCategories == null) {
+//			result.setReturnCode(MemberReturnCode.MERCHANT_SCOPE_FAILED);
+//			return result;
+//		}
+//		result.setValue(merchantCategories);
+//		return result;
+//	}
+	/*public MemResult<List<QualificationDO>> getQualificationAfterMer(QualificationDO qualification) {
 		MemResult<List<QualificationDO>> result = new MemResult<List<QualificationDO>>();
-		if (idList == null || domainId <= 0 ) {
-			log.error("params error:idList={} domainId={}",idList,domainId);
+		if (qualification == null  ) {
+			log.error("params error:qualification={} ",JSON.toJSONString(qualification));
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 			return result;
 		}
 		try {
-			List<QualificationDO> qualifications = qualificationDao.getQualificationByIds(idList, domainId);
+			List<QualificationDO> qualifications = qualificationDao.getQualification(qualification);
 			if (qualifications == null) {
 				log.error("result:qualifications={}",qualifications);
 				result.setReturnCode(MemberReturnCode.MERCHANT_QUALIFICATION_FAILED);
@@ -299,20 +299,20 @@ public class ApplyManager {
 			result.setValue(qualifications);
 			return result;
 		} catch (Exception e) {
-			log.error("params:idList={} domainId={} error:{}",idList,domainId,e);
+			log.error("params :qualification={} error:{} ",JSON.toJSONString(qualification),e);
 			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
 			return result;
 		}
-	}
+	}*/
 
-	public MemResult<MerchantCategoryDO> getMerchantCategory(long id, int domianId) {
-		MemResult<MerchantCategoryDO> result = new MemResult<>();
-		MerchantCategoryDO merchantCategoryDO = merchantCategoryDao.getMerchantCategoriesById(domianId, id);
+	public MemResult<List<MerchantCategoryDO>> getMerchantCategory(MerchantCategoryDO merchantCategory) {
+		MemResult<List<MerchantCategoryDO>> result = new MemResult<List<MerchantCategoryDO>>();
+		List<MerchantCategoryDO> merchantCategoryDO = merchantCategoryDao.getMerchantCategoriesById(merchantCategory);
 		if(null == merchantCategoryDO) {
 			result.setReturnCode(MemberReturnCode.BUSINESS_CATEGORY_FAILED);
 			return result;
 		}
-		result.setValue(merchantCategoryDao.getMerchantCategoriesById(domianId, id));
+		result.setValue(merchantCategoryDO);
 		return result;
 	}
 }

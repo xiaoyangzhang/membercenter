@@ -22,15 +22,14 @@ public interface MerchantCategoryScopeDOMapper {
      * 
     * created by zhangxy
     * @date 2016年5月25日
-    * @Title: getMerchantCategoryScopeByMerchantCategoryId 
-    * @Description: 根据商家类目id获取经营范围
-    * @param  merchantCategoryId
-    * @param  domainId
+    * @Title: getMerchantCategoryScope 
+    * @Description: 获取经营范围
+    * @param  merchantCategoryScopeDO
     * @param     设定文件 
     * @return List<MerchantCategoryScopeDO>    返回类型 
     * @throws
      */
-    public List<MerchantCategoryScopeDO> getMerchantCategoryScopeByMerchantCategoryId(@Param("merchantCategoryId")long merchantCategoryId,@Param("domainId")int domainId);
+    public List<MerchantCategoryScopeDO> getMerchantCategoryScope(@Param("merchantCategoryScope")MerchantCategoryScopeDO merchantCategoryScopeDO);
 
     /**
      * 根据scopeIds查询category集合
@@ -38,5 +37,5 @@ public interface MerchantCategoryScopeDOMapper {
      * @param domainId
      * @return
      */
-    List<MerchantCategoryScopeDO> getMerchantCatergoryScopesByScopeIds(@Param("scopeIds") long[] scopeIds, @Param("domainId") int domainId);
+   // List<MerchantCategoryScopeDO> getMerchantCatergoryScopesByScopeIds(@Param("scopeIds") long[] scopeIds, @Param("domainId") int domainId);
 }

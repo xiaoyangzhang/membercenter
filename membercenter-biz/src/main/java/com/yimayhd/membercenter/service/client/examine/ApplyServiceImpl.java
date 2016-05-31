@@ -8,6 +8,7 @@ import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.examine.ApplyService;
 import com.yimayhd.membercenter.manager.ApplyManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +23,16 @@ public class ApplyServiceImpl implements ApplyService {
 	@Autowired
 	private ApplyManager applyManager;
 	@Override
-	public MemResult<List<BusinessScopeDO>> getBusinessScopeBySellerId(long sellerId,int domainId) {
+	public MemResult<List<BusinessScopeDO>> getBusinessScopesBySellerId(MerchantScopeDO merchantScope) {
 		MemResult<List<BusinessScopeDO>> scopes = new MemResult<List<BusinessScopeDO>>();
-		if (sellerId <= 0 || domainId <= 0) {
-			log.error("params error:sellerId={} domainId={}",sellerId,domainId);
+		if (merchantScope == null) {
+			log.error("params error:merchantScope={}",JSON.toJSONString(merchantScope));
 			scopes.setReturnCode(MemberReturnCode.PARAMTER_ERROR);;
 			return scopes;
 		}
 		try {
-			  MemResult<List<MerchantScopeDO>> result = applyManager.getBusinessScopeBySellerId(sellerId, domainId);
-			  if (result == null || !result.isSuccess()) {
+			  MemResult<List<MerchantScopeDO>> result = applyManager.getMerchantScope(merchantScope);
+			  if (result == null || !result.isSuccess() || result.getValue() == null) {
 				scopes.setReturnCode(MemberReturnCode.MERCHANT_SCOPE_FAILED);
 				return scopes;
 			}
@@ -39,101 +40,105 @@ public class ApplyServiceImpl implements ApplyService {
 			for (MerchantScopeDO msDO : result.getValue()) {
 				idList.add(msDO.getId());
 			}
-			scopes = applyManager.getBusinessScopesByIds(domainId, idList);
+			BusinessScopeDO businessScope = new BusinessScopeDO();
+			businessScope.setIdList(idList);
+			businessScope.setDomainId(merchantScope.getDomainId());
+			//businessScope.set
+			scopes = applyManager.getBusinessScope(businessScope);
 			return scopes;
 		} catch (Exception e) {
-			log.error("param :sellerId={} domainId={} error :{}",sellerId,domainId,e);
+			log.error("param :merchantScope={} error :{}",JSON.toJSONString(merchantScope),e);
 			scopes.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
 			return scopes;
 		}
 	}
 
-	@Override
-	public MemResult<List<BusinessScopeDO>> getAllBusinessScope(int domainId) {
-		MemResult<List<BusinessScopeDO>> result = new MemResult<List<BusinessScopeDO>>();
-		if (domainId <= 0) {
-			log.error(" param error : domainId={}",domainId);
-			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
-			return result;
-		}
-		try {
-			result = applyManager.getAllBusinessScope(domainId);
-			return result;
-		} catch (Exception e) {
-			log.error("param : domainId={} error :{}",domainId,e);
-			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
-			return result;
-		}
-	}
+//	@Override
+//	public MemResult<List<BusinessScopeDO>> getBusinessScope(BusinessScopeDO businessScope) {
+//		MemResult<List<BusinessScopeDO>> result = new MemResult<List<BusinessScopeDO>>();
+//		if (businessScope == null) {
+//			log.error(" param error : businessScope={}",JSON.toJSONString(businessScope));
+//			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+//			return result;
+//		}
+//		try {
+//			result = applyManager.getBusinessScope(businessScope);
+//			return result;
+//		} catch (Exception e) {
+//			log.error("param : businessScope={} error :{}",JSON.toJSONString(businessScope),e);
+//			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+//			return result;
+//		}
+//	}
+//
+//	@Override
+//	public MemResult<List<QualificationDO>> getAllQualification(int domainId) {
+//		MemResult<List<QualificationDO>> result = new MemResult<List<QualificationDO>>();
+//		if (domainId <= 0) {
+//			log.error(" param error : domainId={}",domainId);
+//			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+//			return result;
+//		}
+//		try {
+//			result = applyManager.getAllQualification(domainId);
+//			return result;
+//		} catch (Exception e) {
+//			log.error("param : domainId={} error :{}",domainId,e);
+//			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+//			return result;
+//		}
+//	}
 
 	@Override
-	public MemResult<List<QualificationDO>> getAllQualification(int domainId) {
-		MemResult<List<QualificationDO>> result = new MemResult<List<QualificationDO>>();
-		if (domainId <= 0) {
-			log.error(" param error : domainId={}",domainId);
-			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
-			return result;
-		}
-		try {
-			result = applyManager.getAllQualification(domainId);
-			return result;
-		} catch (Exception e) {
-			log.error("param : domainId={} error :{}",domainId,e);
-			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
-			return result;
-		}
-	}
-
-	@Override
-	public MemResult<List<MerchantCategoryScopeDO>> getBusinessScopeByMerchantCategoryId(
-			long merchantCategoryId, int domainId) {
+	public MemResult<List<MerchantCategoryScopeDO>> getMerchantCategoryScope(
+			MerchantCategoryScopeDO merchantCategoryScope) {
 		MemResult<List<MerchantCategoryScopeDO>> result = new MemResult<List<MerchantCategoryScopeDO>>();
-		if (domainId <= 0 || merchantCategoryId <= 0) {
-			log.error(" param error : domainId={} merchantCategoryId={}",domainId,merchantCategoryId);
+		if ( merchantCategoryScope == null) {
+			log.error(" param error : MerchantCategoryScopeDO merchantCategoryScope={}",JSON.toJSONString(merchantCategoryScope));
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 			return result;
 		}
 		try {
-			result = applyManager.getScopeByMerchantCategoryId(merchantCategoryId, domainId);
+			result = applyManager.getMerchantCategoryScope(merchantCategoryScope);
 			return result;
 		} catch (Exception e) {
-			log.error("param : domainId={} merchantCategoryId={} error :{}",domainId,merchantCategoryId,e);
+			log.error("param : MerchantCategoryScopeDO merchantCategoryScope={} error :{}",JSON.toJSONString(merchantCategoryScope),e);
 			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
 			return result;
 		}
 	}
 
 	@Override
-	public MemResult<List<CategoryQualificationDO>> getQualificationByMerchantCategoryId(
-			long merchantCategoryId, int domainId) {
+	public MemResult<List<CategoryQualificationDO>> getCategoryQualification(
+			CategoryQualificationDO categoryQualificationDO) {
 		MemResult<List<CategoryQualificationDO>> result = new MemResult<List<CategoryQualificationDO>>();
-		if (domainId <= 0 || merchantCategoryId <= 0) {
-			log.error(" param error : domainId={} merchantCategoryId={}",domainId,merchantCategoryId);
+		if (categoryQualificationDO == null) {
+			log.error(" param error : categoryQualificationDO={}",JSON.toJSONString(categoryQualificationDO));
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 			return result;
 		}
 		try {
-			result = applyManager.getQualificationByMerchantCategoryId(merchantCategoryId, domainId);
+			result = applyManager.getCategoryQualification(categoryQualificationDO);
 			return result;
 		} catch (Exception e) {
-			log.error("param : domainId={} merchantCategoryId={} error :{}",domainId,merchantCategoryId,e);
+			log.error(" param error : categoryQualificationDO={} error:{}",JSON.toJSONString(categoryQualificationDO),e);
 			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
 			return result;
 		}
 	}
 
 	@Override
-	public MemResult<List<QualificationDO>> getMerchantQualificationBySellerId(
-			long sellerId, int domainId) {
+	public MemResult<List<QualificationDO>> getQualificationBySellerId(
+			MerchantQualificationDO merchantQualification) {
 		MemResult<List<QualificationDO>> qualifications = new MemResult<List<QualificationDO>>();
-		if (domainId <= 0 || sellerId <= 0) {
-			log.error(" param error : domainId={} sellerId={}",domainId,sellerId);
+		if (merchantQualification == null) {
+			log.error(" param error : merchantQualification={} ",JSON.toJSONString(merchantQualification));
 			qualifications.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 			return qualifications;
 		}
 		try {
-			 MemResult<List<MerchantQualificationDO>> result = applyManager.getMerchantQualificationBySellerId(sellerId, domainId);
-			if (!result.isSuccess()) {
+			 MemResult<List<MerchantQualificationDO>> result = applyManager.getMerchantQualification(merchantQualification);
+			if (result == null || !result.isSuccess() || result.getValue() == null ) {
 				qualifications.setReturnCode(MemberReturnCode.MERCHANT_QUALIFICATION_FAILED);
 				return qualifications;
 			}
@@ -141,10 +146,14 @@ public class ApplyServiceImpl implements ApplyService {
 			for (MerchantQualificationDO mqDO : result.getValue()) {
 				idList.add(mqDO.getId());
 			}
-			 qualifications = applyManager.getQualificationByIds(idList, domainId);
+			QualificationDO qualification = new QualificationDO();
+			qualification.setIdList(idList);
+			qualification.setDomainId(merchantQualification.getDomainId());
+			//qualification.set
+			 qualifications = applyManager.getQualification(qualification);
 			return qualifications;
 		} catch (Exception e) {
-			log.error("param : domainId={} sellerId={} error :{}",domainId,sellerId,e);
+			log.error("param : merchantQualification={} error :{}",JSON.toJSONString(merchantQualification),e);
 			qualifications.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
 			return qualifications;
 		}
@@ -188,75 +197,75 @@ public class ApplyServiceImpl implements ApplyService {
 	}
 
 	@Override
-	public MemResult<List<QualificationDO>> getQualificationByIds(
-			List<Long> idList, int domainId) {
+	public MemResult<List<QualificationDO>> getQualification(
+			QualificationDO qualification) {
 		MemResult<List<QualificationDO>> result = new MemResult<List<QualificationDO>>();
-		if (idList == null || domainId <= 0) {
-			log.error("params error:idList={} domainId={}",idList,domainId);
+		if (qualification == null) {
+			log.error("params error:qualification={} ",JSON.toJSONString(qualification));
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 			return result;
 		}
 		try {
-			result = applyManager.getQualificationByIds(idList, domainId);
+			result = applyManager.getQualification(qualification);
 			return result;
 		} catch (Exception e) {
-			log.error("params :idList={} domainId={} error:{}",idList,domainId,e);
+			log.error("params :qualification={} error:{}",JSON.toJSONString(qualification),e);
 			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
 			return result;
 		}
 	}
 
 	@Override
-	public MemResult<List<BusinessScopeDO>> getBusinessScopeByIds(
-			List<Long> idList, int domainId) {
+	public MemResult<List<BusinessScopeDO>> getBusinessScope(
+			BusinessScopeDO businessScope) {
 		MemResult<List<BusinessScopeDO>> result = new MemResult<List<BusinessScopeDO>>();
-		if (idList == null || domainId <= 0) {
-			log.error("params error:idList={} domainId={}",idList,domainId);
+		if (businessScope == null) {
+			log.error("params error:businessScope={}",JSON.toJSONString(businessScope));
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 			return result;
 		}
 		
 		try {
-			result = applyManager.getBusinessScopesByIds(domainId, idList);
+			result = applyManager.getBusinessScope(businessScope);
 			return result;
 		} catch (Exception e) {
-			log.error("params :idList={} domainId={} error:{}",idList,domainId,e);
+			log.error("params :businessScope={} error:{}",JSON.toJSONString(businessScope),e);
 			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
 			return result;
 		}
 	}
 
-	@Override
-	public MemResult<List<BusinessScopeDO>> getBusinessScopesByIds(int domainId, List<Long> ids) {
-		MemResult<List<BusinessScopeDO>> result = new MemResult<>();
-		if (domainId <= 0 || ids == null || ids.size() == 0) {
-			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
-		}
-		result = applyManager.getBusinessScopesByIds(domainId, ids);
-		return result;
-	}
+//	@Override
+//	public MemResult<List<BusinessScopeDO>> getBusinessScopesByIds(int domainId, List<Long> ids) {
+//		MemResult<List<BusinessScopeDO>> result = new MemResult<>();
+//		if (domainId <= 0 || ids == null || ids.size() == 0) {
+//			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+//		}
+//		result = applyManager.getBusinessScopesByIds(domainId, ids);
+//		return result;
+//	}
 
-	public MemResult<List<MerchantCategoryDO>> getAllMerchantCategory(
-			int domainId) {
-		MemResult<List<MerchantCategoryDO>> result = new MemResult<List<MerchantCategoryDO>>();
-		if (domainId <= 0 ) {
-			log.error("param error:domainId={}",domainId);
-			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
-			return result;
-		}
-		try {
-			result = applyManager.getAllMerchantCategory(domainId);
-			return result;
-		} catch (Exception e) {
-			log.error("params : domainId={} error:{}",domainId,e);
-			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
-			return result;
-		}
-	}
+//	public MemResult<List<MerchantCategoryDO>> getAllMerchantCategory(
+//			int domainId) {
+//		MemResult<List<MerchantCategoryDO>> result = new MemResult<List<MerchantCategoryDO>>();
+//		if (domainId <= 0 ) {
+//			log.error("param error:domainId={}",domainId);
+//			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+//			return result;
+//		}
+//		try {
+//			result = applyManager.getAllMerchantCategory(domainId);
+//			return result;
+//		} catch (Exception e) {
+//			log.error("params : domainId={} error:{}",domainId,e);
+//			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+//			return result;
+//		}
+//	}
 
 	@Override
-	public MemResult<MerchantCategoryDO> getMerchantCategory(int domainId, long id) {
-		return applyManager.getMerchantCategory(id,domainId);
+	public MemResult<List<MerchantCategoryDO>> getMerchantCategory(MerchantCategoryDO merchantCategory) {
+		return applyManager.getMerchantCategory(merchantCategory);
 	}
 
 }

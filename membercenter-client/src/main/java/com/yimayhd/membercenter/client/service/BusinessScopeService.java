@@ -9,5 +9,5 @@ import com.yimayhd.membercenter.client.result.MemResult;
  * Created by hanlei on 2016/5/24.  
  */
 public interface BusinessScopeService {
-	MemResult<List<BusinessScopeDO>> findBusinessScopesByScope(int domainId, List<Long> scopeIds);
+	MemResult<List<BusinessScopeDO>> findBusinessScopesByScope(BusinessScopeDO businessScope);
 }

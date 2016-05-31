@@ -19,7 +19,7 @@ public interface MerchantCategoryDOMapper {
 
     int updateByPrimaryKey(MerchantCategoryDO record);
     
-    public List<MerchantCategoryDO> getAllMerchantCategory(@Param("domainId")int domainId);
+   //public List<MerchantCategoryDO> getAllMerchantCategory(@Param("domainId")int domainId);
 
-    MerchantCategoryDO getMerchantCategoriesById(@Param("domainId") int domainId, @Param("id") long id);
+    List<MerchantCategoryDO> getMerchantCategories(@Param("category") MerchantCategoryDO merchantCategory);
 }

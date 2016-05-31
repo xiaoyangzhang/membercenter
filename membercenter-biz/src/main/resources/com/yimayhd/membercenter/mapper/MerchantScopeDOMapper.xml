@@ -98,13 +98,13 @@
       domain_id = #{domainId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <!-- <select id="getBusinessScopeBySellerId" resultMap="BaseResultMap">
+   <select id="getMerchantScope" parameterType="com.yimayhd.membercenter.client.domain.MerchantScopeDO" resultMap="BaseResultMap">
   	select id,business_scope_id from merchant_scope
-  	where domain_id=#{domainId}
-  	<if test="sellerId != null">
-  		and seller_id=#{sellerId}
+  	where domain_id=#{merchantScope.domainId}
+  	<if test="merchantScope.sellerId != null">
+  		and seller_id=#{merchantScope.sellerId}
   	</if>
-  </select>
+  </select><!--
   <insert id="insertBatch" parameterType="java.util.List">  
    
     insert into merchant_scope (seller_id, business_scope_id, gmt_created, gmt_modified, status, domain_id ) values  

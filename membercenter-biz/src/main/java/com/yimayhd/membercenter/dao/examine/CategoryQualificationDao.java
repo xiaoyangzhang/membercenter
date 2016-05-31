@@ -19,14 +19,18 @@ public class CategoryQualificationDao {
  
 	@Autowired
 	private CategoryQualificationDOMapper categoryQualificationDOMapper;
-	public List<CategoryQualificationDO> getCATGQualificationByMerchantCATGId(long merchantCategoryId,int domainId) {
+	//public List<CategoryQualificationDO> getCATGQualificationByMerchantCATGId(long merchantCategoryId,int domainId) {
 //		if (merchantCategoryId <=0 || domainId <= 0) {
 //			return null;
 //		}
-		List<CategoryQualificationDO> qualifications = categoryQualificationDOMapper.getQualificationIdsByMerchantCategoryId(merchantCategoryId, domainId);
+	//	List<CategoryQualificationDO> qualifications = categoryQualificationDOMapper.getQualificationIdsByMerchantCategoryId(merchantCategoryId, domainId);
 //		if (qualifications == null) {
 //			return null;
 //		}
-		return qualifications;
+//		return qualifications;
+//	}
+	
+	public List<CategoryQualificationDO> getCategoryQualification(CategoryQualificationDO categoryQua) {
+		return categoryQualificationDOMapper.getCategoryQualification(categoryQua);
 	}
 }

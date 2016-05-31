@@ -2,6 +2,7 @@ package com.yimayhd.membercenter.client.domain.merchant;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class QualificationDO implements Serializable {
     private long id;
@@ -20,8 +21,17 @@ public class QualificationDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private int domainId;
+    private List<Long> idList;
     
-    public int getDomainId() {
+    public List<Long> getIdList() {
+		return idList;
+	}
+
+	public void setIdList(List<Long> idList) {
+		this.idList = idList;
+	}
+
+	public int getDomainId() {
 		return domainId;
 	}
 

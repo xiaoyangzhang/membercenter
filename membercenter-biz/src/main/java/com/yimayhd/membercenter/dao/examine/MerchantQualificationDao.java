@@ -52,7 +52,7 @@ public class MerchantQualificationDao {
 
 	
 	
-	public List<MerchantQualificationDO> getMerchantQualificationBySellerId(long sellerId,int domainId) {
-		return merchantQualificationDOMapper.getMerchantQualificationBySellerId(sellerId, domainId);
+	public List<MerchantQualificationDO> getMerchantQualification(MerchantQualificationDO merchantQualification) {
+		return merchantQualificationDOMapper.getMerchantQualification(merchantQualification);
 	}
 }

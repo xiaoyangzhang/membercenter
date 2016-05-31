@@ -19,11 +19,13 @@ public interface CategoryQualificationDOMapper {
 
     int updateByPrimaryKey(CategoryQualificationDO record);
    /**
-    * 根据商家类目id查询需要上传的资质id集合
-    * @param merchantCategoryId 商家类目
+    * 获取商家身份与资质的关联对象集合
+    * @param categoryQualificationDO 
     * @param domainId
     * @return
     */
     
-    public List<CategoryQualificationDO> getQualificationIdsByMerchantCategoryId(@Param("categoryId")long merchantCategoryId,@Param("domainId")int domainId);
+  //  public List<CategoryQualificationDO> getQualificationIdsByMerchantCategoryId(@Param("categoryId")long merchantCategoryId,@Param("domainId")int domainId);
+    
+    public List<CategoryQualificationDO> getCategoryQualification(@Param("category")CategoryQualificationDO categoryQualificationDO);
 }

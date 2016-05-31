@@ -19,21 +19,21 @@ public class QualificationDao {
 
 	@Autowired
 	private QualificationDOMapper qualificationDOMapper;
-	public List<QualificationDO> getAllQualification(int domainId) {
+	public List<QualificationDO> getQualification(QualificationDO qualification) {
 		//List<QualificationDO> qualificationList = new ArrayList<QualificationDO>();
 //		if (domainId <= 0) {
 //			return null;
 			//return MemResult.buildFailResult(-1, "参数错误", qualificationList);
 	//	}
-		List<QualificationDO> qualificationList = qualificationDOMapper.selectAllQualifications(domainId);
+		List<QualificationDO> qualificationList = qualificationDOMapper.getQualification(qualification);
 //		if (qualificationList == null) {
 //			return null;
 //		}
 		//return MemResult.buildSuccessResult(qualificationList);
 		return qualificationList;
 	}
-	public List<QualificationDO> getQualificationByIds(List<Long> idList,int domainId) {
-		return qualificationDOMapper.getQualificationByIds(idList, domainId);
-	}
+//	public List<QualificationDO> getQualificationByIds(List<Long> idList,int domainId) {
+//		return qualificationDOMapper.getQualificationByIds(idList, domainId);
+//	}
 	
 }

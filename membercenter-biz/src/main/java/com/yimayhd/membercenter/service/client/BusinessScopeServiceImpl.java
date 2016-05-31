@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.alibaba.fastjson.JSON;
 import com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.BusinessScopeService;
@@ -22,12 +23,12 @@ public class BusinessScopeServiceImpl implements BusinessScopeService {
 	private BusinessScopeManager businessScopeManager;
 
 	@Override
-	public MemResult<List<BusinessScopeDO>> findBusinessScopesByScope(int domainId, List<Long> scopeIds) {
-        if (null == scopeIds || scopeIds.size() <= 0) {
-            LOGGER.info("businessScopeDOs not found by scopeIds={}", scopeIds);
+	public MemResult<List<BusinessScopeDO>> findBusinessScopesByScope(BusinessScopeDO businessScope) {
+        if (businessScope == null) {
+            LOGGER.info("businessScopeDOs not found by businessScope={}", JSON.toJSONString(businessScope));
             return MemResult.buildFailResult(0, "参数为空", null);
         }
-		List<BusinessScopeDO> businessScopeDOs = businessScopeManager.getBusinessScopesByScope(domainId, scopeIds);
+		List<BusinessScopeDO> businessScopeDOs = businessScopeManager.getBusinessScopesByScope(businessScope);
 		MemResult<List<BusinessScopeDO>> result = new MemResult<>();
 		result.setValue(businessScopeDOs);
 		return result;

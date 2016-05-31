@@ -20,8 +20,26 @@ public class CategoryQualificationDO implements Serializable {
 
     private Date gmtModified;
     private int domainId;
+    private long businessScopeId;
+    private byte isDirectSale;
     
-    public int getDomainId() {
+    public long getBusinessScopeId() {
+		return businessScopeId;
+	}
+
+	public void setBusinessScopeId(long businessScopeId) {
+		this.businessScopeId = businessScopeId;
+	}
+
+	public byte getIsDirectSale() {
+		return isDirectSale;
+	}
+
+	public void setIsDirectSale(byte isDirectSale) {
+		this.isDirectSale = isDirectSale;
+	}
+
+	public int getDomainId() {
 		return domainId;
 	}
 

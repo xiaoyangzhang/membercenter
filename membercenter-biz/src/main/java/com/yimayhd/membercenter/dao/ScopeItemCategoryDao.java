@@ -16,4 +16,8 @@ public class ScopeItemCategoryDao {
 	public List<ScopeItemCategoryDO> getScopeItemCategoriesByMerchantScope(int domainId, long[] scopeIds) {
 		return scopeItemCategoryDOMapper.selectByMerchantScope(domainId, scopeIds);
 	}
+
+	public List<ScopeItemCategoryDO> getScopeItemCategoriesByCategory(int domainId, long[] categoryIds) {
+		return scopeItemCategoryDOMapper.selectByCategory(domainId, categoryIds);
+	}
 }

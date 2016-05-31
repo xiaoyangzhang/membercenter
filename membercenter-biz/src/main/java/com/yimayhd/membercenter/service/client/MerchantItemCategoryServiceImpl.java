@@ -31,24 +31,37 @@ public class MerchantItemCategoryServiceImpl implements MerchantItemCategoryServ
     @Autowired
     ExamineDOMapper examineDOMapper;
     @Autowired
-    private MerchantRepo merchantRepo;
-    @Autowired
     private MerchantItemCategoryManager merchantItemCategoryManager;
     @Autowired
     private ExamineDealService examineDealService;
     
 	@Override
-	public MemResult<List<MerchantItemCategoryDO>> findMerchantItemCategoriesByMerchant(int domainId, long examineId) {
-		// TODO Auto-generated method stub
-		return null;
+	public MemResult<List<MerchantItemCategoryDO>> findMerchantItemCategoriesByExamineId(int domainId, long examineId) {
+		MemResult<List<MerchantItemCategoryDO>> merchantItemCategoryResult = new MemResult<>();
+		if(domainId <= 0 || examineId <= 0) {
+			merchantItemCategoryResult.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return merchantItemCategoryResult;
+		}
+		MemResult<ExamineInfoDTO> examineInfoMemResult = examineDealService.queryMerchantExamineInfoById(examineId);
+		ExamineDO examineDO = ExamineConverter.examinDTOToDO(examineInfoMemResult.getValue());
+		if(examineDO == null) {
+			merchantItemCategoryResult.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
+			return merchantItemCategoryResult;
+		}
+		List<MerchantItemCategoryDO> merchantItemCategoryDOs = merchantItemCategoryManager.findMerchantItemCategoryByMerchant(domainId, examineDO.getSellerId());
+		merchantItemCategoryResult.setValue(merchantItemCategoryDOs);
+		return merchantItemCategoryResult;
 	}
 
 	@Override
-	public MemResultSupport saveMerchantItemCategoriesByMerchant(int domainId, long examineId, long[] categoryIds) {
-
+	public MemResultSupport saveMerchantItemCategories(int domainId, long examineId, long[] categoryIds) {
+		MemResultSupport memResultSupport = new MemResultSupport();
+		if(domainId <= 0 || examineId <= 0 || null == categoryIds || categoryIds.length == 0) {
+			memResultSupport.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return memResultSupport;
+		}
 		MemResult<ExamineInfoDTO> examineInfoMemResult = examineDealService.queryMerchantExamineInfoById(examineId);
 		ExamineDO examineDO = ExamineConverter.examinDTOToDO(examineInfoMemResult.getValue());
-		MemResultSupport memResultSupport = new MemResultSupport();
 		if(examineDO == null) {
 			memResultSupport.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
 			return memResultSupport;

@@ -19,6 +19,13 @@
     from merchant_item_category
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByMerchant" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from merchant_item_category
+    where domain_id = #{domainId,jdbcType=INTEGER}
+    and seller_id = #{sellerId,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="long" >
     delete from merchant_item_category
     where id = #{id,jdbcType=BIGINT}

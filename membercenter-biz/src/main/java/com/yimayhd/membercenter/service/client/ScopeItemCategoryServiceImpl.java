@@ -24,19 +24,39 @@ public class ScopeItemCategoryServiceImpl implements ScopeItemCategoryService {
 
 	@Override
 	public MemResult<List<ScopeItemCategoryDO>> findScopeItemCategoriesByMerchantScope(int domainId, long[] scopeIds) {
+		MemResult<List<ScopeItemCategoryDO>> scopeItemCategoryResult = new MemResult<>();
 		if (null == scopeIds || scopeIds.length <= 0) {
-			LOGGER.info("businessScopeDOs not found by scopeIds={}", scopeIds);
-			return MemResult.buildFailResult(0, "参数为空", null);
+			LOGGER.error("businessScopeDOs not found by scopeIds={}", scopeIds);
+			scopeItemCategoryResult.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return scopeItemCategoryResult;
 		}
 		MemResult<List<ScopeItemCategoryDO>> result = new MemResult<List<ScopeItemCategoryDO>>();
 		List<ScopeItemCategoryDO> scopeItemCategoryDOs = scopeItemCategoryManager
 				.getScopeItemCategoryByMerchantScope(domainId, scopeIds);
 		if (scopeItemCategoryDOs.isEmpty()) {
-			LOGGER.info("scopeItemCategory not found by merchantVO={}", scopeItemCategoryDOs);
-			return MemResult.buildFailResult(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR.getCode(),
-					MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR.getDesc(), null);
+			LOGGER.error("businessScopeDOs not found by scopeIds={}", scopeIds);
+			scopeItemCategoryResult.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
+			return scopeItemCategoryResult;
 		}
 		result.setValue(scopeItemCategoryDOs);
 		return result;
+	}
+
+	@Override
+	public MemResult<List<ScopeItemCategoryDO>> findScopeItemCategoriesByCategory(int domainId, long[] categoryIds) {
+		MemResult<List<ScopeItemCategoryDO>> scopeItemCategoryResult = new MemResult<>();
+		if(domainId <= 0 || null == categoryIds || categoryIds.length == 0) {
+			LOGGER.error("businessScopeDOs not found by categoryIds={}", categoryIds);
+			scopeItemCategoryResult.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return scopeItemCategoryResult;
+		}
+		List<ScopeItemCategoryDO> scopeItemCategoryDOs = scopeItemCategoryManager.getScopeItemCategoriesByCategory(domainId, categoryIds);
+		if (scopeItemCategoryDOs.isEmpty()) {
+			LOGGER.error("businessScopeDOs not found by categoryIds={}", categoryIds);
+			scopeItemCategoryResult.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
+			return scopeItemCategoryResult;
+		}
+		scopeItemCategoryResult.setValue(scopeItemCategoryDOs);
+		return scopeItemCategoryResult;
 	}
 }

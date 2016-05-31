@@ -53,7 +53,7 @@ public class MerchantItemCategoryManager {
     @Autowired
     ExamineDetailDOMapper examineDetailDOMapper;
 
-    public List<MerchantItemCategoryDO> findMerchantItemCategoryByMerchant(int domainId, int sellerId) {
+    public List<MerchantItemCategoryDO> findMerchantItemCategoryByMerchant(int domainId, long sellerId) {
         return merchantItemCategoryDao.selectMerchantItemCategoriesByMerchant(domainId, sellerId);
     }
 

@@ -8,7 +8,7 @@ import com.yimayhd.membercenter.client.result.MemResultSupport;
 
 public interface MerchantItemCategoryService {
 
-	MemResult<List<MerchantItemCategoryDO>> findMerchantItemCategoriesByMerchant(int domainId, long examineId);
+	MemResult<List<MerchantItemCategoryDO>> findMerchantItemCategoriesByExamineId(int domainId, long examineId);
 	
-	MemResultSupport saveMerchantItemCategoriesByMerchant(int domainId, long examineId, long[] categoryIds);
+	MemResultSupport saveMerchantItemCategories(int domainId, long examineId, long[] categoryIds);
 }

@@ -116,7 +116,6 @@
 		#{domainId,jdbcType=INTEGER}
 		where id = #{id,jdbcType=BIGINT}
 	</update>
-
 	<select id="selectByMerchantScope" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
@@ -125,6 +124,17 @@
 		and business_scope_id in
 		<foreach collection="scopeIds" index="index" item="item" open="("
 			separator="," close=")">
+			#{item,jdbcType=BIGINT}
+		</foreach>
+	</select>
+	<select id="selectByCategory" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from scope_item_category
+		where domain_id = #{domainId,jdbcType=INTEGER}
+		and item_category_id in
+		<foreach collection="categoryIds" index="index" item="item" open="("
+				 separator="," close=")">
 			#{item,jdbcType=BIGINT}
 		</foreach>
 	</select>

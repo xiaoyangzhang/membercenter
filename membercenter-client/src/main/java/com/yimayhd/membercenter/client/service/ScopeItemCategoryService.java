@@ -10,4 +10,6 @@ import com.yimayhd.membercenter.client.result.MemResult;
  */
 public interface ScopeItemCategoryService {
 	MemResult<List<ScopeItemCategoryDO>> findScopeItemCategoriesByMerchantScope(int domainId, long[] scopeIds);
+
+	MemResult<List<ScopeItemCategoryDO>> findScopeItemCategoriesByCategory(int domainId, long[] categoryIds);
 }

@@ -11,10 +11,14 @@ import java.util.List;
  */
 public class ScopeItemCategoryManager {
 
-	@Autowired
-	private ScopeItemCategoryDao scopeItemCategoryDao;
+    @Autowired
+    private ScopeItemCategoryDao scopeItemCategoryDao;
 
-	public List<ScopeItemCategoryDO> getScopeItemCategoryByMerchantScope(int domainId, long[] scopeIds) {
-		return scopeItemCategoryDao.getScopeItemCategoriesByMerchantScope(domainId, scopeIds);
-	}
+    public List<ScopeItemCategoryDO> getScopeItemCategoryByMerchantScope(int domainId, long[] scopeIds) {
+        return scopeItemCategoryDao.getScopeItemCategoriesByMerchantScope(domainId, scopeIds);
+    }
+
+    public List<ScopeItemCategoryDO> getScopeItemCategoriesByCategory(int domainId, long[] categoryIds) {
+        return scopeItemCategoryDao.getScopeItemCategoriesByCategory(domainId, categoryIds);
+    }
 }

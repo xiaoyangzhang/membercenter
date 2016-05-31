@@ -28,13 +28,11 @@ public interface MerchantScopeDOMapper {
      * 
     * created by zhangxy
     * @date 2016年5月25日
-    * @Title: getBusinessScopeBySellerId 
-    * @Description: 根据商家id获取经营范围
-    * @param @param sellerId
-    * @param @param domainId
-    * @param @return    设定文件 
+    * @Title: getBusinessScope 
+    * @Description:获取经营范围
+    * @param merchantScope
     * @return List<MerchantScopeDO>    返回类型 
     * @throws
      */
-    public List<MerchantScopeDO> getBusinessScopeBySellerId(@Param("sellerId")long sellerId,@Param("domainId")int domainId);
+    public List<MerchantScopeDO> getMerchantScope(@Param("merchantScope")MerchantScopeDO merchantScope);
 }

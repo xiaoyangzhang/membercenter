@@ -18,12 +18,12 @@ import com.yimayhd.membercenter.mapper.MerchantCategoryDOMapper;
 public class MerchantCategoryDao {
 	@Autowired
 	private MerchantCategoryDOMapper merchantCategoryDOMapper;
-	public List<MerchantCategoryDO> getAllMerchantCategory(int domainId) {
-		
-		return merchantCategoryDOMapper.getAllMerchantCategory(domainId);
-	}
+	//public List<MerchantCategoryDO> getAllMerchantCategory(int domainId) {
+//		
+//		return merchantCategoryDOMapper.getAllMerchantCategory(domainId);
+//	}
 
-	public MerchantCategoryDO getMerchantCategoriesById(int domainId,long id) {
-		return merchantCategoryDOMapper.getMerchantCategoriesById(domainId,id);
+	public List<MerchantCategoryDO> getMerchantCategoriesById(MerchantCategoryDO merchantCategory) {
+		return merchantCategoryDOMapper.getMerchantCategories(merchantCategory);
 	}
 }

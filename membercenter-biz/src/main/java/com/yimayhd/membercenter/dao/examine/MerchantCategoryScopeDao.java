@@ -20,18 +20,18 @@ public class MerchantCategoryScopeDao {
 
 	@Autowired
 	private MerchantCategoryScopeDOMapper merchantCategoryScopeDOMapper;
-	public List<MerchantCategoryScopeDO> getMerchantCategoryScopeByMerchantCategoryId(long merchantCategoryId,int domainId) {
+	public List<MerchantCategoryScopeDO> getMerchantCategoryScope(MerchantCategoryScopeDO merchantCategoryScope) {
 //		if (merchantCategoryId <=0 || domainId <= 0) {
 //			return null;
 //		}
-		List<MerchantCategoryScopeDO> scopes = merchantCategoryScopeDOMapper.getMerchantCategoryScopeByMerchantCategoryId(merchantCategoryId, domainId);
+		List<MerchantCategoryScopeDO> scopes = merchantCategoryScopeDOMapper.getMerchantCategoryScope(merchantCategoryScope);
 //		if (scopes == null) {
 //			return null;
 //		}
 		return scopes;
 	}
 
-	public List<MerchantCategoryScopeDO> getMerchantCategoriesByScopeIds(long[] scopeIds, int domainId) {
-		return merchantCategoryScopeDOMapper.getMerchantCatergoryScopesByScopeIds(scopeIds, domainId);
-	}
+//	public List<MerchantCategoryScopeDO> getMerchantCategoriesByScopeIds(long[] scopeIds, int domainId) {
+//		return merchantCategoryScopeDOMapper.getMerchantCatergoryScopesByScopeIds(scopeIds, domainId);
+//	}
 }

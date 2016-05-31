@@ -19,13 +19,13 @@ public class BusinessScopeDao {
 
 	@Autowired
 	private BusinessScopeDOMapper businessScopeDOMapper;
-	public List<BusinessScopeDO> getAllBusinessScope(int domainId) {
+	public List<BusinessScopeDO> getBusinessScope(BusinessScopeDO businessScope) {
 		//List<BusinessScopeDO> businessScopeList = new ArrayList<BusinessScopeDO>();
 //		if (domainId <= 0) {
 //			return null;
 			//return MemResult.buildFailResult(-1, "参数错误", businessScopeList);
 		//}
-		List<BusinessScopeDO> businessScopeList = businessScopeDOMapper.getAllBusinessScope(domainId);
+		List<BusinessScopeDO> businessScopeList = businessScopeDOMapper.getBusinessScopes(businessScope);
 //		 if(businessScopeList == null) {
 //			 return null;
 //		 }
@@ -42,7 +42,7 @@ public class BusinessScopeDao {
 //	public List<BusinessScopeDO> getBusinessScopesByScope(int domainId, Long[] scopeIds) {
 //		return businessScopeDOMapper.getBusinessScopesByScope(domainId, scopeIds);
 //	}
-	public List<BusinessScopeDO> getBusinessScopesByScope(int domainId, List<Long> scopeIds) {
-		return businessScopeDOMapper.getBusinessScopesByScope(domainId, scopeIds);
-	}
+//	public List<BusinessScopeDO> getBusinessScopesByScope(int domainId, List<Long> scopeIds) {
+//		return businessScopeDOMapper.getBusinessScopesByScope(domainId, scopeIds);
+//	}
 }

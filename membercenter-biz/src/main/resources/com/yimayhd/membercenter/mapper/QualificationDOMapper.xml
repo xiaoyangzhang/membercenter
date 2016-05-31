@@ -115,17 +115,17 @@
       domain_id = #{domainId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectAllQualifications" resultMap="BaseResultMap"  >
+ <!--  <select id="selectAllQualifications" resultMap="BaseResultMap"  >
   	select id,title,type,tip from qualification
   	where domain_id=#{domainId}
   	
-  </select>
-  <select id="getQualificationByIds" resultMap="BaseResultMap" >
+  </select> -->
+  <select id="getQualification" parameterType="com.yimayhd.membercenter.client.domain.merchant.QualificationDO" resultMap="BaseResultMap" >
   	select id,title,tip from qualification
-  	where domain_id=#{domainId}
-  	<if test="list != null">
+  	where domain_id=#{qualification.domainId}
+  	<if test="qualification.idList != null">
   		and id in 
-  		<foreach collection ="list" item ="item" index ="index" open="(" separator="," close=")">
+  		<foreach collection ="qualification.idList" item ="item" index ="index" open="(" separator="," close=")">
   			#{item}
   		</foreach>
   	</if>

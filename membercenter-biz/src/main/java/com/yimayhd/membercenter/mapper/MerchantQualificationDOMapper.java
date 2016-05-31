@@ -22,13 +22,12 @@ public interface MerchantQualificationDOMapper {
      * 
     * created by zhangxy
     * @date 2016年5月25日
-    * @Title: getMerchantQualificationBySellerId 
-    * @Description: 根据商家id获取商家与资质的关联对象的集合
-    * @param @param sellerId
-    * @param @param domainId
-    * @param @return    设定文件 
+    * @Title: getMerchantQualification
+    * @Description: 获取商家与资质的关联对象的集合
+    * @param  merchantQualification
+    
     * @return List<MerchantQualificationDO>    返回类型 
     * @throws
      */
-    public List<MerchantQualificationDO> getMerchantQualificationBySellerId(@Param("sellerId") long sellerId,@Param("domainId") int domainId);
+    public List<MerchantQualificationDO> getMerchantQualification(@Param("merchantQualification") MerchantQualificationDO merchantQualification);
 }

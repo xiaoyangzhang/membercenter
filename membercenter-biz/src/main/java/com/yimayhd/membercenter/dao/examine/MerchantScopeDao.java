@@ -50,7 +50,7 @@ public class MerchantScopeDao {
 
 
 	
-	public List<MerchantScopeDO> getMerchantScopeBySellerId(long sellerId,int domainId) {
+	public List<MerchantScopeDO> getMerchantScope(MerchantScopeDO merchantScope) {
 //		if (sellerId <=0 || domainId <= 0) {
 //			return null;
 //		}
@@ -58,7 +58,7 @@ public class MerchantScopeDao {
 //		if (merchantScopes == null) {
 //			return null;
 //		}
-		return merchantScopeDOMapper.getBusinessScopeBySellerId(sellerId, domainId);
+		return merchantScopeDOMapper.getMerchantScope(merchantScope);
 	}
 	
 	

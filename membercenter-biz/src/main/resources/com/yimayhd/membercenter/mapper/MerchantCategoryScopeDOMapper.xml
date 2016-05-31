@@ -96,20 +96,25 @@
       domain_id = #{domainId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="getMerchantCategoryScopeByMerchantCategoryId" resultMap="BaseResultMap">
+  <!-- <select id="getMerchantCategoryScopeByMerchantCategoryId" resultMap="BaseResultMap">
   	select id,business_scope_id from merchant_category_scope
   	where domain_id=#{domainId}
   	<if test="merchantCategoryId != null">
   		and merchant_category_id = #{merchantCategoryId,jdbcType=BIGINT}
   	</if>
-  </select>
-  <select id="getMerchantCatergoryScopesByScopeIds" resultMap="BaseResultMap">
+  </select> -->
+  <select id="getMerchantCategoryScope" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryScopeDO" resultMap="BaseResultMap">
     select id,merchant_category_id from merchant_category_scope
-    where domain_id=#{domainId}
+    where domain_id=#{merchantCategoryScope.domainId}
+    <if test="merchantCategoryScope.idList != null">
     and business_scope_id in
-    <foreach collection="scopeIds" index="index" item="item" open="("
+    <foreach collection="merchantCategoryScope.idList" index="index" item="item" open="("
              separator="," close=")">
       #{item,jdbcType=BIGINT}
     </foreach>
+    </if>
+    <if test="merchantCategoryScope.id != null">
+    	and merchant_category_id = #{merchantCategoryScope.merchantCategoryId}
+    </if>
   </select>
 </mapper>

@@ -129,15 +129,17 @@
       domain_id = #{domainId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="getAllMerchantCategory" resultMap="BaseResultMap" >
+  <!-- <select id="getAllMerchantCategory" resultMap="BaseResultMap" >
   	select id,name,parent_id from merchant_category
   	where domain_id=#{domainId}
   	
-  </select>
+  </select> -->
 
-  <select id="getMerchantCategoriesById" resultMap="BaseResultMap">
+  <select id="getMerchantCategories" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryDO" resultMap="BaseResultMap">
     select name,id,parent_id from merchant_category
     where domain_id=#{domainId}
-    and id = #{id}
+    <if test="category.id != null">
+    and id = #{category.id}
+    </if>
   </select>
 </mapper>

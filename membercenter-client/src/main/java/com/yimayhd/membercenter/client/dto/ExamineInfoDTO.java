@@ -160,7 +160,29 @@ public class ExamineInfoDTO implements Serializable {
 	private String scenicQualityLevel;//景区质量等级证书
 	private String relationBetweenHotelAngGroup;//酒店与集团的所属关系说明
 	
+	private String lawPersonCard;//法人身份证号
+	private String saleLicenseNumber;//营业执照号
+	private String taxRegisterNumber;//税务登记号
 	
+	public String getLawPersonCard() {
+		return lawPersonCard;
+	}
+	public void setLawPersonCard(String lawPersonCard) {
+		this.lawPersonCard = lawPersonCard;
+	}
+	public String getSaleLicenseNumber() {
+		return saleLicenseNumber;
+	}
+	public void setSaleLicenseNumber(String saleLicenseNumber) {
+		this.saleLicenseNumber = saleLicenseNumber;
+	}
+	public String getTaxRegisterNumber() {
+		return taxRegisterNumber;
+	}
+	public void setTaxRegisterNumber(String taxRegisterNumber) {
+		this.taxRegisterNumber = taxRegisterNumber;
+	}
+
 	private List<MerchantQualificationDO> merchantQualifications;//商家与资质关联对象集合
 	private List<MerchantScopeDO> merchantScopes;//商家与经营范围关联对象集合
 	

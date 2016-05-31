@@ -20,11 +20,11 @@ package com.yimayhd.membercenter.enums;
 public enum ExamineType {
     
     TALENT("旅游线路达人", 1),
-    MERCHANT("店铺", 2),
-    TOUR_COR("旅游企业", 3),
-    HOTEL("酒店", 4),
-    SCENIC("景区", 5),
-    CITY_COR("同城活动企业", 6)
+    MERCHANT("店铺", 2)
+//    TOUR_COR("旅游企业", 3),
+//    HOTEL("酒店", 4),
+//    SCENIC("景区", 5),
+//    CITY_COR("同城活动企业", 6)
     ;
     
     private String name;

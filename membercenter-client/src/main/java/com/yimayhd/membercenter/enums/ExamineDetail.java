@@ -40,7 +40,9 @@ public enum ExamineDetail {
     ACCOUNT_BANK_CITY_CODE("财务结算开户行城市CODE", "13", 2),
     ACCOUNT_BANK_NAME("财务结算开户行名称", "14", 2),
    // SHOP_TYPE("店铺性质","22",2),
-    
+    LEGAL_CARD_NUMBER("法人身份证号","22",2),
+    SALE_LICENSE_NUMBER("营业执照号","23",2),
+    TAX_REGISTER_NUMBER("税务登记号","24",2),
     //*******************账户信息*******************//
     PRODUCTER_NAME("产品联系人姓名", "15", 3),
     PRODUCTER_TEL("产品联系人手机", "16", 3),

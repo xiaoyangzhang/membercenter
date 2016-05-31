@@ -103,6 +103,9 @@ public class ExamineConverter {
         examinDTO.setCooperation3(pictureMap.get(PictureUrl.COOPERATION3.getId()));
         examinDTO.setCooperation4(pictureMap.get(PictureUrl.COOPERATION4.getId()));
         examinDTO.setCooperation5(pictureMap.get(PictureUrl.COOPERATION5.getId()));
+        examinDTO.setLawPersonCard(featureMap.get(ExamineDetail.LEGAL_CARD_NUMBER.getId()));
+        examinDTO.setSaleLicenseNumber(featureMap.get(ExamineDetail.SALE_LICENSE_NUMBER.getId()));
+        examinDTO.setTaxRegisterNumber(featureMap.get(ExamineDetail.TAX_REGISTER_NUMBER.getId()));
         //2期
 //        examinDTO.setAmusementParkReport(pictureMap.get(PictureUrl.AMUSEMENTPARK_REPORT.getId()));
 //        examinDTO.setHotelGoodsAuthorization(pictureMap.get(PictureUrl.HOTEL_GOODS_AUTHORIZATION.getId()));
@@ -164,6 +167,9 @@ public class ExamineConverter {
         featureMap.put(ExamineDetail.ACCOUNT_BANK_CITY_CODE.getId(), examinDTO.getAccountBankCityCode());
         featureMap.put(ExamineDetail.ACCOUNT_BANK_NAME.getId(), examinDTO.getAccountBankName());
         featureMap.put(ExamineDetail.MERCHANT_NAME.getId(), examinDTO.getMerchantName());
+        featureMap.put(ExamineDetail.LEGAL_CARD_NUMBER.getId(), examinDTO.getLawPersonCard());
+        featureMap.put(ExamineDetail.SALE_LICENSE_NUMBER.getId(), examinDTO.getSaleLicenseNumber());
+        featureMap.put(ExamineDetail.TAX_REGISTER_NUMBER.getId(), examinDTO.getTaxRegisterNumber());
         //featureMap.put(ExamineDetail.SHOP_TYPE.getId(), examinDTO.getShopType());//2期-店铺性质
         pictureMap.put(PictureUrl.LEGRAL_CARD_UP.getId(), examinDTO.getLegralCardUp());
         pictureMap.put(PictureUrl.LEGRAL_CARD_DOWN.getId(), examinDTO.getLegralCardDown());

@@ -61,8 +61,6 @@ public class MerchantItemCategoryManager {
         final MemResultSupport memResultSupport = new MemResultSupport();
         // 新增商家
         final MerchantDO merchantDO = ExamineConverter.examineToMerchant(examineDO);
-        final AtomicBoolean isSuccess = new AtomicBoolean(false);
-
         final MemResult<ExamineDO> examineResult = talentExamineManager.queryMerchantExamineInfoById(examineDO);
         transactionTemplate.execute(new TransactionCallback<Void>() {
             @Override
@@ -122,8 +120,8 @@ public class MerchantItemCategoryManager {
                     merchantItemCategoryDO.setStatus(1);
                     merchantItemCategoryDOs.add(merchantItemCategoryDO);
                 }
-                isSuccess.set(merchantItemCategoryDao.saveMerchanItemCategories(merchantItemCategoryDOs));
-                if (!isSuccess.get()) {
+                boolean target = merchantItemCategoryDao.saveMerchanItemCategories(merchantItemCategoryDOs);
+                if (!target) {
                     transactionStatus.setRollbackOnly();
                     memResultSupport.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
                 }
@@ -132,7 +130,6 @@ public class MerchantItemCategoryManager {
             }
         });
 
-        isSuccess.set(false);
         // 为商家授权、发送短信
         TransactionSendResult merchantItemCategorySendResult = msgSender.sendMessage(examineResult.getValue(), MemberTopic.MERCHANT_ROLE_BIND.getTopic(),
                 MemberTopic.MERCHANT_ROLE_BIND.getTags(), new LocalTransactionExecuter() {
@@ -144,9 +141,10 @@ public class MerchantItemCategoryManager {
                         logger.info("sendMerchantApply par:{} sendMes return:{}", JSONObject.toJSONString(examineDO),
                                 JSONObject.toJSONString(sendResult));
                         if (sendResult.getSendStatus() == SendStatus.SEND_OK) {
-                            isSuccess.set(true);
                             return LocalTransactionState.COMMIT_MESSAGE;
                         }
+                        logger.error("send msg failed! topic={}, msg={},  result={}", MemberTopic.EXAMINE_RESULT.getTopic(), JSON.toJSONString(examineDO), "短信发送失败");
+                        memResultSupport.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
                         return LocalTransactionState.UNKNOW;
                     }
                 });
@@ -156,10 +154,6 @@ public class MerchantItemCategoryManager {
             memResultSupport.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
         }
 
-        if (!isSuccess.get()) {
-            logger.error("send msg failed! topic={}, msg={},  result={}", MemberTopic.EXAMINE_RESULT.getTopic(), JSON.toJSONString(examineDO), "短信发送失败");
-            memResultSupport.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
-        }
         return memResultSupport;
     }
 }

@@ -295,28 +295,18 @@ public class TalentExamineManager {
             examineDetailDOMapper.insert(examineResult.getValue());
             logger.info("dealExamineInfo param:{} insertDetail success",
                     JSONObject.toJSONString(examineResult.getValue()));
-            
-            // 审批驳回发送短信通知
-            if(examineResult.getValue().getStatues() == ExamineStatus.EXAMIN_ERROR.getStatus()) {
+            baseResult.setValue(Boolean.TRUE);
+        } catch (Exception e) {
+            logger.error("dealExamineInfo param:{} error, mes is:{}", JSONObject.toJSONString(examineDO), e);
+            baseResult.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+        } finally {
+            if (baseResult.isSuccess()) {
                 // 发送审核状态到mq消息
                 SendResult sendResult = msgSender.sendMessage(examineResult.getValue(),
                         MemberTopic.EXAMINE_RESULT.getTopic(), MemberTopic.EXAMINE_RESULT.getTags());
                 logger.info("dealExamineInfo par:{} sendMes return:{}", JSONObject.toJSONString(examineDO),
                         JSONObject.toJSONString(sendResult));
             }
-            
-            baseResult.setValue(Boolean.TRUE);
-        } catch (Exception e) {
-            logger.error("dealExamineInfo param:{} error, mes is:{}", JSONObject.toJSONString(examineDO), e);
-            baseResult.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
-        } finally {
-//            if (baseResult.isSuccess()) {
-//                // 发送审核状态到mq消息
-//                SendResult sendResult = msgSender.sendMessage(examineResult.getValue(),
-//                        MemberTopic.EXAMINE_RESULT.getTopic(), MemberTopic.EXAMINE_RESULT.getTags());
-//                logger.info("dealExamineInfo par:{} sendMes return:{}", JSONObject.toJSONString(examineDO),
-//                        JSONObject.toJSONString(sendResult));
-//            }
         }
         return baseResult;
     }

@@ -2,6 +2,7 @@ package com.yimayhd.membercenter.dao.examine;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO;
@@ -30,7 +31,7 @@ public class CategoryQualificationDao {
 //		return qualifications;
 //	}
 	
-	public List<CategoryQualificationDO> getCategoryQualification(CategoryQualificationDO categoryQua) {
-		return categoryQualificationDOMapper.getCategoryQualification(categoryQua);
+	public List<CategoryQualificationDO> getCategoryQualification(CategoryQualificationDO categoryQua,List<Long> idList) {
+		return categoryQualificationDOMapper.getCategoryQualification(categoryQua,idList);
 	}
 }

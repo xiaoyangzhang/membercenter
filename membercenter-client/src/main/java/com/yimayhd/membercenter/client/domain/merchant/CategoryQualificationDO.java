@@ -2,6 +2,7 @@ package com.yimayhd.membercenter.client.domain.merchant;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class CategoryQualificationDO implements Serializable {
     private long id;
@@ -22,8 +23,17 @@ public class CategoryQualificationDO implements Serializable {
     private int domainId;
     private long businessScopeId;
     private byte isDirectSale;
+    private List<Long> scopeIdsList;
     
-    public long getBusinessScopeId() {
+    public List<Long> getScopeIdsList() {
+		return scopeIdsList;
+	}
+
+	public void setScopeIdsList(List<Long> scopeIdsList) {
+		this.scopeIdsList = scopeIdsList;
+	}
+
+	public long getBusinessScopeId() {
 		return businessScopeId;
 	}
 

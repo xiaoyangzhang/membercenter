@@ -134,6 +134,13 @@
   		and business_scope_id = #{category.businessScopeId,jdbcType=BIGINT},
   		
   	</if>
+  	<if test="scopeIdsList != null">
+		and business_scope_id in
+		<foreach collection="scopeIdsList" index="index" item="item" open="("
+			separator="," close=")">
+			#{item,jdbcType=BIGINT}
+		</foreach>
+		</if>
   	<if test="category.isDirectSale != null and category.isDirectSale != 0">
   		and is_direct_sale = #{category.isDirectSale,jdbcType=BIGINT}
   		

@@ -106,9 +106,9 @@
   <select id="getMerchantCategoryScope" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryScopeDO" resultMap="BaseResultMap">
     select id,merchant_category_id from merchant_category_scope
     where domain_id=#{merchantCategoryScope.domainId}
-    <if test="merchantCategoryScope.idList != null">
+    <if test="idList != null">
     and business_scope_id in
-    <foreach collection="merchantCategoryScope.idList" index="index" item="item" open="("
+    <foreach collection="idList" index="index" item="item" open="("
              separator="," close=")">
       #{item,jdbcType=BIGINT}
     </foreach>

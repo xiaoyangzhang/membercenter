@@ -2,6 +2,8 @@ package com.yimayhd.membercenter.manager;
 
 import com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO;
 import com.yimayhd.membercenter.dao.examine.BusinessScopeDao;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -14,7 +16,7 @@ public class BusinessScopeManager {
 	@Autowired
 	private BusinessScopeDao businessScopeDao;
 
-	public List<BusinessScopeDO> getBusinessScopesByScope(BusinessScopeDO businessScope) {
-		return businessScopeDao.getBusinessScope(businessScope);
+	public List<BusinessScopeDO> getBusinessScopesByScope(BusinessScopeDO businessScope,List<Long> idList) {
+		return businessScopeDao.getBusinessScope(businessScope,idList);
 	}
 }

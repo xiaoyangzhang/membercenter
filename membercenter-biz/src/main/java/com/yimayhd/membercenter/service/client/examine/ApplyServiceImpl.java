@@ -9,6 +9,7 @@ import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.examine.ApplyService;
 import com.yimayhd.membercenter.manager.ApplyManager;
 
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,15 @@ public class ApplyServiceImpl implements ApplyService {
 			for (MerchantScopeDO msDO : result.getValue()) {
 				idList.add(msDO.getId());
 			}
+			if (idList.size() == 0) {
+				scopes.setReturnCode(MemberReturnCode.MERCHANT_SCOPE_FAILED);
+				return scopes;
+			}
 			BusinessScopeDO businessScope = new BusinessScopeDO();
-			businessScope.setIdList(idList);
+			//businessScope.setIdList(idList);
 			businessScope.setDomainId(merchantScope.getDomainId());
 			//businessScope.set
-			scopes = applyManager.getBusinessScope(businessScope);
+			scopes = applyManager.getBusinessScope(businessScope,idList);
 			return scopes;
 		} catch (Exception e) {
 			log.error("param :merchantScope={} error :{}",JSON.toJSONString(merchantScope),e);
@@ -91,15 +96,16 @@ public class ApplyServiceImpl implements ApplyService {
 
 	@Override
 	public MemResult<List<MerchantCategoryScopeDO>> getMerchantCategoryScope(
-			MerchantCategoryScopeDO merchantCategoryScope) {
+			MerchantCategoryScopeDO merchantCategoryScope,List<Long> idList) {
 		MemResult<List<MerchantCategoryScopeDO>> result = new MemResult<List<MerchantCategoryScopeDO>>();
-		if ( merchantCategoryScope == null) {
+		if ( merchantCategoryScope == null || (idList != null && idList.size() == 0)) {
+			
 			log.error(" param error : MerchantCategoryScopeDO merchantCategoryScope={}",JSON.toJSONString(merchantCategoryScope));
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 			return result;
 		}
 		try {
-			result = applyManager.getMerchantCategoryScope(merchantCategoryScope);
+			result = applyManager.getMerchantCategoryScope(merchantCategoryScope,idList);
 			return result;
 		} catch (Exception e) {
 			log.error("param : MerchantCategoryScopeDO merchantCategoryScope={} error :{}",JSON.toJSONString(merchantCategoryScope),e);
@@ -146,11 +152,15 @@ public class ApplyServiceImpl implements ApplyService {
 			for (MerchantQualificationDO mqDO : result.getValue()) {
 				idList.add(mqDO.getId());
 			}
+			if (idList.size() == 0) {
+				qualifications.setReturnCode(MemberReturnCode.MERCHANT_QUALIFICATION_FAILED);
+				return qualifications;
+			}
 			QualificationDO qualification = new QualificationDO();
-			qualification.setIdList(idList);
+			//qualification.setIdList(idList);
 			qualification.setDomainId(merchantQualification.getDomainId());
 			//qualification.set
-			 qualifications = applyManager.getQualification(qualification);
+			 qualifications = applyManager.getQualification(qualification,idList);
 			return qualifications;
 		} catch (Exception e) {
 			log.error("param : merchantQualification={} error :{}",JSON.toJSONString(merchantQualification),e);
@@ -198,15 +208,15 @@ public class ApplyServiceImpl implements ApplyService {
 
 	@Override
 	public MemResult<List<QualificationDO>> getQualification(
-			QualificationDO qualification) {
+			QualificationDO qualification,List<Long> idList) {
 		MemResult<List<QualificationDO>> result = new MemResult<List<QualificationDO>>();
-		if (qualification == null) {
+		if (qualification == null || (idList != null && idList.size() == 0)) {
 			log.error("params error:qualification={} ",JSON.toJSONString(qualification));
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 			return result;
 		}
 		try {
-			result = applyManager.getQualification(qualification);
+			result = applyManager.getQualification(qualification,idList);
 			return result;
 		} catch (Exception e) {
 			log.error("params :qualification={} error:{}",JSON.toJSONString(qualification),e);
@@ -217,16 +227,16 @@ public class ApplyServiceImpl implements ApplyService {
 
 	@Override
 	public MemResult<List<BusinessScopeDO>> getBusinessScope(
-			BusinessScopeDO businessScope) {
+			BusinessScopeDO businessScope,List<Long> idList) {
 		MemResult<List<BusinessScopeDO>> result = new MemResult<List<BusinessScopeDO>>();
-		if (businessScope == null) {
+		if (businessScope == null || (idList != null && idList.size() == 0)) {
 			log.error("params error:businessScope={}",JSON.toJSONString(businessScope));
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 			return result;
 		}
 		
 		try {
-			result = applyManager.getBusinessScope(businessScope);
+			result = applyManager.getBusinessScope(businessScope,idList);
 			return result;
 		} catch (Exception e) {
 			log.error("params :businessScope={} error:{}",JSON.toJSONString(businessScope),e);

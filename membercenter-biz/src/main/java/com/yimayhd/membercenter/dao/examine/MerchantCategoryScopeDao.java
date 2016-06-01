@@ -3,6 +3,8 @@ package com.yimayhd.membercenter.dao.examine;
 import java.util.List;
 
 import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryDO;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryScopeDO;
@@ -20,11 +22,11 @@ public class MerchantCategoryScopeDao {
 
 	@Autowired
 	private MerchantCategoryScopeDOMapper merchantCategoryScopeDOMapper;
-	public List<MerchantCategoryScopeDO> getMerchantCategoryScope(MerchantCategoryScopeDO merchantCategoryScope) {
+	public List<MerchantCategoryScopeDO> getMerchantCategoryScope(MerchantCategoryScopeDO merchantCategoryScope,List<Long> idList) {
 //		if (merchantCategoryId <=0 || domainId <= 0) {
 //			return null;
 //		}
-		List<MerchantCategoryScopeDO> scopes = merchantCategoryScopeDOMapper.getMerchantCategoryScope(merchantCategoryScope);
+		List<MerchantCategoryScopeDO> scopes = merchantCategoryScopeDOMapper.getMerchantCategoryScope(merchantCategoryScope,idList);
 //		if (scopes == null) {
 //			return null;
 //		}

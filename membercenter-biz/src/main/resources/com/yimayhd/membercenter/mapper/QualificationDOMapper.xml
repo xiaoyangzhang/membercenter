@@ -123,9 +123,9 @@
   <select id="getQualification" parameterType="com.yimayhd.membercenter.client.domain.merchant.QualificationDO" resultMap="BaseResultMap" >
   	select id,title,tip from qualification
   	where domain_id=#{qualification.domainId}
-  	<if test="qualification.idList != null">
+  	<if test="idList != null ">
   		and id in 
-  		<foreach collection ="qualification.idList" item ="item" index ="index" open="(" separator="," close=")">
+  		<foreach collection ="idList" item ="item" index ="index" open="(" separator="," close=")">
   			#{item}
   		</foreach>
   	</if>

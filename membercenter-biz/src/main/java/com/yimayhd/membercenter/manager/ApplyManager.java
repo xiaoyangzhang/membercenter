@@ -3,6 +3,8 @@ package com.yimayhd.membercenter.manager;
 import java.util.List;
 
 import com.yimayhd.membercenter.entity.merchant.Merchant;
+
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,14 +69,14 @@ public class ApplyManager {
 	private MerchantQualificationDao merchantQualificationDao;
 	@Autowired
 	private MerchantCategoryDao merchantCategoryDao;
-	public MemResult<List<BusinessScopeDO>> getBusinessScope(BusinessScopeDO businessScope) {
+	public MemResult<List<BusinessScopeDO>> getBusinessScope(BusinessScopeDO businessScope,List<Long> idList) {
 		//List<BusinessScopeDO> businessScopeList = new ArrayList<BusinessScopeDO>();
 //		if (domainId <= 0) {
 //			
 //			return MemResult.buildFailResult(-1, "参数错误", null);
 //		}
 		MemResult<List<BusinessScopeDO>> result = new MemResult<List<BusinessScopeDO>>();
-		List<BusinessScopeDO> businessScopeList = businessScopeDao.getBusinessScope(businessScope);
+		List<BusinessScopeDO> businessScopeList = businessScopeDao.getBusinessScope(businessScope,idList);
 		 if(businessScopeList == null) {
 			 result.setReturnCode(MemberReturnCode.BUSINESS_SCOPE_FAILED);
 			 return result;
@@ -84,13 +86,13 @@ public class ApplyManager {
 
 	}
 
-	public MemResult<List<QualificationDO>> getQualification(QualificationDO qualification) {
+	public MemResult<List<QualificationDO>> getQualification(QualificationDO qualification,List<Long> idList) {
 		//List<QualificationDO> qualificationList = new ArrayList<QualificationDO>();
 //		if (domainId <= 0) {
 //			return MemResult.buildFailResult(-1, "参数错误", null);
 //		}
 		MemResult<List<QualificationDO>> result = new MemResult<List<QualificationDO>>();
-		List<QualificationDO> qualificationList = qualificationDao.getQualification(qualification);
+		List<QualificationDO> qualificationList = qualificationDao.getQualification(qualification,idList);
 		if (qualificationList == null) {
 			result.setReturnCode(MemberReturnCode.QUALIFICATION_FAILED);
 			return result;
@@ -114,12 +116,12 @@ public class ApplyManager {
 		return result;
 
 	}
-	public MemResult<List<MerchantCategoryScopeDO>> getMerchantCategoryScope(MerchantCategoryScopeDO merchantCategoryScope) {
+	public MemResult<List<MerchantCategoryScopeDO>> getMerchantCategoryScope(MerchantCategoryScopeDO merchantCategoryScope,List<Long> idList) {
 //		if (merchantCategoryId <=0 || domainId <= 0) {
 //			return MemResult.buildFailResult(-1, "参数错误", null);
 //		}
 		MemResult<List<MerchantCategoryScopeDO>> result = new MemResult<List<MerchantCategoryScopeDO>>();
-		List<MerchantCategoryScopeDO> scopes = merchantCategoryScopeDao.getMerchantCategoryScope(merchantCategoryScope);
+		List<MerchantCategoryScopeDO> scopes = merchantCategoryScopeDao.getMerchantCategoryScope(merchantCategoryScope,idList);
 		if (scopes == null) {
 			result.setReturnCode(MemberReturnCode.CATEGORY_BUSINESS_SCOPE_FAILED);
 			return result;
@@ -207,10 +209,10 @@ public class ApplyManager {
 
 	}
 
-	public MemResult<List<BusinessScopeDO>> getBusinessScopes(BusinessScopeDO businessScope) {
+	public MemResult<List<BusinessScopeDO>> getBusinessScopes(BusinessScopeDO businessScope,List<Long> idList) {
 		MemResult<List<BusinessScopeDO>> result = new MemResult<>();
 
-		List<BusinessScopeDO> businessScopeDOs = businessScopeDao.getBusinessScope(businessScope);
+		List<BusinessScopeDO> businessScopeDOs = businessScopeDao.getBusinessScope(businessScope,idList);
 		if(businessScopeDOs.isEmpty()) {
 			result.setReturnCode(MemberReturnCode.BUSINESS_SCOPE_FAILED);
 			return result;

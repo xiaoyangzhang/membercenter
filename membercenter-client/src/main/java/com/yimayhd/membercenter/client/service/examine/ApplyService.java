@@ -7,6 +7,9 @@ import com.yimayhd.membercenter.client.result.MemResult;
 
 import java.util.List;
 
+
+
+
 /**
  * 〈一句话功能简述〉<br>
  * 〈入驻申请service〉
@@ -25,7 +28,7 @@ public interface ApplyService {
 	 * @param domainId
 	 * @return
 	 */
-	public MemResult<List<BusinessScopeDO>> getBusinessScope(BusinessScopeDO businessScope);
+	public MemResult<List<BusinessScopeDO>> getBusinessScope(BusinessScopeDO businessScope,List<Long> idList);
 	/**
 	 * 获取资质<br/>
 	 * @author zhangxy 24/05/2016
@@ -33,7 +36,7 @@ public interface ApplyService {
 	 * @param domainId
 	 * @return
 	 */
-	public MemResult<List<QualificationDO>> getQualification(QualificationDO qualification);
+	public MemResult<List<QualificationDO>> getQualification(QualificationDO qualification,List<Long> idList);
 	/**
 	 * 获取商家的经营范围<br/>
 	 * @author zhangxy 24/05/2016
@@ -70,7 +73,7 @@ public interface ApplyService {
 	 * @param domainId
 	 * @return
 	 */
-	public MemResult<List<MerchantCategoryScopeDO>> getMerchantCategoryScope(MerchantCategoryScopeDO merchantCategoryScope);
+	public MemResult<List<MerchantCategoryScopeDO>> getMerchantCategoryScope(MerchantCategoryScopeDO merchantCategoryScope,List<Long> idList);
 	/**
 	 * 获取商家类目与资质关联对象的集合<br/>
 	 * @author zhangxy 24/05/2016

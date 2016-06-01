@@ -2,6 +2,7 @@ package com.yimayhd.membercenter.dao.examine;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO;
@@ -19,13 +20,13 @@ public class BusinessScopeDao {
 
 	@Autowired
 	private BusinessScopeDOMapper businessScopeDOMapper;
-	public List<BusinessScopeDO> getBusinessScope(BusinessScopeDO businessScope) {
+	public List<BusinessScopeDO> getBusinessScope(BusinessScopeDO businessScope,List<Long> idList) {
 		//List<BusinessScopeDO> businessScopeList = new ArrayList<BusinessScopeDO>();
 //		if (domainId <= 0) {
 //			return null;
 			//return MemResult.buildFailResult(-1, "参数错误", businessScopeList);
 		//}
-		List<BusinessScopeDO> businessScopeList = businessScopeDOMapper.getBusinessScopes(businessScope);
+		List<BusinessScopeDO> businessScopeList = businessScopeDOMapper.getBusinessScopes(businessScope,idList);
 //		 if(businessScopeList == null) {
 //			 return null;
 //		 }

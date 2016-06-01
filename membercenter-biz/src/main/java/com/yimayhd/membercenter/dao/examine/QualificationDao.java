@@ -2,6 +2,7 @@ package com.yimayhd.membercenter.dao.examine;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.client.domain.merchant.QualificationDO;
@@ -19,13 +20,13 @@ public class QualificationDao {
 
 	@Autowired
 	private QualificationDOMapper qualificationDOMapper;
-	public List<QualificationDO> getQualification(QualificationDO qualification) {
+	public List<QualificationDO> getQualification(QualificationDO qualification,List<Long> idList) {
 		//List<QualificationDO> qualificationList = new ArrayList<QualificationDO>();
 //		if (domainId <= 0) {
 //			return null;
 			//return MemResult.buildFailResult(-1, "参数错误", qualificationList);
 	//	}
-		List<QualificationDO> qualificationList = qualificationDOMapper.getQualification(qualification);
+		List<QualificationDO> qualificationList = qualificationDOMapper.getQualification(qualification,idList);
 //		if (qualificationList == null) {
 //			return null;
 //		}

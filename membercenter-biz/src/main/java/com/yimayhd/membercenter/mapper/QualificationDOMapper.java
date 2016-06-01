@@ -35,5 +35,5 @@ public interface QualificationDOMapper {
     * @throws
      */
     
-    List<QualificationDO> getQualification(@Param("qualification")QualificationDO qualification);
+    List<QualificationDO> getQualification(@Param("qualification")QualificationDO qualification,@Param("idList")List<Long> idList);
 }

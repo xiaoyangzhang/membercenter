@@ -22,8 +22,26 @@ public class QualificationDO implements Serializable {
     private static final long serialVersionUID = 1L;
     private int domainId;
     private List<Long> idList;
-    
-    public List<Long> getIdList() {
+    private List<CategoryQualificationDO> categoryQualificationList;
+    private byte required;
+    public List<CategoryQualificationDO> getCategoryQualificationList() {
+		return categoryQualificationList;
+	}
+
+	public void setCategoryQualificationList(
+			List<CategoryQualificationDO> categoryQualificationList) {
+		this.categoryQualificationList = categoryQualificationList;
+	}
+
+	public byte getRequired() {
+		return required;
+	}
+
+	public void setRequired(byte required) {
+		this.required = required;
+	}
+
+	public List<Long> getIdList() {
 		return idList;
 	}
 

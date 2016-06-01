@@ -27,5 +27,5 @@ public interface CategoryQualificationDOMapper {
     
   //  public List<CategoryQualificationDO> getQualificationIdsByMerchantCategoryId(@Param("categoryId")long merchantCategoryId,@Param("domainId")int domainId);
     
-    public List<CategoryQualificationDO> getCategoryQualification(@Param("category")CategoryQualificationDO categoryQualificationDO);
+    public List<CategoryQualificationDO> getCategoryQualification(@Param("category")CategoryQualificationDO categoryQualificationDO,@Param("scopeIdsList")List<Long> idList);
 }

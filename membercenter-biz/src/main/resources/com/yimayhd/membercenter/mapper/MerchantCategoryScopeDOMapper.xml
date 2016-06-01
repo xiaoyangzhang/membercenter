@@ -104,7 +104,7 @@
   	</if>
   </select> -->
   <select id="getMerchantCategoryScope" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryScopeDO" resultMap="BaseResultMap">
-    select id,merchant_category_id from merchant_category_scope
+    select id,merchant_category_id,business_scope_id from merchant_category_scope
     where domain_id=#{merchantCategoryScope.domainId}
     <if test="idList != null">
     and business_scope_id in

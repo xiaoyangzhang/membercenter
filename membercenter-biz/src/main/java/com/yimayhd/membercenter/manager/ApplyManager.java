@@ -101,13 +101,13 @@ public class ApplyManager {
 		return result;
 	}
 
-	public MemResult<List<CategoryQualificationDO>> getCategoryQualification(CategoryQualificationDO categoryQua) {
+	public MemResult<List<CategoryQualificationDO>> getCategoryQualification(CategoryQualificationDO categoryQua,List<Long> idList) {
 //		if (merchantCategoryId <=0 || domainId <= 0) {
 //			return MemResult.buildFailResult(-1, "参数错误", null);
 //		}
 		MemResult<List<CategoryQualificationDO>> result = new MemResult<List<CategoryQualificationDO>>();
 
-		List<CategoryQualificationDO> qualifications = categoryQualificationDao.getCategoryQualification(categoryQua);
+		List<CategoryQualificationDO> qualifications = categoryQualificationDao.getCategoryQualification(categoryQua,idList);
 		if (qualifications == null) {
 			result.setReturnCode(MemberReturnCode.CATEGORY_QUALIFICATION_FAILED);
 			return result;

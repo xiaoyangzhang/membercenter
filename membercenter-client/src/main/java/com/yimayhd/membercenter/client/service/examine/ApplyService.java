@@ -10,6 +10,7 @@ import java.util.List;
 
 
 
+
 /**
  * 〈一句话功能简述〉<br>
  * 〈入驻申请service〉
@@ -81,7 +82,7 @@ public interface ApplyService {
 	 * @param merchantCategoryId
 	 * @return
 	 */
-	public MemResult<List<CategoryQualificationDO>> getCategoryQualification(CategoryQualificationDO categoryQualificationDO);
+	public MemResult<List<CategoryQualificationDO>> getCategoryQualification(CategoryQualificationDO categoryQualificationDO,List<Long> idList);
 	
 	/**
 	 * 获取用户的经营范围

@@ -116,7 +116,7 @@ public class ApplyServiceImpl implements ApplyService {
 
 	@Override
 	public MemResult<List<CategoryQualificationDO>> getCategoryQualification(
-			CategoryQualificationDO categoryQualificationDO) {
+			CategoryQualificationDO categoryQualificationDO,List<Long> idList) {
 		MemResult<List<CategoryQualificationDO>> result = new MemResult<List<CategoryQualificationDO>>();
 		if (categoryQualificationDO == null) {
 			log.error(" param error : categoryQualificationDO={}",JSON.toJSONString(categoryQualificationDO));
@@ -124,7 +124,7 @@ public class ApplyServiceImpl implements ApplyService {
 			return result;
 		}
 		try {
-			result = applyManager.getCategoryQualification(categoryQualificationDO);
+			result = applyManager.getCategoryQualification(categoryQualificationDO,idList);
 			return result;
 		} catch (Exception e) {
 			log.error(" param error : categoryQualificationDO={} error:{}",JSON.toJSONString(categoryQualificationDO),e);

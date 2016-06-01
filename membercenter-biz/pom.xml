@@ -13,10 +13,10 @@
 	<packaging>jar</packaging>
 	<name>membercenter-biz</name>
 	<dependencies>
-		<dependency>
+		<!-- <dependency>
 				<groupId>com.yimayhd.stone</groupId>
 				<artifactId>stone</artifactId>
-			</dependency>
+			</dependency> -->
 		<dependency>
 				<groupId>com.yimayhd.user</groupId>
 				<artifactId>session-manager</artifactId>

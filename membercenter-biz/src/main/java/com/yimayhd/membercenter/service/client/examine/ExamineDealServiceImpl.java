@@ -110,6 +110,10 @@ public class ExamineDealServiceImpl implements ExamineDealService {
             MemResult<ExamineDO> queryResult = talentExamineManager.queryMerchantExamineInfoById(examineDO);
             if (queryResult.isSuccess()) {
                 ExamineInfoDTO examinDTO = ExamineConverter.examineDOToDTO(queryResult.getValue());
+                if (examinDTO == null) {
+					result.setReturnCode(MemberReturnCode.MERCHANT_NOT_FOUND_ERROR);
+					return result;
+				}
                 result.setValue(examinDTO);
                 logger.info("queryMerchantExamineInfoBySellerId par:{} return success, costs:{}ms",
                         JSONObject.toJSONString(examineQueryDTO), (System.currentTimeMillis() - start));

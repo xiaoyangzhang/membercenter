@@ -114,7 +114,7 @@
   <select id="getMerchantQualification" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO" resultMap="BaseResultMap">
   	select qulification_id,content from merchant_qualification
   	where domain_id=#{merchantQualification.domainId}
-  	<if test="merchantQualification.sellerId != null">
+  	<if test="merchantQualification.sellerId != null and merchantQualification.sellerId != 0">
   		and seller_id=#{merchantQualification.sellerId}
   	</if>
   </select>

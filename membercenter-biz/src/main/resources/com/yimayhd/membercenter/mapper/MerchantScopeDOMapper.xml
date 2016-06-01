@@ -101,7 +101,7 @@
    <select id="getMerchantScope" parameterType="com.yimayhd.membercenter.client.domain.MerchantScopeDO" resultMap="BaseResultMap">
   	select id,business_scope_id from merchant_scope
   	where domain_id=#{merchantScope.domainId}
-  	<if test="merchantScope.sellerId != null">
+  	<if test="merchantScope.sellerId != null and merchantScope.sellerId != 0">
   		and seller_id=#{merchantScope.sellerId}
   	</if>
   </select><!--

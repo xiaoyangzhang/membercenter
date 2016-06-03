@@ -125,7 +125,7 @@
   	</if>
   </select> -->
   <select id="getCategoryQualification" parameterType="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO" resultMap="BaseResultMap">
-  	select qulification_id,required from category_qualification
+  	select DISTINCT qulification_id,required from category_qualification
   	where domain_id=#{category.domainId}
   	<if test="category.merchantCategoryId != null and category.merchantCategoryId != 0">
   		and merchant_category_id = #{category.merchantCategoryId,jdbcType=BIGINT}
@@ -136,7 +136,7 @@
   	</if>
   	<if test="scopeIdsList != null">
 		and business_scope_id in
-		<foreach collection="list" index="index" item="item" open="("
+		<foreach collection="scopeIdsList" index="index" item="item" open="("
 			separator="," close=")">
 			#{item,jdbcType=BIGINT}
 		</foreach>

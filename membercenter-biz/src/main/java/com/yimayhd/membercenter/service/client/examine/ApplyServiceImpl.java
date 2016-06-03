@@ -15,7 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ApplyServiceImpl implements ApplyService {
 	
@@ -148,7 +150,7 @@ public class ApplyServiceImpl implements ApplyService {
 				qualifications.setReturnCode(MemberReturnCode.MERCHANT_QUALIFICATION_FAILED);
 				return qualifications;
 			}
-			List<Long> idList = new ArrayList<Long>();
+			Set<Long> idList = new HashSet<Long>();
 			for (MerchantQualificationDO mqDO : result.getValue()) {
 				idList.add(mqDO.getId());
 			}
@@ -208,7 +210,7 @@ public class ApplyServiceImpl implements ApplyService {
 
 	@Override
 	public MemResult<List<QualificationDO>> getQualification(
-			QualificationDO qualification,List<Long> idList) {
+			QualificationDO qualification,Set<Long> idList) {
 		MemResult<List<QualificationDO>> result = new MemResult<List<QualificationDO>>();
 		if (qualification == null || (idList != null && idList.size() == 0)) {
 			log.error("params error:qualification={} ",JSON.toJSONString(qualification));

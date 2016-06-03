@@ -1,9 +1,9 @@
-package com.yimayhd.membercenter.client.domain.draft;
+package com.yimayhd.membercenter.client.dto;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class DraftDO implements Serializable{
+public class DraftDTO implements Serializable{
 
 	/**
 	 * serialVersionUID = -638270932104725839L;
@@ -25,6 +25,11 @@ public class DraftDO implements Serializable{
 	 */
 	private Long accountId;
 
+	/**
+	 * 子类型名称
+	 */
+	private String subTypeName;
+	
 	/**
 	 * 创建时间
 	 */
@@ -52,6 +57,14 @@ public class DraftDO implements Serializable{
 
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
+	}
+
+	public String getSubTypeName() {
+		return subTypeName;
+	}
+
+	public void setSubTypeName(String subTypeName) {
+		this.subTypeName = subTypeName;
 	}
 
 	public Date getGmtCreated() {

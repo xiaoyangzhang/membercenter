@@ -57,7 +57,7 @@ public class ApplyServiceImpl implements ApplyService {
 			return scopes;
 		}
 	}
-
+	
 //	@Override
 //	public MemResult<List<BusinessScopeDO>> getBusinessScope(BusinessScopeDO businessScope) {
 //		MemResult<List<BusinessScopeDO>> result = new MemResult<List<BusinessScopeDO>>();
@@ -276,6 +276,43 @@ public class ApplyServiceImpl implements ApplyService {
 	@Override
 	public MemResult<List<MerchantCategoryDO>> getMerchantCategory(MerchantCategoryDO merchantCategory) {
 		return applyManager.getMerchantCategory(merchantCategory);
+	}
+
+	@Override
+	public MemResult<List<MerchantScopeDO>> getMerchantScope(
+			MerchantScopeDO merchantScope) {
+		MemResult<List<MerchantScopeDO>> result = new MemResult<List<MerchantScopeDO>>();
+		if (merchantScope == null) {
+			log.error("param error:merchantScope={}",merchantScope);
+			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return result;
+		}
+		try {
+			result = applyManager.getMerchantScope(merchantScope);
+			//return result;
+		} catch (Exception e) {
+			log.error("params :merchantScope={} error:{}",JSON.toJSONString(merchantScope),e);
+			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+		}
+		return result;
+	}
+	@Override
+	public MemResult<List<MerchantQualificationDO>> getMerchantQualification(
+			MerchantQualificationDO merchantQualification) {
+		MemResult<List<MerchantQualificationDO>> result = new MemResult<List<MerchantQualificationDO>>();
+		if (merchantQualification == null) {
+			log.error("param merchantQualification={}",merchantQualification);
+			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return result;
+		}
+		try {
+			result = applyManager.getMerchantQualification(merchantQualification);
+			//return result;
+		} catch (Exception e) {
+			log.error("params :merchantQualification={} error:{}",JSON.toJSONString(merchantQualification),e);
+			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+		}
+		return result;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.yimayhd.membercenter.manager;
 
 import java.util.List;
+import java.util.Set;
 
 import com.yimayhd.membercenter.entity.merchant.Merchant;
 
@@ -86,7 +87,7 @@ public class ApplyManager {
 
 	}
 
-	public MemResult<List<QualificationDO>> getQualification(QualificationDO qualification,List<Long> idList) {
+	public MemResult<List<QualificationDO>> getQualification(QualificationDO qualification,Set<Long> idList) {
 		//List<QualificationDO> qualificationList = new ArrayList<QualificationDO>();
 //		if (domainId <= 0) {
 //			return MemResult.buildFailResult(-1, "参数错误", null);

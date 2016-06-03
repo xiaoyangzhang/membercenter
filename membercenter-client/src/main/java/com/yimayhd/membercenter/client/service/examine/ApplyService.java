@@ -6,6 +6,7 @@ import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 
 import java.util.List;
+import java.util.Set;
 
 
 
@@ -46,7 +47,7 @@ public interface ApplyService {
 	 * @param domainId
 	 * @return
 	 */
-	public MemResult<List<QualificationDO>> getQualification(QualificationDO qualification,List<Long> idList);
+	public MemResult<List<QualificationDO>> getQualification(QualificationDO qualification,Set<Long> idList);
 	/**
 	 * 获取商家的经营范围<br/>
 	 * @author zhangxy 24/05/2016

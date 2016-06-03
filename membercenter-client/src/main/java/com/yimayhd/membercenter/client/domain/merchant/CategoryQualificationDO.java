@@ -11,7 +11,7 @@ public class CategoryQualificationDO implements Serializable {
 
     private long qulificationId;
 
-    private byte required;
+    private int required;
 
     private int serialNo;
 
@@ -22,7 +22,7 @@ public class CategoryQualificationDO implements Serializable {
     private Date gmtModified;
     private int domainId;
     private long businessScopeId;
-    private byte isDirectSale;
+    private int isDirectSale;
     private List<Long> scopeIdsList;
     
     public List<Long> getScopeIdsList() {
@@ -41,11 +41,11 @@ public class CategoryQualificationDO implements Serializable {
 		this.businessScopeId = businessScopeId;
 	}
 
-	public byte getIsDirectSale() {
+	public int getIsDirectSale() {
 		return isDirectSale;
 	}
 
-	public void setIsDirectSale(byte isDirectSale) {
+	public void setIsDirectSale(int isDirectSale) {
 		this.isDirectSale = isDirectSale;
 	}
 
@@ -82,11 +82,11 @@ public class CategoryQualificationDO implements Serializable {
         this.qulificationId = qulificationId;
     }
 
-    public byte getRequired() {
+    public int getRequired() {
         return required;
     }
 
-    public void setRequired(byte required) {
+    public void setRequired(int required) {
         this.required = required;
     }
 

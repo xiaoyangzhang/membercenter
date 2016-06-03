@@ -140,7 +140,7 @@ public class ExamineInfoDTO implements Serializable {
     private Date createDate;
     //手持身份证
     private String cardInHand;
-    private byte isDirectSale;//是否直营
+    private int isDirectSale;//是否直营
 	private long merchantCategoryId;//商家身份
 	 // ********************2期商户资质证明****************************//
 	private String interMediaryLicense;//因私出入境中介机构经营许可证正面
@@ -302,10 +302,10 @@ public class ExamineInfoDTO implements Serializable {
 	public void setMerchantCategoryId(long merchantCategoryId) {
 		this.merchantCategoryId = merchantCategoryId;
 	}
-	public byte getIsDirectSale() {
+	public int getIsDirectSale() {
 		return isDirectSale;
 	}
-	public void setIsDirectSale(byte isDirectSale) {
+	public void setIsDirectSale(int isDirectSale) {
 		this.isDirectSale = isDirectSale;
 	}
     public long getId() {

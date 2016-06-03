@@ -23,13 +23,22 @@ import java.util.List;
 public interface ApplyService {
 	
 	/** 
+	 * 获取用户的经营范围<br/>
+	 * @author zhangxy 24/05/2016
+	 * @param sellerId
+	 * @param domainId
+	 * @param idList 关联表主键集合
+	 * @return
+	 */
+	public MemResult<List<BusinessScopeDO>> getBusinessScope(BusinessScopeDO businessScope,List<Long> idList);
+	/** 
 	 * 获取用户与经营范围的关联对象集合<br/>
 	 * @author zhangxy 24/05/2016
 	 * @param sellerId
 	 * @param domainId
 	 * @return
 	 */
-	public MemResult<List<BusinessScopeDO>> getBusinessScope(BusinessScopeDO businessScope,List<Long> idList);
+	public MemResult<List<MerchantScopeDO>> getMerchantScope(MerchantScopeDO merchantScope);
 	/**
 	 * 获取资质<br/>
 	 * @author zhangxy 24/05/2016
@@ -120,4 +129,5 @@ public interface ApplyService {
 	public MemResult<List<MerchantCategoryDO>> getMerchantCategory(MerchantCategoryDO merchantCategory);
 
 	//MemResult<MerchantCategoryDO> getMerchantCategory(MerchantCategoryDO merchantCategory);
+	public MemResult<List<MerchantQualificationDO>> getMerchantQualification(MerchantQualificationDO merchantQualification) ;
 }

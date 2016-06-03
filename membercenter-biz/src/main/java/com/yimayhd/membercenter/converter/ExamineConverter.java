@@ -109,7 +109,7 @@ public class ExamineConverter {
         //2期
 //        examinDTO.setAmusementParkReport(pictureMap.get(PictureUrl.AMUSEMENTPARK_REPORT.getId()));
 //        examinDTO.setHotelGoodsAuthorization(pictureMap.get(PictureUrl.HOTEL_GOODS_AUTHORIZATION.getId()));
-//        examinDTO.setIsDirectSale(examineDO.getIsDirectSale());
+        examinDTO.setIsDirectSale(examineDO.getIsDirectSale());
 //        examinDTO.setWildlifeSale(pictureMap.get(PictureUrl.WILDLIFE_SALE.getId()));
 //        examinDTO.setWaterWildlifeSale(pictureMap.get(PictureUrl.WATER_WILDLIFE_SALE.getId()));
 //        examinDTO.setSpecialSaleLicense(pictureMap.get(PictureUrl.SPECIAL_SALE_LICENSE.getId()));
@@ -122,7 +122,7 @@ public class ExamineConverter {
 //        examinDTO.setScenicPriceRegister(pictureMap.get(PictureUrl.SCENIC_PRICE_REGISTER.getId()));
 //        examinDTO.setScenicGoodsAuthorization(pictureMap.get(PictureUrl.SCENIC_GOODS_AUTHORIZATION.getId()));
 //        examinDTO.setRelationBetweenHotelAngGroup(pictureMap.get(PictureUrl.RELATION_BETWEEN_HOTEL_AND_GROUP.getId()));
-//        examinDTO.setMerchantCategoryId(examineDO.getMerchantCategoryId());
+        examinDTO.setMerchantCategoryId(examineDO.getMerchantCategoryId());
         // type
         examinDTO.setTouristCard(certificateMap.get(CertificateOption.TOURIST_CARD.getCode()));
         examinDTO.setDrivingLinence(certificateMap.get(CertificateOption.DRIVING_LICENCE.getCode()));

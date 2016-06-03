@@ -23,7 +23,7 @@ public class QualificationDO implements Serializable {
     private int domainId;
     private List<Long> idList;
     private List<CategoryQualificationDO> categoryQualificationList;
-    private byte required;
+    private int required;
     public List<CategoryQualificationDO> getCategoryQualificationList() {
 		return categoryQualificationList;
 	}
@@ -33,11 +33,11 @@ public class QualificationDO implements Serializable {
 		this.categoryQualificationList = categoryQualificationList;
 	}
 
-	public byte getRequired() {
+	public int getRequired() {
 		return required;
 	}
 
-	public void setRequired(byte required) {
+	public void setRequired(int required) {
 		this.required = required;
 	}
 

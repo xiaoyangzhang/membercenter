@@ -114,6 +114,9 @@
     </foreach>
     </if>
     <if test="merchantCategoryScope.id != null and merchantCategoryScope.id !=  0">
+    	and id = #{merchantCategoryScope.id}
+    </if>
+    <if test="merchantCategoryScope.merchantCategoryId != null and merchantCategoryScope.merchantCategoryId !=  0">
     	and merchant_category_id = #{merchantCategoryScope.merchantCategoryId}
     </if>
   </select>

@@ -5,11 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 public class QualificationDO implements Serializable {
+	private static final long serialVersionUID = 1L;
     private long id;
 
     private String title;
 
-    private String type;
+    private int type;
 
     private String tip;
 
@@ -18,13 +19,38 @@ public class QualificationDO implements Serializable {
     private Date gmtCreated;
 
     private Date gmtModified;
-
-    private static final long serialVersionUID = 1L;
+    private int num; 
     private int domainId;
     private List<Long> idList;
     private List<CategoryQualificationDO> categoryQualificationList;
-    private int required;
-    public List<CategoryQualificationDO> getCategoryQualificationList() {
+    private boolean required;
+    private String overallNote;//全局备注
+    
+    public boolean isRequired() {
+		return required;
+	}
+
+	public void setRequired(boolean required) {
+		this.required = required;
+	}
+
+	public String getOverallNote() {
+		return overallNote;
+	}
+
+	public void setOverallNote(String overallNote) {
+		this.overallNote = overallNote;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public List<CategoryQualificationDO> getCategoryQualificationList() {
 		return categoryQualificationList;
 	}
 
@@ -33,13 +59,7 @@ public class QualificationDO implements Serializable {
 		this.categoryQualificationList = categoryQualificationList;
 	}
 
-	public int getRequired() {
-		return required;
-	}
-
-	public void setRequired(int required) {
-		this.required = required;
-	}
+	
 
 	public List<Long> getIdList() {
 		return idList;
@@ -72,11 +92,11 @@ public class QualificationDO implements Serializable {
         this.title = title;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

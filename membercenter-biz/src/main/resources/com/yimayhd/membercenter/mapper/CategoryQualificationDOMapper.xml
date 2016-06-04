@@ -7,7 +7,7 @@
     <result column="qulification_id" property="qulificationId" jdbcType="BIGINT" />
     <result column="business_scope_id" property="businessScopeId" jdbcType="BIGINT" />
     <result column="is_direct_sale" property="isDirectSale" jdbcType="TINYINT" />
-    <result column="required" property="required" jdbcType="BIT" />
+    <result column="required" property="required" jdbcType="BOOLEAN" />
     <result column="serial_no" property="serialNo" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
@@ -33,7 +33,7 @@
       required, serial_no, status, 
       gmt_created, gmt_modified,domain_id,business_scope_id,is_direct_sale)
     values (#{merchantCategoryId,jdbcType=BIGINT}, #{qulificationId,jdbcType=BIGINT}, 
-      #{required,jdbcType=BIT}, #{serialNo,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{required}, #{serialNo,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},#{domainId,jdbcType=INTEGER},#{businessScopeId,jdbcType=BIGINT},#{isDirectSale,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO" useGeneratedKeys="true" keyProperty="id" >
@@ -58,7 +58,7 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       #{merchantCategoryId,jdbcType=BIGINT},
       #{qulificationId,jdbcType=BIGINT},
-      #{required,jdbcType=BIT},
+      #{required},
       #{serialNo,jdbcType=INTEGER},
       #{status,jdbcType=INTEGER},
       #{businessScopeId,jdbcType=BIGINT},#{isDirectSale,jdbcType=TINYINT},
@@ -83,7 +83,7 @@
         qulification_id = #{qulificationId,jdbcType=BIGINT},
       </if>
       <if test="required != null" >
-        required = #{required,jdbcType=BIT},
+        required = #{required},
       </if>
       <if test="serialNo != null" >
         serial_no = #{serialNo,jdbcType=INTEGER},
@@ -107,7 +107,7 @@
     update category_qualification
     set merchant_category_id = #{merchantCategoryId,jdbcType=BIGINT},
       qulification_id = #{qulificationId,jdbcType=BIGINT},
-      required = #{required,jdbcType=BIT},
+      required = #{required},
       serial_no = #{serialNo,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},

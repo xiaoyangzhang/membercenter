@@ -17,20 +17,23 @@ package com.yimayhd.membercenter.enums;
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
-public enum ExamineType {
+public enum MerchantType {
     
     TALENT("旅游线路达人", 1),
     MERCHANT("店铺", 2),
     TOUR_COR("旅游企业", 3),
     HOTEL("酒店", 4),
     SCENIC("景区", 5),
-    CITY_COR("同城活动企业", 6)
+    CITY_COR("同城活动企业", 6),
+    //以下为旅游企业类型的两个身份
+    TRAVEL_AGENCY("旅行社", 7),
+    TRAVLE_SERVICE("旅游商务服务公司", 8)
     ;
     
     private String name;
     private int type;
 
-    ExamineType(String name, int type) {
+    MerchantType(String name, int type) {
         this.name = name;
         this.type = type;
     }
@@ -43,8 +46,8 @@ public enum ExamineType {
         return type;
     }
 
-    public static ExamineType getByType(int type){
-    	for(ExamineType examineType : ExamineType.values() ){
+    public static MerchantType getByType(int type){
+    	for(MerchantType examineType : MerchantType.values() ){
     		if( examineType.getType() == type ){
     			return examineType ;
     		}
@@ -52,7 +55,7 @@ public enum ExamineType {
     	return null ;
     }
     public static boolean has(int id) {
-        for (ExamineType eXType : values()) {
+        for (MerchantType eXType : values()) {
             if (eXType.getType() == id) {
                 return true;
             }

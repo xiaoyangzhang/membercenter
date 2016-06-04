@@ -11,7 +11,7 @@ public class CategoryQualificationDO implements Serializable {
 
     private long qulificationId;
 
-    private int required;
+    private boolean required;
 
     private int serialNo;
 
@@ -82,15 +82,15 @@ public class CategoryQualificationDO implements Serializable {
         this.qulificationId = qulificationId;
     }
 
-    public int getRequired() {
-        return required;
-    }
+    public boolean isRequired() {
+		return required;
+	}
 
-    public void setRequired(int required) {
-        this.required = required;
-    }
+	public void setRequired(boolean required) {
+		this.required = required;
+	}
 
-    public int getSerialNo() {
+	public int getSerialNo() {
         return serialNo;
     }
 

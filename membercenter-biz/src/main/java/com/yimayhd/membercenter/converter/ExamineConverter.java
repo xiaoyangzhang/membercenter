@@ -23,7 +23,7 @@ import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
 import com.yimayhd.membercenter.client.query.InfoQueryDTO;
 import com.yimayhd.membercenter.enums.ExamineDetail;
 import com.yimayhd.membercenter.enums.ExamineStatus;
-import com.yimayhd.membercenter.enums.ExamineType;
+import com.yimayhd.membercenter.enums.MerchantType;
 import com.yimayhd.membercenter.enums.PictureUrl;
 import com.yimayhd.membercenter.util.ParmCheckUtil;
 import com.yimayhd.user.client.domain.MerchantDO;
@@ -208,7 +208,7 @@ public class ExamineConverter {
 //        pictureMap.put(PictureUrl.TRAVEL_AGENCY_BRANCH_AGREEMENT.getId(), examinDTO.getTravelAgencyBranchAgreement());
 //        pictureMap.put(PictureUrl.SPECIAL_SALE_LICENSE.getId(), examinDTO.getSpecialSaleLicense());
 //        pictureMap.put(PictureUrl.SPECIAL_SALE_AUTHORIZATION.getId(), examinDTO.getSpecialSaleAuthorization());
-        if(examinDTO.getType() == ExamineType.TALENT.getType()){
+        if(examinDTO.getType() == MerchantType.TALENT.getType()){
             certificateMap.put(CertificateOption.TOURIST_CARD.getCode(), examinDTO.getTouristCard());
             certificateMap.put(CertificateOption.DRIVING_LICENCE.getCode(), examinDTO.getDrivingLinence());
             certificateMap.put(CertificateOption.DIVING_LICENCE.getCode(), examinDTO.getDivingLinence());
@@ -372,7 +372,7 @@ public class ExamineConverter {
         //店铺名称
         merchantDO.setName(ParmCheckUtil.checkString(featureMap.get(ExamineDetail.MERCHANT_NAME.getId())));
         //达人
-        if(ExamineType.TALENT.getType() == examineDO.getType()){
+        if(MerchantType.TALENT.getType() == examineDO.getType()){
             merchantDO.setOption(MerchantOption.TALENT.getOption());
             List<CertificateOption> options = new ArrayList<CertificateOption>();
             //身份证

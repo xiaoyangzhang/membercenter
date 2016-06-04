@@ -41,7 +41,7 @@ public class ApplyServiceImpl implements ApplyService {
 			}
 			List<Long> idList = new ArrayList<Long>();
 			for (MerchantScopeDO msDO : result.getValue()) {
-				idList.add(msDO.getId());
+				idList.add(msDO.getBusinessScopeId());
 			}
 			if (idList.size() == 0) {
 				scopes.setReturnCode(MemberReturnCode.MERCHANT_SCOPE_FAILED);

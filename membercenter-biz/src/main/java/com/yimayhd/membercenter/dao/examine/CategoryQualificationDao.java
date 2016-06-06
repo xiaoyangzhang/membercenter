@@ -32,7 +32,7 @@ public class CategoryQualificationDao {
 //		return qualifications;
 //	}
 	
-	public List<CategoryQualificationDO> getCategoryQualification(QualificationQueryDTO queryDTO) {
-		return categoryQualificationDOMapper.getCategoryQualification(queryDTO,queryDTO.getIdSet());
+	public List<CategoryQualificationDO> getCategoryQualification(CategoryQualificationDO categoryQualification) {
+		return categoryQualificationDOMapper.getCategoryQualification(categoryQualification,categoryQualification.getScopeIdsList());
 	}
 }

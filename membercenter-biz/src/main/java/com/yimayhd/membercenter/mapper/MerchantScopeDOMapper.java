@@ -36,7 +36,7 @@ public interface MerchantScopeDOMapper {
     * @return List<MerchantScopeDO>    返回类型 
     * @throws
      */
-    public List<MerchantScopeDO> getMerchantScope(@Param("merchantScope")BusinessScopeQueryDTO businessScopeQueryDTO);
+    public List<MerchantScopeDO> getMerchantScope(@Param("merchantScope")MerchantScopeDO businessScopeQueryDTO);
     /**
      * 
     * created by zhangxy

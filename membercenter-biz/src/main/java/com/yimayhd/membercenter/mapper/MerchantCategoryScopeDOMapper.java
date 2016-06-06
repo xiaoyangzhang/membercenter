@@ -31,7 +31,7 @@ public interface MerchantCategoryScopeDOMapper {
     * @return List<MerchantCategoryScopeDO>    返回类型 
     * @throws
      */
-    public List<MerchantCategoryScopeDO> getMerchantCategoryScope(@Param("merchantCategoryScope")BusinessScopeQueryDTO queryDTO,@Param("idList")Set<Long> idList);
+    public List<MerchantCategoryScopeDO> getMerchantCategoryScope(@Param("merchantCategoryScope")MerchantCategoryScopeDO queryDTO,@Param("idList")Set<Long> idList);
 
     /**
      * 根据scopeIds查询category集合

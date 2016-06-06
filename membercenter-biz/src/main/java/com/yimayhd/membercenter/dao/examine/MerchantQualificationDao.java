@@ -53,7 +53,7 @@ public class MerchantQualificationDao {
 
 	
 	
-	public List<MerchantQualificationDO> getMerchantQualification(QualificationQueryDTO qualificationQueryDTO) {
+	public List<MerchantQualificationDO> getMerchantQualification(MerchantQualificationDO qualificationQueryDTO) {
 		return merchantQualificationDOMapper.getMerchantQualification(qualificationQueryDTO);
 	}
 	

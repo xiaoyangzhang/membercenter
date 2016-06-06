@@ -31,7 +31,7 @@ public interface MerchantQualificationDOMapper {
     * @return List<MerchantQualificationDO>    返回类型 
     * @throws
      */
-    public List<MerchantQualificationDO> getMerchantQualification(@Param("merchantQualification")QualificationQueryDTO queryDTO);
+    public List<MerchantQualificationDO> getMerchantQualification(@Param("merchantQualification")MerchantQualificationDO queryDTO);
     /**
      * 
     * created by zhangxy

@@ -2,6 +2,10 @@ package com.yimayhd.membercenter.service.client;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.draft.DraftDO;
 import com.yimayhd.membercenter.client.domain.draft.DraftDetailDO;
 import com.yimayhd.membercenter.client.dto.DraftDTO;
@@ -9,9 +13,18 @@ import com.yimayhd.membercenter.client.query.DraftListQuery;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.DraftManagerService;
+import com.yimayhd.membercenter.manager.DraftManager;
 
 public class DraftManagerServiceImpl implements DraftManagerService {
 
+	/**
+	 * 草稿箱manager
+	 */
+	private DraftManager draftManager;
+	
+    private static final Logger LOGGER = LoggerFactory.getLogger(DraftManagerServiceImpl.class);
+
+	
 	/**
 	 * 保存草稿
 	 * @param draftVO 新建的vo
@@ -21,8 +34,17 @@ public class DraftManagerServiceImpl implements DraftManagerService {
 	 */
 	@Override
 	public MemResult<Boolean> saveDraft(DraftDO draftDO) {
-		// TODO Auto-generated method stub
-		return null;
+        LOGGER.info("saveDraft draftDO= {}", draftDO);
+        MemResult<Boolean> result = new MemResult<Boolean>();
+        try {
+        	result = draftManager.saveDraft(draftDO);
+		} catch (Exception e) {
+            LOGGER.error("draftManagerServiceImpl.saveDraft occur error:{}", e);
+            result.setValue(false);
+            result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+		}
+        
+		return result;
 	}
 
 	/**

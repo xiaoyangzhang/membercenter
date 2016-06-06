@@ -24,11 +24,21 @@ public class DraftDO implements Serializable{
 	 * 账户id（商户或用户）
 	 */
 	private Long accountId;
+	
+	/**
+	 * json格式数据
+	 */
+	private String JSONStr;
 
 	/**
 	 * 创建时间
 	 */
 	private Date gmtCreated;
+	
+	/**
+	 * 创建时间
+	 */
+	private Date gmtModified;
 
 	public Long getId() {
 		return id;
@@ -60,5 +70,21 @@ public class DraftDO implements Serializable{
 
 	public void setGmtCreated(Date gmtCreated) {
 		this.gmtCreated = gmtCreated;
+	}
+
+	public String getJSONStr() {
+		return JSONStr;
+	}
+
+	public void setJSONStr(String jSONStr) {
+		JSONStr = jSONStr;
+	}
+
+	public Date getGmtModified() {
+		return gmtModified;
+	}
+
+	public void setGmtModified(Date gmtModified) {
+		this.gmtModified = gmtModified;
 	}
 }

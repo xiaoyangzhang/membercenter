@@ -18,7 +18,7 @@ public class MerchantCategoryScopeDO implements Serializable {
 
     private Date gmtModified;
     private int domainId;
-    private Set<Long> idSet = new HashSet<>();
+    private Set<Long> idSet ;
     
     public Set<Long> getIdSet() {
 		return idSet;

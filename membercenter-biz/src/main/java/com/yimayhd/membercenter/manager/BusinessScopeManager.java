@@ -36,7 +36,10 @@ public class BusinessScopeManager {
 	public List<BusinessScopeDO> getBusinessScopesByScope(BusinessScopeQueryDTO queryDTO) {
 		BusinessScopeDO businessScope = new BusinessScopeDO();
 		businessScope.setDomainId(queryDTO.getDomainId());
-		businessScope.setIdList(queryDTO.getIdSet());
+		if (queryDTO.getIdSet() != null && queryDTO.getIdSet().size() >0) {
+			
+			businessScope.setIdList(queryDTO.getIdSet());
+		}
 		
 		return businessScopeDao.getBusinessScope(businessScope);
 	}
@@ -44,7 +47,10 @@ public class BusinessScopeManager {
 	public List<MerchantCategoryScopeDO> getMerchantCategoryScope(BusinessScopeQueryDTO queryDTO) {
 		MerchantCategoryScopeDO merchantCategoryScope = new MerchantCategoryScopeDO();
 		merchantCategoryScope.setDomainId(queryDTO.getDomainId());
-		merchantCategoryScope.setIdSet(queryDTO.getIdSet());
+		if (queryDTO.getIdSet() != null && queryDTO.getIdSet().size() >0) {
+			
+			merchantCategoryScope.setIdSet(queryDTO.getIdSet());
+		}
 		merchantCategoryScope.setBusinessScopeId(queryDTO.getMerchantCategoryScopeId());
 		merchantCategoryScope.setMerchantCategoryId(queryDTO.getMerchantCategoryId());
 		return merchantCategoryScopeDao.getMerchantCategoryScope(merchantCategoryScope);

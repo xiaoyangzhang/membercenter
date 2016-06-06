@@ -135,8 +135,8 @@
   	
   </select> -->
 
-  <select id="getMerchantCategories" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryDO" resultMap="BaseResultMap">
-    select name,id,parent_id,type from merchant_category
+  <select id="getMerchantCategory" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryDO" resultMap="BaseResultMap">
+    select name,id,parent_id,domain_id,type from merchant_category
     where domain_id=#{category.domainId}
     <if test="category.id != null and category.id != 0">
     and id = #{category.id}

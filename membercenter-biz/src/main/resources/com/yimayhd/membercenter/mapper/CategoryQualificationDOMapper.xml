@@ -124,8 +124,8 @@
   		and merchant_category_id = #{categoryId}
   	</if>
   </select> -->
-  <select id="getCategoryQualification" parameterType="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO" resultMap="BaseResultMap">
-  	select DISTINCT qulification_id,required from category_qualification
+  <select id="getCategoryQualification"  resultMap="BaseResultMap">
+  	select DISTINCT qulification_id,required,domain_id from category_qualification
   	where domain_id=#{category.domainId}
   	<if test="category.merchantCategoryId != null and category.merchantCategoryId != 0">
   		and merchant_category_id = #{category.merchantCategoryId,jdbcType=BIGINT}

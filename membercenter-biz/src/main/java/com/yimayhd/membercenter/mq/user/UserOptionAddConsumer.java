@@ -25,7 +25,7 @@ import com.yimayhd.membercenter.client.enums.topic.MemberTopic;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.converter.ExamineConverter;
 import com.yimayhd.membercenter.enums.ExamineStatus;
-import com.yimayhd.membercenter.enums.MerchantType;
+import com.yimayhd.membercenter.enums.ExamineType;
 import com.yimayhd.membercenter.mq.BaseConsumer;
 import com.yimayhd.membercenter.repo.MerchantRepo;
 import com.yimayhd.membercenter.repo.UserOptionRepo;
@@ -116,7 +116,7 @@ public class UserOptionAddConsumer extends BaseConsumer {
 	private MemResult<Boolean> addUserOption(long userId, int type) {
 		List<UserOptions> userOptionsList = new ArrayList<UserOptions>();
 		// 达人
-		if (MerchantType.TALENT.getType() == type) {
+		if (ExamineType.TALENT.getType() == type) {
 			userOptionsList.add(UserOptions.USER_TALENT);
 			// 达人默认大V
 			userOptionsList.add(UserOptions.CERTIFICATED);

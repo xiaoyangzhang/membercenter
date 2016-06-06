@@ -107,10 +107,10 @@
   <update id="updateByPrimaryKey" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO" >
     update merchant_qualification
     set
-      
+     
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       status = #{status}
-    where id = #{id,jdbcType=BIGINT}
+    where seller_id = #{sellerId}
   </update>
   <update id="updateStatusBatch"  parameterType="java.util.List">  
     <foreach collection="list" item="item" index="index" open="" close="" separator=";">
@@ -123,7 +123,7 @@
     </foreach>      
 </update>
   <select id="getMerchantQualification" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO" resultMap="BaseResultMap">
-  	select qulification_id,content from merchant_qualification
+  	select id,qulification_id,content,domain_id,seller_id from merchant_qualification
   	where domain_id=#{merchantQualification.domainId}
   	and status = 1
   	<if test="merchantQualification.sellerId != null and merchantQualification.sellerId != 0">

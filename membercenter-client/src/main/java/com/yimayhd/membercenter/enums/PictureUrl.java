@@ -56,7 +56,8 @@ public enum PictureUrl {
     SCENIE_TICKET_DOWN_SCANNING("景区门票扫描件反面","30",1),
     SCENIC_GOODS_AUTHORIZATION("景区商品授权书","31",1),
     SCENIC_QUALITY_LEVEL("景区质量等级证书","32",1),
-    RELATION_BETWEEN_HOTEL_AND_GROUP("酒店与集团的所属关系说明","33",1);
+    RELATION_BETWEEN_HOTEL_AND_GROUP("酒店与集团的所属关系说明","33",1),
+    CARD_IN_HAND("手持身份证","34",1);
      
     private static Map<Integer, List<String>> hashMap = new HashMap<Integer, List<String>>();
 

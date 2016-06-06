@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryScopeDO;
+import com.yimayhd.membercenter.client.query.BusinessScopeQueryDTO;
 import com.yimayhd.membercenter.mapper.MerchantCategoryScopeDOMapper;
 
 /**
@@ -22,15 +23,9 @@ public class MerchantCategoryScopeDao {
 
 	@Autowired
 	private MerchantCategoryScopeDOMapper merchantCategoryScopeDOMapper;
-	public List<MerchantCategoryScopeDO> getMerchantCategoryScope(MerchantCategoryScopeDO merchantCategoryScope,List<Long> idList) {
-//		if (merchantCategoryId <=0 || domainId <= 0) {
-//			return null;
-//		}
-		List<MerchantCategoryScopeDO> scopes = merchantCategoryScopeDOMapper.getMerchantCategoryScope(merchantCategoryScope,idList);
-//		if (scopes == null) {
-//			return null;
-//		}
-		return scopes;
+	public List<MerchantCategoryScopeDO> getMerchantCategoryScope(BusinessScopeQueryDTO queryDTO) {
+		//List<MerchantCategoryScopeDO> scopes = 
+		return merchantCategoryScopeDOMapper.getMerchantCategoryScope(queryDTO,queryDTO.getIdSet());
 	}
 
 //	public List<MerchantCategoryScopeDO> getMerchantCategoriesByScopeIds(long[] scopeIds, int domainId) {

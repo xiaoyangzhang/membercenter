@@ -98,10 +98,10 @@
       <if test="gmtModified != null" >
         gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
-      <if test="isDirectSale != null" >
+      <if test="isDirectSale != null and isDirectSale > 0" >
         is_direct_sale = #{isDirectSale,jdbcType=TINYINT},
       </if>
-      <if test="merchantCategoryId != null" >
+      <if test="merchantCategoryId != null and merchantCategoryId > 0" >
         merchant_category_id = #{merchantCategoryId,jdbcType=BIGINT},
       </if>
     </set>

@@ -37,16 +37,7 @@
               <property name="retries" value="${dubbo.retries}"/>
        </bean>
        	<!--  -->
-	<bean id="applyServiceExport" class="com.alibaba.dubbo.config.spring.ServiceBean">
-              <property name="interface" value="com.yimayhd.membercenter.client.service.examine.ApplyService"/>
-              <property name="ref" ref="applyService"/>
-              <property name="application" ref="dubboApplicationConfig"/>
-              <property name="registry" ref="dubboRegistryConfig"/>
-              <property name="protocol" ref="dubboProtocolConfig"/>
-              <property name="version" value="${export.dubbo.version}"/>
-              <property name="timeout" value="${export.dubbo.timeout}"/>
-              <property name="retries" value="${dubbo.retries}"/>
-       </bean>
+	
        <bean id="travelKaServiceExport" class="com.alibaba.dubbo.config.spring.ServiceBean">
               <property name="interface" value="com.yimayhd.membercenter.client.service.TravelKaService"/>
               <property name="ref" ref="travelKaService"/>
@@ -124,5 +115,25 @@
               <property name="timeout" value="${export.dubbo.timeout}"/>
               <property name="retries" value="${dubbo.retries}"/>
        </bean>
-
+	<bean id="merchantApplyServiceExport" class="com.alibaba.dubbo.config.spring.ServiceBean">
+              <property name="interface" value="com.yimayhd.membercenter.client.service.examine.MerchantApplyService"/>
+              <property name="ref" ref="merchantApplyService"/>
+              <property name="application" ref="dubboApplicationConfig"/>
+              <property name="registry" ref="dubboRegistryConfig"/>
+              <property name="protocol" ref="dubboProtocolConfig"/>
+              <property name="version" value="${export.dubbo.version}"/>
+              <property name="timeout" value="${export.dubbo.timeout}"/>
+              <property name="retries" value="${dubbo.retries}"/>
+       </bean>
+	<bean id="qualificationServiceExport" class="com.alibaba.dubbo.config.spring.ServiceBean">
+              <property name="interface" value="com.yimayhd.membercenter.client.service.QualificationService"/>
+              <property name="ref" ref="qualificationService"/>
+              <property name="application" ref="dubboApplicationConfig"/>
+              <property name="registry" ref="dubboRegistryConfig"/>
+              <property name="protocol" ref="dubboProtocolConfig"/>
+              <property name="version" value="${export.dubbo.version}"/>
+              <property name="timeout" value="${export.dubbo.timeout}"/>
+              <property name="retries" value="${dubbo.retries}"/>
+       </bean>
+	
 </beans>

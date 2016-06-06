@@ -36,14 +36,19 @@ public class MerchantItemCategoryServiceImpl implements MerchantItemCategoryServ
     private ExamineDealService examineDealService;
     
 	@Override
-	public MemResult<List<MerchantItemCategoryDO>> findMerchantItemCategoriesBySellerId(int domainId, long sellerId) {
+	public MemResult<List<MerchantItemCategoryDO>> findMerchantItemCategoriesByExamineId(int domainId, long examineId) {
 		MemResult<List<MerchantItemCategoryDO>> merchantItemCategoryResult = new MemResult<>();
-		if(domainId <= 0 || sellerId <= 0) {
+		if(domainId <= 0 || examineId <= 0) {
 			merchantItemCategoryResult.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 			return merchantItemCategoryResult;
 		}
-
-		List<MerchantItemCategoryDO> merchantItemCategoryDOs = merchantItemCategoryManager.findMerchantItemCategoryByMerchant(domainId, sellerId);
+		MemResult<ExamineInfoDTO> examineInfoMemResult = examineDealService.queryMerchantExamineInfoById(examineId);
+		ExamineDO examineDO = ExamineConverter.examinDTOToDO(examineInfoMemResult.getValue());
+		if(examineDO == null) {
+			merchantItemCategoryResult.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
+			return merchantItemCategoryResult;
+		}
+		List<MerchantItemCategoryDO> merchantItemCategoryDOs = merchantItemCategoryManager.findMerchantItemCategoryByMerchant(domainId, examineDO.getSellerId());
 		merchantItemCategoryResult.setValue(merchantItemCategoryDOs);
 		return merchantItemCategoryResult;
 	}

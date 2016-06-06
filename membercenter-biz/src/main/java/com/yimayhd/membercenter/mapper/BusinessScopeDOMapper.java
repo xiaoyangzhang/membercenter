@@ -1,10 +1,12 @@
 package com.yimayhd.membercenter.mapper;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO;
+import com.yimayhd.membercenter.client.query.BusinessScopeQueryDTO;
 
 public interface BusinessScopeDOMapper {
     int deleteByPrimaryKey(long id);
@@ -19,12 +21,10 @@ public interface BusinessScopeDOMapper {
 
     int updateByPrimaryKey(BusinessScopeDO record);
     /**
-     * 获取所有是经营范围
+     * 获取经营范围
      * @param domainId
      * @return
      */
-   // public List<BusinessScopeDO> getAllBusinessScope(@Param("domainId") int domainId);
     
-   // public List<BusinessScopeDO> getBusinessScopesByScope(@Param("domainId") int domainId,@Param("scopeIds") Long[] scopeIds);
-    public List<BusinessScopeDO> getBusinessScopes(@Param("scope") BusinessScopeDO businessScopeDO,@Param("idList")List<Long> idList);
+    public List<BusinessScopeDO> getBusinessScopes(@Param("scope") BusinessScopeDO businessScope,@Param("idList")Set<Long> idList);
 }

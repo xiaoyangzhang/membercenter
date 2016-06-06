@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO;
+import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
 import com.yimayhd.membercenter.mapper.CategoryQualificationDOMapper;
 
 /**
@@ -31,7 +32,7 @@ public class CategoryQualificationDao {
 //		return qualifications;
 //	}
 	
-	public List<CategoryQualificationDO> getCategoryQualification(CategoryQualificationDO categoryQua,List<Long> idList) {
-		return categoryQualificationDOMapper.getCategoryQualification(categoryQua,idList);
+	public List<CategoryQualificationDO> getCategoryQualification(QualificationQueryDTO queryDTO) {
+		return categoryQualificationDOMapper.getCategoryQualification(queryDTO,queryDTO.getIdSet());
 	}
 }

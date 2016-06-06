@@ -11,7 +11,9 @@ package com.yimayhd.membercenter.client.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
@@ -163,7 +165,14 @@ public class ExamineInfoDTO implements Serializable {
 	private String lawPersonCard;//法人身份证号
 	private String saleLicenseNumber;//营业执照号
 	private String taxRegisterNumber;//税务登记号
+	private Set<Long> idSet = new HashSet<Long>();
 	
+	public Set<Long> getIdSet() {
+		return idSet;
+	}
+	public void setIdSet(Set<Long> idSet) {
+		this.idSet = idSet;
+	}
 	public String getLawPersonCard() {
 		return lawPersonCard;
 	}

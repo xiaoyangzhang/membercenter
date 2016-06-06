@@ -8,6 +8,7 @@ import com.yimayhd.membercenter.client.dto.DraftDTO;
 import com.yimayhd.membercenter.client.query.DraftListQuery;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
+import com.yimayhd.membercenter.client.vo.DraftVO;
 
 /**
  * 草稿箱接口
@@ -59,4 +60,13 @@ public interface DraftManagerService {
 	 * @createTime 2016年6月3日
 	 */
 	public MemResult<DraftDetailDO> getDraftDetail(Long id);
+	
+	/**
+	 * 通过类型和商户id获得草稿箱信息
+	 * @param draftVO 入力参数
+	 * @return 草稿详细结果
+	 * @author liuxp
+	 * @createTime 2016年6月6日
+	 */
+	public MemResult<DraftDetailDO> getDraftDetailByType(DraftVO draftVO);
 }

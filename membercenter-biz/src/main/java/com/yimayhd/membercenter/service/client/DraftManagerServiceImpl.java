@@ -13,6 +13,7 @@ import com.yimayhd.membercenter.client.query.DraftListQuery;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.DraftManagerService;
+import com.yimayhd.membercenter.client.vo.DraftVO;
 import com.yimayhd.membercenter.manager.DraftManager;
 
 public class DraftManagerServiceImpl implements DraftManagerService {
@@ -56,8 +57,17 @@ public class DraftManagerServiceImpl implements DraftManagerService {
 	 */
 	@Override
 	public MemResult<Boolean> deleteDrafts(List<Long> ids) {
-		// TODO Auto-generated method stub
-		return null;
+        LOGGER.info("deleteDrafts ids= {}", ids);
+        MemResult<Boolean> result = new MemResult<Boolean>();
+        try {
+        	result = draftManager.deleteDrafts(ids);
+		} catch (Exception e) {
+            LOGGER.error("draftManagerServiceImpl.deleteDrafts occur error:{}", e);
+            result.setValue(false);
+            result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+		}
+        
+		return result;
 	}
 
 	/**
@@ -68,8 +78,16 @@ public class DraftManagerServiceImpl implements DraftManagerService {
 	 */
 	@Override
 	public MemResult<Boolean> coverDraft(DraftDO draftDO) {
-		// TODO Auto-generated method stub
-		return null;
+        LOGGER.info("coverDraft draftDO= {}", draftDO);
+        MemResult<Boolean> result = new MemResult<Boolean>();
+        try {
+        	result = draftManager.coverDraft(draftDO);
+		} catch (Exception e) {
+            LOGGER.error("draftManagerServiceImpl.coverDraft occur error:{}", e);
+            result.setValue(false);
+            result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+		}
+		return result;
 	}
 
 	/**
@@ -81,8 +99,16 @@ public class DraftManagerServiceImpl implements DraftManagerService {
 	 */
 	@Override
 	public MemPageResult<DraftDTO> getDraftList(DraftListQuery draftListQuery) {
-		// TODO Auto-generated method stub
-		return null;
+        LOGGER.info("getDraftList draftListQuery= {}", draftListQuery);
+        MemPageResult<DraftDTO> result = new MemPageResult<DraftDTO>();
+        try {
+        	result = draftManager.getDraftsList(draftListQuery);
+		} catch (Exception e) {
+            LOGGER.error("draftManagerServiceImpl.getDraftList occur error:{}", e);
+            result.setSuccess(false);
+            result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+		}
+		return result;
 	}
 
 	/**
@@ -94,8 +120,36 @@ public class DraftManagerServiceImpl implements DraftManagerService {
 	 */
 	@Override
 	public MemResult<DraftDetailDO> getDraftDetail(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		LOGGER.info("getDraftDetail id= {}", id);
+		MemResult<DraftDetailDO> result = new MemResult<DraftDetailDO>();
+        try {
+        	result = draftManager.getDetailById(id);
+		} catch (Exception e) {
+            LOGGER.error("draftManagerServiceImpl.getDraftDetail occur error:{}", e);
+            result.setSuccess(false);
+            result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+		}
+		return result;
 	}
 
+	/**
+	 * 通过类型和商户id获得草稿箱信息
+	 * @param draftVO 入力参数
+	 * @return 草稿详细结果
+	 * @author liuxp
+	 * @createTime 2016年6月6日
+	 */
+	@Override
+	public MemResult<DraftDetailDO> getDraftDetailByType(DraftVO draftVO) {
+		LOGGER.info("getDraftDetail draftVO= {}", draftVO);
+		MemResult<DraftDetailDO> result = new MemResult<DraftDetailDO>();
+        try {
+        	result = draftManager.getDetailByType(draftVO);
+		} catch (Exception e) {
+            LOGGER.error("draftManagerServiceImpl.getDraftDetailByType occur error:{}", e);
+            result.setSuccess(false);
+            result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+		}
+		return result;
+	}
 }

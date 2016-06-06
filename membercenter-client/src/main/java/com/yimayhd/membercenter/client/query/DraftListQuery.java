@@ -22,6 +22,16 @@ public class DraftListQuery extends PageQuery {
 	 * 子类型
 	 */
 	private int subType;
+	
+	/**
+	 * 商户id
+	 */
+	private Long accountId;
+	
+	/**
+	 * domainID
+	 */
+	private Long domainId;
 
 	public int getMainType() {
 		return mainType;
@@ -37,5 +47,21 @@ public class DraftListQuery extends PageQuery {
 
 	public void setSubType(int subType) {
 		this.subType = subType;
+	}
+
+	public Long getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
+
+	public Long getDomainId() {
+		return domainId;
+	}
+
+	public void setDomainId(Long domainId) {
+		this.domainId = domainId;
 	}
 }

@@ -24,8 +24,6 @@
 
 	    <bean id="applyManager" class="com.yimayhd.membercenter.manager.ApplyManager"/>
 	
-	
-	
     <bean id="memberIdpool" class="com.yimayhd.membercenter.idgen.IdPoolImpl">
         <constructor-arg name="generator" ref="globalIdGenerator"/>
         <constructor-arg name="configDomain" value="${app.name}"/>
@@ -51,4 +49,7 @@
 
     <bean id="jxMsgManager" class="com.yimayhd.membercenter.manager.msgpush.JxMsgManager"/>
     <bean id="msgHandlerManager" class="com.yimayhd.membercenter.manager.msgpush.MsgHandlerManager"/>
+    
+    <bean id="draftManager" class="com.yimayhd.membercenter.manager.DraftManager"/>
+    
 </beans>

@@ -29,6 +29,16 @@ public class DraftDO implements Serializable{
 	 * json格式数据
 	 */
 	private String JSONStr;
+	
+	/**
+	 * 主类型
+	 */
+	private int mainType;
+	
+	/**
+	 * 子类型
+	 */
+	private int subType;
 
 	/**
 	 * 创建时间
@@ -39,6 +49,11 @@ public class DraftDO implements Serializable{
 	 * 创建时间
 	 */
 	private Date gmtModified;
+	
+	/**
+	 * domainId
+	 */
+	private int domainId;
 
 	public Long getId() {
 		return id;
@@ -86,5 +101,29 @@ public class DraftDO implements Serializable{
 
 	public void setGmtModified(Date gmtModified) {
 		this.gmtModified = gmtModified;
+	}
+
+	public int getMainType() {
+		return mainType;
+	}
+
+	public void setMainType(int mainType) {
+		this.mainType = mainType;
+	}
+
+	public int getSubType() {
+		return subType;
+	}
+
+	public void setSubType(int subType) {
+		this.subType = subType;
+	}
+
+	public int getDomainId() {
+		return domainId;
+	}
+
+	public void setDomainId(int domainId) {
+		this.domainId = domainId;
 	}
 }

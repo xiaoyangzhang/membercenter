@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yimayhd.membercenter.mapper.DraftMapper">
+	
+<resultMap type="com.yimayhd.membercenter.client.domain.draft.DraftDO" id="draftDO">
+    <id column="id" property="id" jdbcType="BIGINT" />
+   	<result column="draft_name" property="draftName" jdbcType="VARCHAR" />
+   	<result column="user_id" property="accountId" jdbcType="BIGINT" />
+   	<result column="data" property="JSONStr" jdbcType="VARCHAR" />
+   	<result column="main_type" property="mainType" jdbcType="INTEGER" />
+   	<result column="sub_type" property="subType" jdbcType="INTEGER" />
+   	<result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
+   	<result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+   	<result column="domain_id" property="domainId" jdbcType="INTEGER" />
+</resultMap>
+ <sql id="Base_Column_List">
+        id, user_id, draft_name, data,main_type, sub_type, gmt_created, gmt_modified, domain_id
+    </sql>	
+
+<!-- 获得草稿箱列表 -->
+<select id="getDraftList" parameterType="com.yimayhd.membercenter.client.query.DraftListQuery" resultMap="draftDO">
+	SELECT 
+	<include refid="Base_Column_List"/> 
+	FROM draft
+	<include refid="pageQueryManagerSqlString"/>
+	ORDER BY gmt_created DESC
+	LIMIT #{startRow},#{pageSize}
+</select>
+
+<!-- 获得草稿箱列表数量 -->
+<select id="getDraftsCount" parameterType="com.yimayhd.membercenter.client.query.DraftListQuery" resultType="Integer">
+	SELECT (*) FROM draft
+	<include refid="pageQueryManagerSqlString"/>
+</select>
+
+<!-- 保存草稿 -->
+<insert id="saveDraft" parameterType="com.yimayhd.membercenter.client.domain.draft.DraftDO"  useGeneratedKeys="true" keyProperty="id" >
+	INSERT INTO draft
+		(
+		draft_name,
+		user_id,
+		main_type,
+		sub_type,
+		data,
+		gm_created,
+		gm_modified,
+		domain_id)
+		VALUES
+		(
+		#{draftName,jdbcType=VARCHAR},
+		#{accountId,jdbcType=BIGINT},
+		#{mainType,jdbcType=INTEGER},
+		#{subType,jdbcType=INTEGER},
+		#{JSONStr,jdbcType=VARCHAR},
+		#{gmtCreated,jdbcType=TIMESTAMP},
+		#{gmtModified,jdbcType=TIMESTAMP},
+		#{domainId,jdbcType=INTEGER})
+</insert>
+
+<!-- 覆盖草稿 -->
+<update id="coverDraft" parameterType="com.yimayhd.membercenter.client.domain.draft.DraftDO" >
+	UPDATE draft SET data = #{JSONStr,jdbcType=VARCHAR}, gm_modified = #{gmtModified,jdbcType=TIMESTAMP} WHERE id = #{id}
+</update>
+
+<!-- 删除草稿 -->
+<delete id="deleteDrafts" >
+	DELETE FROM draft WHERE id IN
+	<foreach collection="ids" item="item" open="(" separator="," close=")">
+		#{item}
+	</foreach>
+</delete>
+
+<!-- 获得指定草稿内容 -->
+<select id="getDraftDetail" resultMap="draftDO">
+	SELECT 
+	<include refid="Base_Column_List"/> 
+	FROM draft
+	WHERE id = #{id}
+</select>
+
+<!-- 通过类型获得指定草稿内容 -->
+<select id="getDraftDetailByType" parameterType="com.yimayhd.membercenter.client.vo.DraftVO">
+	SELECT 
+	<include refid="Base_Column_List"/> 
+	FROM draft
+	WHERE main_type = #{mainType}
+	  AND sub_type = #{subType}
+	  AND user_id = #{accountId}
+</select>
+
+<sql id="pageQueryManagerSqlString">
+        <where>
+            <if test="mainType != null and mainType != '' ">
+                AND
+                main_type = #{mainType}
+            </if>
+            <if test="subType != null and subType != ''">
+                AND
+                sub_type = #{subType}
+            </if>
+            <if test="accountId != null">
+            	AND
+            	user_id = #{accountId}
+            </if>
+            <if test="domainId !=0">
+            	AND
+            	domain_id = #{domainId}
+            </if>
+        </where>
+    </sql>
+</mapper>

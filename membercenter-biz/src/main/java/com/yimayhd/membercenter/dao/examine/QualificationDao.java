@@ -5,7 +5,10 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO;
 import com.yimayhd.membercenter.client.domain.merchant.QualificationDO;
+import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
+import com.yimayhd.membercenter.mapper.CategoryQualificationDOMapper;
 import com.yimayhd.membercenter.mapper.QualificationDOMapper;
 
 /**
@@ -20,21 +23,8 @@ public class QualificationDao {
 
 	@Autowired
 	private QualificationDOMapper qualificationDOMapper;
-	public List<QualificationDO> getQualification(QualificationDO qualification,Set<Long> idList) {
-		//List<QualificationDO> qualificationList = new ArrayList<QualificationDO>();
-//		if (domainId <= 0) {
-//			return null;
-			//return MemResult.buildFailResult(-1, "参数错误", qualificationList);
-	//	}
-		List<QualificationDO> qualificationList = qualificationDOMapper.getQualification(qualification,idList);
-//		if (qualificationList == null) {
-//			return null;
-//		}
-		//return MemResult.buildSuccessResult(qualificationList);
-		return qualificationList;
+	public List<QualificationDO> getQualification(QualificationQueryDTO queryDTO) {
+		return qualificationDOMapper.getQualification(queryDTO,queryDTO.getIdSet());
 	}
-//	public List<QualificationDO> getQualificationByIds(List<Long> idList,int domainId) {
-//		return qualificationDOMapper.getQualificationByIds(idList, domainId);
-//	}
 	
 }

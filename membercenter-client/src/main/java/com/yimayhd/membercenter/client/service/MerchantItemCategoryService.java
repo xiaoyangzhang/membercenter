@@ -1,14 +1,14 @@
 package com.yimayhd.membercenter.client.service;
 
+import java.util.List;
+
 import com.yimayhd.membercenter.client.domain.merchant.MerchantItemCategoryDO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.result.MemResultSupport;
 
-import java.util.List;
-
 public interface MerchantItemCategoryService {
 
-	MemResult<List<MerchantItemCategoryDO>> findMerchantItemCategoriesBySellerId(int domainId, long sellerId);
+	MemResult<List<MerchantItemCategoryDO>> findMerchantItemCategoriesByExamineId(int domainId, long examineId);
 	
 	MemResultSupport saveMerchantItemCategories(int domainId, long examineId, long[] categoryIds);
 }

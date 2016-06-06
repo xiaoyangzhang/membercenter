@@ -1,12 +1,15 @@
 package com.yimayhd.membercenter.client.service;
 
-import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
-import com.yimayhd.membercenter.client.domain.merchant.*;
+import java.util.List;
+
+import com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO;
+import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
+import com.yimayhd.membercenter.client.domain.merchant.QualificationDO;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
+import com.yimayhd.membercenter.client.query.BusinessScopeQueryDTO;
+import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 
-import java.util.List;
-import java.util.Set;
 
 
 
@@ -23,23 +26,6 @@ import java.util.Set;
 
 public interface QualificationService {
 	
-	/** 
-	 * 获取用户的经营范围<br/>
-	 * @author zhangxy 24/05/2016
-	 * @param sellerId
-	 * @param domainId
-	 * @param idList 关联表主键集合
-	 * @return
-	 */
-	public MemResult<List<BusinessScopeDO>> getBusinessScope(BusinessScopeDO businessScope,List<Long> idList);
-	/** 
-	 * 获取用户与经营范围的关联对象集合<br/>
-	 * @author zhangxy 24/05/2016
-	 * @param sellerId
-	 * @param domainId
-	 * @return
-	 */
-	public MemResult<List<MerchantScopeDO>> getMerchantScope(MerchantScopeDO merchantScope);
 	/**
 	 * 获取资质<br/>
 	 * @author zhangxy 24/05/2016
@@ -47,44 +33,7 @@ public interface QualificationService {
 	 * @param domainId
 	 * @return
 	 */
-	public MemResult<List<QualificationDO>> getQualification(QualificationDO qualification,Set<Long> idList);
-	/**
-	 * 获取商家的经营范围<br/>
-	 * @author zhangxy 24/05/2016
-	 * @param idList, domainId
-	 * @param domainId
-	 * @return
-	 */
-	//public MemResult<List<BusinessScopeDO>> getBusinessScope(List<Long> idList,int domainId);
-	/**
-	 * 获取用户的资质<br/>
-	 * @author zhangxy 24/05/2016
-	 * @param sellerId
-	 * @param domainId
-	 * @return
-	 */
-	public MemResult<List<QualificationDO>> getQualificationBySellerId(MerchantQualificationDO merchantQualification);
-	/**
-	 * 获取所有的经营范围<br/>
-	 * @author zhangxy 24/05/2016
-	 * @param domainId
-	 * @return
-	 */
-	//public MemResult<List<BusinessScopeDO>> getAllBusinessScope(int domainId);
-	/**
-	 * 获取所有的资质<br/>
-	 * @author zhangxy 24/05/2016
-	 * @param domainId
-	 * @return
-	 */
-	//public MemResult<List<QualificationDO>> getAllQualification(int domainId);
-	/**
-	 * 获取商家类目与经营范围管理对象集合<br/>
-	 * @author zhangxy 24/05/2016
-	 * @param domainId
-	 * @return
-	 */
-	public MemResult<List<MerchantCategoryScopeDO>> getMerchantCategoryScope(MerchantCategoryScopeDO merchantCategoryScope,List<Long> idList);
+	public MemResult<List<QualificationDO>> getQualification(QualificationQueryDTO queryDTO);
 	/**
 	 * 获取商家类目与资质关联对象的集合<br/>
 	 * @author zhangxy 24/05/2016
@@ -92,17 +41,9 @@ public interface QualificationService {
 	 * @param merchantCategoryId
 	 * @return
 	 */
-	public MemResult<List<CategoryQualificationDO>> getCategoryQualification(CategoryQualificationDO categoryQualificationDO,List<Long> idList);
+	public MemResult<List<CategoryQualificationDO>> getCategoryQualification(QualificationQueryDTO queryDTO);
 	
-	/**
-	 * 获取用户的经营范围
-	 * @param domainId
-	 * @param ids
-     * @return
-     */
-	MemResult<List<BusinessScopeDO>> getBusinessScopesBySellerId(MerchantScopeDO merchantScope);
 
-	public MemResult<Boolean> submitExamineInfo(ExamineInfoDTO dto);
 	/**
 	 * 
 	* created by zhangxy
@@ -116,19 +57,23 @@ public interface QualificationService {
 	 */
 	public MemResult<Boolean> updateMerchantQualification(ExamineInfoDTO dto);
 	
+
+	public MemResult<List<MerchantQualificationDO>> getMerchantQualification(QualificationQueryDTO queryDTO) ;
 	/**
-	 * 
+	 * 更新商家与资质关联关系的可用性
 	* created by zhangxy
-	* @date 2016年5月29日
-	* @Title: getMerchantCategory 
-	* @Description: 获取商家身份
-	* @param @param domainId
+	* @date 2016年6月5日
+	* @Title: updateMerchantScopeStatus 
+	* @Description: TODO
+	* @param @param queryDTO
 	* @param @return    设定文件 
-	* @return MemResult<List<MerchantCategoryDO>>    返回类型 
+	* @return MemResult<Boolean>    返回类型 
 	* @throws
 	 */
-	public MemResult<List<MerchantCategoryDO>> getMerchantCategory(MerchantCategoryDO merchantCategory);
-
-	//MemResult<MerchantCategoryDO> getMerchantCategory(MerchantCategoryDO merchantCategory);
-	public MemResult<List<MerchantQualificationDO>> getMerchantQualification(MerchantQualificationDO merchantQualification) ;
+	public MemResult<Boolean> updateMerchantQualificationStatus(QualificationQueryDTO queryDTO);
+	
+	public MemResult<Integer> updateStatusBatch(List<QualificationQueryDTO> qualificationQueryDTOs) ;
+		
+	
+	
 }

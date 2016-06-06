@@ -113,7 +113,7 @@
       #{item,jdbcType=BIGINT}
     </foreach>
     </if>
-    <if test="merchantCategoryScope.id != null and merchantCategoryScope.id !=  0">
+    <if test="merchantCategoryScope.merchantCategoryScopeId != null and merchantCategoryScope.merchantCategoryScopeId !=  0">
     	and id = #{merchantCategoryScope.id}
     </if>
     <if test="merchantCategoryScope.merchantCategoryId != null and merchantCategoryScope.merchantCategoryId !=  0">

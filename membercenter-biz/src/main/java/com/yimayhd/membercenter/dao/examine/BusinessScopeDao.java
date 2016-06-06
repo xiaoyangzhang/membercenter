@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO;
+import com.yimayhd.membercenter.client.query.BusinessScopeQueryDTO;
 import com.yimayhd.membercenter.mapper.BusinessScopeDOMapper;
 
 /**
@@ -20,30 +21,12 @@ public class BusinessScopeDao {
 
 	@Autowired
 	private BusinessScopeDOMapper businessScopeDOMapper;
-	public List<BusinessScopeDO> getBusinessScope(BusinessScopeDO businessScope,List<Long> idList) {
-		//List<BusinessScopeDO> businessScopeList = new ArrayList<BusinessScopeDO>();
-//		if (domainId <= 0) {
-//			return null;
-			//return MemResult.buildFailResult(-1, "参数错误", businessScopeList);
-		//}
-		List<BusinessScopeDO> businessScopeList = businessScopeDOMapper.getBusinessScopes(businessScope,idList);
-//		 if(businessScopeList == null) {
-//			 return null;
-//		 }
-		// return MemResult.buildSuccessResult(businessScopeList);
+	public List<BusinessScopeDO> getBusinessScope(BusinessScopeDO businessScope) {
+		
+		List<BusinessScopeDO> businessScopeList = businessScopeDOMapper.getBusinessScopes(businessScope,businessScope.getIdList());
 		 return businessScopeList;
 		
 	}
 
-//	public List<BusinessScopeDO> getBusinessScopesByIds(int domianId, long[] ids) {
-//		return businessScopeDOMapper.getBusinessScopesByScope(domianId,ids);
-//	}
-//	public List<BusinessScopeDO> getBusinessScopesByScope(int domainId, long[] scopeIds) {
-	
-//	public List<BusinessScopeDO> getBusinessScopesByScope(int domainId, Long[] scopeIds) {
-//		return businessScopeDOMapper.getBusinessScopesByScope(domainId, scopeIds);
-//	}
-//	public List<BusinessScopeDO> getBusinessScopesByScope(int domainId, List<Long> scopeIds) {
-//		return businessScopeDOMapper.getBusinessScopesByScope(domainId, scopeIds);
-//	}
+
 }

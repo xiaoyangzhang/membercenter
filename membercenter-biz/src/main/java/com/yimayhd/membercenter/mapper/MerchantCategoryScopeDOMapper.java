@@ -1,10 +1,12 @@
 package com.yimayhd.membercenter.mapper;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryScopeDO;
+import com.yimayhd.membercenter.client.query.BusinessScopeQueryDTO;
 
 public interface MerchantCategoryScopeDOMapper {
     int deleteByPrimaryKey(long id);
@@ -29,7 +31,7 @@ public interface MerchantCategoryScopeDOMapper {
     * @return List<MerchantCategoryScopeDO>    返回类型 
     * @throws
      */
-    public List<MerchantCategoryScopeDO> getMerchantCategoryScope(@Param("merchantCategoryScope")MerchantCategoryScopeDO merchantCategoryScopeDO,@Param("idList")List<Long> idList);
+    public List<MerchantCategoryScopeDO> getMerchantCategoryScope(@Param("merchantCategoryScope")BusinessScopeQueryDTO queryDTO,@Param("idList")Set<Long> idList);
 
     /**
      * 根据scopeIds查询category集合

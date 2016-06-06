@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
+import com.yimayhd.membercenter.client.query.BusinessScopeQueryDTO;
+import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
 
 public interface MerchantQualificationDOMapper {
     int deleteByPrimaryKey(long id);
@@ -29,5 +31,17 @@ public interface MerchantQualificationDOMapper {
     * @return List<MerchantQualificationDO>    返回类型 
     * @throws
      */
-    public List<MerchantQualificationDO> getMerchantQualification(@Param("merchantQualification") MerchantQualificationDO merchantQualification);
+    public List<MerchantQualificationDO> getMerchantQualification(@Param("merchantQualification")QualificationQueryDTO queryDTO);
+    /**
+     * 
+    * created by zhangxy
+    * @date 2016年6月5日
+    * @Title: updateStatusBatch 
+    * @Description: 批量更新状态
+    * @param @param queryDTOList
+    * @param @return    设定文件 
+    * @return int    返回类型 
+    * @throws
+     */
+    public int updateStatusBatch(@Param("list")List<MerchantQualificationDO> qualificationDOList);
 }

@@ -3,10 +3,16 @@ package com.yimayhd.membercenter.converter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.Query;
+
 import com.yimayhd.membercenter.client.domain.CertificatesDO;
+import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantInfoDO;
+import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
 import com.yimayhd.membercenter.client.domain.talent.TalentInfoDO;
+import com.yimayhd.membercenter.client.query.BusinessScopeQueryDTO;
 import com.yimayhd.membercenter.client.query.MerchantQueryDTO;
+import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.entity.merchant.MerchantQuery;
 import com.yimayhd.membercenter.util.ParmCheckUtil;
@@ -215,5 +221,21 @@ public class MerchantConverter {
         merchantDTO.setLon(merchantDO.getLon());
         merchantDTO.setLat(merchantDO.getLat());
         return merchantDTO;
+    }
+    
+    public static MerchantQualificationDO convertQueryQualification2DO(QualificationQueryDTO qualificationQueryDTO) {
+    	MerchantQualificationDO merchantQualification = new MerchantQualificationDO();
+    	merchantQualification.setDomainId(qualificationQueryDTO.getDomainId());
+    	merchantQualification.setSellerId(qualificationQueryDTO.getSellerId());
+    	merchantQualification.setStatus(qualificationQueryDTO.getStatus());
+    	return merchantQualification;
+    }
+    public static MerchantScopeDO convertQueryScopeVO2DO(BusinessScopeQueryDTO queryDTO) {
+    	MerchantScopeDO merchantScope = new MerchantScopeDO();
+    	merchantScope.setDomainId(queryDTO.getDomainId());
+    	merchantScope.setSellerId(queryDTO.getSellerId());
+    	//	merchantQualification.s
+    	merchantScope.setStatus(queryDTO.getStatus());
+    	return merchantScope;
     }
 }

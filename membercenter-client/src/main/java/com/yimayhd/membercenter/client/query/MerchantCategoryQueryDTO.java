@@ -1,5 +1,7 @@
 package com.yimayhd.membercenter.client.query;
 
+import java.io.Serializable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,8 +13,12 @@ import org.slf4j.LoggerFactory;
 * @date 2016年6月4日 上午11:32:59
 *
  */
-public class MerchantCategoryQueryDTO {
+public class MerchantCategoryQueryDTO implements Serializable {
 
+	/**
+	* @Fields serialVersionUID : TODO(用一句话描述这个变量表示什么)
+	*/
+	private static final long serialVersionUID = 2459584914091043354L;
 	protected  final Logger log = LoggerFactory.getLogger(getClass());
 	private int domainId;
 	private long id;

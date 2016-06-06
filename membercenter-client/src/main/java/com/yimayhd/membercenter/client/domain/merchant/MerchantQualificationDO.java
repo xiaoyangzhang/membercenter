@@ -22,8 +22,17 @@ public class MerchantQualificationDO implements Serializable {
     private int domainId;
     
     private List<Long> idList;
+    private int status;
     
-    public String getContent() {
+    public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public String getContent() {
 		return content;
 	}
 

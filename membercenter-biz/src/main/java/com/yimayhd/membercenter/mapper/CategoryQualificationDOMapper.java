@@ -1,10 +1,12 @@
 package com.yimayhd.membercenter.mapper;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO;
+import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
 
 public interface CategoryQualificationDOMapper {
     int deleteByPrimaryKey(long id);
@@ -27,5 +29,5 @@ public interface CategoryQualificationDOMapper {
     
   //  public List<CategoryQualificationDO> getQualificationIdsByMerchantCategoryId(@Param("categoryId")long merchantCategoryId,@Param("domainId")int domainId);
     
-    public List<CategoryQualificationDO> getCategoryQualification(@Param("category")CategoryQualificationDO categoryQualificationDO,@Param("scopeIdsList")List<Long> idList);
+    public List<CategoryQualificationDO> getCategoryQualification(@Param("category")QualificationQueryDTO queryDTO,@Param("scopeIdsList")Set<Long> idList);
 }

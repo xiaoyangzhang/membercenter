@@ -20,7 +20,7 @@ public class MerchantCategoryDao {
 	@Autowired
 	private MerchantCategoryDOMapper merchantCategoryDOMapper;
 
-	public List<MerchantCategoryDO> getMerchantCategory(MerchantCategoryQueryDTO queryDTO) {
+	public List<MerchantCategoryDO> getMerchantCategory(MerchantCategoryDO queryDTO) {
 		return merchantCategoryDOMapper.getMerchantCategory(queryDTO);
 	}
 }

@@ -23,8 +23,8 @@ public class QualificationDao {
 
 	@Autowired
 	private QualificationDOMapper qualificationDOMapper;
-	public List<QualificationDO> getQualification(QualificationQueryDTO queryDTO) {
-		return qualificationDOMapper.getQualification(queryDTO,queryDTO.getIdSet());
+	public List<QualificationDO> getQualification(QualificationDO queryDTO) {
+		return qualificationDOMapper.getQualification(queryDTO,queryDTO.getIdList());
 	}
 	
 }

@@ -113,7 +113,10 @@ public class MerchantApplyManager {
 	}
 	public MemResult<List<MerchantCategoryDO>> getMerchantCategory(MerchantCategoryQueryDTO merchantCategoryQueryDTO) {
 		MemResult<List<MerchantCategoryDO>> result = new MemResult<List<MerchantCategoryDO>>();
-		List<MerchantCategoryDO> merchantCategoryList = merchantCategoryDao.getMerchantCategory(merchantCategoryQueryDTO);
+		MerchantCategoryDO merchantCategory  = new MerchantCategoryDO();
+		merchantCategory.setDomainId(merchantCategoryQueryDTO.getDomainId());
+		merchantCategory.setId(merchantCategoryQueryDTO.getId());
+		List<MerchantCategoryDO> merchantCategoryList = merchantCategoryDao.getMerchantCategory(merchantCategory);
 		if (merchantCategoryList == null) {
 			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
 			return result;

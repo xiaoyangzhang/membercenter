@@ -37,14 +37,23 @@ public class BusinessScopeManager {
 		BusinessScopeDO businessScope = new BusinessScopeDO();
 		businessScope.setDomainId(queryDTO.getDomainId());
 		businessScope.setIdList(queryDTO.getIdSet());
+		
 		return businessScopeDao.getBusinessScope(businessScope);
 	}
 	
 	public List<MerchantCategoryScopeDO> getMerchantCategoryScope(BusinessScopeQueryDTO queryDTO) {
-		return merchantCategoryScopeDao.getMerchantCategoryScope(queryDTO);
+		MerchantCategoryScopeDO merchantCategoryScope = new MerchantCategoryScopeDO();
+		merchantCategoryScope.setDomainId(queryDTO.getDomainId());
+		merchantCategoryScope.setIdSet(queryDTO.getIdSet());
+		merchantCategoryScope.setBusinessScopeId(queryDTO.getMerchantCategoryScopeId());
+		merchantCategoryScope.setMerchantCategoryId(queryDTO.getMerchantCategoryId());
+		return merchantCategoryScopeDao.getMerchantCategoryScope(merchantCategoryScope);
 	}
 	public List<MerchantScopeDO> getMerchantScope(BusinessScopeQueryDTO queryDTO) {
-		return merchantScopeDao.getMerchantScope(queryDTO);
+		MerchantScopeDO merchantScope = new MerchantScopeDO();
+		merchantScope.setDomainId(queryDTO.getDomainId());
+		merchantScope.setSellerId(queryDTO.getSellerId());
+		return merchantScopeDao.getMerchantScope(merchantScope);
 	}
 	public MemResult<Boolean> updateMerchantScopeStatus(BusinessScopeQueryDTO queryDTO) {
 		 MemResult<Boolean> result  = new  MemResult<Boolean>();

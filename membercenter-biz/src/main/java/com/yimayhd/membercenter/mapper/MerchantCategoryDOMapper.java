@@ -22,5 +22,5 @@ public interface MerchantCategoryDOMapper {
     
    //public List<MerchantCategoryDO> getAllMerchantCategory(@Param("domainId")int domainId);
 
-    List<MerchantCategoryDO> getMerchantCategory(@Param("category") MerchantCategoryQueryDTO queryDTO);
+    List<MerchantCategoryDO> getMerchantCategory(@Param("category") MerchantCategoryDO	 merchantCategory);
 }

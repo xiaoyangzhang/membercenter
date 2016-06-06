@@ -3,6 +3,7 @@ package com.yimayhd.membercenter.client.domain.merchant;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class QualificationDO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -21,7 +22,7 @@ public class QualificationDO implements Serializable {
     private Date gmtModified;
     private int num; 
     private int domainId;
-    private List<Long> idList;
+    private Set<Long> idList;
     private List<CategoryQualificationDO> categoryQualificationList;
     private boolean required;
     private String overallNote;//全局备注
@@ -61,11 +62,13 @@ public class QualificationDO implements Serializable {
 
 	
 
-	public List<Long> getIdList() {
+	
+
+	public Set<Long> getIdList() {
 		return idList;
 	}
 
-	public void setIdList(List<Long> idList) {
+	public void setIdList(Set<Long> idList) {
 		this.idList = idList;
 	}
 

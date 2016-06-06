@@ -78,7 +78,10 @@ public class QualificationManager {
 
 	public MemResult<List<QualificationDO>> getQualification(QualificationQueryDTO queryDTO) {
 		MemResult<List<QualificationDO>> result = new MemResult<List<QualificationDO>>();
-		List<QualificationDO> qualificationList = qualificationDao.getQualification(queryDTO);
+		QualificationDO qualification = new QualificationDO();
+		qualification.setDomainId(queryDTO.getDomainId());
+		qualification.setIdList(queryDTO.getIdSet());
+		List<QualificationDO> qualificationList = qualificationDao.getQualification(qualification);
 		if (qualificationList == null) {
 			result.setReturnCode(MemberReturnCode.QUALIFICATION_FAILED);
 			return result;
@@ -89,8 +92,12 @@ public class QualificationManager {
 
 	public MemResult<List<CategoryQualificationDO>> getCategoryQualification(QualificationQueryDTO queryDTO) {
 		MemResult<List<CategoryQualificationDO>> result = new MemResult<List<CategoryQualificationDO>>();
-
-		List<CategoryQualificationDO> qualifications = categoryQualificationDao.getCategoryQualification(queryDTO);
+		CategoryQualificationDO categoryQualification = new CategoryQualificationDO();
+		categoryQualification.setDomainId(queryDTO.getDomainId());
+		categoryQualification.setIsDirectSale(queryDTO.getDirectSale());
+		categoryQualification.setScopeIdsList(queryDTO.getIdSet());
+		categoryQualification.setMerchantCategoryId(queryDTO.getMerchantCategoryId());
+		List<CategoryQualificationDO> qualifications = categoryQualificationDao.getCategoryQualification(categoryQualification);
 		if (qualifications == null) {
 			result.setReturnCode(MemberReturnCode.CATEGORY_QUALIFICATION_FAILED);
 			return result;
@@ -128,7 +135,10 @@ public class QualificationManager {
 
 	public MemResult<List<MerchantQualificationDO>> getMerchantQualification(QualificationQueryDTO qualificationQueryDTO) {
 		MemResult<List<MerchantQualificationDO>> result = new MemResult<List<MerchantQualificationDO>>();
-		List<MerchantQualificationDO> merchantQualifications = merchantQualificationDao.getMerchantQualification(qualificationQueryDTO);
+		MerchantQualificationDO merchantQualification= new MerchantQualificationDO();
+		merchantQualification.setDomainId(qualificationQueryDTO.getDomainId());
+		merchantQualification.setSellerId(qualificationQueryDTO.getSellerId());
+		List<MerchantQualificationDO> merchantQualifications = merchantQualificationDao.getMerchantQualification(merchantQualification);
 		if (merchantQualifications == null) {
 			result.setReturnCode(MemberReturnCode.MERCHANT_QUALIFICATION_FAILED);
 			return result;

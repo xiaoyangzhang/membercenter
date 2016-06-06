@@ -23,7 +23,7 @@ import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
 import com.yimayhd.membercenter.client.query.InfoQueryDTO;
 import com.yimayhd.membercenter.enums.ExamineDetail;
 import com.yimayhd.membercenter.enums.ExamineStatus;
-import com.yimayhd.membercenter.enums.MerchantType;
+import com.yimayhd.membercenter.enums.ExamineType;
 import com.yimayhd.membercenter.enums.PictureUrl;
 import com.yimayhd.membercenter.util.ParmCheckUtil;
 import com.yimayhd.user.client.domain.MerchantDO;
@@ -132,7 +132,7 @@ public class ExamineConverter {
         examinDTO.setTrainingCertificate(certificateMap.get(CertificateOption.TRAINING_CERTIFICATE.getCode()));
         examinDTO.setTeacherCertificate(certificateMap.get(CertificateOption.TEACHER_CERTIFICATE.getCode()));
         examinDTO.setArtCertificate(certificateMap.get(CertificateOption.ART_CERTIFICATE.getCode()));
-
+        examinDTO.setCardInHand(pictureMap.get(PictureUrl.CARD_IN_HAND.getId()));
         examinDTO.setCreateDate(examineDO.getGmtCreated());
         return examinDTO;
     } 
@@ -188,6 +188,7 @@ public class ExamineConverter {
         pictureMap.put(PictureUrl.COOPERATION3.getId(), examinDTO.getCooperation3());
         pictureMap.put(PictureUrl.COOPERATION4.getId(), examinDTO.getCooperation4());
         pictureMap.put(PictureUrl.COOPERATION5.getId(), examinDTO.getCooperation5());
+        pictureMap.put(PictureUrl.CARD_IN_HAND.getId(), examinDTO.getCardInHand());
         //2期
         examineDO.setIsDirectSale(examinDTO.getIsDirectSale());
         examineDO.setMerchantCategoryId(examinDTO.getMerchantCategoryId());
@@ -208,7 +209,7 @@ public class ExamineConverter {
 //        pictureMap.put(PictureUrl.TRAVEL_AGENCY_BRANCH_AGREEMENT.getId(), examinDTO.getTravelAgencyBranchAgreement());
 //        pictureMap.put(PictureUrl.SPECIAL_SALE_LICENSE.getId(), examinDTO.getSpecialSaleLicense());
 //        pictureMap.put(PictureUrl.SPECIAL_SALE_AUTHORIZATION.getId(), examinDTO.getSpecialSaleAuthorization());
-        if(examinDTO.getType() == MerchantType.TALENT.getType()){
+        if(examinDTO.getType() == ExamineType.TALENT.getType()){
             certificateMap.put(CertificateOption.TOURIST_CARD.getCode(), examinDTO.getTouristCard());
             certificateMap.put(CertificateOption.DRIVING_LICENCE.getCode(), examinDTO.getDrivingLinence());
             certificateMap.put(CertificateOption.DIVING_LICENCE.getCode(), examinDTO.getDivingLinence());
@@ -372,7 +373,7 @@ public class ExamineConverter {
         //店铺名称
         merchantDO.setName(ParmCheckUtil.checkString(featureMap.get(ExamineDetail.MERCHANT_NAME.getId())));
         //达人
-        if(MerchantType.TALENT.getType() == examineDO.getType()){
+        if(ExamineType.TALENT.getType() == examineDO.getType()){
             merchantDO.setOption(MerchantOption.TALENT.getOption());
             List<CertificateOption> options = new ArrayList<CertificateOption>();
             //身份证

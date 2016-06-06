@@ -21,7 +21,7 @@ public class BusinessScopeDO implements Serializable {
 
     private Date gmtModified;
     private int domainId;
-    private Set<Long> idList = new HashSet<>();
+    private Set<Long> idList;
     
    
 

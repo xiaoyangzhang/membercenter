@@ -95,7 +95,7 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-   <update id="updateStatusBatch"  parameterType="java.util.List">  
+   <update id="updateStatusBatch"  >  
     <foreach collection="list" item="item" index="index" open="" close="" separator=";">
         update merchant_scope
         <set>
@@ -106,7 +106,7 @@
     </foreach>      
 </update>
    <select id="getMerchantScope" parameterType="com.yimayhd.membercenter.client.domain.MerchantScopeDO" resultMap="BaseResultMap">
-  	select id,business_scope_id from merchant_scope
+  	select id,business_scope_id,seller_id,domain_id from merchant_scope
   	where domain_id=#{merchantScope.domainId} and status =1
   	<if test="merchantScope.sellerId != null and merchantScope.sellerId != 0">
   		and seller_id=#{merchantScope.sellerId}

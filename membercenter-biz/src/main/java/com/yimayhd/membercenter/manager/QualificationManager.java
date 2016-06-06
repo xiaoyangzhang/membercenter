@@ -80,7 +80,10 @@ public class QualificationManager {
 		MemResult<List<QualificationDO>> result = new MemResult<List<QualificationDO>>();
 		QualificationDO qualification = new QualificationDO();
 		qualification.setDomainId(queryDTO.getDomainId());
-		qualification.setIdList(queryDTO.getIdSet());
+		if (queryDTO.getIdSet() != null && queryDTO.getIdSet().size() >0) {
+			
+			qualification.setIdList(queryDTO.getIdSet());
+		}
 		List<QualificationDO> qualificationList = qualificationDao.getQualification(qualification);
 		if (qualificationList == null) {
 			result.setReturnCode(MemberReturnCode.QUALIFICATION_FAILED);
@@ -95,7 +98,10 @@ public class QualificationManager {
 		CategoryQualificationDO categoryQualification = new CategoryQualificationDO();
 		categoryQualification.setDomainId(queryDTO.getDomainId());
 		categoryQualification.setIsDirectSale(queryDTO.getDirectSale());
-		categoryQualification.setScopeIdsList(queryDTO.getIdSet());
+		if (queryDTO.getIdSet() != null && queryDTO.getIdSet().size() >0) {
+			
+			categoryQualification.setScopeIdsList(queryDTO.getIdSet());
+		}
 		categoryQualification.setMerchantCategoryId(queryDTO.getMerchantCategoryId());
 		List<CategoryQualificationDO> qualifications = categoryQualificationDao.getCategoryQualification(categoryQualification);
 		if (qualifications == null) {
@@ -221,6 +227,17 @@ public class QualificationManager {
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 			return result;
 		}
+		 MerchantQualificationDO merchantQualification = new MerchantQualificationDO();
+		 merchantQualification.setDomainId(examineInfoDTO.getDomainId());
+		 merchantQualification.setSellerId(examineInfoDTO.getSellerId());
+		 List<MerchantQualificationDO> merchantQualificationList = merchantQualificationDao.getMerchantQualification(merchantQualification);
+			if (merchantQualificationList != null) {
+				for (MerchantQualificationDO merchantQualificationDO : merchantQualificationList) {
+					merchantQualificationDO.setStatus(-1);
+					merchantQualificationDO.setGmtModified(new Date());
+					merchantQualificationDao.update(merchantQualificationDO);
+				}
+			}
 		List<MerchantQualificationDO> merchantQualifications = examineInfoDTO.getMerchantQualifications();
 		MerchantQualificationDO merQuaDO = null;
 		for (MerchantQualificationDO mq : merchantQualifications) {
@@ -306,8 +323,19 @@ public class QualificationManager {
 //	}
 	public MemResult<Boolean> updateMerchantQualificationStatus(QualificationQueryDTO queryDTO) {
 		 MemResult<Boolean> result  = new  MemResult<Boolean>();
-		MerchantQualificationDO merchantQualification = MerchantConverter.convertQueryQualification2DO(queryDTO);
-		MerchantQualificationDO updateResult = merchantQualificationDao.update(merchantQualification);
+		 MerchantQualificationDO merchantQualification = new MerchantQualificationDO();
+		 merchantQualification.setDomainId(queryDTO.getDomainId());
+		 merchantQualification.setSellerId(queryDTO.getSellerId());
+		 List<MerchantQualificationDO> merchantQualificationList = merchantQualificationDao.getMerchantQualification(merchantQualification);
+			if (merchantQualificationList != null) {
+				for (MerchantQualificationDO merchantQualificationDO : merchantQualificationList) {
+					merchantQualificationDO.setStatus(-1);
+					merchantQualificationDO.setGmtModified(new Date());
+					merchantQualificationDao.update(merchantQualificationDO);
+				}
+			}
+		MerchantQualificationDO newMerchantQualification = MerchantConverter.convertQueryQualification2DO(queryDTO);
+		MerchantQualificationDO updateResult = merchantQualificationDao.insert(newMerchantQualification);
 		if (updateResult == null) {
 			result.setReturnCode(MemberReturnCode.DB_UPDATE_FAILED);
 			

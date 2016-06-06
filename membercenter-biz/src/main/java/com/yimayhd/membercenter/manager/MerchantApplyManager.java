@@ -1,6 +1,8 @@
 package com.yimayhd.membercenter.manager;
 
+import java.util.Date;
 import java.util.List;
+
 
 
 
@@ -56,18 +58,20 @@ public class MerchantApplyManager {
 			return result;
 		}
 		final List<MerchantScopeDO> merchantScopes = examineInfoDTO.getMerchantScopes();
-//		BusinessScopeQueryDTO businessScopeQueryDTO = new BusinessScopeQueryDTO();
-//		businessScopeQueryDTO.setDomainId(examineInfoDTO.getDomainId());
-//		businessScopeQueryDTO.setSellerId(examineInfoDTO.getSellerId());
-//		List<MerchantScopeDO> merchantScopeList = merchantScopeDao.getMerchantScope(businessScopeQueryDTO);
-//		if (merchantScopeList != null) {
-//			for (MerchantScopeDO merchantScopeDO : merchantScopeList) {
-////				MerchantScopeDO newMerchantScopeDO = new  MerchantScopeDO();
-////				newMerchantScopeDO.setId(merchantScopeDO.getId());
-//				merchantScopeDO.setStatus(-1);
-//				merchantScopeDao.update(merchantScopeDO);
-//			}
-//		}
+		//BusinessScopeQueryDTO businessScopeQueryDTO = new BusinessScopeQueryDTO();
+		MerchantScopeDO merchantScope = new MerchantScopeDO();
+		merchantScope.setDomainId(examineInfoDTO.getDomainId());
+		merchantScope.setSellerId(examineInfoDTO.getSellerId());
+		List<MerchantScopeDO> merchantScopeList = merchantScopeDao.getMerchantScope(merchantScope);
+		if (merchantScopeList != null) {
+			for (MerchantScopeDO merchantScopeDO : merchantScopeList) {
+//				MerchantScopeDO newMerchantScopeDO = new  MerchantScopeDO();
+//				newMerchantScopeDO.setId(merchantScopeDO.getId());
+				merchantScopeDO.setStatus(-1);
+				merchantScopeDO.setGmtModified(new Date());
+				merchantScopeDao.update(merchantScopeDO);
+			}
+		}
 				Boolean dbResult = transactionTemplate.execute(new TransactionCallback<Boolean>() {
 
 					@Override

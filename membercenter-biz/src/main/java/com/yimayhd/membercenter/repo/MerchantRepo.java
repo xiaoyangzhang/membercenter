@@ -193,6 +193,7 @@ public class MerchantRepo {
             BaseResult<List<MerchantDO>> merchantResult = merchantService.getMerchantList(merchantQuery);
             // 返回列表为空 不存在sellerName
             if (merchantResult.isSuccess() && ParmCheckUtil.checkListNull(merchantResult.getValue())) {
+            	baseResult.setValue(Boolean.FALSE);
                 return baseResult;
             }
             baseResult.setReturnCode(MemberReturnCode.DB_MERCHANTNAME_FAILED);

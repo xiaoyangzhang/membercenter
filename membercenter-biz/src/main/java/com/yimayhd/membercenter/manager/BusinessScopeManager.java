@@ -10,9 +10,7 @@ import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
 import com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryScopeDO;
-import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
 import com.yimayhd.membercenter.client.query.BusinessScopeQueryDTO;
-import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.converter.MerchantConverter;
 import com.yimayhd.membercenter.dao.examine.BusinessScopeDao;
@@ -71,29 +69,6 @@ public class BusinessScopeManager {
 		}
 		return result;
 	}
-//	public MemResult<List<BusinessScopeDO>> getBusinessScope(BusinessScopeDO businessScope,List<Long> idList) {
-//		MemResult<List<BusinessScopeDO>> result = new MemResult<List<BusinessScopeDO>>();
-//		List<BusinessScopeDO> businessScopeList = businessScopeDao.getBusinessScope(businessScope,idList);
-//		 if(businessScopeList == null) {
-//			 result.setReturnCode(MemberReturnCode.BUSINESS_SCOPE_FAILED);
-//			 return result;
-//		 }
-//		 result.setValue(businessScopeList);
-//		 return result;
-//
-//	}
-//	
-//	public MemResult<List<BusinessScopeDO>> getBusinessScopes(BusinessScopeDO businessScope,List<Long> idList) {
-//		MemResult<List<BusinessScopeDO>> result = new MemResult<>();
-//
-//		List<BusinessScopeDO> businessScopeDOs = businessScopeDao.getBusinessScope(businessScope,idList);
-//		if(businessScopeDOs.isEmpty()) {
-//			result.setReturnCode(MemberReturnCode.BUSINESS_SCOPE_FAILED);
-//			return result;
-//		}
-//		result.setValue(businessScopeDOs);
-//		return result;
-//	}
 	public MemResult<Integer> updateStatusBatch(List<BusinessScopeQueryDTO> queryDTOs) {
 		 MemResult<Integer> result  = new  MemResult<Integer>();
 		 List<MerchantScopeDO> scopeList = new ArrayList<MerchantScopeDO>();

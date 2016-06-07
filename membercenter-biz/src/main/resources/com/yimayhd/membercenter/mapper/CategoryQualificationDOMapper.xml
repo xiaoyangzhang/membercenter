@@ -7,7 +7,7 @@
     <result column="qulification_id" property="qulificationId" jdbcType="BIGINT" />
     <result column="business_scope_id" property="businessScopeId" jdbcType="BIGINT" />
     <result column="is_direct_sale" property="isDirectSale" jdbcType="TINYINT" />
-    <result column="required" property="required" jdbcType="BOOLEAN" />
+    <result column="required" property="required" jdbcType="TINYINT" />
     <result column="serial_no" property="serialNo" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />

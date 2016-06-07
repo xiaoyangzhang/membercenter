@@ -294,4 +294,23 @@ public class ExamineDealServiceImpl implements ExamineDealService {
         return result;
     }
 
+	@Override
+	public MemResult<Boolean> checkMerchantNameIsExist(ExamineInfoDTO	 examineInfoDTO) {
+		MemResult<Boolean> result  = new MemResult<Boolean>();
+		if (examineInfoDTO == null || StringUtils.isBlank(examineInfoDTO.getMerchantName()) || examineInfoDTO.getDomainId() <= 0) {
+			logger.error("params error :ExamineInfoDTO={}",examineInfoDTO);
+			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return result;
+		}
+		try {
+			result = talentExamineManager.checkMerchantNameIsExist(examineInfoDTO.getMerchantName(), examineInfoDTO.getDomainId());
+			
+		} catch (Exception e) {
+			logger.error("params :ExamineInfoDTO={} error:{}",examineInfoDTO,e);
+			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+		}
+		return result;
+	}
+    
+
 }

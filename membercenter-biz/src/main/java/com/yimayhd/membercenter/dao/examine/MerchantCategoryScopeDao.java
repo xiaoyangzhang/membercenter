@@ -24,11 +24,6 @@ public class MerchantCategoryScopeDao {
 	@Autowired
 	private MerchantCategoryScopeDOMapper merchantCategoryScopeDOMapper;
 	public List<MerchantCategoryScopeDO> getMerchantCategoryScope(MerchantCategoryScopeDO queryDTO) {
-		//List<MerchantCategoryScopeDO> scopes = 
 		return merchantCategoryScopeDOMapper.getMerchantCategoryScope(queryDTO,queryDTO.getIdSet());
 	}
-
-//	public List<MerchantCategoryScopeDO> getMerchantCategoriesByScopeIds(long[] scopeIds, int domainId) {
-//		return merchantCategoryScopeDOMapper.getMerchantCatergoryScopesByScopeIds(scopeIds, domainId);
-//	}
 }

@@ -30,6 +30,7 @@
 	<bean id="merchantItemCategoryService" class="com.yimayhd.membercenter.service.client.MerchantItemCategoryServiceImpl"></bean>
 	<bean id="draftManagerService" class="com.yimayhd.membercenter.service.client.DraftManagerServiceImpl"></bean>
 
-	<bean id="applyService" class="com.yimayhd.membercenter.service.client.examine.ApplyServiceImpl"></bean>
+	<bean id="merchantApplyService" class="com.yimayhd.membercenter.service.client.examine.MerchantApplyServiceImpl"></bean>
+	<bean id="qualificationService" class="com.yimayhd.membercenter.service.client.QualificationServiceImpl"></bean>
 	
 </beans>

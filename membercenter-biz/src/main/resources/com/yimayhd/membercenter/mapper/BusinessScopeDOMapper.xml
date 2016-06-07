@@ -140,8 +140,8 @@
 		where domain_id=#{domainId}
 	</select> -->
 
-	<select id="getBusinessScopes" parameterType="com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO" resultMap="BaseResultMap">
-		select name,id,parent_id from business_scope
+	<select id="getBusinessScopes"  resultMap="BaseResultMap">
+		select name,id,parent_id,domain_id from business_scope
 		where domain_id=#{scope.domainId}
 		<if test="idList != null">
 		and id in

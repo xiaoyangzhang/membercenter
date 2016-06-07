@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
+import com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
+import com.yimayhd.membercenter.client.query.BusinessScopeQueryDTO;
 import com.yimayhd.membercenter.mapper.MerchantQualificationDOMapper;
 import com.yimayhd.membercenter.mapper.MerchantScopeDOMapper;
 
@@ -50,7 +52,7 @@ public class MerchantScopeDao {
 
 
 	
-	public List<MerchantScopeDO> getMerchantScope(MerchantScopeDO merchantScope) {
+	public List<MerchantScopeDO> getMerchantScope(MerchantScopeDO businessScopeQueryDTO) {
 //		if (sellerId <=0 || domainId <= 0) {
 //			return null;
 //		}
@@ -58,8 +60,12 @@ public class MerchantScopeDao {
 //		if (merchantScopes == null) {
 //			return null;
 //		}
-		return merchantScopeDOMapper.getMerchantScope(merchantScope);
+		
+		return merchantScopeDOMapper.getMerchantScope(businessScopeQueryDTO);
 	}
 	
-	
+	public int updateStatusBatch(List<MerchantScopeDO> scopeDOs) {
+		return merchantScopeDOMapper.updateStatusBatch(scopeDOs);
+		
+	}
 }

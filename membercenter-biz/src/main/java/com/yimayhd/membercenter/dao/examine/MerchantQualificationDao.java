@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
+import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
 import com.yimayhd.membercenter.mapper.MerchantQualificationDOMapper;
 import com.yimayhd.membercenter.mapper.MerchantScopeDOMapper;
 
@@ -52,7 +53,12 @@ public class MerchantQualificationDao {
 
 	
 	
-	public List<MerchantQualificationDO> getMerchantQualification(MerchantQualificationDO merchantQualification) {
-		return merchantQualificationDOMapper.getMerchantQualification(merchantQualification);
+	public List<MerchantQualificationDO> getMerchantQualification(MerchantQualificationDO qualificationQueryDTO) {
+		return merchantQualificationDOMapper.getMerchantQualification(qualificationQueryDTO);
+	}
+	
+	public int updateStatusBatch(List<MerchantQualificationDO> qualificationDOList) {
+		return merchantQualificationDOMapper.updateStatusBatch(qualificationDOList);
+		
 	}
 }

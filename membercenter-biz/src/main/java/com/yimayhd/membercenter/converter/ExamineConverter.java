@@ -132,7 +132,7 @@ public class ExamineConverter {
         examinDTO.setTrainingCertificate(certificateMap.get(CertificateOption.TRAINING_CERTIFICATE.getCode()));
         examinDTO.setTeacherCertificate(certificateMap.get(CertificateOption.TEACHER_CERTIFICATE.getCode()));
         examinDTO.setArtCertificate(certificateMap.get(CertificateOption.ART_CERTIFICATE.getCode()));
-
+        examinDTO.setCardInHand(pictureMap.get(PictureUrl.CARD_IN_HAND.getId()));
         examinDTO.setCreateDate(examineDO.getGmtCreated());
         return examinDTO;
     } 
@@ -188,6 +188,7 @@ public class ExamineConverter {
         pictureMap.put(PictureUrl.COOPERATION3.getId(), examinDTO.getCooperation3());
         pictureMap.put(PictureUrl.COOPERATION4.getId(), examinDTO.getCooperation4());
         pictureMap.put(PictureUrl.COOPERATION5.getId(), examinDTO.getCooperation5());
+        pictureMap.put(PictureUrl.CARD_IN_HAND.getId(), examinDTO.getCardInHand());
         //2期
         examineDO.setIsDirectSale(examinDTO.getIsDirectSale());
         examineDO.setMerchantCategoryId(examinDTO.getMerchantCategoryId());

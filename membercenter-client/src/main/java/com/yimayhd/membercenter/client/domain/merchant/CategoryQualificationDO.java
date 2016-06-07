@@ -3,6 +3,7 @@ package com.yimayhd.membercenter.client.domain.merchant;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class CategoryQualificationDO implements Serializable {
     private long id;
@@ -11,7 +12,7 @@ public class CategoryQualificationDO implements Serializable {
 
     private long qulificationId;
 
-    private int required;
+    private boolean required;
 
     private int serialNo;
 
@@ -23,13 +24,15 @@ public class CategoryQualificationDO implements Serializable {
     private int domainId;
     private long businessScopeId;
     private int isDirectSale;
-    private List<Long> scopeIdsList;
+    private Set<Long> scopeIdsList;
     
-    public List<Long> getScopeIdsList() {
+    
+
+	public Set<Long> getScopeIdsList() {
 		return scopeIdsList;
 	}
 
-	public void setScopeIdsList(List<Long> scopeIdsList) {
+	public void setScopeIdsList(Set<Long> scopeIdsList) {
 		this.scopeIdsList = scopeIdsList;
 	}
 
@@ -82,15 +85,15 @@ public class CategoryQualificationDO implements Serializable {
         this.qulificationId = qulificationId;
     }
 
-    public int getRequired() {
-        return required;
-    }
+    public boolean isRequired() {
+		return required;
+	}
 
-    public void setRequired(int required) {
-        this.required = required;
-    }
+	public void setRequired(boolean required) {
+		this.required = required;
+	}
 
-    public int getSerialNo() {
+	public int getSerialNo() {
         return serialNo;
     }
 

@@ -9,8 +9,8 @@ package com.yimayhd.membercenter.enums;
  */
 public enum ExamineCharacter {
 
-	DIRECT_SALE("直营店",0),
-	BOUTIQUE("专营店",1);
+	DIRECT_SALE("直营店",1),
+	BOUTIQUE("专营店",2);
 	
 	private String name;
 	private int type;

@@ -2,6 +2,8 @@ package com.yimayhd.membercenter.client.domain.merchant;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MerchantCategoryScopeDO implements Serializable {
     private long id;
@@ -16,8 +18,17 @@ public class MerchantCategoryScopeDO implements Serializable {
 
     private Date gmtModified;
     private int domainId;
+    private Set<Long> idSet ;
     
-    public int getDomainId() {
+    public Set<Long> getIdSet() {
+		return idSet;
+	}
+
+	public void setIdSet(Set<Long> idSet) {
+		this.idSet = idSet;
+	}
+
+	public int getDomainId() {
 		return domainId;
 	}
 

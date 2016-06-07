@@ -10,9 +10,10 @@
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
     <result column="domain_id" property="domainId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, merchant_category_id, qulification_id, seller_id, content, gmt_created, gmt_modified,domain_id
+    id, merchant_category_id, qulification_id, seller_id, content, gmt_created, gmt_modified,domain_id,status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="long" >
     select 
@@ -26,10 +27,10 @@
   </delete>
   <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO" useGeneratedKeys="true" keyProperty="id" >
     insert into merchant_qualification (merchant_category_id, qulification_id, 
-      seller_id, content, gmt_created, 
+      seller_id, content, gmt_created, status,
       gmt_modified,domain_id)
     values (#{merchantCategoryId,jdbcType=BIGINT}, #{qulificationId,jdbcType=BIGINT}, 
-      #{sellerId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{gmtCreated,jdbcType=TIMESTAMP}, 
+      #{sellerId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{gmtCreated,jdbcType=TIMESTAMP}, #{status}, 
       #{gmtModified,jdbcType=TIMESTAMP},#{domainId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO" useGeneratedKeys="true" keyProperty="id" >
@@ -52,6 +53,9 @@
        <if test="domainId != null" >
         domain_id,
       </if>
+       <if test="status != null" >
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       #{merchantCategoryId,jdbcType=BIGINT},
@@ -71,6 +75,9 @@
       <if test="domainId != null" >
         #{domainId,jdbcType=INTEGER},
       </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO" >
@@ -82,38 +89,43 @@
       <if test="qulificationId != null" >
         qulification_id = #{qulificationId,jdbcType=BIGINT},
       </if>
-      <if test="sellerId != null" >
-        seller_id = #{sellerId,jdbcType=BIGINT},
-      </if>
+      
       <if test="content != null" >
         content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="gmtCreated != null" >
-        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
-      </if>
+      
       <if test="gmtModified != null" >
         gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
-      <if test="domainId != null" >
-        domain_id = #{domainId,jdbcType=INTEGER},
+      <if test="status != null" >
+        status = #{status},
       </if>
+     
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO" >
     update merchant_qualification
-    set merchant_category_id = #{merchantCategoryId,jdbcType=BIGINT},
-      qulification_id = #{qulificationId,jdbcType=BIGINT},
-      seller_id = #{sellerId,jdbcType=BIGINT},
-      content = #{content,jdbcType=VARCHAR},
-      gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+    set
+     
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-      domain_id=#{domainId,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
+      status = #{status}
+    where seller_id = #{sellerId}
   </update>
+  <update id="updateStatusBatch"  parameterType="java.util.List">  
+    <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+        update merchant_qualification
+        <set>
+            status=#{item.status},
+            gmt_modified = #{item.gmtModified,jdbcType=TIMESTAMP}
+        </set>
+        where seller_id = ${item.sellerId}
+    </foreach>      
+</update>
   <select id="getMerchantQualification" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO" resultMap="BaseResultMap">
-  	select qulification_id,content from merchant_qualification
+  	select id,qulification_id,content,domain_id,seller_id from merchant_qualification
   	where domain_id=#{merchantQualification.domainId}
+  	and status = 1
   	<if test="merchantQualification.sellerId != null and merchantQualification.sellerId != 0">
   		and seller_id=#{merchantQualification.sellerId}
   	</if>

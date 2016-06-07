@@ -1,5 +1,7 @@
 package com.yimayhd.membercenter.manager;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +19,7 @@ import com.alibaba.fastjson.JSON;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
+import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO;
 import com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO;
@@ -24,6 +27,7 @@ import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryScopeDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
 import com.yimayhd.membercenter.client.domain.merchant.QualificationDO;
+import com.yimayhd.membercenter.converter.MerchantConverter;
 import com.yimayhd.membercenter.dao.examine.BusinessScopeDao;
 import com.yimayhd.membercenter.dao.examine.CategoryQualificationDao;
 import com.yimayhd.membercenter.dao.examine.MerchantApplyDao;
@@ -44,40 +48,70 @@ import com.yimayhd.membercenter.mq.MsgSender;
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
-public class ApplyManager {
-	private static final Logger log  = LoggerFactory.getLogger(ApplyManager.class);
+public class QualificationManager {
+	private static final Logger log  = LoggerFactory.getLogger(QualificationManager.class);
+	@Autowired
+	private  MerchantApplyDao merchantApplyDao;
+	@Autowired
+	private BusinessScopeDao businessScopeDao;
+	@Autowired
+	private QualificationDao qualificationDao;
+	@Autowired
+	private CategoryQualificationDao categoryQualificationDao;
+	@Autowired
+	private MerchantCategoryScopeDao merchantCategoryScopeDao;
+	@Autowired
+	private MsgSender msgSender;
+	@Autowired
+	private TransactionTemplate transactionTemplate ;
+	@Autowired
+	private IDPool memberIdpool ;
+	@Autowired
+	private  TalentExamineManager talentExamineManager;
+    @Autowired
+	private MerchantScopeDao merchantScopeDao;
+	@Autowired
+	private MerchantQualificationDao merchantQualificationDao;
+	@Autowired
+	private MerchantCategoryDao merchantCategoryDao;
 	
 
-//	public MemResult<List<QualificationDO>> getQualification(QualificationDO qualification,Set<Long> idList) {
-//		//List<QualificationDO> qualificationList = new ArrayList<QualificationDO>();
-////		if (domainId <= 0) {
-////			return MemResult.buildFailResult(-1, "参数错误", null);
-////		}
-//		MemResult<List<QualificationDO>> result = new MemResult<List<QualificationDO>>();
-//		List<QualificationDO> qualificationList = qualificationDao.getQualification(qualification,idList);
-//		if (qualificationList == null) {
-//			result.setReturnCode(MemberReturnCode.QUALIFICATION_FAILED);
-//			return result;
-//		}
-//		result.setValue(qualificationList);
-//		return result;
-//	}
-//
-//	public MemResult<List<CategoryQualificationDO>> getCategoryQualification(CategoryQualificationDO categoryQua,List<Long> idList) {
-////		if (merchantCategoryId <=0 || domainId <= 0) {
-////			return MemResult.buildFailResult(-1, "参数错误", null);
-////		}
-//		MemResult<List<CategoryQualificationDO>> result = new MemResult<List<CategoryQualificationDO>>();
-//
-//		List<CategoryQualificationDO> qualifications = categoryQualificationDao.getCategoryQualification(categoryQua,idList);
-//		if (qualifications == null) {
-//			result.setReturnCode(MemberReturnCode.CATEGORY_QUALIFICATION_FAILED);
-//			return result;
-//		}
-//		result.setValue(qualifications);
-//		return result;
-//
-//	}
+	public MemResult<List<QualificationDO>> getQualification(QualificationQueryDTO queryDTO) {
+		MemResult<List<QualificationDO>> result = new MemResult<List<QualificationDO>>();
+		QualificationDO qualification = new QualificationDO();
+		qualification.setDomainId(queryDTO.getDomainId());
+		if (queryDTO.getIdSet() != null && queryDTO.getIdSet().size() >0) {
+			
+			qualification.setIdList(queryDTO.getIdSet());
+		}
+		List<QualificationDO> qualificationList = qualificationDao.getQualification(qualification);
+		if (qualificationList == null) {
+			result.setReturnCode(MemberReturnCode.QUALIFICATION_FAILED);
+			return result;
+		}
+		result.setValue(qualificationList);
+		return result;
+	}
+
+	public MemResult<List<CategoryQualificationDO>> getCategoryQualification(QualificationQueryDTO queryDTO) {
+		MemResult<List<CategoryQualificationDO>> result = new MemResult<List<CategoryQualificationDO>>();
+		CategoryQualificationDO categoryQualification = new CategoryQualificationDO();
+		categoryQualification.setDomainId(queryDTO.getDomainId());
+		categoryQualification.setIsDirectSale(queryDTO.getDirectSale());
+		if (queryDTO.getIdSet() != null && queryDTO.getIdSet().size() >0) {
+			
+			categoryQualification.setScopeIdsList(queryDTO.getIdSet());
+		}
+		categoryQualification.setMerchantCategoryId(queryDTO.getMerchantCategoryId());
+		List<CategoryQualificationDO> qualifications = categoryQualificationDao.getCategoryQualification(categoryQualification);
+		if (qualifications == null) {
+			result.setReturnCode(MemberReturnCode.CATEGORY_QUALIFICATION_FAILED);
+			return result;
+		}
+		result.setValue(qualifications);
+		return result;
+
+	}
 //	public MemResult<List<MerchantCategoryScopeDO>> getMerchantCategoryScope(MerchantCategoryScopeDO merchantCategoryScope,List<Long> idList) {
 ////		if (merchantCategoryId <=0 || domainId <= 0) {
 ////			return MemResult.buildFailResult(-1, "参数错误", null);
@@ -104,19 +138,22 @@ public class ApplyManager {
 //		result.setValue(merchantScopes);
 //		return result;
 //	}
-//
-//	public MemResult<List<MerchantQualificationDO>> getMerchantQualification(MerchantQualificationDO merchantQualification) {
-//		MemResult<List<MerchantQualificationDO>> result = new MemResult<List<MerchantQualificationDO>>();
-//		List<MerchantQualificationDO> merchantQualifications = merchantQualificationDao.getMerchantQualification(merchantQualification);
-//		if (merchantQualifications == null) {
-//			result.setReturnCode(MemberReturnCode.MERCHANT_QUALIFICATION_FAILED);
-//			return result;
-//		}
-//		result.setValue(merchantQualifications);
-//		return result;
-//	}
-//
-//	
+
+	public MemResult<List<MerchantQualificationDO>> getMerchantQualification(QualificationQueryDTO qualificationQueryDTO) {
+		MemResult<List<MerchantQualificationDO>> result = new MemResult<List<MerchantQualificationDO>>();
+		MerchantQualificationDO merchantQualification= new MerchantQualificationDO();
+		merchantQualification.setDomainId(qualificationQueryDTO.getDomainId());
+		merchantQualification.setSellerId(qualificationQueryDTO.getSellerId());
+		List<MerchantQualificationDO> merchantQualifications = merchantQualificationDao.getMerchantQualification(merchantQualification);
+		if (merchantQualifications == null) {
+			result.setReturnCode(MemberReturnCode.MERCHANT_QUALIFICATION_FAILED);
+			return result;
+		}
+		result.setValue(merchantQualifications);
+		return result;
+	}
+
+	
 //	public MemResult<Boolean> submitExamineInfo(final ExamineInfoDTO examineInfoDTO) {
 //		MemResult<Boolean> result = new MemResult<Boolean>();
 //		if ((examineInfoDTO == null) ) {
@@ -170,38 +207,53 @@ public class ApplyManager {
 //		return result ;
 //
 //	}
-
-	
-	
-//	public MemResult<Boolean> updateMerchantQualification(ExamineInfoDTO examineInfoDTO) {
-//		MemResult<Boolean> result = new MemResult<Boolean>();
-//		if (examineInfoDTO == null) {
-//			log.error("param error : merchantQualificationDO={}",JSON.toJSONString(examineInfoDTO));
-//			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+//
+//	public MemResult<List<BusinessScopeDO>> getBusinessScopes(BusinessScopeDO businessScope,List<Long> idList) {
+//		MemResult<List<BusinessScopeDO>> result = new MemResult<>();
+//
+//		List<BusinessScopeDO> businessScopeDOs = businessScopeDao.getBusinessScope(businessScope,idList);
+//		if(businessScopeDOs.isEmpty()) {
+//			result.setReturnCode(MemberReturnCode.BUSINESS_SCOPE_FAILED);
 //			return result;
 //		}
-//		boolean isNewMerchantQualification = false;
-//		if (merchantQualificationDO.getId() <= 0) {
-//			long id = memberIdpool.getNewId();
-//			merchantQualificationDO.setId(id);
-//			isNewMerchantQualification = true;
-//		}
-//		List<MerchantQualificationDO> merchantQualifications = examineInfoDTO.getMerchantQualifications();
-//		MerchantQualificationDO merQuaDO = null;
-//		for (MerchantQualificationDO mq : merchantQualifications) {
-//			
-//			if (mq.getId() <= 0) {
-//				merQuaDO = merchantQualificationDao.insert(mq);
+//		result.setValue(businessScopeDOs);
+//		return result;
+//	}
+//	
+	public MemResult<Boolean> updateMerchantQualification(ExamineInfoDTO examineInfoDTO) {
+		MemResult<Boolean> result = new MemResult<Boolean>();
+		if (examineInfoDTO == null) {
+			log.error("param error : merchantQualificationDO={}",JSON.toJSONString(examineInfoDTO));
+			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return result;
+		}
+		 MerchantQualificationDO merchantQualification = new MerchantQualificationDO();
+		 merchantQualification.setDomainId(examineInfoDTO.getDomainId());
+		 merchantQualification.setSellerId(examineInfoDTO.getSellerId());
+		 List<MerchantQualificationDO> merchantQualificationList = merchantQualificationDao.getMerchantQualification(merchantQualification);
+			if (merchantQualificationList != null) {
+				for (MerchantQualificationDO merchantQualificationDO : merchantQualificationList) {
+					merchantQualificationDO.setStatus(-1);
+					merchantQualificationDO.setGmtModified(new Date());
+					merchantQualificationDao.update(merchantQualificationDO);
+				}
+			}
+		List<MerchantQualificationDO> merchantQualifications = examineInfoDTO.getMerchantQualifications();
+		MerchantQualificationDO merQuaDO = null;
+		for (MerchantQualificationDO mq : merchantQualifications) {
+			
+			//if (mq.getId() <= 0) {
+				merQuaDO = merchantQualificationDao.insert(mq);
 //			}else {
 //				merQuaDO = merchantQualificationDao.update(mq);
 //			}
-//			if(merQuaDO == null) {
-//				result.setReturnCode(MemberReturnCode.DB_UPDATE_FAILED);
-//				return result;
-//			}
-//		}
-//		return result;
-//	}
+			if(merQuaDO == null) {
+				result.setReturnCode(MemberReturnCode.DB_UPDATE_FAILED);
+				return result;
+			}
+		}
+		return result;
+	}
 	
 //	public MemResult<List<BusinessScopeDO>> getBusinessScopeByIds(int domainId,List<Long> idList) {
 //		MemResult<List<BusinessScopeDO>> result = new MemResult<List<BusinessScopeDO>>();
@@ -269,4 +321,42 @@ public class ApplyManager {
 //		result.setValue(merchantCategoryDO);
 //		return result;
 //	}
+	public MemResult<Boolean> updateMerchantQualificationStatus(QualificationQueryDTO queryDTO) {
+		 MemResult<Boolean> result  = new  MemResult<Boolean>();
+		 MerchantQualificationDO merchantQualification = new MerchantQualificationDO();
+		 merchantQualification.setDomainId(queryDTO.getDomainId());
+		 merchantQualification.setSellerId(queryDTO.getSellerId());
+		 List<MerchantQualificationDO> merchantQualificationList = merchantQualificationDao.getMerchantQualification(merchantQualification);
+			if (merchantQualificationList != null) {
+				for (MerchantQualificationDO merchantQualificationDO : merchantQualificationList) {
+					merchantQualificationDO.setStatus(-1);
+					merchantQualificationDO.setGmtModified(new Date());
+					merchantQualificationDao.update(merchantQualificationDO);
+				}
+			}
+		MerchantQualificationDO newMerchantQualification = MerchantConverter.convertQueryQualification2DO(queryDTO);
+		MerchantQualificationDO updateResult = merchantQualificationDao.insert(newMerchantQualification);
+		if (updateResult == null) {
+			result.setReturnCode(MemberReturnCode.DB_UPDATE_FAILED);
+			
+		}
+		return result;
+	}
+	
+	public MemResult<Integer> updateStatusBatch(List<QualificationQueryDTO> queryDTOs) {
+		 MemResult<Integer> result  = new  MemResult<Integer>();
+		 List<MerchantQualificationDO> qualificationDOList = new ArrayList<MerchantQualificationDO>();
+		 for (QualificationQueryDTO qualificationQueryDTO : queryDTOs) {
+				MerchantQualificationDO merchantQualification = MerchantConverter.convertQueryQualification2DO(qualificationQueryDTO);
+				merchantQualification.setGmtModified(new Date());
+				qualificationDOList.add(merchantQualification);
+		}
+		 int updateCount = merchantQualificationDao.updateStatusBatch(qualificationDOList);
+		 if (updateCount < queryDTOs.size()) {
+			 result.setReturnCode(MemberReturnCode.DB_UPDATE_FAILED);
+			 return result;
+		}
+		 result.setValue(updateCount);
+		 return result;
+	}
 }

@@ -4,15 +4,17 @@
   <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.merchant.QualificationDO" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
     <result column="tip" property="tip" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
     <result column="domain_id" property="domainId" jdbcType="INTEGER" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="overall_note" property="overallNote" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title, type, tip, status, gmt_created, gmt_modified,domain_id
+    id, title, type, tip, status, gmt_created, gmt_modified,domain_id,num,overall_note
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="long" >
     select 
@@ -28,7 +30,7 @@
     insert into qualification (title, type, tip, 
       status, gmt_created, gmt_modified,domain_id
       )
-    values (#{title,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{tip,jdbcType=VARCHAR}, 
+    values (#{title,jdbcType=VARCHAR}, #{type}, #{tip,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},#{domainId,jdbcType=INTEGER}
       )
   </insert>
@@ -60,7 +62,7 @@
         #{title,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
-        #{type,jdbcType=VARCHAR},
+        #{type},
       </if>
       <if test="tip != null" >
         #{tip,jdbcType=VARCHAR},
@@ -84,7 +86,7 @@
         title = #{title,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
-        type = #{type,jdbcType=VARCHAR},
+        type = #{type},
       </if>
       <if test="tip != null" >
         tip = #{tip,jdbcType=VARCHAR},
@@ -107,7 +109,7 @@
   <update id="updateByPrimaryKey" parameterType="com.yimayhd.membercenter.client.domain.merchant.QualificationDO" >
     update qualification
     set title = #{title,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
+      type = #{type},
       tip = #{tip,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
@@ -120,8 +122,8 @@
   	where domain_id=#{domainId}
   	
   </select> -->
-  <select id="getQualification" parameterType="com.yimayhd.membercenter.client.domain.merchant.QualificationDO" resultMap="BaseResultMap" >
-  	select id,title,tip from qualification
+  <select id="getQualification"  resultMap="BaseResultMap" >
+  	select id,title,tip,num,type,overall_note,domain_id from qualification
   	where domain_id=#{qualification.domainId}
   	<if test="idList != null ">
   		and id in 

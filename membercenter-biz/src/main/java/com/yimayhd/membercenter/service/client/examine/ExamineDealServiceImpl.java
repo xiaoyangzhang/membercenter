@@ -304,7 +304,7 @@ public class ExamineDealServiceImpl implements ExamineDealService {
 		}
 		try {
 			result = talentExamineManager.checkMerchantNameIsExist(examineInfoDTO.getMerchantName(), examineInfoDTO.getDomainId());
-			
+			//result.setValue(value);
 		} catch (Exception e) {
 			logger.error("params :ExamineInfoDTO={} error:{}",examineInfoDTO,e);
 			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);

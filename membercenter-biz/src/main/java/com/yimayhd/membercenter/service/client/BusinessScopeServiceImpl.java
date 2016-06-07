@@ -8,7 +8,6 @@ import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
 import com.yimayhd.membercenter.client.domain.merchant.BusinessScopeDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryScopeDO;
 import com.yimayhd.membercenter.client.query.BusinessScopeQueryDTO;
-import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.BusinessScopeService;
 import com.yimayhd.membercenter.manager.BusinessScopeManager;
@@ -90,8 +89,6 @@ public class BusinessScopeServiceImpl implements BusinessScopeService {
 			return result;
 		}
 		try {
-//			List<MerchantScopeDO> merchantScopes = businessScopeManager.getMerchantScope(queryDTO);
-//			result.setValue(merchantScopes);
 			result = businessScopeManager.updateMerchantScopeStatus(queryDTO);
 		} catch (Exception e) {
 			LOGGER.error("params :BusinessScopeQueryDTO={} error:{} ",queryDTO,e);

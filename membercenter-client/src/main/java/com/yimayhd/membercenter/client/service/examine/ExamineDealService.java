@@ -112,5 +112,16 @@ public interface ExamineDealService {
      * @since [产品/模块版本](可选)
      */
     MemResult<ExamineResultDTO> queryExamineDealResult(InfoQueryDTO examineQueryDTO);
-
+    /**
+     * 
+    * created by zhangxy
+    * @date 2016年6月7日
+    * @Title: checkMerchantNameIsExist 
+    * @Description: 验证店铺名称是否存在
+    * @param @param infoQueryDTO
+    * @param @return    设定文件 
+    * @return MemResult<Boolean>    返回类型 
+    * @throws
+     */
+    public MemResult<Boolean> checkMerchantNameIsExist(ExamineInfoDTO examineInfoDTO);
 }

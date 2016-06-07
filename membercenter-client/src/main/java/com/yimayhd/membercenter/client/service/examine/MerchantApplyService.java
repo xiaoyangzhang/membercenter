@@ -1,13 +1,11 @@
 package com.yimayhd.membercenter.client.service.examine;
 
-import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
 import com.yimayhd.membercenter.client.domain.merchant.*;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
 import com.yimayhd.membercenter.client.query.MerchantCategoryQueryDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 
 import java.util.List;
-import java.util.Set;
 
 
 

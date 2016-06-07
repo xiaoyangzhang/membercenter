@@ -31,7 +31,7 @@ public class DraftListQuery extends PageQuery {
 	/**
 	 * domainID
 	 */
-	private Long domainId;
+	private int domainId;
 
 	public int getMainType() {
 		return mainType;
@@ -57,11 +57,11 @@ public class DraftListQuery extends PageQuery {
 		this.accountId = accountId;
 	}
 
-	public Long getDomainId() {
+	public int getDomainId() {
 		return domainId;
 	}
 
-	public void setDomainId(Long domainId) {
+	public void setDomainId(int domainId) {
 		this.domainId = domainId;
 	}
 }

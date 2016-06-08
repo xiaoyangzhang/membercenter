@@ -130,6 +130,7 @@
 	<sql id="queryExamineSql">
     <where>
       domain_id = #{domainId,jdbcType=INTEGER}
+      and 4 > statues
 		<if test="sellerId > 0">
 			and seller_id = #{sellerId,jdbcType=BIGINT}
 		</if>

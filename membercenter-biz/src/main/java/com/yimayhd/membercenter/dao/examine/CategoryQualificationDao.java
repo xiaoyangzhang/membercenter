@@ -25,4 +25,12 @@ public class CategoryQualificationDao {
 	public List<CategoryQualificationDO> getCategoryQualification(CategoryQualificationDO categoryQualification) {
 		return categoryQualificationDOMapper.getCategoryQualification(categoryQualification,categoryQualification.getScopeIdsList());
 	}
+
+	public Boolean getQualificationRequired(QualificationQueryDTO dto) {
+		CategoryQualificationDO categoryQualificationDO = categoryQualificationDOMapper.getQualificationRequired(dto);
+		if(categoryQualificationDO != null) {
+			return categoryQualificationDO.isRequired();
+		}
+		return false;
+	}
 }

@@ -209,4 +209,11 @@ public class QualificationManager {
 		 result.setValue(updateCount);
 		 return result;
 	}
+
+	public MemResult<Boolean> getQualificationRequired(QualificationQueryDTO dto) {
+		Boolean result = categoryQualificationDao.getQualificationRequired(dto);
+		MemResult<Boolean> memResult = new MemResult<>();
+		memResult.setValue(result);
+		return memResult;
+	}
 }

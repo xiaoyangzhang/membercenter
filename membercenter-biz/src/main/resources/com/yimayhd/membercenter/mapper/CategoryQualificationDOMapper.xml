@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yimayhd.membercenter.mapper.CategoryQualificationDOMapper" >
-  <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="merchant_category_id" property="merchantCategoryId" jdbcType="BIGINT" />
-    <result column="qulification_id" property="qulificationId" jdbcType="BIGINT" />
-    <result column="business_scope_id" property="businessScopeId" jdbcType="BIGINT" />
-    <result column="is_direct_sale" property="isDirectSale" jdbcType="TINYINT" />
-    <result column="required" property="required" jdbcType="TINYINT" />
-    <result column="serial_no" property="serialNo" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
-    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
-    <result column="domain_id" property="domainId" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.yimayhd.membercenter.mapper.CategoryQualificationDOMapper">
+    <resultMap id="BaseResultMap" type="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="merchant_category_id" property="merchantCategoryId" jdbcType="BIGINT"/>
+        <result column="qulification_id" property="qulificationId" jdbcType="BIGINT"/>
+        <result column="business_scope_id" property="businessScopeId" jdbcType="BIGINT"/>
+        <result column="is_direct_sale" property="isDirectSale" jdbcType="TINYINT"/>
+        <result column="required" property="required" jdbcType="TINYINT"/>
+        <result column="serial_no" property="serialNo" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+        <result column="domain_id" property="domainId" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, merchant_category_id, qulification_id, required, serial_no, status, gmt_created, 
     gmt_modified,domain_id,business_scope_id,is_direct_sale
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="long" >
-    select 
-    <include refid="Base_Column_List" />
-    from category_qualification
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="long" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="long">
+        select
+        <include refid="Base_Column_List"/>
+        from category_qualification
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="long">
     delete from category_qualification
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO" useGeneratedKeys="true" keyProperty="id" >
+    <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO"
+            useGeneratedKeys="true" keyProperty="id">
     insert into category_qualification (merchant_category_id, qulification_id, 
       required, serial_no, status, 
       gmt_created, gmt_modified,domain_id,business_scope_id,is_direct_sale)
@@ -36,74 +37,77 @@
       #{required}, #{serialNo,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP},#{domainId,jdbcType=INTEGER},#{businessScopeId,jdbcType=BIGINT},#{isDirectSale,jdbcType=TINYINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO" useGeneratedKeys="true" keyProperty="id" >
-    insert into category_qualification
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      merchant_category_id,
-      qulification_id,
-      required,
-      serial_no,
-      status,
-      business_scope_id,is_direct_sale,
-      <if test="gmtCreated != null" >
-        gmt_created,
-      </if>
-      <if test="gmtModified != null" >
-        gmt_modified,
-      </if>
-      <if test="domainId != null" >
-        domain_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      #{merchantCategoryId,jdbcType=BIGINT},
-      #{qulificationId,jdbcType=BIGINT},
-      #{required},
-      #{serialNo,jdbcType=INTEGER},
-      #{status,jdbcType=INTEGER},
-      #{businessScopeId,jdbcType=BIGINT},#{isDirectSale,jdbcType=TINYINT},
-      <if test="gmtCreated != null" >
-        #{gmtCreated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null" >
-        #{gmtModified,jdbcType=TIMESTAMP},
-      </if>
-      <if test="domainId != null" >
-        #{domainId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO" >
-    update category_qualification
-    <set >
-      <if test="merchantCategoryId != null" >
-        merchant_category_id = #{merchantCategoryId,jdbcType=BIGINT},
-      </if>
-      <if test="qulificationId != null" >
-        qulification_id = #{qulificationId,jdbcType=BIGINT},
-      </if>
-      <if test="required != null" >
-        required = #{required},
-      </if>
-      <if test="serialNo != null" >
-        serial_no = #{serialNo,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="gmtCreated != null" >
-        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="gmtModified != null" >
-        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-      </if>
-      <if test="domainId != null" >
-        domain_id = #{domainId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO" >
+    <insert id="insertSelective" parameterType="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into category_qualification
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            merchant_category_id,
+            qulification_id,
+            required,
+            serial_no,
+            status,
+            business_scope_id,is_direct_sale,
+            <if test="gmtCreated != null">
+                gmt_created,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="domainId != null">
+                domain_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{merchantCategoryId,jdbcType=BIGINT},
+            #{qulificationId,jdbcType=BIGINT},
+            #{required},
+            #{serialNo,jdbcType=INTEGER},
+            #{status,jdbcType=INTEGER},
+            #{businessScopeId,jdbcType=BIGINT},#{isDirectSale,jdbcType=TINYINT},
+            <if test="gmtCreated != null">
+                #{gmtCreated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="domainId != null">
+                #{domainId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO">
+        update category_qualification
+        <set>
+            <if test="merchantCategoryId != null">
+                merchant_category_id = #{merchantCategoryId,jdbcType=BIGINT},
+            </if>
+            <if test="qulificationId != null">
+                qulification_id = #{qulificationId,jdbcType=BIGINT},
+            </if>
+            <if test="required != null">
+                required = #{required},
+            </if>
+            <if test="serialNo != null">
+                serial_no = #{serialNo,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreated != null">
+                gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="domainId != null">
+                domain_id = #{domainId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey"
+            parameterType="com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO">
     update category_qualification
     set merchant_category_id = #{merchantCategoryId,jdbcType=BIGINT},
       qulification_id = #{qulificationId,jdbcType=BIGINT},
@@ -117,33 +121,47 @@
       is_direct_sale=#{isDirectSale,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
-   <!-- <select id="getQualificationIdsByMerchantCategoryId" resultMap="BaseResultMap">
-  	select qulification_id  from category_qualification where 
-  	domain_id=#{domainId}
-  	<if test="categoryId != null">
-  		and merchant_category_id = #{categoryId}
-  	</if>
-  </select> -->
-  <select id="getCategoryQualification"  resultMap="BaseResultMap">
-  	select DISTINCT qulification_id,required,domain_id from category_qualification
-  	where domain_id=#{category.domainId}
-  	<if test="category.merchantCategoryId != null and category.merchantCategoryId != 0">
-  		and merchant_category_id = #{category.merchantCategoryId,jdbcType=BIGINT}
-  	</if>
-  	<if test="category.businessScopeId != null and category.businessScopeId != 0">
-  		and business_scope_id = #{category.businessScopeId,jdbcType=BIGINT},
-  		
-  	</if>
-  	<if test="scopeIdsList != null">
-		and business_scope_id in
-		<foreach collection="scopeIdsList" index="index" item="item" open="("
-			separator="," close=")">
-			#{item,jdbcType=BIGINT}
-		</foreach>
-		</if>
-  	<if test="category.isDirectSale != null and category.isDirectSale != 0">
-  		and is_direct_sale = #{category.isDirectSale}
-  		
-  	</if>
-  </select>
+    <!-- <select id="getQualificationIdsByMerchantCategoryId" resultMap="BaseResultMap">
+       select qulification_id  from category_qualification where
+       domain_id=#{domainId}
+       <if test="categoryId != null">
+           and merchant_category_id = #{categoryId}
+       </if>
+   </select> -->
+    <select id="getCategoryQualification" resultMap="BaseResultMap">
+        select DISTINCT qulification_id,required,domain_id from category_qualification
+        where domain_id=#{category.domainId}
+        <if test="category.merchantCategoryId != null and category.merchantCategoryId != 0">
+            and merchant_category_id = #{category.merchantCategoryId,jdbcType=BIGINT}
+        </if>
+        <if test="category.businessScopeId != null and category.businessScopeId != 0">
+            and business_scope_id = #{category.businessScopeId,jdbcType=BIGINT},
+
+        </if>
+        <if test="scopeIdsList != null">
+            and business_scope_id in
+            <foreach collection="scopeIdsList" index="index" item="item" open="("
+                     separator="," close=")">
+                #{item,jdbcType=BIGINT}
+            </foreach>
+        </if>
+        <if test="category.isDirectSale != null and category.isDirectSale != 0">
+            and is_direct_sale = #{category.isDirectSale}
+
+        </if>
+    </select>
+    <select id="getQualificationRequired" parameterType="com.yimayhd.membercenter.client.query.QualificationQueryDTO"
+            resultMap="BaseResultMap">
+        select DISTINCT qulification_id,required,domain_id from category_qualification
+        where domain_id=#{domainId}
+        <if test="directSale != null">
+            and is_direct_sale = #{directSale,jdbcType=BIGINT}
+        </if>
+        <if test="merchantCategoryId != null and merchantCategoryId != 0">
+            and merchant_category_id = #{merchantCategoryId,jdbcType=BIGINT}
+        </if>
+        <if test="qualificationId != null and qualificationId != 0">
+            and qulification_id = #{qualificationId,jdbcType=BIGINT}
+        </if>
+    </select>
 </mapper>

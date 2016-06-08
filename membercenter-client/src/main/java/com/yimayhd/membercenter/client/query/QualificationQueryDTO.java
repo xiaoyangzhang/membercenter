@@ -22,6 +22,7 @@ public class QualificationQueryDTO implements Serializable {
 	*/
 	private static final long serialVersionUID = 1642895241681795224L;
 	protected  final Logger log = LoggerFactory.getLogger(getClass());
+	private long qualificationId;
 	private int domainId;
 	private long sellerId;
 	private long merchantCategoryId;
@@ -29,6 +30,12 @@ public class QualificationQueryDTO implements Serializable {
 	private int directSale;
 	private long businessScopeId;
 	private Set<Long> idSet = new HashSet<Long>();
+	public long getQualificationId() {
+		return qualificationId;
+	}
+	public void setQualificationId(long qualificationId) {
+		this.qualificationId = qualificationId;
+	}
 	public int getDomainId() {
 		return domainId;
 	}

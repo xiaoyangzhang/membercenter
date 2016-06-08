@@ -4,11 +4,12 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.draft.DraftDO;
-import com.yimayhd.membercenter.client.domain.draft.DraftDetailDO;
 import com.yimayhd.membercenter.client.dto.DraftDTO;
+import com.yimayhd.membercenter.client.dto.DraftDetailDTO;
 import com.yimayhd.membercenter.client.query.DraftListQuery;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
@@ -21,6 +22,7 @@ public class DraftManagerServiceImpl implements DraftManagerService {
 	/**
 	 * 草稿箱manager
 	 */
+	@Autowired
 	private DraftManager draftManager;
 	
     private static final Logger LOGGER = LoggerFactory.getLogger(DraftManagerServiceImpl.class);
@@ -119,9 +121,9 @@ public class DraftManagerServiceImpl implements DraftManagerService {
 	 * @createTime 2016年6月3日
 	 */
 	@Override
-	public MemResult<DraftDetailDO> getDraftDetail(Long id) {
+	public MemResult<DraftDetailDTO> getDraftDetail(Long id) {
 		LOGGER.info("getDraftDetail id= {}", id);
-		MemResult<DraftDetailDO> result = new MemResult<DraftDetailDO>();
+		MemResult<DraftDetailDTO> result = new MemResult<DraftDetailDTO>();
         try {
         	result = draftManager.getDetailById(id);
 		} catch (Exception e) {
@@ -140,9 +142,9 @@ public class DraftManagerServiceImpl implements DraftManagerService {
 	 * @createTime 2016年6月6日
 	 */
 	@Override
-	public MemResult<DraftDetailDO> getDraftDetailByType(DraftVO draftVO) {
+	public MemResult<DraftDetailDTO> getDraftDetailByType(DraftVO draftVO) {
 		LOGGER.info("getDraftDetail draftVO= {}", draftVO);
-		MemResult<DraftDetailDO> result = new MemResult<DraftDetailDO>();
+		MemResult<DraftDetailDTO> result = new MemResult<DraftDetailDTO>();
         try {
         	result = draftManager.getDetailByType(draftVO);
 		} catch (Exception e) {

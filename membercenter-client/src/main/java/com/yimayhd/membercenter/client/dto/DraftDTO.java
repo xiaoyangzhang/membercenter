@@ -34,6 +34,16 @@ public class DraftDTO implements Serializable{
 	 * 创建时间
 	 */
 	private Date gmtCreated;
+	
+	/**
+	 * 主类型
+	 */
+	private int mainType;
+	
+	/**
+	 * 子类型
+	 */
+	private int subType;
 
 	public Long getId() {
 		return id;
@@ -73,5 +83,21 @@ public class DraftDTO implements Serializable{
 
 	public void setGmtCreated(Date gmtCreated) {
 		this.gmtCreated = gmtCreated;
+	}
+
+	public int getMainType() {
+		return mainType;
+	}
+
+	public void setMainType(int mainType) {
+		this.mainType = mainType;
+	}
+
+	public int getSubType() {
+		return subType;
+	}
+
+	public void setSubType(int subType) {
+		this.subType = subType;
 	}
 }

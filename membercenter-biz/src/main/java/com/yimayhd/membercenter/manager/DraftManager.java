@@ -13,6 +13,7 @@ import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.draft.DraftDO;
 import com.yimayhd.membercenter.client.domain.draft.DraftDetailDO;
 import com.yimayhd.membercenter.client.dto.DraftDTO;
+import com.yimayhd.membercenter.client.dto.DraftDetailDTO;
 import com.yimayhd.membercenter.client.query.DraftListQuery;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
@@ -173,8 +174,8 @@ public class DraftManager {
      * @author liuxp
      * @createTime 2016年6月6日
      */
-    public MemResult<DraftDetailDO> getDetailById(Long id) {
-		MemResult<DraftDetailDO> result = new MemResult<DraftDetailDO>();
+    public MemResult<DraftDetailDTO> getDetailById(Long id) {
+		MemResult<DraftDetailDTO> result = new MemResult<DraftDetailDTO>();
 		result.setSuccess(false);
 		DraftDetailDO draftDetailDO;
 		try {
@@ -190,8 +191,11 @@ public class DraftManager {
 			logger.info("getDetailById id= {} find no data", id);
 			return result;
 		} else {
+			DraftDetailDTO draftDetailDTO = new DraftDetailDTO();
+			draftDetailDTO.setId(draftDetailDO.getId());
+			draftDetailDTO.setJSONStr(draftDetailDO.getJSONStr());
 			result.setSuccess(true);
-			result.setValue(draftDetailDO);
+			result.setValue(draftDetailDTO);
 		}
 		return result;
     }
@@ -203,8 +207,8 @@ public class DraftManager {
      * @author liuxp
      * @createTime 2016年6月6日
      */
-    public MemResult<DraftDetailDO> getDetailByType(DraftVO draftVO) {
-    	MemResult<DraftDetailDO> result = new MemResult<DraftDetailDO>();
+    public MemResult<DraftDetailDTO> getDetailByType(DraftVO draftVO) {
+    	MemResult<DraftDetailDTO> result = new MemResult<DraftDetailDTO>();
 		result.setSuccess(false);
 		
 		if(!(draftVO.getMainType()>0)||!(draftVO.getSubType()>0)||draftVO.getAccountId()==null) {
@@ -226,8 +230,11 @@ public class DraftManager {
 			logger.info("getDetailByType draftVO= {} find no data", draftVO);
 			return result;
 		} else {
+			DraftDetailDTO draftDetailDTO = new DraftDetailDTO();
+			draftDetailDTO.setId(draftDetailDO.getId());
+			draftDetailDTO.setJSONStr(draftDetailDO.getJSONStr());
 			result.setSuccess(true);
-			result.setValue(draftDetailDO);
+			result.setValue(draftDetailDTO);
 		}
 		return result;
     }

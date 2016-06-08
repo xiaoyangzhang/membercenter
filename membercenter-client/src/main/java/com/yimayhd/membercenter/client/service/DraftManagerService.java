@@ -5,6 +5,7 @@ import java.util.List;
 import com.yimayhd.membercenter.client.domain.draft.DraftDO;
 import com.yimayhd.membercenter.client.domain.draft.DraftDetailDO;
 import com.yimayhd.membercenter.client.dto.DraftDTO;
+import com.yimayhd.membercenter.client.dto.DraftDetailDTO;
 import com.yimayhd.membercenter.client.query.DraftListQuery;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
@@ -59,7 +60,7 @@ public interface DraftManagerService {
 	 * @author liuxp
 	 * @createTime 2016年6月3日
 	 */
-	public MemResult<DraftDetailDO> getDraftDetail(Long id);
+	public MemResult<DraftDetailDTO> getDraftDetail(Long id);
 	
 	/**
 	 * 通过类型和商户id获得草稿箱信息
@@ -68,5 +69,5 @@ public interface DraftManagerService {
 	 * @author liuxp
 	 * @createTime 2016年6月6日
 	 */
-	public MemResult<DraftDetailDO> getDraftDetailByType(DraftVO draftVO);
+	public MemResult<DraftDetailDTO> getDraftDetailByType(DraftVO draftVO);
 }

@@ -32,6 +32,8 @@ public class DraftConverter {
 			draftDTO.setId(draftDO.getId());
 			int mainType = draftDO.getMainType();
 			int subType = draftDO.getSubType();
+			draftDTO.setMainType(mainType);
+			draftDTO.setSubType(subType);
 			
 			if(mainType==DraftEnum.ITEM.getValue()) {
 				draftDTO.setSubTypeName(ItemType.get(subType).getText());

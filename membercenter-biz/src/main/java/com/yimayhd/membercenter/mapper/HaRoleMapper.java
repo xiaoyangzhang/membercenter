@@ -15,4 +15,12 @@ public interface HaRoleMapper{
 	boolean updateRoleStatus(HaRoleDO haRoleDO);
 	
 	public List<HaRoleDO> getRolesByType(int roleType);
+
+	int add(HaRoleDO haRoleDO);
+
+	HaRoleDO getById(long id);
+
+	int modify(HaRoleDO haRoleDO);
+
+	void delete(long id);
 }

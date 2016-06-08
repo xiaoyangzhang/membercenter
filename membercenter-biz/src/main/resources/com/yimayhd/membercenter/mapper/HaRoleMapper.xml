@@ -93,4 +93,33 @@
 		update ha_role t set t.status
 		= 0 where t.id = #{value}
 	</update>
+	<update id="modify" parameterType="com.yimayhd.membercenter.client.domain.HaRoleDO">
+		update ha_role t
+		<set>
+
+			<if test="name != null">
+				t.name = #{name,jdbcType=VARCHAR},
+			</if>
+
+			<if test="type != null">
+				t.type = #{type,jdbcType=INTEGER},
+			</if>
+
+			<if test="gmtCreated != null">
+				t.gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
+			</if>
+
+			<if test="gmtModified != null">
+				t.gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+			</if>
+
+			<if test="status != null">
+				t.status = #{status,jdbcType=INTEGER}
+			</if>
+
+		</set>
+		where
+		t.id = #{id}
+	</update>
+
 </mapper>

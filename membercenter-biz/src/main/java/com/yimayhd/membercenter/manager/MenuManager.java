@@ -51,7 +51,7 @@ public class MenuManager {
             // 查询总数
             int count = menuDao.queryCount(menuListQuery);
             if (ParmCheckUtil.MIN_CODE >= count) {
-                logger.info("queryMenu param:{}  queryMerchantExaminCount is zero", JSONObject.toJSONString(menuListQuery));
+                logger.info("queryMenu param:{}  queryCount is zero", JSONObject.toJSONString(menuListQuery));
                 return baseResult;
             }
             // 分页查询

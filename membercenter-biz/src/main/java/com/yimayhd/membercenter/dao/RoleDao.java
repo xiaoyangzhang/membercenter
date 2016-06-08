@@ -1,14 +1,13 @@
 package com.yimayhd.membercenter.dao;
 
-import java.util.Date;
-import java.util.List;
-
-import com.yimayhd.membercenter.client.domain.MemberRecordDO;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.yimayhd.membercenter.client.domain.HaRoleDO;
+import com.yimayhd.membercenter.client.query.RoleListQuery;
 import com.yimayhd.membercenter.enums.RoleType;
 import com.yimayhd.membercenter.mapper.HaRoleMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Date;
+import java.util.List;
 
 public class RoleDao {
     @Autowired
@@ -54,5 +53,13 @@ public class RoleDao {
 
     public void delete(long id) {
         haRoleMapper.delete(id);
+    }
+
+    public List<HaRoleDO> pageQuery(RoleListQuery roleListQuery) {
+        return haRoleMapper.pageQuery(roleListQuery);
+    }
+
+    public Integer queryCount(RoleListQuery roleListQuery) {
+        return haRoleMapper.queryCount(roleListQuery);
     }
 }

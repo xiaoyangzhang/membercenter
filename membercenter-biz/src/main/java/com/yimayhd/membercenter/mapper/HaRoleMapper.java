@@ -1,26 +1,32 @@
 package com.yimayhd.membercenter.mapper;
 
-import java.util.List;
-
 import com.yimayhd.membercenter.client.domain.HaRoleDO;
+import com.yimayhd.membercenter.client.query.RoleListQuery;
+
+import java.util.List;
 
 /**
  * 角色表（菜单）
+ *
  * @author czf
  */
-public interface HaRoleMapper{
+public interface HaRoleMapper {
 
-	Long roleDetailCount();
-	
-	boolean updateRoleStatus(HaRoleDO haRoleDO);
-	
-	public List<HaRoleDO> getRolesByType(int roleType);
+    Long roleDetailCount();
 
-	int add(HaRoleDO haRoleDO);
+    boolean updateRoleStatus(HaRoleDO haRoleDO);
 
-	HaRoleDO getById(long id);
+    public List<HaRoleDO> getRolesByType(int roleType);
 
-	int modify(HaRoleDO haRoleDO);
+    int add(HaRoleDO haRoleDO);
 
-	void delete(long id);
+    HaRoleDO getById(long id);
+
+    int modify(HaRoleDO haRoleDO);
+
+    void delete(long id);
+
+    List<HaRoleDO> pageQuery(RoleListQuery roleListQuery);
+
+    Integer queryCount(RoleListQuery roleListQuery);
 }

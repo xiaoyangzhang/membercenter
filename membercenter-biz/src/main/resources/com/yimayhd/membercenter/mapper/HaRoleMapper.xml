@@ -122,4 +122,31 @@
 		t.id = #{id}
 	</update>
 
+    <sql id="querySqlString" >
+        <where>
+            <if test="title != null">
+                title LIKE CONCAT(CONCAT('%', #{title}), '%')
+            </if>
+            <if test="id!=null">
+                and id=#{id}
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="pageQuery" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.client.query.RoleListQuery" >
+        select
+        <include refid="Base_Column_List" />
+        from ha_role
+        <include refid="querySqlString" />
+
+        order by gmt_created desc
+        limit #{startRow},#{pageSize}
+    </select>
+    <select id="queryCount" resultType="java.lang.Integer" parameterType="com.yimayhd.membercenter.client.query.RoleListQuery" >
+        select
+        count(1)
+        from ha_role
+        <include refid="querySqlString" />
+    </select>
 </mapper>

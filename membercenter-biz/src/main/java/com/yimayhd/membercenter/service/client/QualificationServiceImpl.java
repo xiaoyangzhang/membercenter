@@ -133,4 +133,9 @@ public class QualificationServiceImpl implements QualificationService {
 		return result;
 	}
 
+	@Override
+	public MemResult<Boolean> getQualificationRequired(QualificationQueryDTO queryDTO) {
+		return qualificationManager.getQualificationRequired(queryDTO);
+	}
+
 }

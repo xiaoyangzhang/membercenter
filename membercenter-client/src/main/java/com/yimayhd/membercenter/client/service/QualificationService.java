@@ -73,6 +73,6 @@ public interface QualificationService {
 	
 	public MemResult<Integer> updateStatusBatch(List<QualificationQueryDTO> qualificationQueryDTOs) ;
 		
-	
+	MemResult<Boolean> getQualificationRequired(QualificationQueryDTO queryDTO);
 	
 }

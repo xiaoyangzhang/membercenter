@@ -42,8 +42,8 @@
 		main_type,
 		sub_type,
 		data,
-		gm_created,
-		gm_modified,
+		gmt_created,
+		gmt_modified,
 		domain_id)
 		VALUES
 		(

@@ -71,5 +71,38 @@ public class MapUnionUtil {
         examineMater.setGmtModified(new Date());
         return examineMater;
     }
+    public static ExamineDO unionAll2(ExamineDO examineMater, ExamineDO examineSlave) {
+    	examineMater.setId(examineSlave.getId());
+    	// 图片
+    	Map<String, String> pictureMasterMap = PicFeatureUtil.fromString(examineMater.getPicturesUrl());
+    	// 图片
+    	Map<String, String> pictureSlaveMap = PicFeatureUtil.fromString(examineSlave.getPicturesUrl());
+    	// 新覆盖旧
+    	pictureSlaveMap.putAll(PictureUrl.queryFullMap(pictureMasterMap));
+    	// pictureSlaveMap.putAll(pictureMasterMap);
+    	examineMater.setPicturesUrl(PicFeatureUtil.toString(pictureSlaveMap));
+    	
+    	// 信息明细
+    	Map<String, String> featureMasterMap = PicFeatureUtil.fromString(examineMater.getFeature());
+    	// 信息明细
+    	Map<String, String> featureSlaveMap = PicFeatureUtil.fromString(examineSlave.getFeature());
+    	// featureSlaveMap.putAll(featureMasterMap);
+    	featureSlaveMap.putAll(ExamineDetail.queryFullMap(featureMasterMap));
+    	examineMater.setFeature(PicFeatureUtil.toString(featureSlaveMap));
+    	
+    	// 达人技能
+    	Map<String, String> certificateMasterMap = PicFeatureUtil.fromString(examineMater.getCertificate());
+    	// 达人技能
+    	Map<String, String> certificateSlaveMap = PicFeatureUtil.fromString(examineSlave.getCertificate());
+    	int number = PictureUrl.queryNumber(pictureMasterMap);
+    	if (1 == number) {
+    		examineMater.setCertificate(PicFeatureUtil.toString(certificateMasterMap));
+    	} else {
+    		examineMater.setCertificate(PicFeatureUtil.toString(certificateSlaveMap));
+    	}
+    	// certificateSlaveMap.putAll(certificateMasterMap);
+    	examineMater.setGmtModified(new Date());
+    	return examineMater;
+    }
 
 }

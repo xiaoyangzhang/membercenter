@@ -110,7 +110,7 @@
      
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       status = #{status}
-    where seller_id = #{sellerId}
+    where seller_id = #{sellerId} and domain_id=#{domainId}
   </update>
   <update id="updateStatusBatch"  parameterType="java.util.List">  
     <foreach collection="list" item="item" index="index" open="" close="" separator=";">

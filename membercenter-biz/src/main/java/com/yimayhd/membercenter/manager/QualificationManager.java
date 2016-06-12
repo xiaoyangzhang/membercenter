@@ -118,17 +118,7 @@ public class QualificationManager {
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 			return result;
 		}
-		 MerchantQualificationDO merchantQualification = new MerchantQualificationDO();
-		 merchantQualification.setDomainId(examineInfoDTO.getDomainId());
-		 merchantQualification.setSellerId(examineInfoDTO.getSellerId());
-		 List<MerchantQualificationDO> merchantQualificationList = merchantQualificationDao.getMerchantQualification(merchantQualification);
-			if (merchantQualificationList != null) {
-				for (MerchantQualificationDO merchantQualificationDO : merchantQualificationList) {
-					merchantQualificationDO.setStatus(-1);
-					merchantQualificationDO.setGmtModified(new Date());
-					merchantQualificationDao.update(merchantQualificationDO);
-				}
-			}
+		 
 		final List<MerchantQualificationDO> merchantQualifications = examineInfoDTO.getMerchantQualifications();
 		Boolean dbResult = transactionTemplate.execute(new TransactionCallback<Boolean>() {
 
@@ -136,7 +126,17 @@ public class QualificationManager {
 			public Boolean doInTransaction(TransactionStatus status) {
 				boolean result = true;
 				try {
-					
+					MerchantQualificationDO merchantQualification = new MerchantQualificationDO();
+					 merchantQualification.setDomainId(examineInfoDTO.getDomainId());
+					 merchantQualification.setSellerId(examineInfoDTO.getSellerId());
+					 List<MerchantQualificationDO> merchantQualificationList = merchantQualificationDao.getMerchantQualification(merchantQualification);
+						if (merchantQualificationList != null) {
+							for (MerchantQualificationDO merchantQualificationDO : merchantQualificationList) {
+								merchantQualificationDO.setStatus(-1);
+								merchantQualificationDO.setGmtModified(new Date());
+								merchantQualificationDao.update(merchantQualificationDO);
+							}
+						}
 					MerchantQualificationDO merQuaDO = null;
 					for (MerchantQualificationDO mq : merchantQualifications) {
 						
@@ -146,15 +146,15 @@ public class QualificationManager {
 							return false;
 						}
 					}
-					ExamineDO examineDO = new ExamineDO();
-			        examineDO.setSellerId(examineInfoDTO.getSellerId());
-			        examineDO.setDomainId(examineInfoDTO.getDomainId());
-			        examineDO.setType(examineInfoDTO.getType());
-					MemResult<Boolean> changeStatusResult = talentExamineManager.changeExamineStatus(examineDO);
-					if (changeStatusResult == null || !changeStatusResult.isSuccess()) {
-						status.setRollbackOnly();
-						return false;
-					}
+//					ExamineDO examineDO = new ExamineDO();
+//			        examineDO.setSellerId(examineInfoDTO.getSellerId());
+//			        examineDO.setDomainId(examineInfoDTO.getDomainId());
+//			        examineDO.setType(examineInfoDTO.getType());
+				//	MemResult<Boolean> changeStatusResult = talentExamineManager.changeExamineStatus(examineDO);
+//					if (changeStatusResult == null || !changeStatusResult.isSuccess()) {
+//						status.setRollbackOnly();
+//						return false;
+//					}
 				} catch (Exception e) {
 					status.setRollbackOnly(); 
 					log.error("param:examineInfoDTO={}   error:{}", JSON.toJSONString(examineInfoDTO) ,e);

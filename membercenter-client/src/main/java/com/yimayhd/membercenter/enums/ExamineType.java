@@ -20,7 +20,7 @@ package com.yimayhd.membercenter.enums;
 public enum ExamineType {
 
     TALENT("达人", 1),
-    MERCHANT("店铺", 2)
+    MERCHANT("商户", 2)
     ;
     
     private String name;

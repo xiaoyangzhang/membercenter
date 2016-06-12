@@ -30,7 +30,7 @@ public interface ExamineDealService {
     /**
      * 
      * 功能描述: <br>
-     * 〈提交审核基本信息〉
+     * 〈提交审核达人基本信息〉
      *
      * @param examineInfoDTO
      * @return 
@@ -38,6 +38,17 @@ public interface ExamineDealService {
      * @since [产品/模块版本](可选)
      */
     MemResult<Boolean> submitMerchantExamineInfo(ExamineInfoDTO examineInfoDTO);
+    /**
+     * 
+     * 功能描述: <br>
+     * 〈提交审核店铺基本信息〉
+     *
+     * @param examineInfoDTO
+     * @return 
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    MemResult<Boolean> submitExamineInfo(ExamineInfoDTO examineInfoDTO);
     
     
     /**

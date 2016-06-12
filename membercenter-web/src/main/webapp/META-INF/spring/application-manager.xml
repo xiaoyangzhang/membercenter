@@ -24,7 +24,11 @@
 
 	<bean id="merchantApplyManager" class="com.yimayhd.membercenter.manager.MerchantApplyManager"/>
 	<bean id="qualificationManager" class="com.yimayhd.membercenter.manager.QualificationManager"/>
-	
+
+
+    <bean id="menuManager" class="com.yimayhd.membercenter.manager.MenuManager"/>
+    <bean id="roleManager" class="com.yimayhd.membercenter.manager.RoleManager"/>
+
     <bean id="memberIdpool" class="com.yimayhd.membercenter.idgen.IdPoolImpl">
         <constructor-arg name="generator" ref="globalIdGenerator"/>
         <constructor-arg name="configDomain" value="${app.name}"/>

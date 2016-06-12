@@ -145,63 +145,6 @@
 
 
 
-	<!--<select id="pageQuery" resultMap="BaseResultMap" parameterType="com.yimayhd.palacee.model.query.SubjectPageQuery">
-		SELECT <include refid="Base_Column_List" /> FROM ha_menu <include refid="querySqlString" 
-		/> ORDER BY gmt_created desc limit #{startRow},#{pageSize} </select> <select 
-		id="queryCount" resultType="int" parameterType="com.yimayhd.palacee.model.query.SubjectPageQuery">
-		SELECT COUNT(*) FROM ha_menu <include refid="querySqlString" /> </select> -->
-	<sql id="querySqlString">
-		<where>
-			community_id = #{communityId}
-			<if test="ids != null">
-				and id in
-				<foreach item="item" index="index" collection="ids" open="("
-					separator="," close=")">
-					#{item}
-				</foreach>
-			</if>
-			<if test="userId != null">
-				and
-				user_id = #{userId}
-			</if>
-			<if test="objId != null">
-				and
-				obj_id = #{objId}
-			</if>
-			<if test="status != null">
-				AND
-				status = #{status}
-			</if>
-			<if test="hotStartDate != null">
-				AND
-				score_date <![CDATA[>]]>
-				#{hotStartDate}
-			</if>
-			<if test="lastGmtCreated != null">
-				AND
-				gmt_created <![CDATA[<]]>
-				#{lastGmtCreated}
-			</if>
-			<if test="gmtCreateStart != null">
-				AND
-				gmt_created <![CDATA[>]]>
-				#{gmtCreateStart}
-			</if>
-			<if test="gmtCreateEnd != null">
-				AND
-				gmt_created <![CDATA[<]]>
-				#{gmtCreateEnd}
-			</if>
-			<if test="textContent != null">
-				AND
-				text_content like CONCAT('%', #{textContent}, '%')
-			</if>
-			<if test="hasTextContent == true">
-				and
-				text_content is not null
-			</if>
-		</where>
-	</sql>
 
 	<select id="getMenuListByUserId" parameterType="long" resultMap="menuList">
 		SELECT DISTINCT
@@ -321,6 +264,34 @@
 		<if test="type == 1">
 			and type = #{type}
 		</if>
+	</select>
+
+	<sql id="querySqlString" >
+		<where>
+			<if test="title != null">
+				title LIKE CONCAT(CONCAT('%', #{title}), '%')
+			</if>
+			<if test="id!=null">
+				and id=#{id}
+			</if>
+		</where>
+	</sql>
+
+
+	<select id="pageQuery" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.client.query.MenuListQuery" >
+		select
+		<include refid="Base_Column_List" />
+		from ha_menu
+		<include refid="querySqlString" />
+
+		order by gmt_created desc
+		limit #{startRow},#{pageSize}
+	</select>
+	<select id="queryCount" resultType="java.lang.Integer" parameterType="com.yimayhd.membercenter.client.query.MenuListQuery" >
+		select
+		count(1)
+		from ha_menu
+		<include refid="querySqlString" />
 	</select>
 
 </mapper>

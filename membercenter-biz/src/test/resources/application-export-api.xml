@@ -35,7 +35,25 @@
               <property name="retries" value="${dubbo.retries}"/>
        </bean>
 
+		<bean id="talentMemberExport" class="com.alibaba.dubbo.config.spring.ServiceBean">
+              <property name="interface" value="com.yimayhd.membercenter.api.talent.TalentMemberApi"/>
+              <property name="ref" ref="talentMemberApi"/>
+              <property name="application" ref="dubboApplicationConfig"/>
+              <property name="registry" ref="dubboRegistryConfig"/>
+              <property name="protocol" ref="dubboProtocolConfig"/>
+              <property name="version" value="${export.dubbo.version}"/>
+              <property name="timeout" value="${export.dubbo.timeout}"/>
+              <property name="retries" value="${dubbo.retries}"/>
+       </bean>
 
-
-
+		<bean id="merchantApiExport" class="com.alibaba.dubbo.config.spring.ServiceBean">
+              <property name="interface" value="com.yimayhd.membercenter.api.MerchantApi"/>
+              <property name="ref" ref="merchantApi"/>
+              <property name="application" ref="dubboApplicationConfig"/>
+              <property name="registry" ref="dubboRegistryConfig"/>
+              <property name="protocol" ref="dubboProtocolConfig"/>
+              <property name="version" value="${export.dubbo.version}"/>
+              <property name="timeout" value="${export.dubbo.timeout}"/>
+              <property name="retries" value="${dubbo.retries}"/>
+       </bean>
 </beans>

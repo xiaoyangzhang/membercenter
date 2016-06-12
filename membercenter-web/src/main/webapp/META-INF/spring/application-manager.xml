@@ -7,7 +7,7 @@
 	<context:annotation-config />
 
 	<bean id="merchantServiceManager" class="com.yimayhd.membercenter.manager.MerchantServiceManager"></bean>
-	
+
 	<bean id="memberProfileManager" class="com.yimayhd.membercenter.manager.MemberProfileManager"/>
 	
 	<bean id="memberPrivilegeManager" class="com.yimayhd.membercenter.manager.MemberPrivilegeManager"></bean>
@@ -28,6 +28,7 @@
 
     <bean id="menuManager" class="com.yimayhd.membercenter.manager.MenuManager"/>
     <bean id="roleManager" class="com.yimayhd.membercenter.manager.RoleManager"/>
+    <bean id="draftManager" class="com.yimayhd.membercenter.manager.DraftManager"/>
 
     <bean id="memberIdpool" class="com.yimayhd.membercenter.idgen.IdPoolImpl">
         <constructor-arg name="generator" ref="globalIdGenerator"/>
@@ -54,7 +55,4 @@
 
     <bean id="jxMsgManager" class="com.yimayhd.membercenter.manager.msgpush.JxMsgManager"/>
     <bean id="msgHandlerManager" class="com.yimayhd.membercenter.manager.msgpush.MsgHandlerManager"/>
-    
-    <bean id="draftManager" class="com.yimayhd.membercenter.manager.DraftManager"/>
-    
 </beans>

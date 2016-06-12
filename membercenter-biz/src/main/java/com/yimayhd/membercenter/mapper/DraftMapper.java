@@ -69,7 +69,7 @@ public interface DraftMapper {
 	 * @author liuxp
 	 * @createTime 2016年6月3日
 	 */
-	DraftDetailDO getDraftDetail(@Param("id")Long id);
+	DraftDO getDraftDetail(@Param("id")Long id);
 	
 	/**
 	 * 通过类型来查找草稿详细内容
@@ -78,5 +78,5 @@ public interface DraftMapper {
 	 * @author liuxp
 	 * @createTime 2016年6月6日
 	 */
-	DraftDetailDO getDraftDetailByType(DraftVO draftVO);
+	DraftDO getDraftDetailByType(DraftVO draftVO);
 }

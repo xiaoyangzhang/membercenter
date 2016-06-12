@@ -138,8 +138,14 @@ public class DraftManager {
         List<DraftDO> draftDOs;
         int count = 0;
         try {
-        	draftDOs = draftMapper.getDraftList(draftListQuery);
-        	count = draftMapper.getDraftsCount(draftListQuery);
+			count = draftMapper.getDraftsCount(draftListQuery);
+			if(count>0) {
+				draftDOs = draftMapper.getDraftList(draftListQuery);
+			} else {
+				result.setTotalCount(count);
+				result.setSuccess(true);
+				return result;
+			}
 		} catch (Exception e) {
 			logger.error("draftListQuery " + draftListQuery.toString(), e);
 			result.setReturnCode(MemberReturnCode.DB_READ_FAILED);
@@ -177,9 +183,9 @@ public class DraftManager {
     public MemResult<DraftDetailDTO> getDetailById(Long id) {
 		MemResult<DraftDetailDTO> result = new MemResult<DraftDetailDTO>();
 		result.setSuccess(false);
-		DraftDetailDO draftDetailDO;
+		DraftDO draftDO;
 		try {
-			draftDetailDO = draftMapper.getDraftDetail(id);
+			draftDO = draftMapper.getDraftDetail(id);
 			
 		} catch (Exception e) {
 			logger.error("getDetailById id " + id, e);
@@ -187,13 +193,13 @@ public class DraftManager {
 			return result;
 		} 
 		
-		if(null==draftDetailDO) {
+		if(null==draftDO) {
 			logger.info("getDetailById id= {} find no data", id);
 			return result;
 		} else {
 			DraftDetailDTO draftDetailDTO = new DraftDetailDTO();
-			draftDetailDTO.setId(draftDetailDO.getId());
-			draftDetailDTO.setJSONStr(draftDetailDO.getJSONStr());
+			draftDetailDTO.setId(draftDO.getId());
+			draftDetailDTO.setJSONStr(draftDO.getJSONStr());
 			result.setSuccess(true);
 			result.setValue(draftDetailDTO);
 		}
@@ -215,10 +221,10 @@ public class DraftManager {
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
     		return result;
 		}
-		DraftDetailDO draftDetailDO;
+		DraftDO draftDO;
 
 		try {
-			draftDetailDO = draftMapper.getDraftDetailByType(draftVO);
+			draftDO = draftMapper.getDraftDetailByType(draftVO);
 			
 		} catch (Exception e) {
 			logger.error("getDetailByType draftVO " + draftVO, e);
@@ -226,13 +232,13 @@ public class DraftManager {
 			return result;
 		} 
 		
-		if(null==draftDetailDO) {
+		if(null==draftDO) {
 			logger.info("getDetailByType draftVO= {} find no data", draftVO);
 			return result;
 		} else {
 			DraftDetailDTO draftDetailDTO = new DraftDetailDTO();
-			draftDetailDTO.setId(draftDetailDO.getId());
-			draftDetailDTO.setJSONStr(draftDetailDO.getJSONStr());
+			draftDetailDTO.setId(draftDO.getId());
+			draftDetailDTO.setJSONStr(draftDO.getJSONStr());
 			result.setSuccess(true);
 			result.setValue(draftDetailDTO);
 		}

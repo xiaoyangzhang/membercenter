@@ -19,7 +19,7 @@
     <bean id="methodLoggerInterceptor" class="com.yimayhd.fhtd.logger.MethodLoggerInterceptor"/>
 
     <aop:config>
-        <aop:pointcut id="methodLogger" expression="@annotation(com.yiholiday.fhtd.logger.annot.MethodLogger)"/>
+        <aop:pointcut id="methodLogger" expression="@annotation(com.yimayhd.fhtd.logger.annot.MethodLogger)"/>
         <aop:advisor advice-ref="methodLoggerInterceptor" pointcut-ref="methodLogger"/>
     </aop:config>
 </beans>

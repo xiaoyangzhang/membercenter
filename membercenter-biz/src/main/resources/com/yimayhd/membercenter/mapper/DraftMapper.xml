@@ -29,7 +29,7 @@
 
 <!-- 获得草稿箱列表数量 -->
 <select id="getDraftsCount" parameterType="com.yimayhd.membercenter.client.query.DraftListQuery" resultType="Integer">
-	SELECT (*) FROM draft
+	SELECT count(*) FROM draft
 	<include refid="pageQueryManagerSqlString"/>
 </select>
 
@@ -59,7 +59,7 @@
 
 <!-- 覆盖草稿 -->
 <update id="coverDraft" parameterType="com.yimayhd.membercenter.client.domain.draft.DraftDO" >
-	UPDATE draft SET data = #{JSONStr,jdbcType=VARCHAR}, gm_modified = #{gmtModified,jdbcType=TIMESTAMP} WHERE id = #{id}
+	UPDATE draft SET data = #{JSONStr,jdbcType=VARCHAR}, gmt_modified = #{gmtModified,jdbcType=TIMESTAMP} WHERE id = #{id}
 </update>
 
 <!-- 删除草稿 -->
@@ -90,11 +90,11 @@
 
 <sql id="pageQueryManagerSqlString">
         <where>
-            <if test="mainType != null and mainType != '' ">
+            <if test="mainType != null and mainType != '' and mainType != 0 ">
                 AND
                 main_type = #{mainType}
             </if>
-            <if test="subType != null and subType != ''">
+            <if test="subType != null and subType != '' and subType !=0">
                 AND
                 sub_type = #{subType}
             </if>

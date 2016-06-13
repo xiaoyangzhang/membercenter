@@ -36,9 +36,13 @@ public class DraftConverter {
 			draftDTO.setSubType(subType);
 			
 			if(mainType==DraftEnum.ITEM.getValue()) {
-				draftDTO.setSubTypeName(ItemType.get(subType).getText());
-				result.add(draftDTO);
-				continue;
+				try {
+					draftDTO.setSubTypeName(ItemType.get(subType).getText());
+					result.add(draftDTO);
+					continue;
+				} catch (Exception e) {
+					throw new Exception("DraftConverter.converterDraftList data error");
+				}
 			} else if(mainType==DraftEnum.RESOURCE.getValue()) {
 				
 				//TODO

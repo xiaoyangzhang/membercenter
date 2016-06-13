@@ -142,7 +142,7 @@ public class DraftManager {
     	result.setSuccess(false);
         result.setHasNext(false);
         List<DraftDO> draftDOs;
-        int count = 0;
+        int count;
         try {
 			count = draftMapper.getDraftsCount(draftListQuery);
 			if(count>0) {

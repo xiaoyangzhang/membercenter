@@ -152,4 +152,8 @@ public class MemberReturnCode extends AbstractReturnCode {
     public static final int SAVE_MERCHANT_FAILED_C = 16007012;
     public static final MemberReturnCode SAVE_MERCHANT_FAILED = new MemberReturnCode(SAVE_MERCHANT_FAILED_C,
     		"保存入驻信息失败");
+    /************************************** DraftManager ********************************************/
+    public static final int DRAFTNAME_EXISTS_FAILED_C = 16009001;
+    public static final MemberReturnCode DRAFTNAME_EXISTS_FAILED = new MemberReturnCode(DRAFTNAME_EXISTS_FAILED_C,
+            "草稿名称已存在");
 }

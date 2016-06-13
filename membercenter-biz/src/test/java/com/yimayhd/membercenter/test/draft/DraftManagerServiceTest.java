@@ -48,13 +48,13 @@ public class DraftManagerServiceTest {
 	@Resource
 	private DraftManagerServiceImpl draftManagerService;
 	
-//	@Test
+	@Test
 	public void saveDraft(){
 		
 		DraftDO draftDO = new DraftDO();
 		draftDO.setAccountId(125L);
 		draftDO.setDomainId(100);
-		draftDO.setDraftName("TEST7");
+		draftDO.setDraftName("TEST6");
 		draftDO.setMainType(DraftEnum.ITEM.getValue());
 		draftDO.setSubType(ItemType.LINE.getValue());
 		draftDO.setJSONStr("{id:1}");
@@ -82,7 +82,7 @@ public class DraftManagerServiceTest {
 //	@Test
 	public void getDraftList(){
 		DraftListQuery draftListQuery = new DraftListQuery();
-		draftListQuery.setAccountId(123L);
+		draftListQuery.setAccountId(17024L);
 //		draftListQuery.setMainType(DraftEnum.ITEM.getValue());
 //		draftListQuery.setSubType(ItemType.LINE.getValue());
 		draftListQuery.setMainType(0);

@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.yimayhd.membercenter.client.domain.draft.DraftDO;
-import com.yimayhd.membercenter.client.domain.draft.DraftDetailDO;
 import com.yimayhd.membercenter.client.query.DraftListQuery;
 import com.yimayhd.membercenter.client.vo.DraftVO;
 
@@ -79,4 +78,13 @@ public interface DraftMapper {
 	 * @createTime 2016年6月6日
 	 */
 	DraftDO getDraftDetailByType(DraftVO draftVO);
+
+	/**
+	 * 判断名称是否重复
+	 * @param draftDO 
+	 * @return
+	 * @author liuxp
+	 * @createTime 2016年6月12日
+	 */
+	int checkNameExisit(DraftDO draftDO);
 }

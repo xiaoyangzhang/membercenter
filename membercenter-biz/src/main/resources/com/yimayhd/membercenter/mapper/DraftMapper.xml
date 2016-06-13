@@ -108,4 +108,8 @@
             </if>
         </where>
     </sql>
+
+	<select id="checkNameExisit" parameterType="com.yimayhd.membercenter.client.domain.draft.DraftDO" resultType="Integer">
+		SELECT COUNT(*) FROM draft WHERE draft_name = #{draftName,jdbcType=VARCHAR} AND domain_id = #{domainId,jdbcType=INTEGER} AND user_id = #{accountId,jdbcType=BIGINT}
+	</select>
 </mapper>

@@ -52,8 +52,14 @@ public class DraftManager {
     	draftDO.setGmtCreated(new Date());
     	draftDO.setGmtModified(new Date());
     	try {
-    		draftMapper.saveDraft(draftDO);
-    		result.setValue(true);
+			int count = draftMapper.checkNameExisit(draftDO);
+			result.setValue(true);
+			if(count>0) {
+				result.setReturnCode(MemberReturnCode.DRAFTNAME_EXISTS_FAILED);
+				result.setSuccess(true);
+			} else {
+				draftMapper.saveDraft(draftDO);
+			}
 		} catch (Exception e) {
 			result.setReturnCode(MemberReturnCode.DB_WRITE_FAILED);
 		}

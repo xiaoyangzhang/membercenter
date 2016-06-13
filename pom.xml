@@ -90,7 +90,7 @@
 			<dependency>
 				<groupId>com.yimayhd.item</groupId>
 				<artifactId>itemcenter-client</artifactId>
-				<version>1.0.0-SNAPSHOT</version>
+				<version>1.0.7-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>

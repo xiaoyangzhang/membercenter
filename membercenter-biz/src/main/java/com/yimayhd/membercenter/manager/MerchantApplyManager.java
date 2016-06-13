@@ -57,22 +57,23 @@ public class MerchantApplyManager {
 			return result;
 		}
 		final List<MerchantScopeDO> merchantScopes = examineInfoDTO.getMerchantScopes();
-		MerchantScopeDO merchantScope = new MerchantScopeDO();
-		merchantScope.setDomainId(examineInfoDTO.getDomainId());
-		merchantScope.setSellerId(examineInfoDTO.getSellerId());
-		List<MerchantScopeDO> merchantScopeList = merchantScopeDao.getMerchantScope(merchantScope);
-		if (merchantScopeList != null) {
-			for (MerchantScopeDO merchantScopeDO : merchantScopeList) {
-				merchantScopeDO.setStatus(-1);
-				merchantScopeDO.setGmtModified(new Date());
-				merchantScopeDao.update(merchantScopeDO);
-			}
-		}
+		
 				Boolean dbResult = transactionTemplate.execute(new TransactionCallback<Boolean>() {
 
 					@Override
 					public Boolean doInTransaction(TransactionStatus status) {
 						try {
+							MerchantScopeDO merchantScope = new MerchantScopeDO();
+							merchantScope.setDomainId(examineInfoDTO.getDomainId());
+							merchantScope.setSellerId(examineInfoDTO.getSellerId());
+							List<MerchantScopeDO> merchantScopeList = merchantScopeDao.getMerchantScope(merchantScope);
+							if (merchantScopeList != null) {
+								for (MerchantScopeDO merchantScopeDO : merchantScopeList) {
+									merchantScopeDO.setStatus(-1);
+									merchantScopeDO.setGmtModified(new Date());
+									merchantScopeDao.update(merchantScopeDO);
+								}
+							}
 							MemResult<Boolean> saveExamineResult = null;
 							saveExamineResult = talentExamineManager.submitMerchantExamineInfo(examineInfoDTO);
 							if ((saveExamineResult == null) || !saveExamineResult.isSuccess()) {

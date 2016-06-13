@@ -312,38 +312,7 @@ public class ExamineDealServiceImpl implements ExamineDealService {
 		return result;
 	}
 
-	@Override
-	public MemResult<Boolean> submitExamineInfo(ExamineInfoDTO examineInfoDTO) {
-		MemResult<Boolean> result = new MemResult<Boolean>();
-        long start = System.currentTimeMillis();
-        try {
-           /* if (ParmCheckUtil.checkExamineDTO(examineInfoDTO)) {
-                result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
-                logger.info("submitMerchantExaminInfo par:{} is error", JSONObject.toJSONString(examineInfoDTO));
-                return result;
-            }
-            // 根据银行ID查询银行name
-            if (StringUtils.isNotBlank(examineInfoDTO.getFinanceOpenBankId())) {
-                MemResult<String> memResult = talentBackInfoManager
-                        .queryBankNameById(examineInfoDTO.getFinanceOpenBankId());
-                logger.info("queryBankNameById par:{} return: {}", examineInfoDTO.getFinanceOpenBankId(),
-                        JSONObject.toJSONString(memResult));
-                if (memResult.isSuccess()) {
-                    examineInfoDTO.setFinanceOpenBankName(memResult.getValue());
-                } 
-            }
-            // 数据转换
-            ExamineDO examinDO = ExamineConverter.examinDTOToDO(examineInfoDTO);*/
-            result = talentExamineManager.submitExamineInfo(examineInfoDTO);
-            logger.info("submitMerchantExaminInfo par:{} submit return:{}, cost:{}ms",
-                    JSONObject.toJSONString(examineInfoDTO), JSONObject.toJSONString(result),
-                    (System.currentTimeMillis() - start));
-        } catch (Exception e) {
-            logger.error("submitMerchantExaminInfo par:{} error:{}", JSONObject.toJSONString(examineInfoDTO), e);
-            result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
-        }
-        return result;
-	}
+	
     
 
 }

@@ -16,7 +16,7 @@
         <dependency>
             <groupId>com.yimayhd.membercenter</groupId>
             <artifactId>membercenter-biz</artifactId>
-        </dependency>
+        </dependency> 
         
         <dependency>
             <groupId>com.yimayhd.membercenter</groupId>

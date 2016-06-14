@@ -103,14 +103,14 @@ public interface ExamineDealService {
     /**
      * 
      * 功能描述: <br>
-     * 〈审核结果表〉
+     * 〈商户审核驳回、达人审核通过or驳回〉
      *
      * @param examineDealDTO
      * @return
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    MemResult<Boolean> dealExamineInfo(ExamineDealDTO examineDealDTO);
+    MemResult<Boolean> refuseMerchantOrAuditTalent(ExamineDealDTO examineDealDTO);
     
     /**
      * 

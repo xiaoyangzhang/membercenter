@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.rocketmq.client.producer.*;
 import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
+import com.yimayhd.membercenter.client.domain.examine.ExamineDetailDO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.converter.ExamineConverter;
 import com.yimayhd.membercenter.enums.ExamineStatus;
@@ -19,6 +20,7 @@ import com.yimayhd.membercenter.repo.MerchantRepo;
 import com.yimayhd.user.client.domain.MerchantDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
@@ -58,54 +60,59 @@ public class MerchantItemCategoryManager {
     }
 
     public MemResultSupport saveMerchanItemCategories(final ExamineDO examineDO, final long[] categoryIds) {
-        final MemResultSupport memResultSupport = new MemResultSupport();
+        MemResultSupport memResultSupport = new MemResultSupport();
         // 新增商家
         final MerchantDO merchantDO = ExamineConverter.examineToMerchant(examineDO);
         final MemResult<ExamineDO> examineResult = talentExamineManager.queryMerchantExamineInfoById(examineDO);
-        transactionTemplate.execute(new TransactionCallback<Void>() {
+        memResultSupport = transactionTemplate.execute(new TransactionCallback<MemResultSupport>() {
             @Override
-            public Void doInTransaction(TransactionStatus transactionStatus) {
+            public MemResultSupport doInTransaction(TransactionStatus transactionStatus) {
+                MemResultSupport support = new MemResultSupport();
                 // 无审核记录
-                if (!examineResult.isSuccess() || (examineResult.isSuccess() && null == examineResult.getValue())) {
-                    logger.info("saveMerchanItemCategories param:{} is null, update fail", JSONObject.toJSONString(examineDO));
-                    memResultSupport.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
-                    return null;
+                if (!examineResult.isSuccess()) {
+                    logger.error("saveMerchanItemCategories param:{} is null, update failure", JSONObject.toJSONString(examineDO));
+                    support.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
+                    return support;
                 }
                 // 判断是否处于审核进行中
                 if (examineResult.getValue().getStatues() != ExamineStatus.EXAMIN_ING.getStatus()) {
                     // 非审核进行中状态无法进行审核
-                    memResultSupport.setReturnCode(MemberReturnCode.DB_EXAMINE_NOT_ING);
                     logger.info("saveMerchanItemCategories param:{} error, isn't ing", JSONObject.toJSONString(examineDO),
                             MemberReturnCode.DB_EXAMINE_NOT_ING.getDesc());
-                    return null;
+                    support.setReturnCode(MemberReturnCode.DB_EXAMINE_NOT_ING);
+                    return support;
                 }
 
                 examineDO.setId(examineResult.getValue().getId());
                 int count = examineDOMapper.updateByPrimaryKey(examineDO);
                 if (count != 1) {
+                    logger.error("saveMerchanItemCategories param:{} is null, update failure", JSONObject.toJSONString(examineDO));
                     transactionStatus.setRollbackOnly();
-                    memResultSupport.setReturnCode(MemberReturnCode.DB_UPDATE_FAILED);
-                    return null;
+                    support.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
+                    return support;
                 }
                 logger.info("saveMerchanItemCategories param:{} update success", JSONObject.toJSONString(examineDO));
-                examineResult.getValue().setId(examineDetailIdPool.getNewId());
-                examineResult.getValue().setReviewerId(examineDO.getReviewerId());
-                examineResult.getValue().setExamineMes(examineDO.getExamineMes());
-                examineResult.getValue().setStatues(examineDO.getStatues());
-                examineResult.getValue().setGmtModified(new Date());
+
+                ExamineDetailDO examineDetailDO = new ExamineDetailDO();
+                BeanUtils.copyProperties(examineResult.getValue(), examineDetailDO);
+                examineDetailDO.setId(examineDetailIdPool.getNewId());
+                examineDetailDO.setGmtModified(new Date());
                 // 保存审核明细表
-                count = examineDetailDOMapper.insert(examineResult.getValue());
+                count = examineDetailDOMapper.insert(examineDetailDO);
                 if (count != 1) {
+                    logger.error("saveMerchanItemCategories param:{} is null, insertDetail failure", JSONObject.toJSONString(examineDO));
                     transactionStatus.setRollbackOnly();
-                    memResultSupport.setReturnCode(MemberReturnCode.DB_WRITE_FAILED);
-                    return null;
+                    support.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
+                    return support;
                 }
                 logger.info("saveMerchanItemCategories param:{} insertDetail success",JSONObject.toJSONString(examineResult.getValue()));
 
                 MemResult<MerchantDO> memResult = merchantRepo.saveMerchant(merchantDO);
                 if (!memResult.isSuccess()) {
+                    logger.error("saveMerchanItemCategories param:{} is null, insertMerchant failure", JSONObject.toJSONString(merchantDO));
                     transactionStatus.setRollbackOnly();
-                    memResultSupport.setReturnCode(MemberReturnCode.MERCHANT_NOT_FOUND_ERROR);
+                    support.setReturnCode(MemberReturnCode.MERCHANT_NOT_FOUND_ERROR);
+                    return support;
                 }
                 logger.info("saveMerchanItemCategories param:{} insertMerchant success",JSONObject.toJSONString(memResult.getValue()));
 
@@ -122,11 +129,13 @@ public class MerchantItemCategoryManager {
                 }
                 boolean target = merchantItemCategoryDao.saveMerchanItemCategories(merchantItemCategoryDOs);
                 if (!target) {
+                    logger.error("saveMerchanItemCategories param:{} is null, saveMerchanItemCategories failure", JSONObject.toJSONString(merchantItemCategoryDOs));
                     transactionStatus.setRollbackOnly();
-                    memResultSupport.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
+                    support.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
+                    return support;
                 }
-                logger.info("saveMerchanItemCategories param:{} insertMerchantItemCategoryDOs success",JSONObject.toJSONString(merchantItemCategoryDOs));
-                return null;
+                logger.info("saveMerchanItemCategories param:{} saveMerchanItemCategories success",JSONObject.toJSONString(merchantItemCategoryDOs));
+                return support;
             }
         });
 
@@ -144,7 +153,6 @@ public class MerchantItemCategoryManager {
                             return LocalTransactionState.COMMIT_MESSAGE;
                         }
                         logger.error("send msg failed! topic={}, msg={},  result={}", MemberTopic.EXAMINE_RESULT.getTopic(), JSON.toJSONString(examineDO), "短信发送失败");
-                        memResultSupport.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
                         return LocalTransactionState.UNKNOW;
                     }
                 });

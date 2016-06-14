@@ -68,20 +68,6 @@ public class MerchantItemCategoryManager {
             @Override
             public MemResultSupport doInTransaction(TransactionStatus transactionStatus) {
                 MemResultSupport support = new MemResultSupport();
-                // 无审核记录
-                if (!examineResult.isSuccess()) {
-                    logger.error("saveMerchanItemCategories param:{} is null, update failure", JSONObject.toJSONString(examineDO));
-                    support.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
-                    return support;
-                }
-                // 判断是否处于审核进行中
-                if (examineResult.getValue().getStatues() != ExamineStatus.EXAMIN_ING.getStatus()) {
-                    // 非审核进行中状态无法进行审核
-                    logger.info("saveMerchanItemCategories param:{} error, isn't ing", JSONObject.toJSONString(examineDO),
-                            MemberReturnCode.DB_EXAMINE_NOT_ING.getDesc());
-                    support.setReturnCode(MemberReturnCode.DB_EXAMINE_NOT_ING);
-                    return support;
-                }
 
                 examineDO.setId(examineResult.getValue().getId());
                 int count = examineDOMapper.updateByPrimaryKey(examineDO);
@@ -163,5 +149,14 @@ public class MerchantItemCategoryManager {
         }
 
         return memResultSupport;
+    }
+
+    public MemResultSupport checkCategoryPrivilege(int domainId, long categoryId, long sellerId) {
+        MerchantItemCategoryDO merchantItemCategoryDO = merchantItemCategoryDao.selectByCategoryIdAndSellerId(domainId,categoryId,sellerId);
+        MemResultSupport support = new MemResultSupport();
+        if (null == merchantItemCategoryDO) {
+            support.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
+        }
+        return support;
     }
 }

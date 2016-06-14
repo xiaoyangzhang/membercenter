@@ -29,6 +29,10 @@ public class MerchantItemCategoryDao {
 	public List<MerchantItemCategoryDO> selectMerchantItemCategoriesByMerchant(int domainId, long sellerId) {
 		return merchantItemCategoryDOMapper.selectByMerchant(domainId, sellerId);
 	}
+
+	public MerchantItemCategoryDO selectByCategoryIdAndSellerId(int domain, long categoryId, long sellerId) {
+		return merchantItemCategoryDOMapper.selectByCategoryIdAndSellerId(domain,categoryId,sellerId);
+	}
 	
 	public boolean saveMerchanItemCategories(final List<MerchantItemCategoryDO> merchantItemCategoryDOs) {
 		return  transactionTemplate.execute(new TransactionCallback<Boolean>() {

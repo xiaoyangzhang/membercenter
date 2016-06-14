@@ -270,6 +270,21 @@ public class TalentExamineManager {
         // 查询是否已经存在审核记录
         MemResult<ExamineDO> examineResult = queryMerchantExamineInfoById(examineDO);
 
+        // 无审核记录
+        if (!examineResult.isSuccess()) {
+            logger.info("dealExamineInfo param:{} is null, update failure", JSONObject.toJSONString(examineDO));
+            baseResult.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
+            return baseResult;
+        }
+        // 判断是否处于审核进行中
+        if (examineResult.getValue().getStatues() != ExamineStatus.EXAMIN_ING.getStatus()) {
+            // 非审核进行中状态无法进行审核
+            baseResult.setReturnCode(MemberReturnCode.DB_EXAMINE_NOT_ING);
+            logger.info("dealExamineInfo param:{} failure, isn't ing", JSONObject.toJSONString(examineDO),
+                    MemberReturnCode.DB_EXAMINE_NOT_ING.getDesc());
+            return baseResult;
+        }
+
         // 如果为达人，自动为达人赋予部分商品类目权限(204,205,207)
         if(examineDO.getType() == 1 && examineDO.getStatues() == ExamineStatus.EXAMIN_OK.getStatus() && examineResult.getValue().getStatues() == ExamineStatus.EXAMIN_ING.getStatus()) {
             long[] categoryIds = new long[]{204l,205l,207l};
@@ -282,20 +297,6 @@ public class TalentExamineManager {
             return baseResult;
         }
         try {
-            // 无审核记录
-            if (!examineResult.isSuccess()) {
-                logger.info("dealExamineInfo param:{} is null, update failure", JSONObject.toJSONString(examineDO));
-                baseResult.setReturnCode(MemberReturnCode.EXAMIN_DATA_ERROR);
-                return baseResult;
-            }
-            // 判断是否处于审核进行中
-            if (examineResult.getValue().getStatues() != ExamineStatus.EXAMIN_ING.getStatus()) {
-                // 非审核进行中状态无法进行审核
-                baseResult.setReturnCode(MemberReturnCode.DB_EXAMINE_NOT_ING);
-                logger.info("dealExamineInfo param:{} failure, isn't ing", JSONObject.toJSONString(examineDO),
-                        MemberReturnCode.DB_EXAMINE_NOT_ING.getDesc());
-                return baseResult;
-            }
             examineDO.setId(examineResult.getValue().getId());
             int updateResult = examineDOMapper.updateByPrimaryKey(examineDO);
             if(updateResult == 1) {
@@ -326,6 +327,7 @@ public class TalentExamineManager {
             baseResult.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
             return baseResult;
         }
+        baseResult.setValue(Boolean.TRUE);
         return baseResult;
     }
 

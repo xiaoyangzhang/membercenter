@@ -53,16 +53,17 @@ public class DraftManagerServiceImpl implements DraftManagerService {
 	/**
 	 * 保存草稿
 	 * @param ids 指定的ids
+	 * @param accountId 用户id
 	 * @return 保存结果
 	 * @author liuxp
 	 * @createTime 2016年6月3日
 	 */
 	@Override
-	public MemResult<Boolean> deleteDrafts(List<Long> ids) {
+	public MemResult<Boolean> deleteDrafts(List<Long> ids, Long accountId) {
         LOGGER.info("deleteDrafts ids= {}", ids);
         MemResult<Boolean> result = new MemResult<Boolean>();
         try {
-        	result = draftManager.deleteDrafts(ids);
+        	result = draftManager.deleteDrafts(ids, accountId);
 		} catch (Exception e) {
             LOGGER.error("draftManagerServiceImpl.deleteDrafts occur error:{}", e);
             result.setValue(false);

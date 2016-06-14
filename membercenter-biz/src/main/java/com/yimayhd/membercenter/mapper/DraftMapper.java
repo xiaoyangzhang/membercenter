@@ -59,7 +59,7 @@ public interface DraftMapper {
 	 * @author liuxp
 	 * @createTime 2016年6月3日
 	 */
-	int deleteDrafts(@Param("ids") Long[] ids);
+	int deleteDrafts(@Param("ids") Long[] ids, @Param("accountId") Long accountId);
 	
 	/**
 	 * 获得指定草稿内容

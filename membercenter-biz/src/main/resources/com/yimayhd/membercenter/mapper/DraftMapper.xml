@@ -58,7 +58,7 @@
 
 <!-- 覆盖草稿 -->
 <update id="coverDraft" parameterType="com.yimayhd.membercenter.client.domain.draft.DraftDO" >
-	UPDATE draft SET data = #{JSONStr,jdbcType=VARCHAR}, gmt_modified = #{gmtModified,jdbcType=TIMESTAMP} WHERE id = #{id}
+	UPDATE draft SET data = #{JSONStr,jdbcType=VARCHAR}, gmt_modified = #{gmtModified,jdbcType=TIMESTAMP} WHERE id = #{id} AND user_id = #{accountId,jdbcType=BIGINT}
 </update>
 
 <!-- 删除草稿 -->
@@ -67,6 +67,7 @@
 	<foreach collection="ids" item="item" open="(" separator="," close=")">
 		#{item}
 	</foreach>
+	AND user_id = #{accountId}
 </delete>
 
 <!-- 获得指定草稿内容 -->

@@ -30,11 +30,12 @@ public interface DraftManagerService {
 	/**
 	 * 保存草稿
 	 * @param ids 指定的ids
+	 * @param accountId 用户id
 	 * @return 保存结果
 	 * @author liuxp
 	 * @createTime 2016年6月3日
 	 */
-	public MemResult<Boolean> deleteDrafts(List<Long> ids);
+	public MemResult<Boolean> deleteDrafts(List<Long> ids, Long accountId);
 	
 	/**
 	 * 保存草稿

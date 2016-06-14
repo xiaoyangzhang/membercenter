@@ -48,11 +48,11 @@ public class DraftManagerServiceTest {
 	@Resource
 	private DraftManagerServiceImpl draftManagerService;
 	
-	@Test
+//	@Test
 	public void saveDraft(){
 		
 		DraftDO draftDO = new DraftDO();
-		draftDO.setAccountId(125L);
+		draftDO.setAccountId(17304L);
 		draftDO.setDomainId(100);
 		draftDO.setDraftName("TEST6");
 		draftDO.setMainType(DraftEnum.ITEM.getValue());
@@ -62,12 +62,13 @@ public class DraftManagerServiceTest {
 		System.out.println(result.getValue());
 	}
 
-//	@Test
+	@Test
 	public void converDraft(){
 
 		DraftDO draftDO = new DraftDO();
 		draftDO.setId(1L);
 		draftDO.setJSONStr("{id:2}");
+		draftDO.setAccountId(17304L);
 		MemResult<Boolean> result = draftManagerService.coverDraft(draftDO);
 		System.out.println(result.getValue());
 	}
@@ -82,12 +83,12 @@ public class DraftManagerServiceTest {
 //	@Test
 	public void getDraftList(){
 		DraftListQuery draftListQuery = new DraftListQuery();
-		draftListQuery.setAccountId(17024L);
+		draftListQuery.setAccountId(17304L);
 //		draftListQuery.setMainType(DraftEnum.ITEM.getValue());
 //		draftListQuery.setSubType(ItemType.LINE.getValue());
 		draftListQuery.setMainType(0);
-		draftListQuery.setSubType(0);
-		draftListQuery.setDomainId(100);
+		draftListQuery.setSubType(21);
+		draftListQuery.setDomainId(1200);
 		draftListQuery.setPageNo(0);
 		draftListQuery.setPageSize(10);
 		MemPageResult<DraftDTO> result = draftManagerService.getDraftList(draftListQuery);
@@ -97,8 +98,8 @@ public class DraftManagerServiceTest {
 //	@Test
 	public void deleteDraft() {
 		List<Long> ids = new ArrayList<>();
-		ids.add(7L);
-		MemResult<Boolean> result = draftManagerService.deleteDrafts(ids);
+		ids.add(9L);
+		MemResult<Boolean> result = draftManagerService.deleteDrafts(ids, 125L);
 		System.out.println(result.getValue());
 	}
 }

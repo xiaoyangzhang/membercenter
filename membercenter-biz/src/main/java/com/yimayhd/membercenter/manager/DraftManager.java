@@ -73,15 +73,16 @@ public class DraftManager {
      * @author liuxp
      * @createTime 2016年6月6日
      */
-    public MemResult<Boolean> deleteDrafts(List<Long> ids) {
+    public MemResult<Boolean> deleteDrafts(List<Long> ids, Long accountId) {
     	
     	MemResult<Boolean> result = new MemResult<Boolean>(false);
-    	int size = ids.size();
-		if(null==ids||size==0) {
+
+		if(CollectionUtils.isEmpty(ids)||null==accountId) {
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
     		return result;
     		
     	} else {
+			int size = ids.size();
     		Long[] param = new Long[size];
     		for (int i=0;i<size;i++) {
     			Long tempLong = ids.get(i);
@@ -94,7 +95,7 @@ public class DraftManager {
 			}
     		
     		try {
-        		draftMapper.deleteDrafts(param);
+        		draftMapper.deleteDrafts(param, accountId);
         		result.setValue(true);
     		} catch (Exception e) {
     			result.setReturnCode(MemberReturnCode.DB_WRITE_FAILED);
@@ -113,7 +114,7 @@ public class DraftManager {
      */
     public MemResult<Boolean> coverDraft(DraftDO draftDO) {
     	MemResult<Boolean> result = new MemResult<Boolean>(false);
-    	if(draftDO.getId()==null||StringUtils.isEmpty(draftDO.getJSONStr())) {
+    	if(null==draftDO.getId()||StringUtils.isEmpty(draftDO.getJSONStr())||null==draftDO.getAccountId()) {
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
     		return result;
     	}

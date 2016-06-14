@@ -25,7 +25,7 @@
     id, seller_id, seller_name, domain_id, principal_name, sale_scope, tel_num, pictures_url, 
     certificate, feature, examine_mes, type, statues, reviewer_id, gmt_created, gmt_modified,merchant_category_id,is_direct_sale
   </sql>
-  <select id="selectBySellerId" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.client.domain.examine.ExamineDO" >
+  <select id="selectBySellerId" resultMap="BaseResultMap" parameterType="com.yimayhd.membercenter.client.domain.examine.ExamineDetailDO" >
     select 
     <include refid="Base_Column_List" />
     from examine_detail
@@ -33,7 +33,7 @@
     seller_id = #{sellerId,jdbcType=BIGINT} and domain_id = #{domainId,jdbcType=INTEGER} and type = #{type,jdbcType=INTEGER}
   </select>
   
-  <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.examine.ExamineDO" >
+  <insert id="insert" parameterType="com.yimayhd.membercenter.client.domain.examine.ExamineDetailDO" >
     insert into examine_detail (id, seller_id, seller_name, 
       domain_id, principal_name, sale_scope, 
       tel_num, pictures_url, certificate, 

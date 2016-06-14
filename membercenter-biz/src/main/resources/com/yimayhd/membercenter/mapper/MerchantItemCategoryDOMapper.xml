@@ -101,4 +101,12 @@
       domain_id = #{domainId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectByCategoryIdAndSellerId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM merchant_item_category
+    WHEN domain_id = #{domainId,jdbcType=INTEGER}
+    AND item_category_id = #{itemCategoryId,jdbcType=BIGINT}
+    AND seller_id = #{sellerId,jdbcType=BIGINT}
+  </select>
 </mapper>

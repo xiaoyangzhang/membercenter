@@ -21,4 +21,8 @@ public class ScopeItemCategoryManager {
     public List<ScopeItemCategoryDO> getScopeItemCategoriesByCategory(int domainId, long[] categoryIds) {
         return scopeItemCategoryDao.getScopeItemCategoriesByCategory(domainId, categoryIds);
     }
+
+    public List<ScopeItemCategoryDO> getScopeItemCategories(List<ScopeItemCategoryDO> scopeItemCategoryDOs) {
+        return scopeItemCategoryDao.getScopeItemCategories(scopeItemCategoryDOs);
+    }
 }

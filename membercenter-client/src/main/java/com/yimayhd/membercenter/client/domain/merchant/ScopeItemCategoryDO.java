@@ -10,6 +10,8 @@ public class ScopeItemCategoryDO implements Serializable {
 
     private long itemCategoryId;
 
+    private long merchantCategoryId;
+
     private int status;
 
     private Date gmtCreated;
@@ -72,5 +74,13 @@ public class ScopeItemCategoryDO implements Serializable {
 
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public long getMerchantCategoryId() {
+        return merchantCategoryId;
+    }
+
+    public void setMerchantCategoryId(long merchantCategoryId) {
+        this.merchantCategoryId = merchantCategoryId;
     }
 }

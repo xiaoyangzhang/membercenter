@@ -52,7 +52,15 @@ public class ExamineDO implements Serializable {
     private long reviewerId;
     private long merchantCategoryId;//商家类目
     private int isDirectSale;//是否直营
-    
+    private long busiType;
+    public long getBusiType() {
+        return busiType;
+    }
+
+    public void setBusiType(long busiType) {
+        this.busiType = busiType;
+    }
+
     public int getIsDirectSale() {
 		return isDirectSale;
 	}

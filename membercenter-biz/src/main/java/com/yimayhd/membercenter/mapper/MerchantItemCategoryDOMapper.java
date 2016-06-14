@@ -21,5 +21,5 @@ public interface MerchantItemCategoryDOMapper {
     
     List<MerchantItemCategoryDO> selectByMerchant(@Param("domainId") int domainId, @Param("sellerId") long sellerId);
 
-    MerchantItemCategoryDO selectByCategoryIdAndSellerId(@Param("domainId") int domainId, @Param("categoryId") long categoryId, @Param("sellerId") long sellerId);
+    MerchantItemCategoryDO selectByCategoryIdAndSellerId(@Param("domainId") int domainId, @Param("itemCategoryId") long categoryId, @Param("sellerId") long sellerId);
 }

@@ -148,6 +148,7 @@ public class DraftManager {
 			count = draftMapper.getDraftsCount(draftListQuery);
 			if(count>0) {
 				draftDOs = draftMapper.getDraftList(draftListQuery);
+				result.setTotalCount(count);
 			} else {
 				result.setTotalCount(count);
 				result.setSuccess(true);

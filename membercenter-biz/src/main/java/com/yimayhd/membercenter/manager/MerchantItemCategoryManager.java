@@ -141,13 +141,12 @@ public class MerchantItemCategoryManager {
                             });
                         } catch (Exception e) {
                             logger.error("saveMerchanItemCategories failed!  examineDO={},  categoryIds={}", JSON.toJSONString(examineDO), JSON.toJSONString(categoryIds), e);
-                            return LocalTransactionState.ROLLBACK_MESSAGE;
-                        }finally {
-                            if(mrs.isSuccess()) {
-                                return LocalTransactionState.COMMIT_MESSAGE;
-                            }
-                            return LocalTransactionState.ROLLBACK_MESSAGE;
+                            mrs.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
                         }
+                        if(mrs != null && mrs.isSuccess()) {
+                        	return LocalTransactionState.COMMIT_MESSAGE;
+                        }
+                        return LocalTransactionState.ROLLBACK_MESSAGE;
                     }
                 });
         if (merchantItemCategorySendResult.getSendStatus() != SendStatus.SEND_OK) {

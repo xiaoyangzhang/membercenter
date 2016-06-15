@@ -1,12 +1,9 @@
 package com.yimayhd.membercenter.mapper;
 
-import java.util.List;
-
+import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
 import org.apache.ibatis.annotations.Param;
 
-import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
-import com.yimayhd.membercenter.client.query.BusinessScopeQueryDTO;
-import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
+import java.util.List;
 
 public interface MerchantQualificationDOMapper {
     int deleteByPrimaryKey(long id);
@@ -44,4 +41,5 @@ public interface MerchantQualificationDOMapper {
     * @throws
      */
     public int updateStatusBatch(@Param("list")List<MerchantQualificationDO> qualificationDOList);
+
 }

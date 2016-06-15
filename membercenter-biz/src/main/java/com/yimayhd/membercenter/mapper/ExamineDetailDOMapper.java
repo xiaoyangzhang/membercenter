@@ -1,6 +1,6 @@
 package com.yimayhd.membercenter.mapper;
 
-import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
+import com.yimayhd.membercenter.client.domain.examine.ExamineDetailDO;
 
 public interface ExamineDetailDOMapper {
 
@@ -14,17 +14,17 @@ public interface ExamineDetailDOMapper {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    int insert(ExamineDO record);
+    int insert(ExamineDetailDO record);
 
     /**
      * 
      * 功能描述: <br>
      * 〈查询〉
      *
-     * @param record
+     * @param examineDetailDO
      * @return
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    ExamineDO selectBySellerId(ExamineDO record);
+    ExamineDetailDO selectBySellerId(ExamineDetailDO examineDetailDO);
 }

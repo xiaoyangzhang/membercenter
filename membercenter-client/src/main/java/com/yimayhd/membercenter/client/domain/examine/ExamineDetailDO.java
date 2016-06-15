@@ -6,13 +6,13 @@ import java.util.Date;
 /**
  * 
  * 〈一句话功能简述〉<br> 
- * 〈审核对象〉
+ * 〈审核记录对象〉
  *
- * @author liubb
+ * @author hanlei
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
-public class ExamineDO implements Serializable {
+public class ExamineDetailDO implements Serializable {
     
     /**
      */
@@ -52,25 +52,7 @@ public class ExamineDO implements Serializable {
     private long reviewerId;
     private long merchantCategoryId;//商家类目
     private int isDirectSale;//是否直营
-    private String busiType;
-
-    public String getMerchantCategoryName() {
-        return merchantCategoryName;
-    }
-
-    public void setMerchantCategoryName(String merchantCategoryName) {
-        this.merchantCategoryName = merchantCategoryName;
-    }
-
-    private String merchantCategoryName;
-    public String getBusiType() {
-        return busiType;
-    }
-
-    public void setBusiType(String busiType) {
-        this.busiType = busiType;
-    }
-
+    
     public int getIsDirectSale() {
 		return isDirectSale;
 	}

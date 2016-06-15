@@ -30,7 +30,7 @@ public interface ExamineDealService {
     /**
      * 
      * 功能描述: <br>
-     * 〈提交审核基本信息〉
+     * 〈提交审核达人基本信息〉
      *
      * @param examineInfoDTO
      * @return 
@@ -92,14 +92,14 @@ public interface ExamineDealService {
     /**
      * 
      * 功能描述: <br>
-     * 〈审核结果表〉
+     * 〈商户审核驳回、达人审核通过or驳回〉
      *
      * @param examineDealDTO
      * @return
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    MemResult<Boolean> dealExamineInfo(ExamineDealDTO examineDealDTO);
+    MemResult<Boolean> refuseMerchantOrAuditTalent(ExamineDealDTO examineDealDTO);
     
     /**
      * 
@@ -112,5 +112,16 @@ public interface ExamineDealService {
      * @since [产品/模块版本](可选)
      */
     MemResult<ExamineResultDTO> queryExamineDealResult(InfoQueryDTO examineQueryDTO);
-
+    /**
+     * 
+    * created by zhangxy
+    * @date 2016年6月7日
+    * @Title: checkMerchantNameIsExist 
+    * @Description: 验证店铺名称是否存在
+    * @param @param infoQueryDTO
+    * @param @return    设定文件 
+    * @return MemResult<Boolean>    返回类型 
+    * @throws
+     */
+    public MemResult<Boolean> checkMerchantNameIsExist(ExamineInfoDTO examineInfoDTO);
 }

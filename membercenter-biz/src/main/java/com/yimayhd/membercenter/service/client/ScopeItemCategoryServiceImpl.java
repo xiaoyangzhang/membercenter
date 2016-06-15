@@ -22,6 +22,7 @@ public class ScopeItemCategoryServiceImpl implements ScopeItemCategoryService {
 	@Autowired
 	private ScopeItemCategoryManager scopeItemCategoryManager;
 
+	@Deprecated
 	@Override
 	public MemResult<List<ScopeItemCategoryDO>> findScopeItemCategoriesByMerchantScope(int domainId, long[] scopeIds) {
 		MemResult<List<ScopeItemCategoryDO>> scopeItemCategoryResult = new MemResult<>();
@@ -39,6 +40,26 @@ public class ScopeItemCategoryServiceImpl implements ScopeItemCategoryService {
 			return scopeItemCategoryResult;
 		}
 		result.setValue(scopeItemCategoryDOs);
+		return result;
+	}
+
+	@Override
+	public MemResult<List<ScopeItemCategoryDO>> findScopeItemCategories(int domainId, List<ScopeItemCategoryDO> scopeItemCategoryDOs) {
+
+		MemResult<List<ScopeItemCategoryDO>> scopeItemCategoryResult = new MemResult<>();
+		if (null == scopeItemCategoryDOs || scopeItemCategoryDOs.isEmpty()) {
+			LOGGER.error("scopeItemCategoryDOs not found by scopeIds={}", scopeItemCategoryDOs);
+			scopeItemCategoryResult.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return scopeItemCategoryResult;
+		}
+		MemResult<List<ScopeItemCategoryDO>> result = new MemResult<List<ScopeItemCategoryDO>>();
+		List<ScopeItemCategoryDO> scopeItemCategoryDOList = scopeItemCategoryManager.getScopeItemCategories(scopeItemCategoryDOs);
+		if (scopeItemCategoryDOList.isEmpty()) {
+			LOGGER.error("businessScopeDOs not found by scopeIds={}", scopeItemCategoryDOList);
+			scopeItemCategoryResult.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
+			return scopeItemCategoryResult;
+		}
+		result.setValue(scopeItemCategoryDOList);
 		return result;
 	}
 

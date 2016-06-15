@@ -21,9 +21,18 @@ public class MerchantCategoryDO implements Serializable {
     private Date gmtCreated;
 
     private Date gmtModified;
-
+    private String busiType;
     private static final long serialVersionUID = 1L;
-    private int domainId;
+    
+    public String getBusiType() {
+		return busiType;
+	}
+
+	public void setBusiType(String busiType) {
+		this.busiType = busiType;
+	}
+
+	private int domainId;
     
     public int getDomainId() {
 		return domainId;

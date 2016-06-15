@@ -12,6 +12,9 @@ package com.yimayhd.membercenter.service.client.examine;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.alibaba.rocketmq.client.producer.SendResult;
+import com.yimayhd.membercenter.client.enums.topic.MemberTopic;
+import com.yimayhd.membercenter.mq.MsgSender;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +54,9 @@ public class ExamineDealServiceImpl implements ExamineDealService {
 
     @Autowired
     TalentBackInfoManager talentBackInfoManager;
+
+    @Autowired
+    MsgSender msgSender;
 
     /*
      * (non-Javadoc)
@@ -179,7 +185,7 @@ public class ExamineDealServiceImpl implements ExamineDealService {
      * membercenter.client.examineDealDTO)
      */
     @Override
-    public MemResult<Boolean> dealExamineInfo(ExamineDealDTO examineDealDTO) {
+    public MemResult<Boolean> refuseMerchantOrAuditTalent(ExamineDealDTO examineDealDTO) {
         MemResult<Boolean> result = new MemResult<Boolean>();
         long start = System.currentTimeMillis();
         try {
@@ -190,7 +196,14 @@ public class ExamineDealServiceImpl implements ExamineDealService {
             }
             // 数据转化
             ExamineDO examineDO = ExamineConverter.examineDealToDO(examineDealDTO);
-            result = talentExamineManager.dealExamineInfo(examineDO);
+            result = talentExamineManager.refuseMerchantOrAuditTalent(examineDO);
+            if(result.isSuccess()) {
+                // 发送审核状态到mq消息
+                SendResult sendResult = msgSender.sendMessage(examineDO,
+                        MemberTopic.EXAMINE_RESULT.getTopic(), MemberTopic.EXAMINE_RESULT.getTags());
+                logger.info("dealExamineInfo par:{} sendMes return:{}", JSONObject.toJSONString(examineDO),
+                        JSONObject.toJSONString(sendResult));
+            }
             logger.info("examinInfoIsOk par:{} return:{}, costs:{}ms", JSONObject.toJSONString(examineDealDTO),
                     JSONObject.toJSONString(result), (System.currentTimeMillis() - start));
         } catch (Exception e) {
@@ -293,5 +306,26 @@ public class ExamineDealServiceImpl implements ExamineDealService {
         }
         return result;
     }
+
+	@Override
+	public MemResult<Boolean> checkMerchantNameIsExist(ExamineInfoDTO	 examineInfoDTO) {
+		MemResult<Boolean> result  = new MemResult<Boolean>();
+		if (examineInfoDTO == null || StringUtils.isBlank(examineInfoDTO.getMerchantName()) || examineInfoDTO.getDomainId() <= 0) {
+			logger.error("params error :ExamineInfoDTO={}",examineInfoDTO);
+			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return result;
+		}
+		try {
+			result = talentExamineManager.checkMerchantNameIsExist(examineInfoDTO.getMerchantName(), examineInfoDTO.getDomainId());
+			//result.setValue(value);
+		} catch (Exception e) {
+			logger.error("params :ExamineInfoDTO={} error:{}",examineInfoDTO,e);
+			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+		}
+		return result;
+	}
+
+	
+    
 
 }

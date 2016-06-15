@@ -66,4 +66,14 @@ public class MerchantItemCategoryServiceImpl implements MerchantItemCategoryServ
 		return memResultSupport;
 	}
 
+	@Override
+	public MemResultSupport checkCategoryPrivilege(int domainId, long categoryId, long sellerId) {
+		MemResultSupport support = new MemResultSupport();
+		if(domainId <= 0 || categoryId <= 0 || sellerId <= 0) {
+			support.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return support;
+		}
+		return merchantItemCategoryManager.checkCategoryPrivilege(domainId,categoryId,sellerId);
+	}
+
 }

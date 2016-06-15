@@ -21,7 +21,6 @@ import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryDO;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
-import com.yimayhd.membercenter.client.query.BusinessScopeQueryDTO;
 import com.yimayhd.membercenter.client.query.MerchantCategoryQueryDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.dao.examine.MerchantCategoryDao;
@@ -58,25 +57,23 @@ public class MerchantApplyManager {
 			return result;
 		}
 		final List<MerchantScopeDO> merchantScopes = examineInfoDTO.getMerchantScopes();
-		//BusinessScopeQueryDTO businessScopeQueryDTO = new BusinessScopeQueryDTO();
-		MerchantScopeDO merchantScope = new MerchantScopeDO();
-		merchantScope.setDomainId(examineInfoDTO.getDomainId());
-		merchantScope.setSellerId(examineInfoDTO.getSellerId());
-		List<MerchantScopeDO> merchantScopeList = merchantScopeDao.getMerchantScope(merchantScope);
-		if (merchantScopeList != null) {
-			for (MerchantScopeDO merchantScopeDO : merchantScopeList) {
-//				MerchantScopeDO newMerchantScopeDO = new  MerchantScopeDO();
-//				newMerchantScopeDO.setId(merchantScopeDO.getId());
-				merchantScopeDO.setStatus(-1);
-				merchantScopeDO.setGmtModified(new Date());
-				merchantScopeDao.update(merchantScopeDO);
-			}
-		}
+		
 				Boolean dbResult = transactionTemplate.execute(new TransactionCallback<Boolean>() {
 
 					@Override
 					public Boolean doInTransaction(TransactionStatus status) {
 						try {
+							MerchantScopeDO merchantScope = new MerchantScopeDO();
+							merchantScope.setDomainId(examineInfoDTO.getDomainId());
+							merchantScope.setSellerId(examineInfoDTO.getSellerId());
+							List<MerchantScopeDO> merchantScopeList = merchantScopeDao.getMerchantScope(merchantScope);
+							if (merchantScopeList != null) {
+								for (MerchantScopeDO merchantScopeDO : merchantScopeList) {
+									merchantScopeDO.setStatus(-1);
+									merchantScopeDO.setGmtModified(new Date());
+									merchantScopeDao.update(merchantScopeDO);
+								}
+							}
 							MemResult<Boolean> saveExamineResult = null;
 							saveExamineResult = talentExamineManager.submitMerchantExamineInfo(examineInfoDTO);
 							if ((saveExamineResult == null) || !saveExamineResult.isSuccess()) {
@@ -87,11 +84,7 @@ public class MerchantApplyManager {
 							MerchantScopeDO merScopeDO = null;
 							for (MerchantScopeDO ms : merchantScopes) {
 								
-							//	if (ms.getId() <= 0) {
-									merScopeDO = merchantScopeDao.insert(ms);
-//								}else {
-//									merScopeDO = merchantScopeDao.update(ms);
-//								}
+								merScopeDO = merchantScopeDao.insert(ms);
 								if (merScopeDO == null) {
 									status.setRollbackOnly();
 									return false;

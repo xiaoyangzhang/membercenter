@@ -21,4 +21,6 @@ public interface ScopeItemCategoryDOMapper {
     List<ScopeItemCategoryDO> selectByMerchantScope(@Param("domainId") int domainId, @Param("scopeIds") long[] scopeIds);
 
     List<ScopeItemCategoryDO> selectByCategory(@Param("domainId") int domainId, @Param("categoryIds") long[] categoryIds);
+
+    List<ScopeItemCategoryDO> selectByScopeIdAndMerchantCategoryId(@Param("domainId") int domainId, @Param("businessScopeId") long businessScopeId, @Param("merchantCategoryId") long merchantCateogryId);
 }

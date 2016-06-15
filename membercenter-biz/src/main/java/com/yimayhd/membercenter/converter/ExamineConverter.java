@@ -362,9 +362,10 @@ public class ExamineConverter {
         }else{
             merchantDO.setOption(MerchantOption.MERCHANT.getOption());
         }
-        if(examineDO.getMerchantCategoryName() != null) {
+        //FIXME 韩磊
+//        if(examineDO.getMerchantCategoryName() != null) {
 //            merchantDO.setBusiType(MerchantBusiType.valueOfName(examineDO.getMerchantCategoryName()).getCode());
-        }
+//        }
         return merchantDO;
     }
 }

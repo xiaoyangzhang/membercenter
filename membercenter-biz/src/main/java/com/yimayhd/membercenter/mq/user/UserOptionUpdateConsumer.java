@@ -18,7 +18,7 @@ import com.yimayhd.user.client.enums.UserOptions;
 import com.yimayhd.user.client.topic.UserTopic;
 
 public class UserOptionUpdateConsumer extends UserRoleConsumer {
-	private static final Logger logger = LoggerFactory.getLogger("MQ") ;
+	private static final Logger logger = LoggerFactory.getLogger("UserOptionUpdateConsumer") ;
 	private static final UserTopic topic = UserTopic.USER_OPTION_UPDATED ;
 	@Autowired
 	private UserRepo userRepo ;
@@ -38,7 +38,6 @@ public class UserOptionUpdateConsumer extends UserRoleConsumer {
 
 	@Override
 	public boolean doConsumeMessage(Serializable message) {
-		System.err.println();
 		String log ="UUID+"+ UUID.randomUUID()+"  topic="+topic+"  msg={}"+JSON.toJSONString(message);
 		logger.info(log);
 		if( !(message instanceof UserDO) ){

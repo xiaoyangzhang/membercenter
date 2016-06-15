@@ -96,18 +96,18 @@ public class ExamineTest extends BaseTest {
 
     @Test
     public void dealExamineInfo() {
-        ExamineDealDTO examineDealDTO = new ExamineDealDTO();
-        examineDealDTO.setDomainId(domainId);
-        examineDealDTO.setSellerId(24116);
-        examineDealDTO.setType(ExamineType.TALENT.getType());
-        // examineDealDTO.setId(1220l);
-        examineDealDTO.setCheckIsOk(true);
-        // examineDealDTO.setExamineMes("审核通过");
-        examineDealDTO.setReviewerId(19202);
-        MemResult<Boolean> result = examineDealService.dealExamineInfo(examineDealDTO);
-        System.out.println("----->");
-        System.out.println("*****  " + JSONObject.toJSONString(result));
-        System.out.println("----->");
+//        ExamineDealDTO examineDealDTO = new ExamineDealDTO();
+//        examineDealDTO.setDomainId(domainId);
+//        examineDealDTO.setSellerId(24116);
+//        examineDealDTO.setType(ExamineType.TALENT.getType());
+//        // examineDealDTO.setId(1220l);
+//        examineDealDTO.setCheckIsOk(true);
+//        // examineDealDTO.setExamineMes("审核通过");
+//        examineDealDTO.setReviewerId(19202);
+//        MemResult<Boolean> result = examineDealService.dealExamineInfo(examineDealDTO);
+//        System.out.println("----->");
+//        System.out.println("*****  " + JSONObject.toJSONString(result));
+//        System.out.println("----->");
     }
 
     @Test

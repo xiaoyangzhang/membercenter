@@ -12,9 +12,10 @@
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
     <result column="domain_id" property="domainId" jdbcType="INTEGER" />
+    <result column="busi_type" property="busiType" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, pic, description, type, parent_id, status, gmt_created, gmt_modified,domain_id
+    id, name, pic, description, type, parent_id, status, gmt_created, gmt_modified,domain_id,busi_type
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="long" >
     select 
@@ -129,14 +130,10 @@
       domain_id = #{domainId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <!-- <select id="getAllMerchantCategory" resultMap="BaseResultMap" >
-  	select id,name,parent_id from merchant_category
-  	where domain_id=#{domainId}
-  	
-  </select> -->
+ 
 
   <select id="getMerchantCategory" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryDO" resultMap="BaseResultMap">
-    select name,id,parent_id,domain_id,type from merchant_category
+    select name,id,parent_id,domain_id,type,busi_type from merchant_category
     where domain_id=#{category.domainId}
     <if test="category.id != null and category.id != 0">
     and id = #{category.id}

@@ -48,21 +48,21 @@ public class DraftManagerServiceTest {
 	@Resource
 	private DraftManagerServiceImpl draftManagerService;
 	
-//	@Test
+	@Test
 	public void saveDraft(){
 		
 		DraftDO draftDO = new DraftDO();
-		draftDO.setAccountId(17304L);
+		draftDO.setAccountId(123L);
 		draftDO.setDomainId(100);
 		draftDO.setDraftName("TEST6");
 		draftDO.setMainType(DraftEnum.ITEM.getValue());
 		draftDO.setSubType(ItemType.LINE.getValue());
 		draftDO.setJSONStr("{id:1}");
-		MemResult<Boolean> result = draftManagerService.saveDraft(draftDO);
+		MemResult<Long> result = draftManagerService.saveDraft(draftDO);
 		System.out.println(result.getValue());
 	}
 
-	@Test
+//	@Test
 	public void converDraft(){
 
 		DraftDO draftDO = new DraftDO();

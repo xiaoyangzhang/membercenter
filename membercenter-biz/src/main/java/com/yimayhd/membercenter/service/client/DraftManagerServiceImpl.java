@@ -36,14 +36,14 @@ public class DraftManagerServiceImpl implements DraftManagerService {
 	 * @createTime 2016年6月3日
 	 */
 	@Override
-	public MemResult<Boolean> saveDraft(DraftDO draftDO) {
+	public MemResult<Long> saveDraft(DraftDO draftDO) {
         LOGGER.info("saveDraft draftDO= {}", draftDO);
-        MemResult<Boolean> result = new MemResult<Boolean>();
+        MemResult<Long> result = new MemResult<Long>();
         try {
         	result = draftManager.saveDraft(draftDO);
 		} catch (Exception e) {
             LOGGER.error("draftManagerServiceImpl.saveDraft occur error:{}", e);
-            result.setValue(false);
+            result.setValue(null);
             result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
 		}
         

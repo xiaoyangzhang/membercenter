@@ -43,8 +43,8 @@ public class DraftManager {
      * @author liuxp
      * @createTime 2016年6月6日
      */
-    public MemResult<Boolean> saveDraft(DraftDO draftDO) {
-    	MemResult<Boolean> result = new MemResult<Boolean>(false);
+    public MemResult<Long> saveDraft(DraftDO draftDO) {
+    	MemResult<Long> result = new MemResult<Long>();
     	if(draftDO.getAccountId()==null||StringUtils.isEmpty(draftDO.getDraftName())||StringUtils.isEmpty(draftDO.getJSONStr())||!(draftDO.getMainType()>0)||!(draftDO.getSubType()>0)||!(draftDO.getDomainId()>0)) {
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
     		return result;
@@ -53,12 +53,12 @@ public class DraftManager {
     	draftDO.setGmtModified(new Date());
     	try {
 			int count = draftMapper.checkNameExisit(draftDO);
-			result.setValue(true);
 			if(count>0) {
 				result.setReturnCode(MemberReturnCode.DRAFTNAME_EXISTS_FAILED);
 				result.setSuccess(true);
 			} else {
 				draftMapper.saveDraft(draftDO);
+				result.setValue(draftDO.getId());
 			}
 		} catch (Exception e) {
 			result.setReturnCode(MemberReturnCode.DB_WRITE_FAILED);

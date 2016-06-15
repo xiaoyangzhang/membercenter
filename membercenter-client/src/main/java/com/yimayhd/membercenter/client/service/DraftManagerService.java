@@ -3,7 +3,6 @@ package com.yimayhd.membercenter.client.service;
 import java.util.List;
 
 import com.yimayhd.membercenter.client.domain.draft.DraftDO;
-import com.yimayhd.membercenter.client.domain.draft.DraftDetailDO;
 import com.yimayhd.membercenter.client.dto.DraftDTO;
 import com.yimayhd.membercenter.client.dto.DraftDetailDTO;
 import com.yimayhd.membercenter.client.query.DraftListQuery;
@@ -25,7 +24,7 @@ public interface DraftManagerService {
 	 * @author liuxp
 	 * @createTime 2016年6月3日
 	 */
-	public MemResult<Boolean> saveDraft(DraftDO draftDO);
+	public MemResult<Long> saveDraft(DraftDO draftDO);
 	
 	/**
 	 * 保存草稿

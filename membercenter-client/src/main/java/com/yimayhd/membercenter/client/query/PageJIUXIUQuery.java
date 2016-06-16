@@ -14,7 +14,7 @@ public class PageJIUXIUQuery implements Serializable {
 	private static final long serialVersionUID = -5408080046722594154L;
 	
 	protected int page = 1;
-    protected int pageSize = 8;
+    protected int pageSize = 10;
     /**
      * 如果设置这个为true，就不会返回总数，
      * 返回的list的数量会多一个，用于判断时候还有下一页 比如要15个，会给16个，如果不够16个，说明没有下一页

@@ -3,7 +3,7 @@
     <parent>
         <artifactId>membercenter</artifactId>
         <groupId>com.yimayhd.membercenter</groupId>
-        <version>1.1.1-SNAPSHOT</version>
+        <version>1.1.2-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -12,11 +12,11 @@
     <name>membercenter-web Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <dependencies>
-    	
+
         <dependency>
             <groupId>com.yimayhd.membercenter</groupId>
             <artifactId>membercenter-biz</artifactId>
-        </dependency> 
+        </dependency>
         
         <dependency>
             <groupId>com.yimayhd.membercenter</groupId>

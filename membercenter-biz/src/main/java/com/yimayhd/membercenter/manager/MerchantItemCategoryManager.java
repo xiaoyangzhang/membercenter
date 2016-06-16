@@ -59,6 +59,12 @@ public class MerchantItemCategoryManager {
         return merchantItemCategoryDao.selectMerchantItemCategoriesByMerchant(domainId, sellerId);
     }
 
+    /**
+     * 审批商家入驻申请，保存商家对应的类目权限
+     * @param examineDO
+     * @param categoryIds
+     * @return
+     */
     public MemResultSupport saveMerchanItemCategories(final ExamineDO examineDO, final long[] categoryIds) {
         MemResultSupport memResultSupport = new MemResultSupport();
         // 新增商家
@@ -70,10 +76,11 @@ public class MerchantItemCategoryManager {
             return memResultSupport;
         }
 
-
+        // 查询商家的入驻申请
         final MemResult<ExamineDO> examineResult = talentExamineManager.queryMerchantExamineInfoById(examineDO);
         final ExamineDO queryExamineDO = examineResult.getValue();
 
+        // 声明商家的入驻申请历史明细
         final ExamineDetailDO examineDetailDO = new ExamineDetailDO();
         BeanUtils.copyProperties(queryExamineDO, examineDetailDO);
         examineDetailDO.setId(examineDetailIdPool.getNewId());
@@ -112,6 +119,7 @@ public class MerchantItemCategoryManager {
                                         }
                                         logger.info("saveMerchanItemCategories param:{} insertDetail success", JSONObject.toJSONString(queryExamineDO));
 
+                                        // 创建商家所具有的类目权限
                                         ArrayList<MerchantItemCategoryDO> merchantItemCategoryDOs = new ArrayList<>();
                                         for (long categoryId : categoryIds) {
                                             MerchantItemCategoryDO merchantItemCategoryDO = new MerchantItemCategoryDO();
@@ -123,6 +131,8 @@ public class MerchantItemCategoryManager {
                                             merchantItemCategoryDO.setStatus(1);
                                             merchantItemCategoryDOs.add(merchantItemCategoryDO);
                                         }
+
+                                        // 保存商家所具有的的类目权限
                                         boolean target = merchantItemCategoryDao.saveMerchanItemCategories(merchantItemCategoryDOs);
                                         if (!target) {
                                             logger.error("saveMerchanItemCategories param:{} is null, saveMerchanItemCategories failure", JSONObject.toJSONString(merchantItemCategoryDOs));

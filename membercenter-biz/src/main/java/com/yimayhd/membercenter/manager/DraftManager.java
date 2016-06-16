@@ -138,7 +138,7 @@ public class DraftManager {
     public MemPageResult<DraftDTO> getDraftsList(DraftListQuery draftListQuery) {
     	
     	MemPageResult<DraftDTO> result = new MemPageResult<DraftDTO>();
-        result.setPageNo(draftListQuery.getPageNo());
+        result.setPageNo(draftListQuery.getPage());
         result.setPageSize(draftListQuery.getPageSize());
     	result.setSuccess(false);
         result.setHasNext(false);
@@ -170,7 +170,7 @@ public class DraftManager {
         	List<DraftDTO> draftDTOs = DraftConverter.converterDraftList(draftDOs);
         	result.setList(draftDTOs);
         	result.setSuccess(true);
-        	result.setHasNext(count-draftListQuery.getPageNo()*draftListQuery.getPageSize()>0);
+        	result.setHasNext(count-draftListQuery.getPage()*draftListQuery.getPageSize()>0);
 		} catch (Exception e) {
 			logger.error("draftListQuery " + draftListQuery.toString(), e);
 

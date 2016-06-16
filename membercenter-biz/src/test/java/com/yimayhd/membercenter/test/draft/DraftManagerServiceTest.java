@@ -39,7 +39,6 @@ import com.yimayhd.membercenter.service.client.DraftManagerServiceImpl;
 		 "classpath:application-consumer.xml",
 		 "classpath:application-export-client.xml",
 		 "classpath:application-service.xml",
-		 
 		"classpath:application-export-api.xml"
 		})
 //@TransactionConfiguration(transactionManager = "transactionManager")
@@ -48,7 +47,7 @@ public class DraftManagerServiceTest {
 	@Resource
 	private DraftManagerServiceImpl draftManagerService;
 	
-	@Test
+//	@Test
 	public void saveDraft(){
 		
 		DraftDO draftDO = new DraftDO();
@@ -80,7 +79,7 @@ public class DraftManagerServiceTest {
 		System.out.println(result.getValue());
 	}
 
-//	@Test
+	@Test
 	public void getDraftList(){
 		DraftListQuery draftListQuery = new DraftListQuery();
 		draftListQuery.setAccountId(17304L);
@@ -89,7 +88,7 @@ public class DraftManagerServiceTest {
 		draftListQuery.setMainType(0);
 		draftListQuery.setSubType(21);
 		draftListQuery.setDomainId(1200);
-		draftListQuery.setPageNo(0);
+		draftListQuery.setPage(0);
 		draftListQuery.setPageSize(10);
 		MemPageResult<DraftDTO> result = draftManagerService.getDraftList(draftListQuery);
 		System.out.println(result.getList());

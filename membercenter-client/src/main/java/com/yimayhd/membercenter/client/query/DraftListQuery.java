@@ -6,7 +6,7 @@ package com.yimayhd.membercenter.client.query;
  * @author liuxp
  *
  */
-public class DraftListQuery extends PageQuery {
+public class DraftListQuery extends PageJIUXIUQuery {
 
 	/**
 	 * serialVersionUID = -2428067804226802107L;

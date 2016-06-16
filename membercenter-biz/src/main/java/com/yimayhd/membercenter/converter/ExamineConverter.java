@@ -28,6 +28,7 @@ import com.yimayhd.membercenter.enums.PictureUrl;
 import com.yimayhd.membercenter.util.ParmCheckUtil;
 import com.yimayhd.user.client.domain.MerchantDO;
 import com.yimayhd.user.client.enums.CertificateOption;
+import com.yimayhd.user.client.enums.MerchantBusiType;
 import com.yimayhd.user.client.enums.MerchantOption;
 
 /**
@@ -362,10 +363,9 @@ public class ExamineConverter {
         }else{
             merchantDO.setOption(MerchantOption.MERCHANT.getOption());
         }
-        //FIXME 韩磊
-//        if(examineDO.getMerchantCategoryName() != null) {
-//            merchantDO.setBusiType(MerchantBusiType.valueOfName(examineDO.getMerchantCategoryName()).getCode());
-//        }
+        if(examineDO.getMerchantCategoryName() != null) {
+            merchantDO.setBusiType(MerchantBusiType.valueOfName(examineDO.getMerchantCategoryName()).getCode());
+        }
         return merchantDO;
     }
 }

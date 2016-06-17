@@ -30,7 +30,7 @@ public class MerchantItemCategoryDao {
 		return merchantItemCategoryDOMapper.selectByMerchant(domainId, sellerId);
 	}
 
-	public List<MerchantItemCategoryDO> selectByCategoryIdAndSellerId(int domain, long categoryId, long sellerId) {
+	public MerchantItemCategoryDO selectByCategoryIdAndSellerId(int domain, long categoryId, long sellerId) {
 		return merchantItemCategoryDOMapper.selectByCategoryIdAndSellerId(domain,categoryId,sellerId);
 	}
 	

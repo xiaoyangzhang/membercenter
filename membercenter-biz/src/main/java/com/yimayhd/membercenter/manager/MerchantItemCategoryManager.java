@@ -152,9 +152,9 @@ public class MerchantItemCategoryManager {
     }
 
     public MemResultSupport checkCategoryPrivilege(int domainId, long categoryId, long sellerId) {
-        MerchantItemCategoryDO merchantItemCategoryDO = merchantItemCategoryDao.selectByCategoryIdAndSellerId(domainId,categoryId,sellerId);
+        List<MerchantItemCategoryDO> merchantItemCategoryDOs = merchantItemCategoryDao.selectByCategoryIdAndSellerId(domainId,categoryId,sellerId);
         MemResultSupport support = new MemResultSupport();
-        if (null == merchantItemCategoryDO) {
+        if (merchantItemCategoryDOs.isEmpty()) {
             support.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
         }
         return support;

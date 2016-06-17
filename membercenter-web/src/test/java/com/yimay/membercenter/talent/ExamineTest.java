@@ -94,8 +94,8 @@ public class ExamineTest extends BaseTest {
         System.out.println("----->");
     }
 
-//    @Test
-//    public void dealExamineInfo() {
+    @Test
+    public void dealExamineInfo() {
 //        ExamineDealDTO examineDealDTO = new ExamineDealDTO();
 //        examineDealDTO.setDomainId(domainId);
 //        examineDealDTO.setSellerId(24116);
@@ -108,7 +108,7 @@ public class ExamineTest extends BaseTest {
 //        System.out.println("----->");
 //        System.out.println("*****  " + JSONObject.toJSONString(result));
 //        System.out.println("----->");
-//    }
+    }
 
     @Test
     public void submitMerchantExamineInfoFristPage() {

@@ -364,7 +364,10 @@ public class ExamineConverter {
         }else{
             merchantDO.setOption(MerchantOption.MERCHANT.getOption());
         }
-        merchantDO.setBusiType(MerchantBusiType.valueOfName(examineDO.getMerchantCategoryName()).getCode());
+        if (!StringUtils.isBlank(examineDO.getMerchantCategoryName())) {
+			
+        	merchantDO.setBusiType(MerchantBusiType.valueOfName(examineDO.getMerchantCategoryName()).getCode());
+		}
         return merchantDO;
     }
 }

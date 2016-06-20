@@ -128,7 +128,7 @@
 	</select>
 	
 	<sql id="queryExamineSql">
-    <where>
+    where
       domain_id = #{domainId,jdbcType=INTEGER}
       and 4 > statues
 		<if test="sellerId > 0">
@@ -152,7 +152,7 @@
 			 #{item,jdbcType=INTEGER}
 		 </foreach>	 
 		</if>
-    </where>
+    
   </sql>
   
 </mapper>

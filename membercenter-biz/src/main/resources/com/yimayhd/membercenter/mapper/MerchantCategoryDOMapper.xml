@@ -135,7 +135,7 @@
   <select id="getMerchantCategory" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryDO" resultMap="BaseResultMap">
     select name,id,parent_id,domain_id,type,busi_type from merchant_category
     where domain_id=#{category.domainId}
-    <if test="category.id != null and category.id != 0">
+    <if test="category.id != null and category.id > 0">
     and id = #{category.id}
     </if>
   </select>

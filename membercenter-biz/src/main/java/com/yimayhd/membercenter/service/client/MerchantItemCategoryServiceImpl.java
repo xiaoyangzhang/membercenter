@@ -5,20 +5,24 @@ import java.util.Date;
 import java.util.List;
 
 import com.yimayhd.membercenter.enums.ExamineStatus;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
+import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantItemCategoryDO;
 import com.yimayhd.membercenter.client.dto.ExamineDealDTO;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
+import com.yimayhd.membercenter.client.query.MerchantCategoryQueryDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.result.MemResultSupport;
 import com.yimayhd.membercenter.client.service.MerchantItemCategoryService;
 import com.yimayhd.membercenter.client.service.examine.ExamineDealService;
 import com.yimayhd.membercenter.converter.ExamineConverter;
+import com.yimayhd.membercenter.manager.MerchantApplyManager;
 import com.yimayhd.membercenter.manager.MerchantItemCategoryManager;
 import com.yimayhd.membercenter.mapper.ExamineDOMapper;
 import com.yimayhd.membercenter.repo.MerchantRepo;
@@ -34,7 +38,8 @@ public class MerchantItemCategoryServiceImpl implements MerchantItemCategoryServ
     private MerchantItemCategoryManager merchantItemCategoryManager;
     @Autowired
     private ExamineDealService examineDealService;
-    
+    @Autowired
+    private MerchantApplyManager merchantApplyManager;
 	@Override
 	public MemResult<List<MerchantItemCategoryDO>> findMerchantItemCategoriesBySellerId(int domainId, long sellerId) {
 		MemResult<List<MerchantItemCategoryDO>> merchantItemCategoryResult = new MemResult<>();
@@ -62,6 +67,19 @@ public class MerchantItemCategoryServiceImpl implements MerchantItemCategoryServ
 			return memResultSupport;
 		}
 		examineDO.setStatues(ExamineStatus.EXAMIN_OK.getStatus());
+//		if (examineDO.getMerchantCategoryId() > 0) {
+//			
+//			MerchantCategoryQueryDTO merchantCategoryQueryDTO = new MerchantCategoryQueryDTO();
+//			merchantCategoryQueryDTO.setDomainId(domainId);
+//			merchantCategoryQueryDTO.setId(examineDO.getMerchantCategoryId());
+//			
+//			MemResult<List<MerchantCategoryDO>> merchantCategoryResult = merchantApplyManager.getMerchantCategory(merchantCategoryQueryDTO);
+//			if (merchantCategoryResult == null || !merchantCategoryResult.isSuccess() || merchantCategoryResult.getValue() == null || merchantCategoryResult.getValue().size() == 0) {
+//				memResultSupport.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+//				return memResultSupport;
+//			}
+//			examineDO.setMerchantCategoryName(merchantCategoryResult.getValue().get(0).getName());
+//		}
 		memResultSupport = merchantItemCategoryManager.saveMerchanItemCategories(examineDO, categoryIds);
 		return memResultSupport;
 	}

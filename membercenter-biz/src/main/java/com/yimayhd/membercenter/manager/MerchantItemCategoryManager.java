@@ -3,21 +3,7 @@ package com.yimayhd.membercenter.manager;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.rocketmq.client.producer.*;
-import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
-import com.yimayhd.membercenter.client.domain.examine.ExamineDetailDO;
-import com.yimayhd.membercenter.client.result.MemResult;
-import com.yimayhd.membercenter.converter.ExamineConverter;
-import com.yimayhd.membercenter.enums.ExamineStatus;
-import com.yimayhd.membercenter.idgen.IDPool;
-import com.yimayhd.membercenter.manager.talent.TalentExamineManager;
-import com.yimayhd.membercenter.mapper.ExamineDOMapper;
-import com.yimayhd.membercenter.mapper.ExamineDetailDOMapper;
-import com.yimayhd.membercenter.repo.MerchantRepo;
-import com.yimayhd.user.client.domain.MerchantDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -27,13 +13,30 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.rocketmq.client.producer.LocalTransactionExecuter;
+import com.alibaba.rocketmq.client.producer.LocalTransactionState;
+import com.alibaba.rocketmq.client.producer.SendStatus;
+import com.alibaba.rocketmq.client.producer.TransactionSendResult;
 import com.alibaba.rocketmq.common.message.Message;
 import com.yimayhd.membercenter.MemberReturnCode;
+import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
+import com.yimayhd.membercenter.client.domain.examine.ExamineDetailDO;
+import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantItemCategoryDO;
 import com.yimayhd.membercenter.client.enums.topic.MemberTopic;
+import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.result.MemResultSupport;
+import com.yimayhd.membercenter.converter.ExamineConverter;
 import com.yimayhd.membercenter.dao.MerchantItemCategoryDao;
+import com.yimayhd.membercenter.idgen.IDPool;
+import com.yimayhd.membercenter.manager.talent.TalentExamineManager;
+import com.yimayhd.membercenter.mapper.ExamineDOMapper;
+import com.yimayhd.membercenter.mapper.ExamineDetailDOMapper;
+import com.yimayhd.membercenter.mapper.MerchantCategoryDOMapper;
 import com.yimayhd.membercenter.mq.MsgSender;
+import com.yimayhd.membercenter.repo.MerchantRepo;
+import com.yimayhd.user.client.domain.MerchantDO;
 
 public class MerchantItemCategoryManager {
     private static final Logger logger = LoggerFactory.getLogger(MerchantItemCategoryManager.class);
@@ -54,6 +57,8 @@ public class MerchantItemCategoryManager {
     IDPool examineDetailIdPool;
     @Autowired
     ExamineDetailDOMapper examineDetailDOMapper;
+    @Autowired
+    private MerchantCategoryDOMapper merchantCategoryDOMapper;
 
     public List<MerchantItemCategoryDO> findMerchantItemCategoryByMerchant(int domainId, long sellerId) {
         return merchantItemCategoryDao.selectMerchantItemCategoriesByMerchant(domainId, sellerId);
@@ -69,6 +74,15 @@ public class MerchantItemCategoryManager {
         MemResultSupport memResultSupport = new MemResultSupport();
         // 新增商家
         final MerchantDO merchantDO = ExamineConverter.examineToMerchant(examineDO);
+        long merchantCategoryId = examineDO.getMerchantCategoryId() ;
+        if( merchantCategoryId > 0 ){
+        	MerchantCategoryDO merchantCategoryDO = merchantCategoryDOMapper.selectByPrimaryKey(merchantCategoryId);
+        	if( merchantCategoryDO != null && merchantCategoryDO.getMerchantCategoryFeature() != null ){
+        		merchantDO.setBusiType(merchantCategoryDO.getMerchantCategoryFeature().getBusinessType());
+        	}
+        	
+        }
+        
         MemResult<MerchantDO> memResult = merchantRepo.saveMerchant(merchantDO);
         if (!memResult.isSuccess()) {
             logger.error("saveMerchanItemCategories param:{} is null, insertMerchant failure", JSONObject.toJSONString(merchantDO));

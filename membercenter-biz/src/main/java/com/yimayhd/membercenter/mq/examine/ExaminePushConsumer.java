@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
 import com.yimayhd.membercenter.client.enums.topic.MemberTopic;
 import com.yimayhd.membercenter.enums.ExamineStatus;
+import com.yimayhd.membercenter.mapper.ExamineDOMapper;
 import com.yimayhd.membercenter.mq.BaseConsumer;
 import com.yimayhd.membercenter.repo.MsgRepo;
 import com.yimayhd.membercenter.util.ParmCheckUtil;
@@ -42,6 +43,8 @@ public class ExaminePushConsumer extends BaseConsumer {
     private static final int BIZ_SUB_TYPE = 3001;
     
     private static final int APPLICATION_ID = 21;
+    @Autowired
+    private ExamineDOMapper examineDOMapper ;
 
     @Autowired
     MsgRepo msgRepo;
@@ -64,7 +67,15 @@ public class ExaminePushConsumer extends BaseConsumer {
             logger.error(log + "   Message not ExamineDO!");
             return true;
         }
-        ExamineDO examineDO = (ExamineDO) message;
+        ExamineDO msg = (ExamineDO) message;
+        //
+        ExamineDO examineDO = examineDOMapper.selectById(msg) ;
+        if( examineDO == null ){
+        	
+        	logger.error("result:ExamineDO={}",JSON.toJSONString(examineDO));
+        	return true; 
+        }
+        
         PushRecordDO pushRecordDO = new PushRecordDO();
         pushRecordDO.setSendType(PushSendType.REGISTRATION_ID.getType());
         pushRecordDO.setUserId(examineDO.getSellerId());

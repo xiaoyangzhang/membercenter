@@ -2,11 +2,11 @@ package com.yimayhd.membercenter.mapper;
 
 import java.util.List;
 
+import com.yimayhd.membercenter.client.dto.DraftDTO;
 import org.apache.ibatis.annotations.Param;
 
 import com.yimayhd.membercenter.client.domain.draft.DraftDO;
 import com.yimayhd.membercenter.client.query.DraftListQuery;
-import com.yimayhd.membercenter.client.vo.DraftVO;
 
 /**
  * 
@@ -72,12 +72,12 @@ public interface DraftMapper {
 	
 	/**
 	 * 通过类型来查找草稿详细内容
-	 * @param draftVO 草稿查询条件（类型）
+	 * @param draftDTO 草稿查询条件（类型）
 	 * @return 草稿详细信息
 	 * @author liuxp
 	 * @createTime 2016年6月6日
 	 */
-	DraftDO getDraftDetailByType(DraftVO draftVO);
+	DraftDO getDraftDetailByType(DraftDTO draftDTO);
 
 	/**
 	 * 判断名称是否重复

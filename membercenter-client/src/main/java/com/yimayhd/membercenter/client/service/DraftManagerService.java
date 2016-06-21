@@ -3,12 +3,11 @@ package com.yimayhd.membercenter.client.service;
 import java.util.List;
 
 import com.yimayhd.membercenter.client.domain.draft.DraftDO;
-import com.yimayhd.membercenter.client.dto.DraftDTO;
 import com.yimayhd.membercenter.client.dto.DraftDetailDTO;
 import com.yimayhd.membercenter.client.query.DraftListQuery;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
-import com.yimayhd.membercenter.client.vo.DraftVO;
+import com.yimayhd.membercenter.client.dto.DraftDTO;
 
 /**
  * 草稿箱接口
@@ -19,7 +18,7 @@ public interface DraftManagerService {
 	
 	/**
 	 * 保存草稿
-	 * @param draftVO 新建的vo
+	 * @param draftDO 新建的vo
 	 * @return 保存结果
 	 * @author liuxp
 	 * @createTime 2016年6月3日
@@ -51,7 +50,7 @@ public interface DraftManagerService {
 	 * @author liuxp
 	 * @createTime 2016年6月3日
 	 */
-	public MemPageResult<DraftDTO> getDraftList(DraftListQuery draftListQuery);
+	public MemPageResult<com.yimayhd.membercenter.client.dto.DraftDTO> getDraftList(DraftListQuery draftListQuery);
 	
 	/**
 	 * 获得草稿详细信息
@@ -64,10 +63,10 @@ public interface DraftManagerService {
 	
 	/**
 	 * 通过类型和商户id获得草稿箱信息
-	 * @param draftVO 入力参数
+	 * @param draftDTO 入力参数
 	 * @return 草稿详细结果
 	 * @author liuxp
 	 * @createTime 2016年6月6日
 	 */
-	public MemResult<DraftDetailDTO> getDraftDetailByType(DraftVO draftVO);
+	public MemResult<DraftDetailDTO> getDraftDetailByType(DraftDTO draftDTO);
 }

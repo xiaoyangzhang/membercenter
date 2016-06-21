@@ -8,13 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.draft.DraftDO;
-import com.yimayhd.membercenter.client.dto.DraftDTO;
 import com.yimayhd.membercenter.client.dto.DraftDetailDTO;
 import com.yimayhd.membercenter.client.query.DraftListQuery;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.DraftManagerService;
-import com.yimayhd.membercenter.client.vo.DraftVO;
+import com.yimayhd.membercenter.client.dto.DraftDTO;
 import com.yimayhd.membercenter.manager.DraftManager;
 
 public class DraftManagerServiceImpl implements DraftManagerService {
@@ -101,9 +100,9 @@ public class DraftManagerServiceImpl implements DraftManagerService {
 	 * @createTime 2016年6月3日
 	 */
 	@Override
-	public MemPageResult<DraftDTO> getDraftList(DraftListQuery draftListQuery) {
+	public MemPageResult<com.yimayhd.membercenter.client.dto.DraftDTO> getDraftList(DraftListQuery draftListQuery) {
         LOGGER.info("getDraftList draftListQuery= {}", draftListQuery);
-        MemPageResult<DraftDTO> result = new MemPageResult<DraftDTO>();
+        MemPageResult<com.yimayhd.membercenter.client.dto.DraftDTO> result = new MemPageResult<com.yimayhd.membercenter.client.dto.DraftDTO>();
         try {
         	result = draftManager.getDraftsList(draftListQuery);
 		} catch (Exception e) {
@@ -137,17 +136,17 @@ public class DraftManagerServiceImpl implements DraftManagerService {
 
 	/**
 	 * 通过类型和商户id获得草稿箱信息
-	 * @param draftVO 入力参数
+	 * @param draftDTO 入力参数
 	 * @return 草稿详细结果
 	 * @author liuxp
 	 * @createTime 2016年6月6日
 	 */
 	@Override
-	public MemResult<DraftDetailDTO> getDraftDetailByType(DraftVO draftVO) {
-		LOGGER.info("getDraftDetail draftVO= {}", draftVO);
+	public MemResult<DraftDetailDTO> getDraftDetailByType(DraftDTO draftDTO) {
+		LOGGER.info("getDraftDetail draftDTO= {}", draftDTO);
 		MemResult<DraftDetailDTO> result = new MemResult<DraftDetailDTO>();
         try {
-        	result = draftManager.getDetailByType(draftVO);
+        	result = draftManager.getDetailByType(draftDTO);
 		} catch (Exception e) {
             LOGGER.error("draftManagerServiceImpl.getDraftDetailByType occur error:{}", e);
             result.setSuccess(false);

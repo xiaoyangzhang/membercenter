@@ -11,13 +11,11 @@ import org.springframework.util.StringUtils;
 import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.draft.DraftDO;
-import com.yimayhd.membercenter.client.domain.draft.DraftDetailDO;
-import com.yimayhd.membercenter.client.dto.DraftDTO;
 import com.yimayhd.membercenter.client.dto.DraftDetailDTO;
 import com.yimayhd.membercenter.client.query.DraftListQuery;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
-import com.yimayhd.membercenter.client.vo.DraftVO;
+import com.yimayhd.membercenter.client.dto.DraftDTO;
 import com.yimayhd.membercenter.conventer.DraftConverter;
 import com.yimayhd.membercenter.mapper.DraftMapper;
 
@@ -135,9 +133,9 @@ public class DraftManager {
      * @author liuxp
      * @createTime 2016年6月6日
      */
-    public MemPageResult<DraftDTO> getDraftsList(DraftListQuery draftListQuery) {
+    public MemPageResult<com.yimayhd.membercenter.client.dto.DraftDTO> getDraftsList(DraftListQuery draftListQuery) {
     	
-    	MemPageResult<DraftDTO> result = new MemPageResult<DraftDTO>();
+    	MemPageResult<com.yimayhd.membercenter.client.dto.DraftDTO> result = new MemPageResult<com.yimayhd.membercenter.client.dto.DraftDTO>();
         result.setPageNo(draftListQuery.getPage());
         result.setPageSize(draftListQuery.getPageSize());
     	result.setSuccess(false);
@@ -167,7 +165,7 @@ public class DraftManager {
         }
         
         try {
-        	List<DraftDTO> draftDTOs = DraftConverter.converterDraftList(draftDOs);
+        	List<com.yimayhd.membercenter.client.dto.DraftDTO> draftDTOs = DraftConverter.converterDraftList(draftDOs);
         	result.setList(draftDTOs);
         	result.setSuccess(true);
         	result.setHasNext(count-draftListQuery.getPage()*draftListQuery.getPageSize()>0);
@@ -216,32 +214,32 @@ public class DraftManager {
     
     /**
      * 通过类型获得草稿详细信息
-     * @param draftVO 查询条件
+     * @param draftDTO 查询条件
      * @return 草稿详细信息
      * @author liuxp
      * @createTime 2016年6月6日
      */
-    public MemResult<DraftDetailDTO> getDetailByType(DraftVO draftVO) {
+    public MemResult<DraftDetailDTO> getDetailByType(DraftDTO draftDTO) {
     	MemResult<DraftDetailDTO> result = new MemResult<DraftDetailDTO>();
 		result.setSuccess(false);
 		
-		if(!(draftVO.getMainType()>0)||!(draftVO.getSubType()>0)||draftVO.getAccountId()==null) {
+		if(!(draftDTO.getMainType()>0)||!(draftDTO.getSubType()>0)|| draftDTO.getAccountId()==null) {
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
     		return result;
 		}
 		DraftDO draftDO;
 
 		try {
-			draftDO = draftMapper.getDraftDetailByType(draftVO);
+			draftDO = draftMapper.getDraftDetailByType(draftDTO);
 			
 		} catch (Exception e) {
-			logger.error("getDetailByType draftVO " + draftVO, e);
+			logger.error("getDetailByType draftDTO " + draftDTO, e);
 			result.setReturnCode(MemberReturnCode.DB_READ_FAILED);
 			return result;
 		} 
 		
 		if(null==draftDO) {
-			logger.info("getDetailByType draftVO= {} find no data", draftVO);
+			logger.info("getDetailByType draftDTO= {} find no data", draftDTO);
 			return result;
 		} else {
 			DraftDetailDTO draftDetailDTO = new DraftDetailDTO();

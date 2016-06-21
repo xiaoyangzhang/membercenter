@@ -22,7 +22,7 @@
 	<include refid="Base_Column_List"/> 
 	FROM draft
 	<include refid="pageQueryManagerSqlString"/>
-	ORDER BY gmt_created DESC
+	ORDER BY gmt_modified DESC
 	LIMIT #{startRow},#{pageSize}
 </select>
 
@@ -79,7 +79,7 @@
 </select>
 
 <!-- 通过类型获得指定草稿内容 -->
-<select id="getDraftDetailByType" parameterType="com.yimayhd.membercenter.client.vo.DraftVO">
+<select id="getDraftDetailByType" parameterType="com.yimayhd.membercenter.client.dto.DraftDTO">
 	SELECT 
 	<include refid="Base_Column_List"/> 
 	FROM draft

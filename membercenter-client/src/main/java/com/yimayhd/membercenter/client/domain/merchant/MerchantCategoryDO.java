@@ -3,6 +3,8 @@ package com.yimayhd.membercenter.client.domain.merchant;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.yimayhd.membercenter.client.enums.feature.MerchantCategoryFeature;
+
 public class MerchantCategoryDO implements Serializable {
     private long id;
 
@@ -22,6 +24,9 @@ public class MerchantCategoryDO implements Serializable {
 
     private Date gmtModified;
     private String busiType;
+    
+    private String feature ;
+    
     private static final long serialVersionUID = 1L;
     
     public String getBusiType() {
@@ -112,4 +117,35 @@ public class MerchantCategoryDO implements Serializable {
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
     }
+
+//	public String getFeatrue() {
+//		return featrue;
+//	}
+//
+//	public void setFeatrue(String featrue) {
+//		this.featrue = featrue;
+//	}
+	
+
+    private MerchantCategoryFeature merchantCategoryFeature;
+
+	public String getFeature() {
+        if(merchantCategoryFeature == null) {
+            return null;
+        }
+        return merchantCategoryFeature.getFeature();
+    }
+
+    public void setFeature(String feature) {
+        this.merchantCategoryFeature = new MerchantCategoryFeature(feature);
+    }
+
+    public MerchantCategoryFeature getMerchantCategoryFeature() {
+        return merchantCategoryFeature;
+    }
+
+    public void setMerchantCategoryFeature(MerchantCategoryFeature merchantCategoryFeature) {
+        this.merchantCategoryFeature = merchantCategoryFeature;
+    }
+	
 }

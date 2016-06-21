@@ -67,19 +67,19 @@ public class MerchantItemCategoryServiceImpl implements MerchantItemCategoryServ
 			return memResultSupport;
 		}
 		examineDO.setStatues(ExamineStatus.EXAMIN_OK.getStatus());
-		if (examineDO.getMerchantCategoryId() > 0) {
-			
-			MerchantCategoryQueryDTO merchantCategoryQueryDTO = new MerchantCategoryQueryDTO();
-			merchantCategoryQueryDTO.setDomainId(domainId);
-			merchantCategoryQueryDTO.setId(examineDO.getMerchantCategoryId());
-			
-			MemResult<List<MerchantCategoryDO>> merchantCategoryResult = merchantApplyManager.getMerchantCategory(merchantCategoryQueryDTO);
-			if (merchantCategoryResult == null || !merchantCategoryResult.isSuccess() || merchantCategoryResult.getValue() == null || merchantCategoryResult.getValue().size() == 0) {
-				memResultSupport.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
-				return memResultSupport;
-			}
-			examineDO.setMerchantCategoryName(merchantCategoryResult.getValue().get(0).getName());
-		}
+//		if (examineDO.getMerchantCategoryId() > 0) {
+//			
+//			MerchantCategoryQueryDTO merchantCategoryQueryDTO = new MerchantCategoryQueryDTO();
+//			merchantCategoryQueryDTO.setDomainId(domainId);
+//			merchantCategoryQueryDTO.setId(examineDO.getMerchantCategoryId());
+//			
+//			MemResult<List<MerchantCategoryDO>> merchantCategoryResult = merchantApplyManager.getMerchantCategory(merchantCategoryQueryDTO);
+//			if (merchantCategoryResult == null || !merchantCategoryResult.isSuccess() || merchantCategoryResult.getValue() == null || merchantCategoryResult.getValue().size() == 0) {
+//				memResultSupport.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+//				return memResultSupport;
+//			}
+//			examineDO.setMerchantCategoryName(merchantCategoryResult.getValue().get(0).getName());
+//		}
 		memResultSupport = merchantItemCategoryManager.saveMerchanItemCategories(examineDO, categoryIds);
 		return memResultSupport;
 	}

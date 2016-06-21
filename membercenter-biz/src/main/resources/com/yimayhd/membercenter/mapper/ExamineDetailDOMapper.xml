@@ -19,7 +19,7 @@
     <result column="gmt_created" property="gmtCreated" jdbcType="TIMESTAMP" />
     <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
      <result column="merchant_category_id" property="merchantCategoryId" jdbcType="BIGINT" />
-    <result column="is_direct_sale" property="isDirectSale" jdbcType="INTEGER" />
+    <result column="is_direct_sale" property="isDirectSale" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, seller_id, seller_name, domain_id, principal_name, sale_scope, tel_num, pictures_url, 
@@ -45,7 +45,7 @@
       #{telNum,jdbcType=VARCHAR}, #{picturesUrl,jdbcType=VARCHAR}, #{certificate,jdbcType=VARCHAR}, 
       #{feature,jdbcType=VARCHAR}, #{examineMes,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
       #{statues,jdbcType=INTEGER}, #{reviewerId,jdbcType=BIGINT}, #{gmtCreated,jdbcType=TIMESTAMP}, 
-      #{gmtModified,jdbcType=TIMESTAMP},#{isDirectSale,jdbcType=INTEGER},#{merchantCategoryId,jdbcType=BIGINT}
+      #{gmtModified,jdbcType=TIMESTAMP},#{isDirectSale,jdbcType=TINYINT},#{merchantCategoryId,jdbcType=BIGINT}
       )
   </insert>
 </mapper>

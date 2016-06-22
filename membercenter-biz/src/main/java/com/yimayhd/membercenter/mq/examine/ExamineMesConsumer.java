@@ -16,6 +16,7 @@ import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
 import com.yimayhd.membercenter.client.enums.topic.MemberTopic;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.enums.ExamineStatus;
+import com.yimayhd.membercenter.mapper.ExamineDOMapper;
 import com.yimayhd.membercenter.mq.BaseConsumer;
 import com.yimayhd.membercenter.repo.MsgRepo;
 import com.yimayhd.membercenter.repo.UserRepo;
@@ -38,7 +39,9 @@ public class ExamineMesConsumer extends BaseConsumer {
     
     @Autowired
     UserRepo userRepo;
-        
+    @Autowired
+    private ExamineDOMapper examineDOMapper ;
+
     @Override
     public String getTopic() {
         return MemberTopic.EXAMINE_RESULT.getTopic();
@@ -57,7 +60,13 @@ public class ExamineMesConsumer extends BaseConsumer {
             logger.error(log + "   Message not ExamineDO!");
             return true;
         }
-        ExamineDO examineDO = (ExamineDO) message;
+        ExamineDO msg = (ExamineDO) message;
+        ExamineDO examineDO = examineDOMapper.selectById(msg) ;
+        if( examineDO == null ){
+        	
+        	logger.error("result:ExamineDO={}",JSON.toJSONString(examineDO));
+        	return true; 
+        }
         MemResult<String> moblieResult = userRepo.queryUserMobile(examineDO.getSellerId());
         if(!moblieResult.isSuccess()){
             logger.info("ExamineMesConsumer par:{}  query mobileNO return null, sendMes fail", JSONObject.toJSONString(examineDO.getSellerId()));

@@ -30,7 +30,6 @@ import com.yimayhd.user.client.domain.MerchantDO;
 import com.yimayhd.user.client.enums.CertificateOption;
 import com.yimayhd.user.client.enums.MerchantBusiType;
 import com.yimayhd.user.client.enums.MerchantOption;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -364,10 +363,6 @@ public class ExamineConverter {
         }else{
             merchantDO.setOption(MerchantOption.MERCHANT.getOption());
         }
-//        if (!StringUtils.isBlank(examineDO.getMerchantCategoryName())) {
-//			
-//        	merchantDO.setBusiType(MerchantBusiType.valueOfName(examineDO.getMerchantCategoryName()).getCode());
-//		}
         return merchantDO;
     }
 }

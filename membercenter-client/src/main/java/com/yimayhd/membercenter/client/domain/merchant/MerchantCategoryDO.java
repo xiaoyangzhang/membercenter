@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.yimayhd.membercenter.client.enums.feature.MerchantCategoryFeature;
 
+
 public class MerchantCategoryDO implements Serializable {
     private long id;
 

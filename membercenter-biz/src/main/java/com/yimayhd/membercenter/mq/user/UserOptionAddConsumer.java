@@ -20,6 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.rocketmq.client.producer.LocalTransactionState;
+import com.alibaba.rocketmq.client.producer.SendResult;
+import com.alibaba.rocketmq.client.producer.SendStatus;
 import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
 import com.yimayhd.membercenter.client.enums.topic.MemberTopic;
 import com.yimayhd.membercenter.client.result.MemResult;
@@ -27,6 +30,7 @@ import com.yimayhd.membercenter.converter.ExamineConverter;
 import com.yimayhd.membercenter.enums.ExamineStatus;
 import com.yimayhd.membercenter.enums.ExamineType;
 import com.yimayhd.membercenter.mq.BaseConsumer;
+import com.yimayhd.membercenter.mq.MsgSender;
 import com.yimayhd.membercenter.repo.MerchantRepo;
 import com.yimayhd.membercenter.repo.UserOptionRepo;
 import com.yimayhd.user.client.domain.MerchantDO;
@@ -49,6 +53,8 @@ public class UserOptionAddConsumer extends BaseConsumer {
 
 	@Autowired
 	UserOptionRepo userOptionRepo;
+	@Autowired
+	private MsgSender msgSender ;
 
 	@Override
 	public String getTopic() {
@@ -99,7 +105,20 @@ public class UserOptionAddConsumer extends BaseConsumer {
         // 更新user option
         // FIXME 刘彬彬 这是一个跨系统调用，需要保证一定成功的，现在的代码如果调用user失败，数据就会错乱了。
         MemResult<Boolean> result = addUserOption(examineDO.getSellerId(), examineDO.getType());
-        return result.isSuccess();
+        if( result != null && result.isSuccess() ){
+//        	return true; 
+        	// 发送审核状态到mq消息
+        	SendResult sendResult = msgSender.sendMessage(examineDO,MemberTopic.EXAMINE_RESULT.getTopic(), MemberTopic.EXAMINE_RESULT.getTags());
+        	if (sendResult.getSendStatus() == SendStatus.SEND_OK) {
+        		logger.info("sendMessage topic:{}  par:{} return:{}", MemberTopic.EXAMINE_RESULT, JSONObject.toJSONString(examineDO), JSONObject.toJSONString(sendResult));
+        		return true;
+        	}else{
+        		logger.error("sendMessage topic:{}  par:{} return:{}", MemberTopic.EXAMINE_RESULT, JSONObject.toJSONString(examineDO), JSONObject.toJSONString(sendResult));
+        		return false;
+        	}
+        }
+        
+        return false;
 	}
 
 	/**

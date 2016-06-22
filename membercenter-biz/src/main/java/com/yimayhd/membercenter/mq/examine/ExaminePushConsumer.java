@@ -67,14 +67,14 @@ public class ExaminePushConsumer extends BaseConsumer {
             logger.error(log + "   Message not ExamineDO!");
             return true;
         }
-        ExamineDO msg = (ExamineDO) message;
+        ExamineDO examineDO = (ExamineDO) message;
         //
-        ExamineDO examineDO = examineDOMapper.selectById(msg) ;
-        if( examineDO == null ){
-        	
-        	logger.error("result:ExamineDO={}",JSON.toJSONString(examineDO));
-        	return true; 
-        }
+//        ExamineDO examineDO = examineDOMapper.selectById(msg) ;
+//        if( examineDO == null ){
+//        	
+//        	logger.error("result:ExamineDO={}",JSON.toJSONString(examineDO));
+//        	return true; 
+//        }
         
         PushRecordDO pushRecordDO = new PushRecordDO();
         pushRecordDO.setSendType(PushSendType.REGISTRATION_ID.getType());

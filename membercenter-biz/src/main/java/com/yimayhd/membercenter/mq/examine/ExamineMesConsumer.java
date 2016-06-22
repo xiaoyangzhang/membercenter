@@ -60,13 +60,13 @@ public class ExamineMesConsumer extends BaseConsumer {
             logger.error(log + "   Message not ExamineDO!");
             return true;
         }
-        ExamineDO examineDO = (ExamineDO) message;
-//        ExamineDO examineDO = examineDOMapper.selectById(msg) ;
-//        if( examineDO == null ){
-//        	
-//        	logger.error("result:ExamineDO={}",JSON.toJSONString(examineDO));
-//        	return true; 
-//        }
+        ExamineDO msg = (ExamineDO) message;
+        ExamineDO examineDO = examineDOMapper.selectById(msg) ;
+        if( examineDO == null ){
+        	
+        	logger.error("result:ExamineDO={}",JSON.toJSONString(examineDO));
+        	return true; 
+        }
         MemResult<String> moblieResult = userRepo.queryUserMobile(examineDO.getSellerId());
         if(!moblieResult.isSuccess()){
             logger.info("ExamineMesConsumer par:{}  query mobileNO return null, sendMes fail",JSON.toJSONString(examineDO), JSONObject.toJSONString(examineDO.getSellerId()));

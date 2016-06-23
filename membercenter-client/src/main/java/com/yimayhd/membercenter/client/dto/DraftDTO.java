@@ -34,6 +34,10 @@ public class DraftDTO implements Serializable{
 	 * 创建时间
 	 */
 	private Date gmtCreated;
+	/**
+	 * 修改时间
+	 */
+	private Date gmtModified;
 	
 	/**
 	 * 主类型
@@ -99,5 +103,13 @@ public class DraftDTO implements Serializable{
 
 	public void setSubType(int subType) {
 		this.subType = subType;
+	}
+
+	public Date getGmtModified() {
+		return gmtModified;
+	}
+
+	public void setGmtModified(Date gmtModified) {
+		this.gmtModified = gmtModified;
 	}
 }

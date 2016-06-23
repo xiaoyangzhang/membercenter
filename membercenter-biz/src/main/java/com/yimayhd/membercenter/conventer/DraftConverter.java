@@ -34,6 +34,7 @@ public class DraftConverter {
 			int subType = draftDO.getSubType();
 			draftDTO.setMainType(mainType);
 			draftDTO.setSubType(subType);
+			draftDTO.setGmtModified(draftDO.getGmtModified());
 			
 			if(mainType==DraftEnum.ITEM.getValue()) {
 				try {

@@ -82,6 +82,7 @@ public class TalentInfoManager {
         merchantPageQuery.setDomainId(talentQueryDTO.getDomainId());
         merchantPageQuery.setPageNo(talentQueryDTO.getPageNo());
         merchantPageQuery.setPageSize(talentQueryDTO.getPageSize());
+        merchantPageQuery.setPicUrlsNotNullAndTitleNotNull(true);
         if (null != talentQueryDTO.isSortType()) {
             merchantPageQuery.setServiceSort(
                     talentQueryDTO.isSortType() ? SequenceEnum.DESC.getType() : SequenceEnum.ASC.getType());

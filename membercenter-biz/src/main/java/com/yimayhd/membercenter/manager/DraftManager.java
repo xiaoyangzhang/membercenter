@@ -114,12 +114,13 @@ public class DraftManager {
     	MemResult<Boolean> result = new MemResult<Boolean>(false);
     	if(null==draftDO.getId()||StringUtils.isEmpty(draftDO.getJSONStr())||null==draftDO.getAccountId()) {
 			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			result.setValue(null);
     		return result;
     	}
     	draftDO.setGmtModified(new Date());
     	try {
-    		draftMapper.coverDraft(draftDO);
-    		result.setValue(true);
+    		int returnCode = draftMapper.coverDraft(draftDO);
+    		result.setValue(returnCode>0);
 		} catch (Exception e) {
 			result.setReturnCode(MemberReturnCode.DB_WRITE_FAILED);
 		}
@@ -145,9 +146,24 @@ public class DraftManager {
         try {
 			count = draftMapper.getDraftsCount(draftListQuery);
 			if(count>0) {
+				if(count<=draftListQuery.getStartRow()) {
+					int page = draftListQuery.getPage();
+					while(page>1) {
+						int startRow = (page-1)*draftListQuery.getPageSize();
+						if(count>startRow) {
+							draftListQuery.setPage(page);
+							draftListQuery.setStartRow(startRow);
+							result.setPageNo(page);
+							break;
+						}
+						page--;
+					}
+
+				}
 				draftDOs = draftMapper.getDraftList(draftListQuery);
 				result.setTotalCount(count);
 			} else {
+				result.setPageNo(1);
 				result.setTotalCount(count);
 				result.setSuccess(true);
 				return result;
@@ -160,6 +176,7 @@ public class DraftManager {
         
         if(CollectionUtils.isEmpty(draftDOs)) {
         	result.setTotalCount(count);
+			result.setPageNo(1);
         	result.setSuccess(true);
             return result;
         }

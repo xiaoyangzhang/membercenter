@@ -6,6 +6,7 @@ import com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
 import com.yimayhd.membercenter.client.domain.merchant.QualificationDO;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
+import com.yimayhd.membercenter.client.dto.MerchantQualificationDTO;
 import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 
@@ -74,5 +75,5 @@ public interface QualificationService {
 	public MemResult<Integer> updateStatusBatch(List<QualificationQueryDTO> qualificationQueryDTOs) ;
 		
 	MemResult<Boolean> getQualificationRequired(QualificationQueryDTO queryDTO);
-	
+	public MemResult<Boolean> insertMerchantQualification(MerchantQualificationDTO dto);
 }

@@ -12,6 +12,7 @@ import com.yimayhd.membercenter.client.domain.merchant.CategoryQualificationDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
 import com.yimayhd.membercenter.client.domain.merchant.QualificationDO;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
+import com.yimayhd.membercenter.client.dto.MerchantQualificationDTO;
 import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.service.QualificationService;
@@ -136,6 +137,18 @@ public class QualificationServiceImpl implements QualificationService {
 	@Override
 	public MemResult<Boolean> getQualificationRequired(QualificationQueryDTO queryDTO) {
 		return qualificationManager.getQualificationRequired(queryDTO);
+	}
+
+
+	@Override
+	public MemResult<Boolean> insertMerchantQualification(MerchantQualificationDTO dto) {
+		MemResult<Boolean> result = new MemResult<Boolean>();
+		if (dto == null) {
+			log.error(" param error : MerchantQualificationDTO={}",JSON.toJSONString(dto));
+			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return result;
+		}
+		return  qualificationManager.insertMerchantQualification(dto);
 	}
 
 }

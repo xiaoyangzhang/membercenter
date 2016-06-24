@@ -14,6 +14,8 @@ import java.util.List;
 
 
 
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import com.alibaba.fastjson.JSON;
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
+import com.yimayhd.membercenter.client.dto.MerchantQualificationDTO;
 import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
@@ -215,5 +218,21 @@ public class QualificationManager {
 		MemResult<Boolean> memResult = new MemResult<>();
 		memResult.setValue(result);
 		return memResult;
+	}
+	
+	public MemResult<Boolean> insertMerchantQualification(MerchantQualificationDTO dto) {
+		MemResult<Boolean> result = new MemResult<Boolean>();
+		try {
+			MerchantQualificationDO merchantQualificationDO = MerchantConverter.convertMerchantQualificationDTO2DO(dto);
+			MerchantQualificationDO insertResult = merchantQualificationDao.insert(merchantQualificationDO);
+			if (insertResult == null) {
+				result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+				return result;
+			}
+		} catch (Exception e) {
+			log.error("params:MerchantQualificationDTO={} exception:{}",JSON.toJSONString(dto),e);
+			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+		}
+		return result;
 	}
 }

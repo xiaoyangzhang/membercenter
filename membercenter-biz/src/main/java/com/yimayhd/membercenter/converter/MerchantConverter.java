@@ -10,6 +10,7 @@ import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantInfoDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
 import com.yimayhd.membercenter.client.domain.talent.TalentInfoDO;
+import com.yimayhd.membercenter.client.dto.MerchantQualificationDTO;
 import com.yimayhd.membercenter.client.query.BusinessScopeQueryDTO;
 import com.yimayhd.membercenter.client.query.MerchantQueryDTO;
 import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
@@ -237,5 +238,16 @@ public class MerchantConverter {
     	//	merchantQualification.s
     	merchantScope.setStatus(queryDTO.getStatus());
     	return merchantScope;
+    }
+    
+    public static MerchantQualificationDO convertMerchantQualificationDTO2DO(MerchantQualificationDTO dto) {
+    	MerchantQualificationDO merchantQualification = new MerchantQualificationDO();
+    	merchantQualification.setDomainId(dto.getMerchantQualification().getDomainId());
+    	merchantQualification.setContent(dto.getMerchantQualification().getContent());
+    	merchantQualification.setIdList(dto.getMerchantQualification().getIdList());
+    	merchantQualification.setStatus(dto.getMerchantQualification().getStatus());
+    	merchantQualification.setSellerId(dto.getMerchantQualification().getSellerId());
+    	merchantQualification.setQulificationId(dto.getMerchantQualification().getQulificationId());
+    	return merchantQualification;
     }
 }

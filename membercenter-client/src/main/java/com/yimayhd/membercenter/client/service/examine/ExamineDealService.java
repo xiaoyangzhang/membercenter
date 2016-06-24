@@ -9,6 +9,7 @@
  */
 package com.yimayhd.membercenter.client.service.examine;
 
+import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
 import com.yimayhd.membercenter.client.dto.ExamineDealDTO;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
 import com.yimayhd.membercenter.client.dto.ExamineResultDTO;
@@ -87,6 +88,7 @@ public interface ExamineDealService {
      * @since [产品/模块版本](可选)
      */
     MemPageResult<ExamineInfoDTO> queryMerchantExamineByPage(ExaminePageQueryDTO examinQueryDTO);
+    MemPageResult<ExamineDO> queryMerchantExamine(ExaminePageQueryDTO examinQueryDTO);
     
     
     /**

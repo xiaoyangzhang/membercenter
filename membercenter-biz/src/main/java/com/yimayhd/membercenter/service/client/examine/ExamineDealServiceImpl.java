@@ -325,6 +325,39 @@ public class ExamineDealServiceImpl implements ExamineDealService {
 		return result;
 	}
 
+	@Override
+	public MemPageResult<ExamineDO> queryMerchantExamine(
+			ExaminePageQueryDTO examinQueryDTO) {
+		MemPageResult<ExamineDO> result = new MemPageResult<ExamineDO>();
+        long start = System.currentTimeMillis();
+        try {
+            if (ParmCheckUtil.MIN_CODE >= examinQueryDTO.getDomainId()) {
+                result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+                logger.info("queryMerchantExamineByPage domainId:{} is error", examinQueryDTO.getDomainId());
+                return result;
+            }
+            MemPageResult<ExamineDO> pageResult = talentExamineManager.queryMerchantExamineByPage(examinQueryDTO);
+            if (pageResult.isSuccess()) {
+                // 判断value是否为空
+                if (!ParmCheckUtil.checkListNull(pageResult.getList())) {
+                    
+                    result.setList(pageResult.getList());
+                    result.setTotalCount(pageResult.getTotalCount());
+                    result.setPageNo(pageResult.getPageNo());
+                    result.setHasNext(pageResult.isHasNext());
+                }
+            } else {
+                result.setReturnCode(pageResult.getReturnCode());
+                logger.info("queryMerchantExamineByPage par:{} is error return:{}",
+                        JSONObject.toJSONString(examinQueryDTO), JSONObject.toJSONString(pageResult));
+            }
+        } catch (Exception e) {
+            logger.error("queryMerchantExamineByPage par:{} error:{}", JSONObject.toJSONString(examinQueryDTO), e);
+            result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+        }
+        return result;
+	}
+
 	
     
 

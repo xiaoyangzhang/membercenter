@@ -41,8 +41,17 @@ public class ExaminePageQueryDTO extends PageQuery {
     private int[] statusArray;
     //审核
     private int status;
+    private long merchantCategoryId;
+    
+    public long getMerchantCategoryId() {
+		return merchantCategoryId;
+	}
 
-    public int getDomainId() {
+	public void setMerchantCategoryId(long merchantCategoryId) {
+		this.merchantCategoryId = merchantCategoryId;
+	}
+
+	public int getDomainId() {
         return domainId;
     }
 

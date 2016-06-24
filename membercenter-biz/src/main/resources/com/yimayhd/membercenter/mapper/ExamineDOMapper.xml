@@ -114,6 +114,9 @@
 		<include refid="Base_Column_List" />
 		from examine
 		<include refid="queryExamineSql"/>
+		<if test="merchantCategoryId == -1">
+			and merchant_category_id = 0
+		</if>
 		order by gmt_modified desc
 		limit #{startRow}, #{pageSize}
 	</select>

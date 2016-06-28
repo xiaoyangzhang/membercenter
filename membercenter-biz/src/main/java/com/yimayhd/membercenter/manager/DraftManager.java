@@ -148,7 +148,7 @@ public class DraftManager {
 			if(count>0) {
 				if(count<=draftListQuery.getStartRow()) {
 					int page = draftListQuery.getPage();
-					while(page>1) {
+					while(page>0) {
 						int startRow = (page-1)*draftListQuery.getPageSize();
 						if(count>startRow) {
 							draftListQuery.setPage(page);

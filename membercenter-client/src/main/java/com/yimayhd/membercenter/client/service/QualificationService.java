@@ -76,4 +76,5 @@ public interface QualificationService {
 		
 	MemResult<Boolean> getQualificationRequired(QualificationQueryDTO queryDTO);
 	public MemResult<Boolean> insertMerchantQualification(MerchantQualificationDTO dto);
+	public MemResult<Boolean> updateMerchantQualification(MerchantQualificationDTO dto);
 }

@@ -151,4 +151,17 @@ public class QualificationServiceImpl implements QualificationService {
 		return  qualificationManager.insertMerchantQualification(dto);
 	}
 
+
+	@Override
+	public MemResult<Boolean> updateMerchantQualification(
+			MerchantQualificationDTO dto) {
+		MemResult<Boolean> result = new MemResult<Boolean>();
+		if (dto == null || dto.getMerchantQualification() == null || dto.getMerchantQualification().getId() <= 0) {
+			log.error(" param error : MerchantQualificationDTO={}",JSON.toJSONString(dto));
+			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return result;
+		}
+		return qualificationManager.updateMerchantQualification(dto);
+	}
+
 }

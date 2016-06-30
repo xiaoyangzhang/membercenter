@@ -242,6 +242,7 @@ public class MerchantConverter {
     
     public static MerchantQualificationDO convertMerchantQualificationDTO2DO(MerchantQualificationDTO dto) {
     	MerchantQualificationDO merchantQualification = new MerchantQualificationDO();
+    	merchantQualification.setId(dto.getMerchantQualification().getId());
     	merchantQualification.setDomainId(dto.getMerchantQualification().getDomainId());
     	merchantQualification.setContent(dto.getMerchantQualification().getContent());
     	merchantQualification.setIdList(dto.getMerchantQualification().getIdList());

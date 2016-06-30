@@ -83,9 +83,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO" >
     update merchant_qualification
     <set >
-      <if test="merchantCategoryId != null" >
+      <!-- <if test="merchantCategoryId != null" >
         merchant_category_id = #{merchantCategoryId,jdbcType=BIGINT},
-      </if>
+      </if> -->
       <if test="qulificationId != null" >
         qulification_id = #{qulificationId,jdbcType=BIGINT},
       </if>
@@ -110,7 +110,14 @@
      
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       status = #{status}
-    where seller_id = #{sellerId} and domain_id=#{domainId}
+    where 1=1
+    <if test="sellerId > 0">
+    and seller_id = #{sellerId}
+    </if>
+    <if test="domainId > 0">
+    and domain_id=#{domainId}
+    </if>
+     
   </update>
   <update id="updateStatusBatch"  parameterType="java.util.List">  
     <foreach collection="list" item="item" index="index" open="" close="" separator=";">
@@ -125,9 +132,12 @@
   <select id="getMerchantQualification" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO" resultMap="BaseResultMap">
   	select id,qulification_id,content,domain_id,seller_id from merchant_qualification
   	where domain_id=#{merchantQualification.domainId}
-  	and status = 1
-  	<if test="merchantQualification.sellerId != null and merchantQualification.sellerId != 0">
+  	and status > 0
+  	<if test="merchantQualification.sellerId != null and merchantQualification.sellerId > 0">
   		and seller_id=#{merchantQualification.sellerId}
+  	</if>
+  	<if test="merchantQualification.status == 2">
+  	and status = 2
   	</if>
   </select>
 </mapper>

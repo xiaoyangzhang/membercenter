@@ -16,6 +16,7 @@ import java.util.List;
 
 
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -227,6 +228,22 @@ public class QualificationManager {
 			MerchantQualificationDO insertResult = merchantQualificationDao.insert(merchantQualificationDO);
 			if (insertResult == null) {
 				result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+				return result;
+			}
+		} catch (Exception e) {
+			log.error("params:MerchantQualificationDTO={} exception:{}",JSON.toJSONString(dto),e);
+			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+		}
+		return result;
+	}
+	
+	public MemResult<Boolean> updateMerchantQualification(MerchantQualificationDTO dto) {
+		MemResult<Boolean> result = new MemResult<Boolean>();
+		MerchantQualificationDO merchantQualificationDO = MerchantConverter.convertMerchantQualificationDTO2DO(dto);
+		try {
+			MerchantQualificationDO updateResult = merchantQualificationDao.update(merchantQualificationDO);
+			if (updateResult == null) {
+				result.setReturnCode(MemberReturnCode.DB_UPDATE_FAILED);
 				return result;
 			}
 		} catch (Exception e) {

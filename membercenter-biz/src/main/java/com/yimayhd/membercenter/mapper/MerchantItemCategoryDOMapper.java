@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.yimayhd.membercenter.client.domain.merchant.MerchantItemCategoryDO;
+import com.yimayhd.membercenter.client.query.MerchantItemCategoryQueryDTO;
 
 public interface MerchantItemCategoryDOMapper {
     int deleteByPrimaryKey(long id);
@@ -22,4 +23,6 @@ public interface MerchantItemCategoryDOMapper {
     List<MerchantItemCategoryDO> selectByMerchant(@Param("domainId") int domainId, @Param("sellerId") long sellerId);
 
     List<MerchantItemCategoryDO> selectByCategoryIdAndSellerId(@Param("domainId") int domainId, @Param("itemCategoryId") long categoryId, @Param("sellerId") long sellerId);
+    
+    //MerchantItemCategoryDO selectMerchantItemCategory(MerchantItemCategoryQueryDTO queryDTO);
 }

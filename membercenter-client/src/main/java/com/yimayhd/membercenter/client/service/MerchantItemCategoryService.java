@@ -14,4 +14,6 @@ public interface MerchantItemCategoryService {
 	MemResultSupport saveMerchantItemCategories(int domainId, long examineId, long[] categoryIds);
 
 	MemResultSupport checkCategoryPrivilege(int domainId, long categoryId, long sellerId);
+	
+	MemResult<List<MerchantItemCategoryDO>> getMerchantItemCategory(int domainId, long categoryId, long sellerId);
 }

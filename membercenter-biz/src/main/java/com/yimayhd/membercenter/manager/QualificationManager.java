@@ -105,6 +105,7 @@ public class QualificationManager {
 		MerchantQualificationDO merchantQualification= new MerchantQualificationDO();
 		merchantQualification.setDomainId(qualificationQueryDTO.getDomainId());
 		merchantQualification.setSellerId(qualificationQueryDTO.getSellerId());
+		merchantQualification.setStatus(qualificationQueryDTO.getStatus());
 		List<MerchantQualificationDO> merchantQualifications = merchantQualificationDao.getMerchantQualification(merchantQualification);
 		if (merchantQualifications == null) {
 			result.setReturnCode(MemberReturnCode.MERCHANT_QUALIFICATION_FAILED);

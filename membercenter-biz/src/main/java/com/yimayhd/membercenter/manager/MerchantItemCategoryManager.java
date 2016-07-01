@@ -189,4 +189,14 @@ public class MerchantItemCategoryManager {
         }
         return support;
     }
+    
+    public MemResult<List<MerchantItemCategoryDO>> getMerchantItemCategory(int domainId, long categoryId, long sellerId) {
+    	MemResult<List<MerchantItemCategoryDO>> result = new MemResult<List<MerchantItemCategoryDO>>();
+    	List<MerchantItemCategoryDO> merchantItemCategoryDOs = merchantItemCategoryDao.selectByCategoryIdAndSellerId(domainId, categoryId, sellerId);
+    	if (merchantItemCategoryDOs.isEmpty()) {
+    		result.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
+    	}
+    	result.setValue(merchantItemCategoryDOs);
+    	return result;
+    }
 }

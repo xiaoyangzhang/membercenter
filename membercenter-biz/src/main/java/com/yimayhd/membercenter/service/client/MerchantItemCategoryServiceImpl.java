@@ -1,7 +1,5 @@
 package com.yimayhd.membercenter.service.client;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.yimayhd.membercenter.enums.ExamineStatus;
@@ -12,11 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
-import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantItemCategoryDO;
-import com.yimayhd.membercenter.client.dto.ExamineDealDTO;
 import com.yimayhd.membercenter.client.dto.ExamineInfoDTO;
-import com.yimayhd.membercenter.client.query.MerchantCategoryQueryDTO;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.result.MemResultSupport;
 import com.yimayhd.membercenter.client.service.MerchantItemCategoryService;
@@ -25,8 +20,6 @@ import com.yimayhd.membercenter.converter.ExamineConverter;
 import com.yimayhd.membercenter.manager.MerchantApplyManager;
 import com.yimayhd.membercenter.manager.MerchantItemCategoryManager;
 import com.yimayhd.membercenter.mapper.ExamineDOMapper;
-import com.yimayhd.membercenter.repo.MerchantRepo;
-import com.yimayhd.user.client.domain.MerchantDO;
 
 public class MerchantItemCategoryServiceImpl implements MerchantItemCategoryService {
 
@@ -67,19 +60,6 @@ public class MerchantItemCategoryServiceImpl implements MerchantItemCategoryServ
 			return memResultSupport;
 		}
 		examineDO.setStatues(ExamineStatus.EXAMIN_OK.getStatus());
-//		if (examineDO.getMerchantCategoryId() > 0) {
-//			
-//			MerchantCategoryQueryDTO merchantCategoryQueryDTO = new MerchantCategoryQueryDTO();
-//			merchantCategoryQueryDTO.setDomainId(domainId);
-//			merchantCategoryQueryDTO.setId(examineDO.getMerchantCategoryId());
-//			
-//			MemResult<List<MerchantCategoryDO>> merchantCategoryResult = merchantApplyManager.getMerchantCategory(merchantCategoryQueryDTO);
-//			if (merchantCategoryResult == null || !merchantCategoryResult.isSuccess() || merchantCategoryResult.getValue() == null || merchantCategoryResult.getValue().size() == 0) {
-//				memResultSupport.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
-//				return memResultSupport;
-//			}
-//			examineDO.setMerchantCategoryName(merchantCategoryResult.getValue().get(0).getName());
-//		}
 		memResultSupport = merchantItemCategoryManager.saveMerchanItemCategories(examineDO, categoryIds);
 		return memResultSupport;
 	}
@@ -92,6 +72,25 @@ public class MerchantItemCategoryServiceImpl implements MerchantItemCategoryServ
 			return support;
 		}
 		return merchantItemCategoryManager.checkCategoryPrivilege(domainId,categoryId,sellerId);
+	}
+
+	@Override
+	public MemResult<List<MerchantItemCategoryDO>> getMerchantItemCategory(
+			int domainId, long categoryId, long sellerId) {
+		MemResult<List<MerchantItemCategoryDO>> result = new MemResult<List<MerchantItemCategoryDO>>();
+		if(domainId <= 0 || categoryId <= 0 || sellerId <= 0) {
+			LOGGER.error("params error:{}",domainId,categoryId,sellerId);
+			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return result;
+		}
+		
+		try {
+			result =  merchantItemCategoryManager.getMerchantItemCategory(domainId,categoryId,sellerId);
+		} catch (Exception e) {
+			LOGGER.error("params : {} exception : {}",domainId,categoryId,sellerId,e);
+			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+		}
+		return result;
 	}
 
 }

@@ -9,12 +9,14 @@ import java.util.List;
 
 
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.util.CollectionUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.yimayhd.membercenter.MemberReturnCode;
@@ -63,33 +65,67 @@ public class MerchantApplyManager {
 					@Override
 					public Boolean doInTransaction(TransactionStatus status) {
 						try {
-							MerchantScopeDO merchantScope = new MerchantScopeDO();
-							merchantScope.setDomainId(examineInfoDTO.getDomainId());
-							merchantScope.setSellerId(examineInfoDTO.getSellerId());
-							List<MerchantScopeDO> merchantScopeList = merchantScopeDao.getMerchantScope(merchantScope);
-							if (merchantScopeList != null) {
-								for (MerchantScopeDO merchantScopeDO : merchantScopeList) {
-									merchantScopeDO.setStatus(-1);
-									merchantScopeDO.setGmtModified(new Date());
-									merchantScopeDao.update(merchantScopeDO);
-								}
-							}
+							//保存数据到审核信息表
 							MemResult<Boolean> saveExamineResult = null;
 							saveExamineResult = talentExamineManager.submitMerchantExamineInfo(examineInfoDTO);
 							if ((saveExamineResult == null) || !saveExamineResult.isSuccess()) {
 								status.setRollbackOnly();
 								return false;
 							}
-		
+							MerchantScopeDO merchantScope = new MerchantScopeDO();
+							merchantScope.setDomainId(examineInfoDTO.getDomainId());
+							merchantScope.setSellerId(examineInfoDTO.getSellerId());
+							merchantScope.setStatus(100);
+							List<MerchantScopeDO> merchantScopeList = merchantScopeDao.getMerchantScope(merchantScope);
 							MerchantScopeDO merScopeDO = null;
-							for (MerchantScopeDO ms : merchantScopes) {
+							if (!CollectionUtils.isEmpty(merchantScopeList)) {
+									for (MerchantScopeDO merchantScopeDO : merchantScopeList) {
+										merchantScopeDO.setStatus(100);
+										merScopeDO = merchantScopeDao.update(merchantScopeDO);
+										if (merScopeDO == null) {
+											status.setRollbackOnly();
+											return false;
+										}
+									}
+									for (MerchantScopeDO ms : merchantScopes) {
+									int count = 0;
+									for (MerchantScopeDO merchantScopeDO : merchantScopeList) {
+									if (merchantScopeDO.getBusinessScopeId() == ms.getBusinessScopeId()) {
+										merchantScopeDO.setStatus(1);
+										merScopeDO = merchantScopeDao.update(merchantScopeDO);
+										count++;
+									}else {
+										continue;
+									}
+//									if (count == 0) {
+//										merchantScopeDO.setStatus(100);
+//										merScopeDO = merchantScopeDao.update(merchantScopeDO);
+//									}
+//									if (merScopeDO == null) {
+//										status.setRollbackOnly();
+//										return false;
+//									}
+								}
+									if (count == 0) {
+										merScopeDO = merchantScopeDao.insert(ms);
+									}
+									if (merScopeDO == null) {
+										status.setRollbackOnly();
+										return false;
+									}
+								}
+							}else {
 								
-								merScopeDO = merchantScopeDao.insert(ms);
-								if (merScopeDO == null) {
-									status.setRollbackOnly();
-									return false;
+								for (MerchantScopeDO ms : merchantScopes) {
+									
+									merScopeDO = merchantScopeDao.insert(ms);
+									if (merScopeDO == null) {
+										status.setRollbackOnly();
+										return false;
+									}
 								}
 							}
+		
 							return true;
 						} catch (Exception e) {
 

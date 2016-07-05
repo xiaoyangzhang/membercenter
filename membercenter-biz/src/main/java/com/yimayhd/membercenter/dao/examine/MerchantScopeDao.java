@@ -36,6 +36,17 @@ public class MerchantScopeDao {
 		}
 		return null;
 	}
+	public MerchantScopeDO updateBySelective(MerchantScopeDO record) {
+		if (null == record) {
+			return null;
+		}
+		record.setGmtModified(new Date());
+		int result = merchantScopeDOMapper.updateByPrimaryKeySelective(record);
+		if (result == 1) {
+			return record;
+		}
+		return null;
+	}
 	
 	public MerchantScopeDO insert(MerchantScopeDO record) {
 		if (null == record) {

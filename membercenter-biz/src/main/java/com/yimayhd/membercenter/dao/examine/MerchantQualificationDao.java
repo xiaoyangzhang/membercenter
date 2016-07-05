@@ -5,11 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
-import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
 import com.yimayhd.membercenter.mapper.MerchantQualificationDOMapper;
-import com.yimayhd.membercenter.mapper.MerchantScopeDOMapper;
 
 /**
  * 
@@ -30,6 +27,17 @@ public class MerchantQualificationDao {
 		}
 		record.setGmtModified(new Date());
 		int result = merchantQualificationDOMapper.updateByPrimaryKey(record);
+		if (result == 1) {
+			return record;
+		}
+		return null;
+	}
+	public MerchantQualificationDO updateBySelective(MerchantQualificationDO record) {
+		if (null == record) {
+			return null;
+		}
+		record.setGmtModified(new Date());
+		int result = merchantQualificationDOMapper.updateByPrimaryKeySelective(record);
 		if (result == 1) {
 			return record;
 		}

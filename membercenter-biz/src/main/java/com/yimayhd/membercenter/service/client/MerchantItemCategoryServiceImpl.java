@@ -75,6 +75,7 @@ public class MerchantItemCategoryServiceImpl implements MerchantItemCategoryServ
 	}
 
 	@Override
+	@Deprecated
 	public MemResult<List<MerchantItemCategoryDO>> getMerchantItemCategory(
 			int domainId, long categoryId, long sellerId) {
 		MemResult<List<MerchantItemCategoryDO>> result = new MemResult<List<MerchantItemCategoryDO>>();
@@ -88,6 +89,25 @@ public class MerchantItemCategoryServiceImpl implements MerchantItemCategoryServ
 			result =  merchantItemCategoryManager.getMerchantItemCategory(domainId,categoryId,sellerId);
 		} catch (Exception e) {
 			LOGGER.error("params : {} exception : {}",domainId,categoryId,sellerId,e);
+			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
+		}
+		return result;
+	}
+
+	@Override
+	public MemResult<MerchantItemCategoryDO> selectObjByCategoryIdAndSellerId(
+			int domainId, long categoryId, long sellerId) {
+		MemResult<MerchantItemCategoryDO> result = new MemResult<MerchantItemCategoryDO>();
+		if(domainId <= 0 || categoryId <= 0 || sellerId <= 0) {
+			LOGGER.error("params error:{}",domainId,categoryId,sellerId);
+			result.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+			return result;
+		}
+		
+		try {
+			result =  merchantItemCategoryManager.selectObjByCategoryIdAndSellerId(domainId,categoryId,sellerId);
+		} catch (Exception e) {
+			LOGGER.error("params :domainId= {},merchantItemCategoryId={},sellerId={}, exception : {}",domainId,categoryId,sellerId,e);
 			result.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
 		}
 		return result;

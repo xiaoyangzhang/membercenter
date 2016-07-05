@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
   
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -189,7 +190,17 @@ public class MerchantItemCategoryManager {
         }
         return support;
     }
-    
+    public MemResult<MerchantItemCategoryDO> selectObjByCategoryIdAndSellerId(int domainId, long categoryId, long sellerId) {
+    	MerchantItemCategoryDO merchantItemCategoryDO = merchantItemCategoryDao.selectObjByCategoryIdAndSellerId(domainId, categoryId, sellerId);
+    	MemResult<MerchantItemCategoryDO> result = new MemResult<MerchantItemCategoryDO>();
+    	if (merchantItemCategoryDO == null) {
+    		result.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
+    		return result;
+    	}
+    	result.setValue(merchantItemCategoryDO);
+    	return result;
+    }
+    @Deprecated
     public MemResult<List<MerchantItemCategoryDO>> getMerchantItemCategory(int domainId, long categoryId, long sellerId) {
     	MemResult<List<MerchantItemCategoryDO>> result = new MemResult<List<MerchantItemCategoryDO>>();
     	List<MerchantItemCategoryDO> merchantItemCategoryDOs = merchantItemCategoryDao.selectByCategoryIdAndSellerId(domainId, categoryId, sellerId);

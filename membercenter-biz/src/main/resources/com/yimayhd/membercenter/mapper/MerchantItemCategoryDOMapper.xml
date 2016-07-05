@@ -109,6 +109,14 @@
     AND item_category_id = #{itemCategoryId,jdbcType=BIGINT}
     AND seller_id = #{sellerId,jdbcType=BIGINT}
   </select>
+  <select id="selectObjByCategoryIdAndSellerId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM merchant_item_category
+    WHERE domain_id = #{domainId,jdbcType=INTEGER}
+    AND item_category_id = #{itemCategoryId,jdbcType=BIGINT}
+    AND seller_id = #{sellerId,jdbcType=BIGINT}
+  </select>
  <!--  <select id="selectMerchantItemCategory" parameterType="com.yimayhd.membercenter.client.query.MerchantItemCategoryQueryDTO" resultMap="BaseResultMap">
   SELECT
     <include refid="Base_Column_List" />

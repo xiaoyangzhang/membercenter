@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yimayhd.membercenter.client.domain.merchant.MerchantItemCategoryDO;
 import com.yimayhd.membercenter.mapper.MerchantItemCategoryDOMapper;
+
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -29,9 +30,12 @@ public class MerchantItemCategoryDao {
 	public List<MerchantItemCategoryDO> selectMerchantItemCategoriesByMerchant(int domainId, long sellerId) {
 		return merchantItemCategoryDOMapper.selectByMerchant(domainId, sellerId);
 	}
-
+	@Deprecated
 	public List<MerchantItemCategoryDO> selectByCategoryIdAndSellerId(int domain, long categoryId, long sellerId) {
 		return merchantItemCategoryDOMapper.selectByCategoryIdAndSellerId(domain,categoryId,sellerId);
+	}
+	public MerchantItemCategoryDO selectObjByCategoryIdAndSellerId(int domain, long categoryId, long sellerId) {
+		return merchantItemCategoryDOMapper.selectObjByCategoryIdAndSellerId(domain,categoryId,sellerId);
 	}
 	
 	public boolean saveMerchanItemCategories(final List<MerchantItemCategoryDO> merchantItemCategoryDOs) {

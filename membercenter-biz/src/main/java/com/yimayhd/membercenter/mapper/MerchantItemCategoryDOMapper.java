@@ -21,8 +21,9 @@ public interface MerchantItemCategoryDOMapper {
     int updateByPrimaryKey(MerchantItemCategoryDO record);
     
     List<MerchantItemCategoryDO> selectByMerchant(@Param("domainId") int domainId, @Param("sellerId") long sellerId);
-
+    @Deprecated
     List<MerchantItemCategoryDO> selectByCategoryIdAndSellerId(@Param("domainId") int domainId, @Param("itemCategoryId") long categoryId, @Param("sellerId") long sellerId);
+    MerchantItemCategoryDO selectObjByCategoryIdAndSellerId(@Param("domainId") int domainId, @Param("itemCategoryId") long categoryId, @Param("sellerId") long sellerId);
     
     //MerchantItemCategoryDO selectMerchantItemCategory(MerchantItemCategoryQueryDTO queryDTO);
 }

@@ -16,8 +16,17 @@ public class MerchantItemCategoryDO implements Serializable {
 
     private Date gmtModified;
     private int domainId;
+    private int type;//商品类型
     
-    public int getDomainId() {
+    public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public int getDomainId() {
 		return domainId;
 	}
 

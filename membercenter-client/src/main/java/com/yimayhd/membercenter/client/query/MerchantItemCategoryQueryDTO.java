@@ -23,6 +23,14 @@ public class MerchantItemCategoryQueryDTO implements Serializable {
 	private long categoryId;
 	private List<Long> idList;
 	private long examineId;
+	private int type;
+	
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
 	public int getDomainId() {
 		return domainId;
 	}

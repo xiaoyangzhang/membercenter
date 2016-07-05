@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantInfoDO;
 import com.yimayhd.membercenter.client.domain.talent.TalentInfoDO;
 import com.yimayhd.membercenter.client.query.MerchantQueryDTO;
@@ -26,6 +27,7 @@ import com.yimayhd.membercenter.converter.TalentConverter;
 import com.yimayhd.membercenter.repo.MerchantRepo;
 import com.yimayhd.membercenter.service.api.talent.TalentMemberApiImpl;
 import com.yimayhd.snscenter.client.dto.SnsCountDTO;
+import com.yimayhd.snscenter.client.result.BaseResult;
 import com.yimayhd.snscenter.client.service.SnsFollowService;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
 import com.yimayhd.user.client.enums.MerchantOption;

@@ -84,7 +84,7 @@ public class TalentMemberApiImpl implements TalentMemberApi {
                 talentInfo.certificateType = IconType.EXPERT.getType();
                 // return talentInfo;
                 
-                MemResult<SnsCountDTO> snsResult = talentInfoManager.getSnsCountInfo(merchantId,userId);
+                MemResult<SnsCountDTO> snsResult = talentInfoManager.getSnsCountInfo(userId,merchantId);
                 if(!snsResult.isSuccess()){
                 	logger.error("talentInfoManager.getSnsCountInfo error,snsResult={},merchantId={}",JSONObject.toJSONString(snsResult),JSONObject.toJSONString(merchantId));
                 	DubboExtProperty.setErrorCode(snsResult.getReturnCode());

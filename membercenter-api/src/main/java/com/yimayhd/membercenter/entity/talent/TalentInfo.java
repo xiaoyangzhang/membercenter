@@ -70,4 +70,16 @@ public class TalentInfo implements Serializable {
     @Description("达人认证")
     public List<Certificates> certificates;
     
+    @Description("关注数量")
+    public long followCount;
+    
+    @Description("粉丝数量")
+    public long fansCount;
+    
+    @Description("ugc数量")
+    public long ugcCount;
+    
+    @Description("NONE-未关注/FOLLOW-单向关注/BIFOLLOW-双向关注")
+    public String attentionType;
+    
 }

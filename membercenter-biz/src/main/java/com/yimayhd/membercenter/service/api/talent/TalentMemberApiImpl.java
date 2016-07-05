@@ -31,6 +31,7 @@ import com.yimayhd.membercenter.entity.talent.TalentQuery;
 import com.yimayhd.membercenter.entity.talent.TalentUserInfo;
 import com.yimayhd.membercenter.manager.talent.TalentInfoManager;
 import com.yimayhd.membercenter.util.ParmCheckUtil;
+import com.yimayhd.snscenter.client.dto.SnsCountDTO;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
 
 import net.pocrd.dubboext.DubboExtProperty;
@@ -82,6 +83,15 @@ public class TalentMemberApiImpl implements TalentMemberApi {
                 talentInfo.certificates = TalentConverter.certificateConvert(talentInfoDO.getCertificates());
                 talentInfo.certificateType = IconType.EXPERT.getType();
                 // return talentInfo;
+                
+                MemResult<SnsCountDTO> snsResult = talentInfoManager.getSnsCountInfo(merchantId,userId);
+                if(!snsResult.isSuccess()){
+                	logger.error("talentInfoManager.getSnsCountInfo error,snsResult={},merchantId={}",JSONObject.toJSONString(snsResult),JSONObject.toJSONString(merchantId));
+                	DubboExtProperty.setErrorCode(snsResult.getReturnCode());
+                	return null;
+                }
+                
+                TalentConverter.mergeTalentInfo(talentInfo, snsResult.getValue());
             }
             logger.info("getTalentDetail par:{} return success, costs:{}ms", merchantId,
                     (System.currentTimeMillis() - start));

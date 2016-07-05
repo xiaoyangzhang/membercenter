@@ -41,7 +41,7 @@
 		<fhtd.version>0.1.0-SNAPSHOT</fhtd.version>
 		<stone.version>0.0.1-SNAPSHOT</stone.version>
 		<msg.version>0.0.6-SNAPSHOT</msg.version>
-		<sns.version>1.0.3-SNAPSHOT</sns.version>
+		<sns.version>1.1.0-SNAPSHOT</sns.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>

@@ -25,6 +25,8 @@ import com.yimayhd.membercenter.converter.MerchantConverter;
 import com.yimayhd.membercenter.converter.TalentConverter;
 import com.yimayhd.membercenter.repo.MerchantRepo;
 import com.yimayhd.membercenter.service.api.talent.TalentMemberApiImpl;
+import com.yimayhd.snscenter.client.dto.SnsCountDTO;
+import com.yimayhd.snscenter.client.service.SnsFollowService;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
 import com.yimayhd.user.client.enums.MerchantOption;
 import com.yimayhd.user.client.enums.SequenceEnum;
@@ -45,6 +47,9 @@ public class TalentInfoManager {
 
     @Autowired
     MerchantRepo merchantRepo;
+    
+    @Autowired
+    SnsFollowService snsFollowService;
 
     /**
      * 
@@ -124,5 +129,25 @@ public class TalentInfoManager {
         logger.info("queryMerchantList param:{} return:{}", JSONObject.toJSONString(merchantQueryDTO),
                 JSONObject.toJSONString(baseResult.getReturnCode()));
         return baseResult;
+    }
+    
+    /**
+     * 查询粉丝数、关注数、UGC数量
+     * @param userId
+     * @return
+     */
+    public MemResult<SnsCountDTO> getSnsCountInfo(long userId,long theUserId){
+    	MemResult<SnsCountDTO> result = new MemResult<SnsCountDTO>();
+    	BaseResult<SnsCountDTO> queryResult = snsFollowService.getSnsCountDTO(userId,theUserId);
+    	
+    	if(!queryResult.isSuccess()){
+    		logger.error("snsFollowService.getSnsCountDTO error:queryResult={},userId={}",JSONObject.toJSONString(queryResult),JSONObject.toJSONString(userId));
+    		result.setReturnCode(MemberReturnCode.DUBBO_ERROR);
+    	}else{
+    		result.setValue(queryResult.getValue());
+    	}
+    	
+    	
+    	return result;
     }
 }

@@ -20,8 +20,11 @@ import com.yimayhd.membercenter.client.domain.talent.TalentInfoDO;
 import com.yimayhd.membercenter.client.query.talent.TalentQueryDTO;
 import com.yimayhd.membercenter.client.result.MemPageResult;
 import com.yimayhd.membercenter.entity.Certificates;
+import com.yimayhd.membercenter.entity.talent.TalentInfo;
 import com.yimayhd.membercenter.entity.talent.TalentQuery;
 import com.yimayhd.membercenter.util.ParmCheckUtil;
+import com.yimayhd.snscenter.client.dto.SnsCountDTO;
+import com.yimayhd.snscenter.client.enums.FollowType;
 import com.yimayhd.user.client.domain.MerchantDO;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
@@ -241,5 +244,16 @@ public class TalentConverter {
             list.add(certificates);
         }
         return list;
+    }
+    
+    public static TalentInfo mergeTalentInfo(TalentInfo talentInfo,SnsCountDTO snsCountDTO){
+    	if(snsCountDTO != null){
+    		talentInfo.fansCount = snsCountDTO.getFansCount();
+    		talentInfo.followCount = snsCountDTO.getFollowCount();
+    		talentInfo.ugcCount = snsCountDTO.getUgcCount();
+    		talentInfo.attentionType = FollowType.valueOfCode(snsCountDTO.getAttentionType()).toString();
+    	}
+    	
+    	return talentInfo;
     }
 }

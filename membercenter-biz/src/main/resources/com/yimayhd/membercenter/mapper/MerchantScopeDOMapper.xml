@@ -67,7 +67,7 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yimayhd.membercenter.client.domain.MerchantScopeDO" >
     update merchant_scope
     <set >
-      <if test="sellerId != null" >
+      <!-- <if test="sellerId != null" >
         seller_id = #{sellerId,jdbcType=BIGINT},
       </if>
       <if test="businessScopeId != null" >
@@ -75,16 +75,16 @@
       </if>
       <if test="gmtCreated != null" >
         gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
-      </if>
+      </if> -->
       <if test="gmtModified != null" >
         gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
-      <if test="domainId != null" >
+      <!-- <if test="domainId != null" >
         domain_id = #{domainId,jdbcType=BIGINT},
-      </if>
+      </if> -->
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -107,9 +107,12 @@
 </update>
    <select id="getMerchantScope" parameterType="com.yimayhd.membercenter.client.domain.MerchantScopeDO" resultMap="BaseResultMap">
   	select id,business_scope_id,seller_id,domain_id from merchant_scope
-  	where domain_id=#{merchantScope.domainId} and status =1
+  	where domain_id=#{merchantScope.domainId} and status > 0
   	<if test="merchantScope.sellerId != null and merchantScope.sellerId != 0">
   		and seller_id=#{merchantScope.sellerId}
+  	</if>
+  	<if test=" merchantScope.status == 0">
+  		and status <![CDATA[<]]> 100
   	</if>
   </select><!--
   <insert id="insertBatch" parameterType="java.util.List">  

@@ -35,7 +35,17 @@ public class MerchantQualificationDao {
 		}
 		return null;
 	}
-	
+	public MerchantQualificationDO updateBySelective(MerchantQualificationDO record) {
+		if (null == record) {
+			return null;
+		}
+		record.setGmtModified(new Date());
+		int result = merchantQualificationDOMapper.updateByPrimaryKeySelective(record);
+		if (result == 1) {
+			return record;
+		}
+		return null;
+	}
 	public MerchantQualificationDO insert(MerchantQualificationDO record) {
 		if (null == record) {
 			return null;

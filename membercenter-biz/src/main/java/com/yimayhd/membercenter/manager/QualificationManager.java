@@ -17,12 +17,16 @@ import java.util.List;
 
 
 
+
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.util.CollectionUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.yimayhd.membercenter.MemberReturnCode;
@@ -105,6 +109,7 @@ public class QualificationManager {
 		MerchantQualificationDO merchantQualification= new MerchantQualificationDO();
 		merchantQualification.setDomainId(qualificationQueryDTO.getDomainId());
 		merchantQualification.setSellerId(qualificationQueryDTO.getSellerId());
+		merchantQualification.setStatus(qualificationQueryDTO.getStatus());
 		List<MerchantQualificationDO> merchantQualifications = merchantQualificationDao.getMerchantQualification(merchantQualification);
 		if (merchantQualifications == null) {
 			result.setReturnCode(MemberReturnCode.MERCHANT_QUALIFICATION_FAILED);
@@ -133,32 +138,64 @@ public class QualificationManager {
 					MerchantQualificationDO merchantQualification = new MerchantQualificationDO();
 					 merchantQualification.setDomainId(examineInfoDTO.getDomainId());
 					 merchantQualification.setSellerId(examineInfoDTO.getSellerId());
+					 merchantQualification.setStatus(100);
 					 List<MerchantQualificationDO> merchantQualificationList = merchantQualificationDao.getMerchantQualification(merchantQualification);
-						if (merchantQualificationList != null) {
+					 MerchantQualificationDO	merQuaDO = null;
+					 //如果已存在该商户资质
+						if (!CollectionUtils.isEmpty(merchantQualificationList)) {
 							for (MerchantQualificationDO merchantQualificationDO : merchantQualificationList) {
-								merchantQualificationDO.setStatus(-1);
-								merchantQualificationDO.setGmtModified(new Date());
-								merchantQualificationDao.update(merchantQualificationDO);
+								merchantQualificationDO.setStatus(100);
+								merQuaDO = merchantQualificationDao.updateBySelective(merchantQualificationDO);
+								if(merQuaDO == null) {
+									status.setRollbackOnly();
+									return false;
+								}
+							}
+							for (MerchantQualificationDO mq : merchantQualifications) {
+								int count = 0;
+								for (MerchantQualificationDO merchantQualificationDO : merchantQualificationList) {
+								if (merchantQualificationDO.getQulificationId() == mq.getQulificationId() ) {
+									if (StringUtils.isBlank(mq.getContent())) {
+										count++;
+										continue;
+									}
+									merchantQualificationDO.setStatus(1);
+									merchantQualificationDO.setContent(mq.getContent());
+									merQuaDO = merchantQualificationDao.updateBySelective(merchantQualificationDO);
+									count++;
+								}else {
+									continue;
+								}
+//								if (count == 0) {
+//									merchantQualificationDO.setStatus(100);
+//									merQuaDO = merchantQualificationDao.update(merchantQualificationDO);
+//								}
+//								if(merQuaDO == null) {
+//									status.setRollbackOnly();
+//									return false;
+//								}
+							}
+								if (count == 0) {
+									merQuaDO = merchantQualificationDao.insert(mq);
+								}
+								if(merQuaDO == null) {
+									status.setRollbackOnly();
+									return false;
+								}
 							}
 						}
-					MerchantQualificationDO merQuaDO = null;
-					for (MerchantQualificationDO mq : merchantQualifications) {
-						
-						merQuaDO = merchantQualificationDao.insert(mq);
-						if(merQuaDO == null) {
-							status.setRollbackOnly();
-							return false;
+						//否则
+						else {
+							
+							for (MerchantQualificationDO mq : merchantQualifications) {
+								
+								merQuaDO = merchantQualificationDao.insert(mq);
+								if(merQuaDO == null) {
+									status.setRollbackOnly();
+									return false;
+								}
+							}
 						}
-					}
-//					ExamineDO examineDO = new ExamineDO();
-//			        examineDO.setSellerId(examineInfoDTO.getSellerId());
-//			        examineDO.setDomainId(examineInfoDTO.getDomainId());
-//			        examineDO.setType(examineInfoDTO.getType());
-				//	MemResult<Boolean> changeStatusResult = talentExamineManager.changeExamineStatus(examineDO);
-//					if (changeStatusResult == null || !changeStatusResult.isSuccess()) {
-//						status.setRollbackOnly();
-//						return false;
-//					}
 				} catch (Exception e) {
 					status.setRollbackOnly(); 
 					log.error("param:examineInfoDTO={}   error:{}", JSON.toJSONString(examineInfoDTO) ,e);

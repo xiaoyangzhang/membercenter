@@ -10,6 +10,8 @@ public class UserMenuQuery implements Serializable {
     private long userId; //用户ID
     private long domain; //domain
 
+    private int projectCode;//1 运营后台;2 商家后台
+
     public long getUserId() {
         return userId;
     }
@@ -24,5 +26,15 @@ public class UserMenuQuery implements Serializable {
 
     public void setDomain(long domain) {
         this.domain = domain;
+    }
+
+
+    public int getProjectCode() {
+        return projectCode;
+    }
+
+    public UserMenuQuery setProjectCode(int projectCode) {
+        this.projectCode = projectCode;
+        return this;
     }
 }

@@ -29,4 +29,19 @@ public interface UserPermissionService {
      */
     MemResult<List<HaMenuDO>> getMenuList(MenuQuery menuQuery,UserMenuOptionDTO userMenuOptionDTO);
 
+    /**
+     * 根据用户ID获取用户权限列表, 服务器缓存
+     * @param userMenuQuery
+     * @param userMenuOptionDTO
+     * @return
+     */
+    MemPageResult<HaMenuDO> getMenuListByUserIdFromCatch(UserMenuQuery userMenuQuery,UserMenuOptionDTO userMenuOptionDTO);
+
+    /**
+     *  缓存用户权限列表
+     * @param userMenuQuery
+     * @param userMenuOptionDTO
+     * @return
+     */
+    public boolean catchUserMenu(UserMenuQuery userMenuQuery, UserMenuOptionDTO userMenuOptionDTO);
 }

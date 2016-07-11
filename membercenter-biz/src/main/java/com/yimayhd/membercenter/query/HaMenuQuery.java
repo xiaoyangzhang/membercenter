@@ -10,6 +10,7 @@ public class HaMenuQuery {
     private long domain;//domain
     private List<Integer> typeList;
     private int type;
+    private int projectCode;//1 运营后台;2 商家后台
 
     public HaMenuQuery() {
     }
@@ -44,5 +45,12 @@ public class HaMenuQuery {
 
     public void setType(int type) {
         this.type = type;
+    }
+    public int getProjectCode() {
+        return projectCode;
+    }
+
+    public void setProjectCode(int projectCode) {
+        this.projectCode = projectCode;
     }
 }

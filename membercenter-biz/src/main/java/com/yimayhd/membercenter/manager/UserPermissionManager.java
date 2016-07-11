@@ -76,6 +76,7 @@ public class UserPermissionManager {
         HaMenuQuery haMenuQuery = new HaMenuQuery();
         haMenuQuery.setMenuIdList(haMenuIdList);
         haMenuQuery.setDomain(userMenuQuery.getDomain());
+        haMenuQuery.setProjectCode(userMenuQuery.getProjectCode());
         List<Integer> typeList = new ArrayList<Integer>();
         //不包含url时，只查菜单
         if(!userMenuOptionDTO.isContainUrl()){

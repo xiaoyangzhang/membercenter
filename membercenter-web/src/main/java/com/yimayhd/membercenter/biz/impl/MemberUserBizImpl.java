@@ -57,7 +57,7 @@ public class MemberUserBizImpl implements MemberUserBiz{
 			// 设置cookie信息
 			String token = result.getToken();
 			Cookie cookie = new Cookie("token", token);
-			cookie.setHttpOnly(true);
+			//cookie.setHttpOnly(true);
 			cookie.setPath("/");
 			getResponse().addCookie(cookie);
 			

@@ -124,5 +124,6 @@
             <foreach collection="roleIdList" index="index" item="item" open="(" close=")" separator=",">
                 #{item}
             </foreach>
+        and status=1
     </select>
 </mapper>

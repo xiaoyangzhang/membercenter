@@ -247,7 +247,13 @@
 		FROM
 		ha_menu
 		WHERE
-		domain = #{domain}
+		status=1
+		<if test="projectCode>0">
+			and project_code=#{projectCode}
+		</if>
+		<if test="domain >0">
+			and domain = #{domain}
+		</if>
 		AND
 		id IN
 		<foreach collection="menuIdList" index="index" item="item" open="(" close=")" separator=",">

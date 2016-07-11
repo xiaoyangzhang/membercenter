@@ -114,6 +114,7 @@
 		<include refid="Base_Column_List" />
 		from examine
 		<include refid="queryExamineSql"/>
+		<!-- 数据迁移期间使用 -->
 		<if test="merchantCategoryId == -1">
 			and merchant_category_id = 0
 		</if>
@@ -137,7 +138,7 @@
 		<if test="sellerId > 0">
 			and seller_id = #{sellerId,jdbcType=BIGINT}
 		</if>
-		<if test="merchantName != null">
+		<if test="merchantName != null and merchantName != ''">
 			and seller_name like CONCAT('%', #{merchantName,jdbcType=VARCHAR}, '%')
 		</if>
 		<if test="type > 0">
@@ -148,6 +149,12 @@
 		</if>
 		<if test="principleTel != null">
 			and tel_num like CONCAT('%', #{principleTel,jdbcType=VARCHAR}, '%')
+		</if>
+		<if test="status > 0">
+			and  statues = #{status},
+		</if>
+		<if test="gmtCreated != null">
+			and  gmt_created = #{gmtCreated},
 		</if>
 		<if test="statusArray != null">
 		and  statues in 

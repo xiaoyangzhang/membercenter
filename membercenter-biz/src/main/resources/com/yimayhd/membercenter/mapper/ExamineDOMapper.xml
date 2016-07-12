@@ -150,10 +150,10 @@
 		<if test="principleTel != null">
 			and tel_num like CONCAT('%', #{principleTel,jdbcType=VARCHAR}, '%')
 		</if>
-		<!-- <if test="status > 0">
+		 <if test="status > 0">
 			and  statues = #{status},
 		</if>
-		<if test="gmtCreated != null">
+	<!--	<if test="gmtCreated != null">
 			and  gmt_created = #{gmtCreated},
 		</if> -->
 		<if test="statusArray != null">

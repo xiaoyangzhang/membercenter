@@ -103,13 +103,13 @@ public class TalentExamineManager {
         	// 数据转换
         	ExamineDO examinDO = ExamineConverter.examinDTOToDO(examineInfoDTO);
             
-            result = checkMerchantNameIsExist(examineInfoDTO.getMerchantName(), examinDO.getDomainId());
+           // result = checkMerchantNameIsExist(examineInfoDTO.getMerchantName(), examinDO.getDomainId());
             // 判断sellerName是否已经存在
-            if (!result.isSuccess()) {
-                result.setReturnCode(MemberReturnCode.DB_MERCHANTNAME_FAILED);
-                logger.info("submitMerchantExaminInfo par:{} sellerName exists", JSONObject.toJSONString(examinDO));
-                return result;
-            }
+//            if (!result.isSuccess()) {
+//                result.setReturnCode(MemberReturnCode.DB_MERCHANTNAME_FAILED);
+//                logger.info("submitMerchantExaminInfo par:{} sellerName exists", JSONObject.toJSONString(examinDO));
+//                return result;
+//            }
             // do 判断是否已经存在
             ExamineDO examine = examineDOMapper.selectBySellerId(examinDO);
             if (null != examine) {

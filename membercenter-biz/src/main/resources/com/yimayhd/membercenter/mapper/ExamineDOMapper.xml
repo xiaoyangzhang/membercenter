@@ -150,12 +150,12 @@
 		<if test="principleTel != null">
 			and tel_num like CONCAT('%', #{principleTel,jdbcType=VARCHAR}, '%')
 		</if>
-		<if test="status > 0">
+		<!-- <if test="status > 0">
 			and  statues = #{status},
 		</if>
 		<if test="gmtCreated != null">
 			and  gmt_created = #{gmtCreated},
-		</if>
+		</if> -->
 		<if test="statusArray != null">
 		and  statues in 
 		<foreach collection ="statusArray" item ="item" index ="index" open="(" separator="," close=")">

@@ -47,7 +47,6 @@ public class MerchantScopeDao {
 		}
 		return null;
 	}
-	
 	public MerchantScopeDO insert(MerchantScopeDO record) {
 		if (null == record) {
 			return null;

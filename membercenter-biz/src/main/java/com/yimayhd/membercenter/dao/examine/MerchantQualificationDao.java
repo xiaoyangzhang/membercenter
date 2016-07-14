@@ -5,8 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.yimayhd.membercenter.client.domain.MerchantScopeDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantQualificationDO;
+import com.yimayhd.membercenter.client.query.QualificationQueryDTO;
 import com.yimayhd.membercenter.mapper.MerchantQualificationDOMapper;
+import com.yimayhd.membercenter.mapper.MerchantScopeDOMapper;
 
 /**
  * 
@@ -43,7 +46,6 @@ public class MerchantQualificationDao {
 		}
 		return null;
 	}
-	
 	public MerchantQualificationDO insert(MerchantQualificationDO record) {
 		if (null == record) {
 			return null;

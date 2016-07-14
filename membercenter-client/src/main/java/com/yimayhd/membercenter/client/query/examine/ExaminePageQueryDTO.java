@@ -9,6 +9,8 @@
  */
 package com.yimayhd.membercenter.client.query.examine;
 
+import java.util.Date;
+
 import com.yimayhd.membercenter.client.query.PageQuery;
 
 /**
@@ -42,8 +44,16 @@ public class ExaminePageQueryDTO extends PageQuery {
     //审核
     private int status;
     private long merchantCategoryId;
-    
-    public long getMerchantCategoryId() {
+    private Date gmtCreated;
+    public Date getGmtCreated() {
+		return gmtCreated;
+	}
+
+	public void setGmtCreated(Date gmtCreated) {
+		this.gmtCreated = gmtCreated;
+	}
+
+	public long getMerchantCategoryId() {
 		return merchantCategoryId;
 	}
 

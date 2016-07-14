@@ -104,7 +104,7 @@ public class TalentExamineManager {
         	ExamineDO examinDO = ExamineConverter.examinDTOToDO(examineInfoDTO);
             
             result = checkMerchantNameIsExist(examineInfoDTO.getMerchantName(), examinDO.getDomainId());
-            // 判断sellerName是否已经存在
+             //判断sellerName是否已经存在
             if (!result.isSuccess()) {
                 result.setReturnCode(MemberReturnCode.DB_MERCHANTNAME_FAILED);
                 logger.info("submitMerchantExaminInfo par:{} sellerName exists", JSONObject.toJSONString(examinDO));

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
   
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -38,6 +39,7 @@ import com.yimayhd.membercenter.mapper.MerchantCategoryDOMapper;
 import com.yimayhd.membercenter.mq.MsgSender;
 import com.yimayhd.membercenter.repo.MerchantRepo;
 import com.yimayhd.user.client.domain.MerchantDO;
+import com.yimayhd.user.client.dto.MerchantUserDTO;
 
 public class MerchantItemCategoryManager {
     private static final Logger logger = LoggerFactory.getLogger(MerchantItemCategoryManager.class);
@@ -83,13 +85,16 @@ public class MerchantItemCategoryManager {
         	}
         	
         }
-        
-        MemResult<MerchantDO> memResult = merchantRepo.saveMerchant(merchantDO);
-        if (!memResult.isSuccess()) {
-            logger.error("saveMerchanItemCategories param:{} is null, insertMerchant failure", JSONObject.toJSONString(merchantDO));
-            memResultSupport.setReturnCode(MemberReturnCode.MERCHANT_NOT_FOUND_ERROR);
-            return memResultSupport;
-        }
+        MemResult<MerchantUserDTO> queryResult = merchantRepo.queryMerchantBySellerId(examineDO.getSellerId(), examineDO.getDomainId());
+        if (queryResult == null ||  queryResult.getValue() == null || queryResult.getValue().getMerchantDO() == null) {
+			
+        	MemResult<MerchantDO> memResult = merchantRepo.saveMerchant(merchantDO);
+        	if (!memResult.isSuccess()) {
+        		logger.error("saveMerchanItemCategories param:{} is null, insertMerchant failure", JSONObject.toJSONString(merchantDO));
+        		memResultSupport.setReturnCode(MemberReturnCode.MERCHANT_NOT_FOUND_ERROR);
+        		return memResultSupport;
+        	}
+		}
 
         // 查询商家的入驻申请
         final MemResult<ExamineDO> examineResult = talentExamineManager.queryMerchantExamineInfoById(examineDO);

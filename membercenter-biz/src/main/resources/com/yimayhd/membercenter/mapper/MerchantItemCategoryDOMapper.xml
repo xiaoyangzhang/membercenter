@@ -73,39 +73,31 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantItemCategoryDO" >
     update merchant_item_category
     <set >
-      <if test="itemCategoryId != null" >
+        <!--  <if test="itemCategoryId != null" >
         item_category_id = #{itemCategoryId,jdbcType=BIGINT},
-      </if>
-      <if test="sellerId != null" >
+      </if> -->
+      <!-- <if test="sellerId != null" >
         seller_id = #{sellerId,jdbcType=BIGINT},
-      </if>
-      <if test="status != null" >
+      </if> -->
+      <if test="status != null " >
         status = #{status,jdbcType=INTEGER},
       </if>
-      <if test="gmtCreated != null" >
-        gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
-      </if>
+      
       <if test="gmtModified != null" >
         gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
-      <if test="domainId != null" >
+      <!-- <if test="domainId != null" >
         domain_id = #{domainId,jdbcType=INTEGER},
-      </if>
-      <if test="type > 0" >
-        type = #{type,jdbcType=INTEGER},
-      </if>
+      </if> -->
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yimayhd.membercenter.client.domain.merchant.MerchantItemCategoryDO" >
     update merchant_item_category
-    set item_category_id = #{itemCategoryId,jdbcType=BIGINT},
-      seller_id = #{sellerId,jdbcType=BIGINT},
+    set 
       status = #{status,jdbcType=INTEGER},
-      gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-      domain_id = #{domainId,jdbcType=INTEGER},
-      type=#{type}
+      
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByCategoryIdAndSellerId" resultMap="BaseResultMap">
@@ -121,16 +113,29 @@
     <include refid="Base_Column_List" />
     FROM merchant_item_category
     WHERE domain_id = #{domainId,jdbcType=INTEGER}
-    AND item_category_id = #{itemCategoryId,jdbcType=BIGINT}
-    AND seller_id = #{sellerId,jdbcType=BIGINT}
+      <if test="itemCategoryId > 0">
     
+    AND item_category_id = #{itemCategoryId,jdbcType=BIGINT}
+    </if>
+    <if test="sellerId > 0">
+    AND seller_id = #{sellerId,jdbcType=BIGINT}
+    </if>
   </select>
- <!--  <select id="selectMerchantItemCategory" parameterType="com.yimayhd.membercenter.client.query.MerchantItemCategoryQueryDTO" resultMap="BaseResultMap">
-  SELECT
+  <select id="selectMerchantItemCategory" parameterType="com.yimayhd.membercenter.client.query.MerchantItemQuery" resultMap="BaseResultMap">
+    SELECT
     <include refid="Base_Column_List" />
     FROM merchant_item_category
-    WHERE domain_id = #{queryDTO.domainId,jdbcType=INTEGER}
-    AND item_category_id = #{queryDTO.itemCategoryId,jdbcType=BIGINT}
-    AND seller_id = #{queryDTO.sellerId,jdbcType=BIGINT}
-  </select> -->
+    WHERE domain_id = #{category.domainId,jdbcType=INTEGER}
+    <if test="category.categoryId > 0">
+    
+    AND item_category_id = #{category.categoryId,jdbcType=BIGINT}
+    </if>
+    <if test="category.sellerId > 0">
+    AND seller_id = #{category.sellerId,jdbcType=BIGINT}
+    </if>
+    <!-- 100表示停用状态，status默认0 -->
+    <if test="category.status == 0">
+    AND status <![CDATA[<]]> 100
+    </if>
+  </select>
 </mapper>

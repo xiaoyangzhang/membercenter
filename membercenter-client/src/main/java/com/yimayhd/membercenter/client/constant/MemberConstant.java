@@ -7,4 +7,6 @@ public class MemberConstant {
 	
 	
 	public static final int MEMBER_CODE_LENGTH = 8 ;
+	public static final int MEMBER_IN_USR = 1 ;
+	public static final int MEMBER_NOT_IN_USR = 100 ;
 }

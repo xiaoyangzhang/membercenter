@@ -121,6 +121,7 @@ public class MerchantItemCategoryManager {
                                     MemResultSupport support = new MemResultSupport();
                                     try {
                                         examineDO.setId(queryExamineDO.getId());
+                                        logger.info("========================examineDOMapper.updateByPrimaryKey param:examineDO={}",JSON.toJSONString(examineDO));
                                         int count = examineDOMapper.updateByPrimaryKey(examineDO);
                                         if (count != 1) {
                                             logger.error("saveMerchanItemCategories param:{} is null, update failure", JSONObject.toJSONString(examineDO));

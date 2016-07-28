@@ -15,7 +15,7 @@
     <result column="busi_type" property="busiType" jdbcType="VARCHAR" />
     <result column="feature" property="feature" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List" >  
     id, name, pic, description, type, parent_id, status, gmt_created, gmt_modified,domain_id,busi_type, feature
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="long" >

@@ -151,7 +151,7 @@
 			and tel_num like CONCAT('%', #{principleTel,jdbcType=VARCHAR}, '%')
 		</if>
 		 <if test="status > 0">
-			and  statues = #{status},
+			and  statues = #{status}
 		</if>
 	<!--	<if test="gmtCreated != null">
 			and  gmt_created = #{gmtCreated},

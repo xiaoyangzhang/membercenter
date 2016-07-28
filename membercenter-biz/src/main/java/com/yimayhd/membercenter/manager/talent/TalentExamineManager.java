@@ -298,6 +298,8 @@ public class TalentExamineManager {
         }
         try {
             examineDO.setId(examineResult.getValue().getId());
+            logger.info("========================examineDOMapper.updateByPrimaryKey param:examineDO={}",JSON.toJSONString(examineDO));
+
             int updateResult = examineDOMapper.updateByPrimaryKey(examineDO);
             if(updateResult == 1) {
                 logger.info("dealExamineInfo param:{} update success", JSONObject.toJSONString(examineDO));

@@ -137,9 +137,11 @@
   	<if test="merchantQualification.sellerId != null and merchantQualification.sellerId > 0">
   		and seller_id=#{merchantQualification.sellerId}
   	</if>
+  	  	<!-- 2为数据迁移临时状态 -->
   	<if test="merchantQualification.status == 2">
   	and status = 2
   	</if>
+  	  	<!-- 100表示停用状态 -->
   	<if test="merchantQualification.status == 0">
   	and status <![CDATA[<]]> 100
   	</if>

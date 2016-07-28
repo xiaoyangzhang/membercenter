@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.yimayhd.membercenter.client.domain.merchant.MerchantItemCategoryDO;
-import com.yimayhd.membercenter.client.query.MerchantItemCategoryQueryDTO;
+import com.yimayhd.membercenter.client.query.MerchantItemQuery;
 
 public interface MerchantItemCategoryDOMapper {
     int deleteByPrimaryKey(long id);
@@ -24,6 +24,6 @@ public interface MerchantItemCategoryDOMapper {
     @Deprecated
     List<MerchantItemCategoryDO> selectByCategoryIdAndSellerId(@Param("domainId") int domainId, @Param("itemCategoryId") long categoryId, @Param("sellerId") long sellerId);
     MerchantItemCategoryDO selectObjByCategoryIdAndSellerId(@Param("domainId") int domainId, @Param("itemCategoryId") long categoryId, @Param("sellerId") long sellerId);
-    
+    List<MerchantItemCategoryDO> selectMerchantItemCategory(@Param("category")MerchantItemQuery queryDTO);
     //MerchantItemCategoryDO selectMerchantItemCategory(MerchantItemCategoryQueryDTO queryDTO);
 }

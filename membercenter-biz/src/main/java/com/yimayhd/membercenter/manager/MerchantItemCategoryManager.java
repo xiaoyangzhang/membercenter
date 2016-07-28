@@ -3,8 +3,6 @@ package com.yimayhd.membercenter.manager;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-  
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.util.CollectionUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -22,11 +21,13 @@ import com.alibaba.rocketmq.client.producer.SendStatus;
 import com.alibaba.rocketmq.client.producer.TransactionSendResult;
 import com.alibaba.rocketmq.common.message.Message;
 import com.yimayhd.membercenter.MemberReturnCode;
+import com.yimayhd.membercenter.client.constant.MemberConstant;
 import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
 import com.yimayhd.membercenter.client.domain.examine.ExamineDetailDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantCategoryDO;
 import com.yimayhd.membercenter.client.domain.merchant.MerchantItemCategoryDO;
 import com.yimayhd.membercenter.client.enums.topic.MemberTopic;
+import com.yimayhd.membercenter.client.query.MerchantItemQuery;
 import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.result.MemResultSupport;
 import com.yimayhd.membercenter.converter.ExamineConverter;
@@ -120,6 +121,7 @@ public class MerchantItemCategoryManager {
                                     MemResultSupport support = new MemResultSupport();
                                     try {
                                         examineDO.setId(queryExamineDO.getId());
+                                        logger.info("========================examineDOMapper.updateByPrimaryKey param:examineDO={}",JSON.toJSONString(examineDO));
                                         int count = examineDOMapper.updateByPrimaryKey(examineDO);
                                         if (count != 1) {
                                             logger.error("saveMerchanItemCategories param:{} is null, update failure", JSONObject.toJSONString(examineDO));
@@ -139,29 +141,90 @@ public class MerchantItemCategoryManager {
                                         }
                                         logger.info("saveMerchanItemCategories param:{} insertDetail success", JSONObject.toJSONString(queryExamineDO));
 
-                                        // 创建商家所具有的类目权限
-                                        ArrayList<MerchantItemCategoryDO> merchantItemCategoryDOs = new ArrayList<>();
-                                        for (long categoryId : categoryIds) {
-                                            MerchantItemCategoryDO merchantItemCategoryDO = new MerchantItemCategoryDO();
-                                            merchantItemCategoryDO.setDomainId(examineDO.getDomainId());
-                                            merchantItemCategoryDO.setGmtCreated(new Date());
-                                            merchantItemCategoryDO.setGmtModified(new Date());
-                                            merchantItemCategoryDO.setItemCategoryId(categoryId);
-                                            merchantItemCategoryDO.setSellerId(merchantDO.getSellerId());
-                                            merchantItemCategoryDO.setStatus(1);
-                                            merchantItemCategoryDOs.add(merchantItemCategoryDO);
-                                        }
-
-                                        // 保存商家所具有的的类目权限
-                                        boolean target = merchantItemCategoryDao.saveMerchanItemCategories(merchantItemCategoryDOs);
-                                        if (!target) {
-                                            logger.error("saveMerchanItemCategories param:{} is null, saveMerchanItemCategories failure", JSONObject.toJSONString(merchantItemCategoryDOs));
-                                            transactionStatus.setRollbackOnly();
-                                            support.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
-                                            return support;
-                                        }
-                                        logger.info("saveMerchanItemCategories param:{} saveMerchanItemCategories success", JSONObject.toJSONString(merchantItemCategoryDOs));
-                                    } catch (Exception e) {
+                                        // 添加或更新商家所具有的类目权限
+                                        MerchantItemQuery queryDTO = new MerchantItemQuery();
+                                        queryDTO.setDomainId(examineDO.getDomainId());
+                                        queryDTO.setSellerId(merchantDO.getSellerId());
+                                        queryDTO.setStatus(MemberConstant.MEMBER_NOT_IN_USR);
+                                        List<MerchantItemCategoryDO> merchantItemCategorys = merchantItemCategoryDao.selectMerchantItemCategory(queryDTO);
+                                        //该商家已存在商品类目
+                                        if (!CollectionUtils.isEmpty(merchantItemCategorys)) {
+											for (MerchantItemCategoryDO mic : merchantItemCategorys) {
+												mic.setStatus(MemberConstant.MEMBER_NOT_IN_USR);
+											}
+											boolean updateNotInUseResult = merchantItemCategoryDao.updateMerchantItemCategory(merchantItemCategorys);
+											if (!updateNotInUseResult) {
+	                                            logger.error(" param:List<MerchantItemCategoryDO>={} , result:{}", JSONObject.toJSONString(merchantItemCategorys),JSON.toJSONString(updateNotInUseResult));
+	                                            transactionStatus.setRollbackOnly();
+	                                            support.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
+	                                            return support;
+	                                        }
+											List<MerchantItemCategoryDO> updateList = new ArrayList<MerchantItemCategoryDO>();
+											List<Long> idList = new ArrayList<Long>();
+											for (long categoryId : categoryIds) {
+												int countNum = 0;
+												for (MerchantItemCategoryDO m : merchantItemCategorys) {
+													if (categoryId == m.getItemCategoryId()) {
+														countNum ++ ;
+														m.setStatus(MemberConstant.MEMBER_IN_USR);
+														updateList.add(m);
+													}else {
+														continue;
+													}
+													if (countNum == 0) {
+														idList.add(categoryId);
+													}
+												}
+											}
+											boolean updateInUseResult = merchantItemCategoryDao.updateMerchantItemCategory(updateList);
+											if (!updateInUseResult) {
+	                                            logger.error(" param:List<MerchantItemCategoryDO>={} , result:{}", JSONObject.toJSONString(merchantItemCategorys),JSON.toJSONString(updateInUseResult));
+	                                            transactionStatus.setRollbackOnly();
+	                                            support.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
+	                                            return support;
+	                                        }
+											ArrayList<MerchantItemCategoryDO> merchantItemCategoryDOs = new ArrayList<>();
+											for (long categoryId : idList) {
+												MerchantItemCategoryDO merchantItemCategoryDO = new MerchantItemCategoryDO();
+												merchantItemCategoryDO.setDomainId(examineDO.getDomainId());
+												
+												merchantItemCategoryDO.setItemCategoryId(categoryId);
+												merchantItemCategoryDO.setSellerId(merchantDO.getSellerId());
+												merchantItemCategoryDO.setStatus(MemberConstant.MEMBER_IN_USR);
+												merchantItemCategoryDOs.add(merchantItemCategoryDO);
+											}
+											
+											// 保存商家所具有的的类目权限
+											boolean target = merchantItemCategoryDao.saveMerchanItemCategories(merchantItemCategoryDOs);
+											if (!target) {
+												logger.error("saveMerchanItemCategories param:{} is null, saveMerchanItemCategories failure", JSONObject.toJSONString(merchantItemCategoryDOs));
+												transactionStatus.setRollbackOnly();
+												support.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
+												return support;
+											}
+										}else {
+											
+											ArrayList<MerchantItemCategoryDO> merchantItemCategoryDOs = new ArrayList<>();
+											for (long categoryId : categoryIds) {
+												MerchantItemCategoryDO merchantItemCategoryDO = new MerchantItemCategoryDO();
+												merchantItemCategoryDO.setDomainId(examineDO.getDomainId());
+												
+												merchantItemCategoryDO.setItemCategoryId(categoryId);
+												merchantItemCategoryDO.setSellerId(merchantDO.getSellerId());
+												merchantItemCategoryDO.setStatus(MemberConstant.MEMBER_IN_USR);
+												merchantItemCategoryDOs.add(merchantItemCategoryDO);
+											}
+											
+											// 保存商家所具有的的类目权限
+											boolean target = merchantItemCategoryDao.saveMerchanItemCategories(merchantItemCategoryDOs);
+											if (!target) {
+												logger.error("saveMerchanItemCategories param:{} is null, saveMerchanItemCategories failure", JSONObject.toJSONString(merchantItemCategoryDOs));
+												transactionStatus.setRollbackOnly();
+												support.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
+												return support;
+											}
+											logger.info("saveMerchanItemCategories param:{} saveMerchanItemCategories success", JSONObject.toJSONString(merchantItemCategoryDOs));
+										}  } catch (Exception e) {
                                         logger.error("saveMerchanItemCategories failed!  examineDO={},  categoryIds={}", JSON.toJSONString(examineDO), JSON.toJSONString(categoryIds), e);
                                         support.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
                                         transactionStatus.setRollbackOnly();

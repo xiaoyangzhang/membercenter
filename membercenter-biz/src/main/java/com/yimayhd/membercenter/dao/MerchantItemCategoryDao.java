@@ -1,15 +1,16 @@
 package com.yimayhd.membercenter.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.yimayhd.membercenter.client.domain.merchant.MerchantItemCategoryDO;
-import com.yimayhd.membercenter.mapper.MerchantItemCategoryDOMapper;
-
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
+
+import com.yimayhd.membercenter.client.domain.merchant.MerchantItemCategoryDO;
+import com.yimayhd.membercenter.client.query.MerchantItemQuery;
+import com.yimayhd.membercenter.mapper.MerchantItemCategoryDOMapper;
 
 public class MerchantItemCategoryDao {
 
@@ -37,7 +38,9 @@ public class MerchantItemCategoryDao {
 	public MerchantItemCategoryDO selectObjByCategoryIdAndSellerId(int domain, long categoryId, long sellerId) {
 		return merchantItemCategoryDOMapper.selectObjByCategoryIdAndSellerId(domain,categoryId,sellerId);
 	}
-	
+	public List<MerchantItemCategoryDO> selectMerchantItemCategory(MerchantItemQuery queryDTO) {
+		return merchantItemCategoryDOMapper.selectMerchantItemCategory(queryDTO);
+	}
 	public boolean saveMerchanItemCategories(final List<MerchantItemCategoryDO> merchantItemCategoryDOs) {
 		return  transactionTemplate.execute(new TransactionCallback<Boolean>() {
 
@@ -45,6 +48,8 @@ public class MerchantItemCategoryDao {
 			public Boolean doInTransaction(TransactionStatus transactionStatus) {
 
 				for(MerchantItemCategoryDO merchantItemCategoryDO : merchantItemCategoryDOs) {
+					 merchantItemCategoryDO.setGmtCreated(new Date());
+                     merchantItemCategoryDO.setGmtModified(new Date());
 					int count = merchantItemCategoryDOMapper.insert(merchantItemCategoryDO);
 					if(count != 1) {
 						transactionStatus.setRollbackOnly();
@@ -55,4 +60,22 @@ public class MerchantItemCategoryDao {
 			}
 		});
 	}
+	public boolean updateMerchantItemCategory(final List<MerchantItemCategoryDO> merchantItemCategoryDOs) {
+		return  transactionTemplate.execute(new TransactionCallback<Boolean>() {
+
+			@Override
+			public Boolean doInTransaction(TransactionStatus transactionStatus) {
+
+		
+		for(MerchantItemCategoryDO merchantItemCategoryDO : merchantItemCategoryDOs) {
+            merchantItemCategoryDO.setGmtModified(new Date());
+			int count = merchantItemCategoryDOMapper.updateByPrimaryKeySelective(merchantItemCategoryDO);
+			if(count != 1) {
+				return false;
+			}
+		}
+		return true;
+	}
+	});
+}
 }

@@ -85,4 +85,7 @@ public class TalentInfo implements Serializable {
     @Description("签名")
     public String signature;
     
+    @Description("封面")
+    public String frontCover;
+    
 }

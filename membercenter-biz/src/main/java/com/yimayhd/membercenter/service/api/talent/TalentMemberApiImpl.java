@@ -84,7 +84,46 @@ public class TalentMemberApiImpl implements TalentMemberApi {
             }
             
             UserDO userDO = userResult.getValue();
-            if(UserOptions.COMMON_TELENT.has(userDO.getOptions())){
+            TalentInfo talentInfo = null;
+            if(UserOptions.USER_TALENT.has(userDO.getOptions())){
+            	
+            	MemResult<MerchantUserDTO> result = talentInfoManager.queryTalentInfo(merchantId, domainId);
+                talentInfo = new TalentInfo();
+                if (result.isSuccess() && result.getValue() != null) {
+                    // 达人基本信息
+                    TalentInfoDO talentInfoDO = TalentConverter.merchantToTalent(result.getValue().getMerchantDO(),
+                            result.getValue().getUserDO(), IconType.EXPERT.getType());
+                    talentInfo.userId = talentInfoDO.getId();
+                    talentInfo.avatar = talentInfoDO.getAvatar();
+                    talentInfo.city = talentInfoDO.getCity();
+                    talentInfo.cityCode = String.valueOf(talentInfoDO.getCityCode());
+                    talentInfo.gender = String.valueOf(talentInfoDO.getGender());
+                    talentInfo.nickName = talentInfoDO.getNickName();
+                    talentInfo.serveCount = talentInfoDO.getServeCount();
+                    talentInfo.serveDesc = talentInfoDO.getServeDesc();
+                    talentInfo.telNum = talentInfoDO.getTelNum();
+                    // talentInfo.type = talentInfoDO.isType();
+                    talentInfo.type = false;
+                    talentInfo.pictures = talentInfoDO.getPictures();
+                    // 技能数据转换
+                    talentInfo.certificates = TalentConverter.certificateConvert(talentInfoDO.getCertificates());
+                    talentInfo.certificateType = IconType.EXPERT.getType();
+                    talentInfo.frontCover = result.getValue().getUserDO().getFrontCover();
+                    talentInfo.signature = result.getValue().getUserDO().getSignature();
+                    // return talentInfo;
+                    
+                    MemResult<SnsCountDTO> snsResult = talentInfoManager.getSnsCountInfo(userId,merchantId);
+                    if(!snsResult.isSuccess()){
+                    	logger.error("talentInfoManager.getSnsCountInfo error,snsResult={},merchantId={}",JSONObject.toJSONString(snsResult),JSONObject.toJSONString(merchantId));
+                    	DubboExtProperty.setErrorCode(snsResult.getReturnCode());
+                    	return null;
+                    }
+                    
+                    TalentConverter.mergeTalentInfo(talentInfo, snsResult.getValue());
+                }
+                
+                
+            }else{
             	//查询新达人信息
             	BaseResult<TalentDTO>  talentResult = talentService.queryTalentInfo(merchantId);
             	if(!talentResult.isSuccess()){
@@ -94,7 +133,7 @@ public class TalentMemberApiImpl implements TalentMemberApi {
                 }
             	
             	//转换
-            	TalentInfo talentInfo = TalentConverter.converet2TalentInfo(talentResult.getValue());
+            	talentInfo = TalentConverter.converet2TalentInfo(talentResult.getValue());
             	MemResult<SnsCountDTO> snsResult = talentInfoManager.getSnsCountInfo(userId,merchantId);
                 if(!snsResult.isSuccess()){
                 	logger.error("talentInfoManager.getSnsCountInfo error,snsResult={},merchantId={}",JSONObject.toJSONString(snsResult),JSONObject.toJSONString(merchantId));
@@ -105,46 +144,8 @@ public class TalentMemberApiImpl implements TalentMemberApi {
                 TalentConverter.mergeTalentInfo(talentInfo, snsResult.getValue());
                 
                 return talentInfo;
-            	
             }
-            
-            
-            MemResult<MerchantUserDTO> result = talentInfoManager.queryTalentInfo(merchantId, domainId);
-            TalentInfo talentInfo = new TalentInfo();
-            if (result.isSuccess()) {
-                // 达人基本信息
-                TalentInfoDO talentInfoDO = TalentConverter.merchantToTalent(result.getValue().getMerchantDO(),
-                        result.getValue().getUserDO(), IconType.EXPERT.getType());
-                talentInfo.userId = talentInfoDO.getId();
-                talentInfo.avatar = talentInfoDO.getAvatar();
-                talentInfo.city = talentInfoDO.getCity();
-                talentInfo.cityCode = String.valueOf(talentInfoDO.getCityCode());
-                talentInfo.gender = String.valueOf(talentInfoDO.getGender());
-                talentInfo.nickName = talentInfoDO.getNickName();
-                talentInfo.serveCount = talentInfoDO.getServeCount();
-                talentInfo.serveDesc = talentInfoDO.getServeDesc();
-                talentInfo.telNum = talentInfoDO.getTelNum();
-                // talentInfo.type = talentInfoDO.isType();
-                talentInfo.type = false;
-                talentInfo.pictures = talentInfoDO.getPictures();
-                // 技能数据转换
-                talentInfo.certificates = TalentConverter.certificateConvert(talentInfoDO.getCertificates());
-                talentInfo.certificateType = IconType.EXPERT.getType();
-                // return talentInfo;
-                
-                MemResult<SnsCountDTO> snsResult = talentInfoManager.getSnsCountInfo(userId,merchantId);
-                if(!snsResult.isSuccess()){
-                	logger.error("talentInfoManager.getSnsCountInfo error,snsResult={},merchantId={}",JSONObject.toJSONString(snsResult),JSONObject.toJSONString(merchantId));
-                	DubboExtProperty.setErrorCode(snsResult.getReturnCode());
-                	return null;
-                }
-                
-                TalentConverter.mergeTalentInfo(talentInfo, snsResult.getValue());
-            }
-            logger.info("getTalentDetail par:{} return success, costs:{}ms", merchantId,
-                    (System.currentTimeMillis() - start));
-            // DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
-            return talentInfo;
+  
         } catch (Exception e) {
             logger.error("getTalentDetail par:{} error:{}", merchantId, e);
             DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);

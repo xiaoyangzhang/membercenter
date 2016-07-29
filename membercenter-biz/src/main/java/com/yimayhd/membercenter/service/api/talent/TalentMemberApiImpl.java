@@ -32,7 +32,13 @@ import com.yimayhd.membercenter.entity.talent.TalentUserInfo;
 import com.yimayhd.membercenter.manager.talent.TalentInfoManager;
 import com.yimayhd.membercenter.util.ParmCheckUtil;
 import com.yimayhd.snscenter.client.dto.SnsCountDTO;
+import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
+import com.yimayhd.user.client.dto.TalentDTO;
+import com.yimayhd.user.client.enums.UserOptions;
+import com.yimayhd.user.client.result.BaseResult;
+import com.yimayhd.user.client.service.TalentService;
+import com.yimayhd.user.client.service.UserService;
 
 import net.pocrd.dubboext.DubboExtProperty;
 
@@ -50,17 +56,59 @@ public class TalentMemberApiImpl implements TalentMemberApi {
 
     @Autowired
     TalentInfoManager talentInfoManager;
+    
+    @Autowired
+    private UserService userService;
+    
+    @Autowired
+    private TalentService talentService;
 
     @Override
     public TalentInfo getTalentDetail(int appId, int domainId, long deviceId, long userId, int versionCode,
             long merchantId) {
         try {
+        	
             if (0 >= merchantId) {
                 DubboExtProperty.setErrorCode(MemberReturnCode.PARAMTER_ERROR);
                 logger.info("getTalentDetail talentId is null");
                 return null;
             }
             long start = System.currentTimeMillis();
+            
+            //判断达人类型
+            BaseResult<UserDO> userResult = userService.getUserDOByUserId(merchantId);
+            if(!userResult.isSuccess()){
+            	logger.error("userService.getUserDOByUserId error,merchantId={}",merchantId);
+            	DubboExtProperty.setErrorCode(userResult.getReturnCode());
+            	return null;
+            }
+            
+            UserDO userDO = userResult.getValue();
+            if(UserOptions.COMMON_TELENT.has(userDO.getOptions())){
+            	//查询新达人信息
+            	BaseResult<TalentDTO>  talentResult = talentService.queryTalentInfo(merchantId);
+            	if(!talentResult.isSuccess()){
+                	logger.error("userService.getUserDOByUserId error,merchantId={}",merchantId);
+                	DubboExtProperty.setErrorCode(talentResult.getReturnCode());
+                	return null;
+                }
+            	
+            	//转换
+            	TalentInfo talentInfo = TalentConverter.converet2TalentInfo(talentResult.getValue());
+            	MemResult<SnsCountDTO> snsResult = talentInfoManager.getSnsCountInfo(userId,merchantId);
+                if(!snsResult.isSuccess()){
+                	logger.error("talentInfoManager.getSnsCountInfo error,snsResult={},merchantId={}",JSONObject.toJSONString(snsResult),JSONObject.toJSONString(merchantId));
+                	DubboExtProperty.setErrorCode(snsResult.getReturnCode());
+                	return null;
+                }
+                
+                TalentConverter.mergeTalentInfo(talentInfo, snsResult.getValue());
+                
+                return talentInfo;
+            	
+            }
+            
+            
             MemResult<MerchantUserDTO> result = talentInfoManager.queryTalentInfo(merchantId, domainId);
             TalentInfo talentInfo = new TalentInfo();
             if (result.isSuccess()) {

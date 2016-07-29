@@ -66,6 +66,8 @@ public class TalentMemberApiImpl implements TalentMemberApi {
     @Override
     public TalentInfo getTalentDetail(int appId, int domainId, long deviceId, long userId, int versionCode,
             long merchantId) {
+    	
+      TalentInfo talentInfo = null;
         try {
         	
             if (0 >= merchantId) {
@@ -84,7 +86,7 @@ public class TalentMemberApiImpl implements TalentMemberApi {
             }
             
             UserDO userDO = userResult.getValue();
-            TalentInfo talentInfo = null;
+           
             if(UserOptions.USER_TALENT.has(userDO.getOptions())){
             	
             	MemResult<MerchantUserDTO> result = talentInfoManager.queryTalentInfo(merchantId, domainId);
@@ -150,7 +152,7 @@ public class TalentMemberApiImpl implements TalentMemberApi {
             logger.error("getTalentDetail par:{} error:{}", merchantId, e);
             DubboExtProperty.setErrorCode(MemberReturnCode.SYSTEM_ERROR);
         }
-        return null;
+        return talentInfo;
     }
 
     @Override

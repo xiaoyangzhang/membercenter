@@ -81,11 +81,9 @@
     <logger name="java.sql.PreparedStatement" level="DEBUG"/>
 
     <!--<logger name="com.pajk.sims"/>-->
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
-        <!--
         <appender-ref ref="DEBUG"/>
-         -->
         <appender-ref ref="INFO"/>
         <appender-ref ref="ERROR"/>
     </root>

@@ -30,6 +30,7 @@ import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
 import com.yimayhd.user.client.dto.TalentDTO;
 import com.yimayhd.user.client.dto.UserDTO;
+import com.yimayhd.user.client.enums.BaseStatus;
 import com.yimayhd.user.client.enums.CertificateOption;
 import com.yimayhd.user.client.enums.SequenceEnum;
 import com.yimayhd.user.client.enums.ServiceFacilityOption;
@@ -268,7 +269,7 @@ public class TalentConverter {
          talentInfo.nickName = userDTO.getNickname();
          talentInfo.signature = userDTO.getSignature();
          talentInfo.frontCover = userDTO.getFrontCover();
-         
+         talentInfo.isHasMainPage = userDTO.isHasMainPage();
        
          return talentInfo;
     }

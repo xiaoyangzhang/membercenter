@@ -88,4 +88,7 @@ public class TalentInfo implements Serializable {
     @Description("封面")
     public String frontCover;
     
+    @Description("是否有主页 ")
+    public boolean isHasMainPage;
+    
 }

@@ -35,6 +35,7 @@ import com.yimayhd.snscenter.client.dto.SnsCountDTO;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
 import com.yimayhd.user.client.dto.TalentDTO;
+import com.yimayhd.user.client.enums.BaseStatus;
 import com.yimayhd.user.client.enums.UserOptions;
 import com.yimayhd.user.client.result.BaseResult;
 import com.yimayhd.user.client.service.TalentService;
@@ -112,6 +113,10 @@ public class TalentMemberApiImpl implements TalentMemberApi {
                     talentInfo.certificateType = IconType.EXPERT.getType();
                     talentInfo.frontCover = result.getValue().getUserDO().getFrontCover();
                     talentInfo.signature = result.getValue().getUserDO().getSignature();
+                    if(BaseStatus.YES.getType() == userDO.getHasMainPage()){
+                    	talentInfo.isHasMainPage = true;
+                    }
+       
                     // return talentInfo;
                     
                     MemResult<SnsCountDTO> snsResult = talentInfoManager.getSnsCountInfo(userId,merchantId);

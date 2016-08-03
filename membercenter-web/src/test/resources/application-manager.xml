@@ -7,7 +7,7 @@
 	<context:annotation-config />
 
 	<bean id="merchantServiceManager" class="com.yimayhd.membercenter.manager.MerchantServiceManager"></bean>
-	
+
 	<bean id="memberProfileManager" class="com.yimayhd.membercenter.manager.MemberProfileManager"/>
 	
 	<bean id="memberPrivilegeManager" class="com.yimayhd.membercenter.manager.MemberPrivilegeManager"></bean>
@@ -17,15 +17,42 @@
     
     <bean id="talentInfoManager" class="com.yimayhd.membercenter.manager.talent.TalentInfoManager"/>
 	<bean id="talentBackInfoManager" class="com.yimayhd.membercenter.manager.talent.TalentBackInfoManager"/>
-	
-	
-	
+	<bean id="talentExamineManager" class="com.yimayhd.membercenter.manager.talent.TalentExamineManager"/>
+	<bean id="scopeItemCategoryManager" class="com.yimayhd.membercenter.manager.ScopeItemCategoryManager"/>
+	<bean id="businessScopeManager" class="com.yimayhd.membercenter.manager.BusinessScopeManager"/>
+	<bean id="merchantItemCategoryManager" class="com.yimayhd.membercenter.manager.MerchantItemCategoryManager"/>
+
+	<bean id="merchantApplyManager" class="com.yimayhd.membercenter.manager.MerchantApplyManager"/>
+	<bean id="qualificationManager" class="com.yimayhd.membercenter.manager.QualificationManager"/>
+
+
+    <bean id="menuManager" class="com.yimayhd.membercenter.manager.MenuManager"/>
+    <bean id="roleManager" class="com.yimayhd.membercenter.manager.RoleManager"/>
+    <bean id="draftManager" class="com.yimayhd.membercenter.manager.DraftManager"/>
+
     <bean id="memberIdpool" class="com.yimayhd.membercenter.idgen.IdPoolImpl">
         <constructor-arg name="generator" ref="globalIdGenerator"/>
         <constructor-arg name="configDomain" value="${app.name}"/>
         <constructor-arg name="configKey" value="${memcenter.meber.idgen.key}"/>
         <constructor-arg name="allocCount" value="20"/>
     </bean>
+    
+    <bean id="examineIdPool" class="com.yimayhd.membercenter.idgen.IdPoolImpl">
+        <constructor-arg name="generator" ref="globalIdGenerator"/>
+        <constructor-arg name="configDomain" value="examine"/>
+        <constructor-arg name="configKey" value="examine_done"/>
+        <constructor-arg name="allocCount" value="20"/>
+    </bean>
+    
+     <bean id="examineDetailIdPool" class="com.yimayhd.membercenter.idgen.IdPoolImpl">
+        <constructor-arg name="generator" ref="globalIdGenerator"/>
+        <constructor-arg name="configDomain" value="examine"/>
+        <constructor-arg name="configKey" value="examine_detail"/>
+        <constructor-arg name="allocCount" value="20"/>
+    </bean>
 	
 	<bean id="sessionManager" class="com.yimayhd.user.session.manager.SessionManager" />
+
+    <bean id="jxMsgManager" class="com.yimayhd.membercenter.manager.msgpush.JxMsgManager"/>
+    <bean id="msgHandlerManager" class="com.yimayhd.membercenter.manager.msgpush.MsgHandlerManager"/>
 </beans>

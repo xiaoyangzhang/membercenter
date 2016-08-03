@@ -27,6 +27,40 @@
         <property name="group" value="${member.consume.member.group}"/>
     </bean>
 
+    <bean id="orderPaidDoneConsumer" class="com.yimayhd.membercenter.mq.order.OrderPaidDoneConsumer"
+          init-method="init" destroy-method="destroy">
+        <property name="nameServer" value="${rocketmq.server.name}"/>
+        <property name="group" value="${member.consume.order.group}"/>
+    </bean>
 
+    <bean id="userOptionUpdateConsumer" class="com.yimayhd.membercenter.mq.user.UserOptionUpdateConsumer"
+          init-method="init" destroy-method="destroy">
+        <property name="nameServer" value="${rocketmq.server.name}"/>
+        <property name="group" value="${member.consume.user.group}"/>
+    </bean>
+	
+	<bean id="userRegisterConsumer" class="com.yimayhd.membercenter.mq.user.UserRegisterConsumer"
+		init-method="init" destroy-method="destroy">
+		<property name="nameServer" value="${rocketmq.server.name}" />
+		<property name="group" value="${member.consume.user.group}" />
+	</bean>
 
+  <bean id="userOptionAddConsumer" class="com.yimayhd.membercenter.mq.user.UserOptionAddConsumer"
+          init-method="init" destroy-method="destroy">
+        <property name="nameServer" value="${rocketmq.server.name}"/>
+        <property name="group" value="${member.consume.user.group}"/>
+    </bean>
+
+  	<bean id="examineMesConsumer" class="com.yimayhd.membercenter.mq.examine.ExamineMesConsumer"
+          init-method="init" destroy-method="destroy">
+        <property name="nameServer" value="${rocketmq.server.name}"/>
+        <property name="group" value="${member.consume.examine.mes.group}"/>
+    </bean>
+    
+    <bean id="examinePushConsumer" class="com.yimayhd.membercenter.mq.examine.ExaminePushConsumer"
+          init-method="init" destroy-method="destroy">
+        <property name="nameServer" value="${rocketmq.server.name}"/>
+        <property name="group" value="${member.consume.examine.push.group}"/>
+    </bean>
+    
 </beans>

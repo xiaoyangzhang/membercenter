@@ -81,5 +81,11 @@ public class TalentInfo implements Serializable {
     
     @Description("NONE-未关注/FOLLOW-单向关注/BIFOLLOW-双向关注")
     public String attentionType;
+
+    @Description("签名")
+    public String signature;
+    
+    @Description("封面")
+    public String frontCover;
     
 }

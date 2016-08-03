@@ -28,6 +28,8 @@ import com.yimayhd.snscenter.client.enums.FollowType;
 import com.yimayhd.user.client.domain.MerchantDO;
 import com.yimayhd.user.client.domain.UserDO;
 import com.yimayhd.user.client.dto.MerchantUserDTO;
+import com.yimayhd.user.client.dto.TalentDTO;
+import com.yimayhd.user.client.dto.UserDTO;
 import com.yimayhd.user.client.enums.CertificateOption;
 import com.yimayhd.user.client.enums.SequenceEnum;
 import com.yimayhd.user.client.enums.ServiceFacilityOption;
@@ -255,5 +257,19 @@ public class TalentConverter {
     	}
     	
     	return talentInfo;
+    }
+    
+    public static TalentInfo converet2TalentInfo(TalentDTO talentDTO){
+    	TalentInfo talentInfo = new TalentInfo();
+    	UserDTO userDTO = talentDTO.getUserDTO();
+    	 talentInfo.userId = userDTO.getId();
+         talentInfo.avatar = userDTO.getAvatar();
+         talentInfo.gender = String.valueOf(userDTO.getGender());
+         talentInfo.nickName = userDTO.getNickname();
+         talentInfo.signature = userDTO.getSignature();
+         talentInfo.frontCover = userDTO.getFrontCover();
+         
+       
+         return talentInfo;
     }
 }

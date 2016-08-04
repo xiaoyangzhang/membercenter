@@ -110,9 +110,10 @@ public class ExamineConverter {
         //2期
         examinDTO.setIsDirectSale(examineDO.getIsDirectSale());
         examinDTO.setMerchantCategoryId(examineDO.getMerchantCategoryId());
-       /* examinDTO.setAccountType(featureMap.get(ExamineDetail.ACCOUNT_TYPE.getId()));
+        examinDTO.setAccountType(featureMap.get(ExamineDetail.ACCOUNT_TYPE.getId()));
         examinDTO.setOpenerCard(featureMap.get(ExamineDetail.OPENER_CARD.getId()));
-        examinDTO.setSettlementCard(featureMap.get(ExamineDetail.SETTLEMENT_CARD.getId()));*/
+        examinDTO.setSettlementCard(featureMap.get(ExamineDetail.SETTLEMENT_CARD.getId()));
+        examinDTO.setOpenerTel(featureMap.get(ExamineDetail.OPENER_TEL.getId()));
         // type
         examinDTO.setTouristCard(certificateMap.get(CertificateOption.TOURIST_CARD.getCode()));
         examinDTO.setDrivingLinence(certificateMap.get(CertificateOption.DRIVING_LICENCE.getCode()));
@@ -160,9 +161,10 @@ public class ExamineConverter {
         featureMap.put(ExamineDetail.LEGAL_CARD_NUMBER.getId(), examinDTO.getLawPersonCard());
         featureMap.put(ExamineDetail.SALE_LICENSE_NUMBER.getId(), examinDTO.getSaleLicenseNumber());
         featureMap.put(ExamineDetail.TAX_REGISTER_NUMBER.getId(), examinDTO.getTaxRegisterNumber());
-        /*featureMap.put(ExamineDetail.ACCOUNT_TYPE.getId(), examinDTO.getAccountType());
+        featureMap.put(ExamineDetail.ACCOUNT_TYPE.getId(), examinDTO.getAccountType());
         featureMap.put(ExamineDetail.OPENER_CARD.getId(), examinDTO.getOpenerCard());
-        featureMap.put(ExamineDetail.SETTLEMENT_CARD.getId(), examinDTO.getSettlementCard());*/
+        featureMap.put(ExamineDetail.SETTLEMENT_CARD.getId(), examinDTO.getSettlementCard());
+        featureMap.put(ExamineDetail.OPENER_TEL.getId(), examinDTO.getOpenerTel());
         pictureMap.put(PictureUrl.LEGRAL_CARD_UP.getId(), examinDTO.getLegralCardUp());
         pictureMap.put(PictureUrl.LEGRAL_CARD_DOWN.getId(), examinDTO.getLegralCardDown());
         pictureMap.put(PictureUrl.BUSINESS_LICENSE.getId(), examinDTO.getBusinessLicense());

@@ -265,7 +265,7 @@ public class TalentConverter {
     	UserDTO userDTO = talentDTO.getUserDTO();
     	 talentInfo.userId = userDTO.getId();
          talentInfo.avatar = userDTO.getAvatar();
-         talentInfo.gender = String.valueOf(userDTO.getGender());
+         talentInfo.gender = String.valueOf(userDTO.getGender().getValue());
          talentInfo.nickName = userDTO.getNickname();
          talentInfo.signature = userDTO.getSignature();
          talentInfo.frontCover = userDTO.getFrontCover();

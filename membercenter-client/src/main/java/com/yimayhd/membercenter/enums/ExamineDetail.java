@@ -56,7 +56,8 @@ public enum ExamineDetail {
     MERCHANT_NAME("店铺名称", "21", 1),
     ACCOUNT_TYPE("账户类型","25",1),
     OPENER_CARD("开户人身份证","26",1),
-    SETTLEMENT_CARD("结算联行号","27",1);
+    SETTLEMENT_CARD("结算联行号","27",1),
+    OPENER_TEL("开户人手机号","28",1);
     private String name;
     private String id;
     private int number;

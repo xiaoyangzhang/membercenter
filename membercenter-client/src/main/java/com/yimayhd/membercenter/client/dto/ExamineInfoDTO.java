@@ -173,7 +173,28 @@ public class ExamineInfoDTO implements Serializable {
      *账户类型
      */
     private String accountType;
-    public String getAccountType() {
+    
+
+	/**
+     * 开户人身份证
+     */
+    private String openerCard;
+    /**
+     * 结算联行号
+     */
+    private String settlementCard;
+    /**
+     * 开户人手机号（银行预留手机号）
+     */
+    private String openerTel;
+    
+    public String getOpenerTel() {
+		return openerTel;
+	}
+	public void setOpenerTel(String openerTel) {
+		this.openerTel = openerTel;
+	}
+	public String getAccountType() {
 		return accountType;
 	}
 	public void setAccountType(String accountType) {
@@ -191,16 +212,6 @@ public class ExamineInfoDTO implements Serializable {
 	public void setSettlementCard(String settlementCard) {
 		this.settlementCard = settlementCard;
 	}
-
-	/**
-     * 开户人身份证
-     */
-    private String openerCard;
-    /**
-     * 结算联行号
-     */
-    private String settlementCard;
-    
 	public Set<Long> getIdSet() {
 		return idSet;
 	}

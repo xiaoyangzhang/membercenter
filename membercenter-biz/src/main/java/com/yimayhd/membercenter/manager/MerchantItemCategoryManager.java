@@ -183,47 +183,24 @@ public class MerchantItemCategoryManager {
 	                                            support.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
 	                                            return support;
 	                                        }
-											ArrayList<MerchantItemCategoryDO> merchantItemCategoryDOs = new ArrayList<>();
-											for (long categoryId : idList) {
-												MerchantItemCategoryDO merchantItemCategoryDO = new MerchantItemCategoryDO();
-												merchantItemCategoryDO.setDomainId(examineDO.getDomainId());
-												
-												merchantItemCategoryDO.setItemCategoryId(categoryId);
-												merchantItemCategoryDO.setSellerId(merchantDO.getSellerId());
-												merchantItemCategoryDO.setStatus(MemberConstant.MEMBER_IN_USR);
-												merchantItemCategoryDOs.add(merchantItemCategoryDO);
-											}
-											
-											// 保存商家所具有的的类目权限
-											boolean target = merchantItemCategoryDao.saveMerchanItemCategories(merchantItemCategoryDOs);
+											boolean target = insertMerchantItemCategory(examineDO,categoryIds);
 											if (!target) {
-												logger.error("saveMerchanItemCategories param:{} is null, saveMerchanItemCategories failure", JSONObject.toJSONString(merchantItemCategoryDOs));
+												//logger.error("saveMerchanItemCategories param:{} is null, saveMerchanItemCategories failure", JSONObject.toJSONString(merchantItemCategoryDOs));
 												transactionStatus.setRollbackOnly();
 												support.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
 												return support;
 											}
 										}else {
 											
-											ArrayList<MerchantItemCategoryDO> merchantItemCategoryDOs = new ArrayList<>();
-											for (long categoryId : categoryIds) {
-												MerchantItemCategoryDO merchantItemCategoryDO = new MerchantItemCategoryDO();
-												merchantItemCategoryDO.setDomainId(examineDO.getDomainId());
-												
-												merchantItemCategoryDO.setItemCategoryId(categoryId);
-												merchantItemCategoryDO.setSellerId(merchantDO.getSellerId());
-												merchantItemCategoryDO.setStatus(MemberConstant.MEMBER_IN_USR);
-												merchantItemCategoryDOs.add(merchantItemCategoryDO);
-											}
 											
-											// 保存商家所具有的的类目权限
-											boolean target = merchantItemCategoryDao.saveMerchanItemCategories(merchantItemCategoryDOs);
+											boolean target = insertMerchantItemCategory(examineDO,categoryIds);
 											if (!target) {
-												logger.error("saveMerchanItemCategories param:{} is null, saveMerchanItemCategories failure", JSONObject.toJSONString(merchantItemCategoryDOs));
+												//logger.error("saveMerchanItemCategories param:{} is null, saveMerchanItemCategories failure", JSONObject.toJSONString(merchantItemCategoryDOs));
 												transactionStatus.setRollbackOnly();
 												support.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
 												return support;
 											}
-											logger.info("saveMerchanItemCategories param:{} saveMerchanItemCategories success", JSONObject.toJSONString(merchantItemCategoryDOs));
+											//logger.info("saveMerchanItemCategories param:{} saveMerchanItemCategories success", JSONObject.toJSONString(merchantItemCategoryDOs));
 										}  } catch (Exception e) {
                                         logger.error("saveMerchanItemCategories failed!  examineDO={},  categoryIds={}", JSON.toJSONString(examineDO), JSON.toJSONString(categoryIds), e);
                                         support.setReturnCode(MemberReturnCode.SYSTEM_ERROR);
@@ -249,7 +226,42 @@ public class MerchantItemCategoryManager {
 
         return memResultSupport;
     }
-
+    /**
+     * 
+    * created by zhangxiaoyang
+    * @date 2016年8月3日
+    * @Title: insertMerchantItemCategory 
+    * @Description: 封装要插入的商家和商品类目管理表数据
+    * @param @param domainId
+    * @param @param categoryId
+    * @param @param sellerId
+    * @param @return    设定文件 
+    * @return MemResultSupport    返回类型 
+    * @throws
+     */
+    private boolean insertMerchantItemCategory(final ExamineDO examineDO,final long[] categoryIds) {
+    	ArrayList<MerchantItemCategoryDO> merchantItemCategoryDOs = new ArrayList<>();
+		for (long categoryId : categoryIds) {
+			MerchantItemCategoryDO merchantItemCategoryDO = new MerchantItemCategoryDO();
+			merchantItemCategoryDO.setDomainId(examineDO.getDomainId());
+			
+			merchantItemCategoryDO.setItemCategoryId(categoryId);
+			merchantItemCategoryDO.setSellerId(examineDO.getSellerId());
+			merchantItemCategoryDO.setStatus(MemberConstant.MEMBER_IN_USR);
+			merchantItemCategoryDOs.add(merchantItemCategoryDO);
+		}
+		
+		try {
+			// 保存商家所具有的的类目权限
+			boolean target = merchantItemCategoryDao.saveMerchanItemCategories(merchantItemCategoryDOs);
+			
+			return target;
+		} catch (Exception e) {
+			logger.error("param:ExamineDO={},categoryIds={},merchantItemCategoryDOs={},error:{}",JSON.toJSONString(examineDO),categoryIds,JSON.toJSONString(merchantItemCategoryDOs),e);
+		}
+    	return false;
+    }
+    
     public MemResultSupport checkCategoryPrivilege(int domainId, long categoryId, long sellerId) {
         List<MerchantItemCategoryDO> merchantItemCategoryDOs = merchantItemCategoryDao.selectByCategoryIdAndSellerId(domainId, categoryId, sellerId);
         MemResultSupport support = new MemResultSupport();

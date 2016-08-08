@@ -21,6 +21,13 @@ public class MenuManager {
     @Autowired
     private MenuDao menuDao;
 
+    public HaMenuDO getMenuById(long id) {
+        if (id <= 0) {
+            return null;
+        }
+        return menuDao.getById(id);
+    }
+
     /**
      * 添加菜单
      *
@@ -32,8 +39,15 @@ public class MenuManager {
         return haMenuDO;
     }
 
+    public void updateMenuStatus(long id) {
+        if (id > 0) {
+            menuDao.delete(id);
+        }
+    }
+
     /**
      * 删除菜单，逻辑删除
+     *
      * @param id 菜单id
      */
     public void deleteMenu(long id) {
@@ -42,6 +56,7 @@ public class MenuManager {
 
     /**
      * 分页查询菜单
+     *
      * @param menuListQuery
      * @return
      */

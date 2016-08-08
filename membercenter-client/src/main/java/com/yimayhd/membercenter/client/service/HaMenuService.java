@@ -2,10 +2,8 @@ package com.yimayhd.membercenter.client.service;
 
 import com.yimayhd.membercenter.client.domain.HaMenuDO;
 import com.yimayhd.membercenter.client.query.MenuListQuery;
-import com.yimayhd.membercenter.client.result.MemPageResult;
+import com.yimayhd.membercenter.client.result.BasePageResult;
 import com.yimayhd.membercenter.client.result.MemResult;
-
-import java.util.List;
 
 /**
  * Created by xushubing on 2016/8/8.
@@ -41,12 +39,11 @@ public interface HaMenuService {
      * @param menuListQuery
      * @return
      */
-    public MemPageResult<List<HaMenuDO>> selectList(MenuListQuery menuListQuery);
+    public BasePageResult<HaMenuDO> selectList(MenuListQuery menuListQuery);
 
     /**
-     *
-     * @param  menuListQuery
+     * @param menuListQuery
      * @return
      */
-    public MemPageResult<List<HaMenuDO>> selectChildList(MenuListQuery menuListQuery);
+    public BasePageResult<HaMenuDO> selectChildList(MenuListQuery menuListQuery);
 }

@@ -13,11 +13,12 @@
 
 		<result column="status" property="status" jdbcType="INTEGER" />
 		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="project_code" property="projectCode" jdbcType="INTEGER" />
 
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id,name,gmt_created,gmt_modified,status, type
+		id,name,gmt_created,gmt_modified,status, type,project_code
 	</sql>
 
 
@@ -35,9 +36,9 @@
 	<insert id="add" parameterType="com.yimayhd.membercenter.client.domain.HaRoleDO"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into ha_role
-			(id,name,gmt_created,gmt_modified,status, type)
+			(id,name,gmt_created,gmt_modified,status, type,project_code)
 		values (
-			#{id},#{name},#{gmtCreated},#{gmtModified},#{status},#{type},
+			#{id},#{name},#{gmtCreated},#{gmtModified},#{status},#{type},#{projectCode}
 		)
 	</insert>
 
@@ -115,6 +116,9 @@
 
 			<if test="status != null">
 				t.status = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="projectCode!= null">
+				t.project_code= #{projectCode,jdbcType=INTEGER}
 			</if>
 
 		</set>

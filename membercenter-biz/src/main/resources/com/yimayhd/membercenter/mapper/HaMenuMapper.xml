@@ -26,6 +26,7 @@
 		<result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
 
 		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="project_code" property="projectCode" jdbcType="INTEGER" />
 
 	</resultMap>
 	<resultMap id="menuList" extends="BaseResultMap"
@@ -42,14 +43,14 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id,name,url,req_type,type,level,leaf,parent_id,domain,gmt_created,gmt_modified,status
+		id,name,url,req_type,type,level,leaf,parent_id,domain,gmt_created,gmt_modified,status,project_code
 	</sql>
 
 	<!--insert的时候要去掉ID，创建时间，更新时间和状态 -->
 	<insert id="add" parameterType="com.yimayhd.membercenter.client.domain.HaMenuDO"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into ha_menu
-		(id,name,url,req_type,type,level,leaf,parent_id,domain,gmt_created,gmt_modified,status)
+		(id,name,url,req_type,type,level,leaf,parent_id,domain,gmt_created,gmt_modified,status,project_code)
 		values (
 
 		#{id,jdbcType=BIGINT},
@@ -74,7 +75,8 @@
 
 		#{gmtModified,jdbcType=TIMESTAMP},
 
-		#{status,jdbcType=INTEGER}
+		#{status,jdbcType=INTEGER},
+		#{projectCode,jdbcType=INTEGER}
 
 		)
 	</insert>
@@ -132,6 +134,9 @@
 
 			<if test="status != null">
 				t.status = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="projectCode!= null">
+				t.project_code= #{projectCode,jdbcType=INTEGER}
 			</if>
 
 		</set>

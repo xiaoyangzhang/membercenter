@@ -32,5 +32,9 @@
 
 	<bean id="merchantApplyService" class="com.yimayhd.membercenter.service.client.examine.MerchantApplyServiceImpl"></bean>
 	<bean id="qualificationService" class="com.yimayhd.membercenter.service.client.QualificationServiceImpl"></bean>
-	
+
+
+	<!-- 菜单角色-->
+	<bean id="haMenuService" class="com.yimayhd.membercenter.service.client.HaMenuServiceImpl"></bean>
+	<bean id="haRoleService" class="com.yimayhd.membercenter.service.client.HaRoleServiceImpl"></bean>
 </beans>

@@ -19,6 +19,7 @@ public class HaRoleDO implements Serializable {
     protected int status;//1-正常0-删除
     private String name; // 角色名称
     private int type;
+    private int projectCode;//1 运营后台;2 商家后台
 
     public long getId() {
         return id;
@@ -75,4 +76,12 @@ public class HaRoleDO implements Serializable {
 	public void setType(int type) {
 		this.type = type;
 	}
+
+    public int getProjectCode() {
+        return projectCode;
+    }
+
+    public void setProjectCode(int projectCode) {
+        this.projectCode = projectCode;
+    }
 }

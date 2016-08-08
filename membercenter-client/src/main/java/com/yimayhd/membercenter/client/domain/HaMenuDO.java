@@ -25,6 +25,7 @@ public class HaMenuDO implements Serializable{
     private Date gmtCreated; // 创建时间
     private Date gmtModified; // 更新时间
     private int status; // 状态（0：删除；1：正常）
+    private int projectCode;//1 运营后台;2 商家后台
     private List<HaMenuDO> haMenuDOList;
 
 
@@ -130,5 +131,14 @@ public class HaMenuDO implements Serializable{
 
     public void setDomain(long domain) {
         this.domain = domain;
+    }
+
+
+    public int getProjectCode() {
+        return projectCode;
+    }
+
+    public void setProjectCode(int projectCode) {
+        this.projectCode = projectCode;
     }
 }

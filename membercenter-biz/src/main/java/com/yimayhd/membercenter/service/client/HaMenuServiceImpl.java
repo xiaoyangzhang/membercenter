@@ -104,7 +104,7 @@ public class HaMenuServiceImpl implements HaMenuService {
     public BasePageResult<HaMenuDO> selectList(MenuListQuery menuListQuery) {
         BasePageResult<HaMenuDO> menuDOMemResult = new BasePageResult<>();
         if (menuListQuery == null) {
-            loger.error("updateMenuStatus parameter error,parameter={}", JSON.toJSONString(menuDOMemResult));
+            loger.error("selectList parameter error,parameter={}", JSON.toJSONString(menuDOMemResult));
             menuDOMemResult.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
             return menuDOMemResult;
         }
@@ -120,7 +120,7 @@ public class HaMenuServiceImpl implements HaMenuService {
     public BasePageResult<HaMenuDO> selectChildList(MenuListQuery menuListQuery) {
         BasePageResult<HaMenuDO> menuDOMemResult = new BasePageResult<>();
         if (menuListQuery == null) {
-            loger.error("updateMenuStatus parameter error,parameter={}", JSON.toJSONString(menuDOMemResult));
+            loger.error("selectList parameter error,parameter={}", JSON.toJSONString(menuDOMemResult));
             menuDOMemResult.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
             return menuDOMemResult;
         }

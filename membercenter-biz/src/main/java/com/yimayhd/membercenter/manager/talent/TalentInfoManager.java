@@ -96,7 +96,8 @@ public class TalentInfoManager {
         }
         // 根据参数选择查询实现
         if (StringUtils.isNotBlank(talentQueryDTO.getSearchWord())) {
-            merchantPageQuery.setTitle(talentQueryDTO.getSearchWord().toUpperCase());
+          //  merchantPageQuery.setTitle(talentQueryDTO.getSearchWord().toUpperCase());
+        	merchantPageQuery.setKeyWords(talentQueryDTO.getSearchWord());
         } else {
             // 达人类型是否为空
             if (StringUtils.isNotBlank(talentQueryDTO.getTagId())) {

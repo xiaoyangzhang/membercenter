@@ -120,10 +120,28 @@ public class HaMenuServiceImpl implements HaMenuService {
     public BasePageResult<HaMenuDO> selectChildList(MenuListQuery menuListQuery) {
         BasePageResult<HaMenuDO> menuDOMemResult = new BasePageResult<>();
         if (menuListQuery == null) {
-            loger.error("selectList parameter error,parameter={}", JSON.toJSONString(menuDOMemResult));
+            loger.error("selectChildList parameter error,parameter={}", JSON.toJSONString(menuDOMemResult));
             menuDOMemResult.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
             return menuDOMemResult;
         }
         return menuManager.queryMenu(menuListQuery);
+    }
+
+    /**
+     * 查询role下的菜单
+     *
+     * @param roleId
+     * @return
+     */
+    @Override
+    public BasePageResult<HaMenuDO> selectMenuByRoleId(long roleId) {
+        BasePageResult<HaMenuDO> menuDOMemResult = new BasePageResult<>();
+        if (roleId <= 0) {
+            loger.error("selectMenuByRoleId parameter error,parameter={}", JSON.toJSONString(menuDOMemResult));
+            menuDOMemResult.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
+            return menuDOMemResult;
+        }
+      //  return menuManager.queryMenu(menuListQuery);
+        return null;
     }
 }

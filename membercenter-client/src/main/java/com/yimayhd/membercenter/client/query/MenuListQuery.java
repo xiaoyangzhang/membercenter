@@ -8,6 +8,15 @@ public class MenuListQuery extends PageQuery {
     private Integer id;//menu id 非必填 查询使用
     private String name;//menu name 非必填查询使用
 
+    private Integer roleId;
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
 
     public Integer getId() {
         return id;

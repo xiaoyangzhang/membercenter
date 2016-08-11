@@ -46,4 +46,12 @@ public interface HaMenuService {
      * @return
      */
     public BasePageResult<HaMenuDO> selectChildList(MenuListQuery menuListQuery);
+
+    /**
+     * 查询role下的菜单
+     *
+     * @param roleId
+     * @return
+     */
+    public BasePageResult<HaMenuDO> selectMenuByRoleId(long roleId);
 }

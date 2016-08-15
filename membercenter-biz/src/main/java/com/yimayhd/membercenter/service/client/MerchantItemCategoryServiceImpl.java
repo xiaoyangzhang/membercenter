@@ -7,6 +7,7 @@ import com.yimayhd.membercenter.enums.ExamineStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import com.yimayhd.membercenter.MemberReturnCode;
 import com.yimayhd.membercenter.client.domain.examine.ExamineDO;
@@ -47,9 +48,9 @@ public class MerchantItemCategoryServiceImpl implements MerchantItemCategoryServ
 	}
 
 	@Override
-	public MemResultSupport saveMerchantItemCategories(int domainId, long examineId, long[] categoryIds) {
+	public MemResultSupport saveMerchantItemCategories(int domainId, long examineId, List<Long> categoryIds) {
 		MemResultSupport memResultSupport = new MemResultSupport();
-		if(domainId <= 0 || examineId <= 0 || null == categoryIds || categoryIds.length == 0) {
+		if(domainId <= 0 || examineId <= 0 || null == categoryIds || CollectionUtils.isEmpty(categoryIds)) {
 			memResultSupport.setReturnCode(MemberReturnCode.PARAMTER_ERROR);
 			return memResultSupport;
 		}

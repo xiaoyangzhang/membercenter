@@ -31,12 +31,14 @@ import com.yimayhd.membercenter.mapper.ExamineDetailDOMapper;
 import com.yimayhd.membercenter.repo.MerchantRepo;
 import com.yimayhd.membercenter.util.MapUnionUtil;
 import com.yimayhd.membercenter.util.ParmCheckUtil;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -287,8 +289,8 @@ public class TalentExamineManager {
 
         // 如果为达人，自动为达人赋予部分商品类目权限(204,205,207)
         if(examineDO.getType() == 1 && examineDO.getStatues() == ExamineStatus.EXAMIN_OK.getStatus() && examineResult.getValue().getStatues() == ExamineStatus.EXAMIN_ING.getStatus()) {
-            long[] categoryIds = new long[]{204l,205l,207l};
-            MemResultSupport support = merchantItemCategoryService.saveMerchantItemCategories(examineDO.getDomainId(), examineDO.getId(), categoryIds);
+            Long[] categoryIds = new Long[]{204l,205l,207l};
+            MemResultSupport support = merchantItemCategoryService.saveMerchantItemCategories(examineDO.getDomainId(), examineDO.getId(), Arrays.asList(categoryIds));
             if(support.isSuccess()) {
                 baseResult.setValue(Boolean.TRUE);
                 return baseResult;

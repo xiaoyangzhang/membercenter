@@ -80,7 +80,7 @@ public class ExaminePushConsumer extends BaseConsumer {
         pushRecordDO.setSendType(PushSendType.REGISTRATION_ID.getType());
         pushRecordDO.setUserId(examineDO.getSellerId());
         pushRecordDO.setPushTitle(PUSH_TITLE);
-        pushRecordDO.setOutId(System.currentTimeMillis());
+        pushRecordDO.setOutId(msg.getId());
         pushRecordDO.setBizType(BIZ_TYPE);
         pushRecordDO.setBizSubtype(BIZ_SUB_TYPE);
         pushRecordDO.setApplicationId(APPLICATION_ID);

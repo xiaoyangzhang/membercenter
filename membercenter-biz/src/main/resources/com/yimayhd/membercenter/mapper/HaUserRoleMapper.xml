@@ -45,7 +45,7 @@
     </update>
 
 
-    <select id="getHaRoleList" parameterType="com.yimayhd.membercenter.client.query.UserMenuQuery" resultType="java.lang.Long">
+   <select id="getHaRoleList" parameterType="com.yimayhd.membercenter.client.query.UserMenuQuery" resultType="long">
         SELECT
             ha_role_id
         FROM

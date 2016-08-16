@@ -198,6 +198,12 @@ public class ExamineDealServiceImpl implements ExamineDealService {
             ExamineDO examineDO = ExamineConverter.examineDealToDO(examineDealDTO);
             result = talentExamineManager.refuseMerchantOrAuditTalent(examineDO);
             if(result.isSuccess()) {
+            	// 判断审核是否通过
+                if (examineDealDTO.isCheckIsOk()) {
+                    examineDO.setStatues(ExamineStatus.EXAMIN_OK.getStatus());
+                } else {
+                    examineDO.setStatues(ExamineStatus.EXAMIN_ERROR.getStatus());
+                }
                 // 发送审核状态到mq消息
                 SendResult sendResult = msgSender.sendMessage(examineDO,
                         MemberTopic.EXAMINE_RESULT.getTopic(), MemberTopic.EXAMINE_RESULT.getTags());

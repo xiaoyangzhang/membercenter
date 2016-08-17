@@ -1,8 +1,6 @@
 package com.yimay.membercenter.dubbo;
 
 import com.alibaba.fastjson.JSON;
-import com.taobao.tair.json.Json;
-import com.yimay.membercenter.DubboBaseTest;
 import com.yimayhd.membercenter.client.domain.HaMenuDO;
 import com.yimayhd.membercenter.client.dto.UserMenuOptionDTO;
 import com.yimayhd.membercenter.client.query.MenuQuery;

@@ -32,6 +32,7 @@ import com.yimayhd.membercenter.client.result.MemResult;
 import com.yimayhd.membercenter.client.result.MemResultSupport;
 import com.yimayhd.membercenter.converter.ExamineConverter;
 import com.yimayhd.membercenter.dao.MerchantItemCategoryDao;
+import com.yimayhd.membercenter.enums.ExamineStatus;
 import com.yimayhd.membercenter.idgen.IDPool;
 import com.yimayhd.membercenter.manager.talent.TalentExamineManager;
 import com.yimayhd.membercenter.mapper.ExamineDOMapper;
@@ -100,7 +101,7 @@ public class MerchantItemCategoryManager {
         // 查询商家的入驻申请
         final MemResult<ExamineDO> examineResult = talentExamineManager.queryMerchantExamineInfoById(examineDO);
         final ExamineDO queryExamineDO = examineResult.getValue();
-
+        queryExamineDO.setStatues(ExamineStatus.EXAMIN_OK.getStatus());
         // 声明商家的入驻申请历史明细
         final ExamineDetailDO examineDetailDO = new ExamineDetailDO();
         BeanUtils.copyProperties(queryExamineDO, examineDetailDO);

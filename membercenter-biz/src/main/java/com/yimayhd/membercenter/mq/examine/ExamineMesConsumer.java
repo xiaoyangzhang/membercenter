@@ -73,7 +73,7 @@ public class ExamineMesConsumer extends BaseConsumer {
             return true;
         }
         SendSmsOption sendSmsOption = new SendSmsOption();
-        sendSmsOption.setOutId(msg.getId());
+        sendSmsOption.setOutId(System.currentTimeMillis());
         List<String> mobiles = new ArrayList<String>();
         mobiles.add(moblieResult.getValue());
         sendSmsOption.setMobileNums(mobiles);

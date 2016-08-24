@@ -123,14 +123,14 @@
 	</select>
 	
 	
-	<select id="queryMerchantExaminCount" resultType="int" parameterType="com.yimayhd.membercenter.client.query.examine.ExaminePageQueryDTO">
+	
+	 <select id="queryMerchantExaminCount" resultType="int" parameterType="com.yimayhd.membercenter.client.query.examine.ExaminePageQueryDTO">
 		select
 		count(1)
 		from examine
 		<include refid="queryExamineSql"/>
 		order by gmt_created desc
 	</select>
-	
 	<sql id="queryExamineSql">
     where
       domain_id = #{domainId,jdbcType=INTEGER}

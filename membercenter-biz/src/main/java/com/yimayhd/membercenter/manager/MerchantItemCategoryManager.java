@@ -1,6 +1,7 @@
 package com.yimayhd.membercenter.manager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -75,7 +76,7 @@ public class MerchantItemCategoryManager {
      * @param categoryIds
      * @return
      */
-    public MemResultSupport saveMerchanItemCategories(final ExamineDO examineDO, final long[] categoryIds) {
+    public MemResultSupport saveMerchanItemCategories(final ExamineDO examineDO, final List<Long> categoryIds) {
         MemResultSupport memResultSupport = new MemResultSupport();
         // 新增商家
         final MerchantDO merchantDO = ExamineConverter.examineToMerchant(examineDO);
@@ -184,9 +185,8 @@ public class MerchantItemCategoryManager {
 	                                            support.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
 	                                            return support;
 	                                        }
-											boolean target = insertMerchantItemCategory(examineDO,categoryIds);
+											boolean target = insertMerchantItemCategory(examineDO,idList);
 											if (!target) {
-												//logger.error("saveMerchanItemCategories param:{} is null, saveMerchanItemCategories failure", JSONObject.toJSONString(merchantItemCategoryDOs));
 												transactionStatus.setRollbackOnly();
 												support.setReturnCode(MemberReturnCode.SCOPE_ITEM_CATEGORY_NOT_FOUND_ERROR);
 												return support;
@@ -240,7 +240,7 @@ public class MerchantItemCategoryManager {
     * @return MemResultSupport    返回类型 
     * @throws
      */
-    private boolean insertMerchantItemCategory(final ExamineDO examineDO,final long[] categoryIds) {
+    private boolean insertMerchantItemCategory(final ExamineDO examineDO,final List<Long> categoryIds) {
     	ArrayList<MerchantItemCategoryDO> merchantItemCategoryDOs = new ArrayList<>();
 		for (long categoryId : categoryIds) {
 			MerchantItemCategoryDO merchantItemCategoryDO = new MerchantItemCategoryDO();

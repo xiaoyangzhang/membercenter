@@ -166,52 +166,7 @@ public class ExamineInfoDTO implements Serializable {
 	private String saleLicenseNumber;//营业执照号
 	private String taxRegisterNumber;//税务登记号
 	private Set<Long> idSet = new HashSet<Long>();
-	/**
-	 * 2.0优化:
-	 */
-    /**
-     *账户类型
-     */
-    private String accountType;
-    
-
-	/**
-     * 开户人身份证
-     */
-    private String openerCard;
-    /**
-     * 结算联行号
-     */
-    private String settlementCard;
-    /**
-     * 开户人手机号（银行预留手机号）
-     */
-    private String openerTel;
-    
-    public String getOpenerTel() {
-		return openerTel;
-	}
-	public void setOpenerTel(String openerTel) {
-		this.openerTel = openerTel;
-	}
-	public String getAccountType() {
-		return accountType;
-	}
-	public void setAccountType(String accountType) {
-		this.accountType = accountType;
-	}
-	public String getOpenerCard() {
-		return openerCard;
-	}
-	public void setOpenerCard(String openerCard) {
-		this.openerCard = openerCard;
-	}
-	public String getSettlementCard() {
-		return settlementCard;
-	}
-	public void setSettlementCard(String settlementCard) {
-		this.settlementCard = settlementCard;
-	}
+	
 	public Set<Long> getIdSet() {
 		return idSet;
 	}

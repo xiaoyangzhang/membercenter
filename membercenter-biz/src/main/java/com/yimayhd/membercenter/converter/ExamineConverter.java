@@ -121,6 +121,11 @@ public class ExamineConverter {
         examinDTO.setArtCertificate(certificateMap.get(CertificateOption.ART_CERTIFICATE.getCode()));
         examinDTO.setCardInHand(pictureMap.get(PictureUrl.CARD_IN_HAND.getId()));
         examinDTO.setCreateDate(examineDO.getGmtCreated());
+        
+        examinDTO.setAccountType(featureMap.get(ExamineDetail.ACCOUNT_TYPE.getId()));
+        examinDTO.setOpenerCard(featureMap.get(ExamineDetail.OPENER_CARD.getId()));
+        examinDTO.setOpenerTel(featureMap.get(ExamineDetail.OPENER_TEL.getId()));
+        examinDTO.setSettlementCard(featureMap.get(ExamineDetail.SETTLEMENT_CARD.getId()));
         return examinDTO;
     } 
 
@@ -157,6 +162,11 @@ public class ExamineConverter {
         featureMap.put(ExamineDetail.LEGAL_CARD_NUMBER.getId(), examinDTO.getLawPersonCard());
         featureMap.put(ExamineDetail.SALE_LICENSE_NUMBER.getId(), examinDTO.getSaleLicenseNumber());
         featureMap.put(ExamineDetail.TAX_REGISTER_NUMBER.getId(), examinDTO.getTaxRegisterNumber());
+        
+        featureMap.put(ExamineDetail.ACCOUNT_TYPE.getId(), examinDTO.getAccountType());
+        featureMap.put(ExamineDetail.OPENER_CARD.getId(), examinDTO.getOpenerCard());
+        featureMap.put(ExamineDetail.OPENER_TEL.getId(), examinDTO.getOpenerTel());
+        featureMap.put(ExamineDetail.SETTLEMENT_CARD.getId(), examinDTO.getSettlementCard());
         pictureMap.put(PictureUrl.LEGRAL_CARD_UP.getId(), examinDTO.getLegralCardUp());
         pictureMap.put(PictureUrl.LEGRAL_CARD_DOWN.getId(), examinDTO.getLegralCardDown());
         pictureMap.put(PictureUrl.BUSINESS_LICENSE.getId(), examinDTO.getBusinessLicense());

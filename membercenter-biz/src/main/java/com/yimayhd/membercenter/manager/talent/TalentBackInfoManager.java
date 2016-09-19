@@ -47,6 +47,7 @@ import com.yimayhd.user.client.dto.UserDTO;
 import com.yimayhd.user.client.enums.CertificateOption;
 import com.yimayhd.user.client.enums.MerchantOption;
 import com.yimayhd.user.client.enums.UserOptions;
+import com.yimayhd.user.client.result.BaseResult;
 
 /**
  * 〈一句话功能简述〉<br>
@@ -136,7 +137,16 @@ public class TalentBackInfoManager {
                         return updatePictureText(domainId, talentInfoDO.getId(), pictureTextDTO);
                     } else {
                         // 保存图文信息
-                        return savePictureText(domainId, talentInfoDO.getId(), pictureTextDTO);
+                       MemResult<Boolean> savePictureTextResult = savePictureText(domainId, talentInfoDO.getId(), pictureTextDTO);
+                       if (savePictureTextResult != null && savePictureTextResult.isSuccess()) {
+						boolean setMainPageFlag = userRepo.setMainPageFlag(talentInfoDO.getId(), true);
+						if (!setMainPageFlag) {
+							baseResult.setSuccess(false);
+							return baseResult;
+						}
+                       }
+					 return savePictureTextResult;
+					
                     }
                 } else {
                     baseResult.setReturnCode(merchantUpdateResult.getReturnCode());
@@ -153,7 +163,17 @@ public class TalentBackInfoManager {
                 if (merchantSaveResult.isSuccess()) {
                     logger.info("saveTalentBackInfo userId:{} saveMerchant success", talentInfoDO.getId());
                     // 保存图文信息
-                    return savePictureText(domainId, talentInfoDO.getId(), pictureTextDTO);
+                    MemResult<Boolean> savePictureTextResult = savePictureText(domainId, talentInfoDO.getId(), pictureTextDTO);
+                    if (savePictureTextResult != null && savePictureTextResult.isSuccess()) {
+                    	boolean setMainPageFlag = userRepo.setMainPageFlag(talentInfoDO.getId(), true);
+                    	if (!setMainPageFlag) {
+							baseResult.setSuccess(false);
+							return baseResult;
+						}
+                    
+                    }
+				 return savePictureTextResult;
+				
                 } else {
                     baseResult.setReturnCode(merchantSaveResult.getReturnCode());
                     logger.info("saveTalentBackInfo userId:{} saveMerchant error", talentInfoDO.getId());
@@ -446,4 +466,5 @@ public class TalentBackInfoManager {
         }
         return baseResult;
     }
+    
 }

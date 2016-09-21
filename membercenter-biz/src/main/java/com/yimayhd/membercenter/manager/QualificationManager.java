@@ -110,6 +110,12 @@ public class QualificationManager {
 		merchantQualification.setDomainId(qualificationQueryDTO.getDomainId());
 		merchantQualification.setSellerId(qualificationQueryDTO.getSellerId());
 		merchantQualification.setStatus(qualificationQueryDTO.getStatus());
+		merchantQualification.setQulificationId(qualificationQueryDTO.getQualificationId());
+		if (!CollectionUtils.isEmpty(qualificationQueryDTO.getIdSet())) {
+			List<Long> idList = new ArrayList<Long>();
+			idList.addAll(qualificationQueryDTO.getIdSet());
+			merchantQualification.setIdList(idList);
+		}
 		List<MerchantQualificationDO> merchantQualifications = merchantQualificationDao.getMerchantQualification(merchantQualification);
 		if (merchantQualifications == null) {
 			result.setReturnCode(MemberReturnCode.MERCHANT_QUALIFICATION_FAILED);

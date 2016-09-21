@@ -132,4 +132,25 @@ public class UserRepo {
         }
         return baseResult;
     }
+    /* 
+     * 更新达人表信息
+	 * @param userTalentUpdateDTO
+	 * @return
+	 */
+    public boolean setMainPageFlag(long userId,boolean status){
+    	if( userId == 0 ){
+    		return false;
+    	}
+    	logger.info("updateTalentInfo setMainPageFlag={}",userId);
+    	try {
+    		BaseResult<Boolean> baseResult = userService.setMainPageFlag(userId,status);
+        	if( baseResult == null || !baseResult.isSuccess() ){
+        		 logger.error("talentService : setMainPageFlag(); param={}",userId);
+        	}
+        	return true;
+    	}catch(Exception e){
+    		 logger.error("setMainPageFlag userId",userId,e);
+    	}
+    	return false;
+    }
 }

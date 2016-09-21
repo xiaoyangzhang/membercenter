@@ -145,5 +145,8 @@
   	<if test="merchantQualification.status == 0">
   	and status <![CDATA[<]]> 100
   	</if>
+  	<if test="merchantQualification.qulificationId > 0">
+  		and qulification_id=#{merchantQualification.qulificationId}
+  	</if>
   </select>
 </mapper>

@@ -113,7 +113,7 @@ public class ExaminePushConsumer extends BaseConsumer {
             for (int i = 1; i <= mesList.size(); i++) {
                 //stringBuilder.append(i);
 //                stringBuilder.append(":" + mesList.get(i - 1) + ";\n");
-                stringBuilder.append(mesList.get(i - 1) + ";\n");
+                stringBuilder.append(mesList.get(i - 1) + "\n");
             }
         }
         return stringBuilder.toString();

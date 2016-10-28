@@ -111,8 +111,9 @@ public class ExaminePushConsumer extends BaseConsumer {
         if (!ParmCheckUtil.checkListNull(mesList)) {
             stringBuilder.append(" \n未通过原因:\n");
             for (int i = 1; i <= mesList.size(); i++) {
-                stringBuilder.append(i);
-                stringBuilder.append(":" + mesList.get(i - 1) + ";\n");
+                //stringBuilder.append(i);
+//                stringBuilder.append(":" + mesList.get(i - 1) + ";\n");
+                stringBuilder.append(mesList.get(i - 1) + "\n");
             }
         }
         return stringBuilder.toString();
